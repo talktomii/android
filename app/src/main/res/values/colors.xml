@@ -23,4 +23,6 @@
     <color name="green">#2BD154</color>
     <color name="black_shade">#EAEAEA</color>
 
+    <color name="card_color">#2F80ED</color>
+    <color name="mycard_bgcolor">#F9F8FC</color>
 </resources>

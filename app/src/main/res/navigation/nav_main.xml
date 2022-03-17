@@ -68,8 +68,8 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.furniture.ui.homefrag.HomesFragment"
-        android:label="HomeFragment" />
+        android:name="com.furniture.ui.mycards.MyCards"
+        android:label="HomeFragment " />
 
     <fragment
         android:id="@+id/editInterestFragment"

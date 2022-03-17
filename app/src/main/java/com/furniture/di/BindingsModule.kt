@@ -15,6 +15,7 @@ import com.furniture.ui.loginSignUp.login.LoginFragment
 import com.furniture.ui.loginSignUp.signup.CreateProfileFragment
 import com.furniture.ui.loginSignUp.signup.SignUpFragment
 import com.furniture.ui.loginSignUp.splash.SplashFragment
+import com.furniture.ui.mycards.MyCards
 import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
 import dagger.Module
@@ -50,11 +51,10 @@ abstract class BindingsModule {
     abstract fun editInterestFragment(): EditInterestFragment
 
     @ContributesAndroidInjector
-    abstract fun homeFrag(): HomesFragment
+    abstract fun homeFrag(): MyCards
 
     @ContributesAndroidInjector
     abstract fun signupFragment(): SignUpFragment
-
 
     @ContributesAndroidInjector
     abstract fun createProfileFragment(): CreateProfileFragment

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<data>
+
+    <variable
+        name="imageUrl"
+        type="String" />
+
+</data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/dp_2"
+            android:background="@color/grey_text"
+            android:scaleType="fitXY"
+            setImageFromUrl="@{imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="@dimen/dp_16"
+            app:riv_mutate_background="true" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ivCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:background="@drawable/bg_white_strok"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

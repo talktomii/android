@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.homeFragment.chooseProducts.ChooseProductsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_30"
+            app:cardCornerRadius="@dimen/dp_16"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_rectangle"
+                android:padding="@dimen/dp_16">
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTitle"
+                        style="@style/TextViewStyleMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/choose_product" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:padding="@dimen/dp_12"
+                        android:src="@drawable/ic_cross" />
+
+                    <TextView
+                        android:id="@+id/tvAddAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/add_new"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="gone"
+                        app:drawableEndCompat="@drawable/ic_add_12" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+                  <androidx.core.widget.NestedScrollView
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+                      <androidx.constraintlayout.widget.ConstraintLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+                          <androidx.recyclerview.widget.RecyclerView
+                              android:id="@+id/rvProduct"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              app:layout_constraintEnd_toEndOf="parent"
+                              app:layout_constraintStart_toStartOf="parent"
+                              app:layout_constraintTop_toTopOf="parent"
+                              tools:itemCount="5" />
+
+                          <TextView
+                              android:id="@+id/TrendingPro"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:fontFamily="@font/poppins_medium"
+                              android:padding="@dimen/dp_5"
+                              android:text="@string/trending_products"
+                              android:textColor="@color/black"
+                              android:textSize="@dimen/sp_14"
+                              app:layout_constraintStart_toStartOf="parent"
+                              app:layout_constraintTop_toBottomOf="@+id/rvProduct" />
+
+                          <androidx.recyclerview.widget.RecyclerView
+                              android:id="@+id/rvTrending"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              app:layout_constraintEnd_toEndOf="parent"
+                              app:layout_constraintStart_toStartOf="parent"
+                              app:layout_constraintTop_toBottomOf="@+id/TrendingPro" />
+
+                      </androidx.constraintlayout.widget.ConstraintLayout>
+                  </androidx.core.widget.NestedScrollView>
+
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

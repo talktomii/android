@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/ic_cross"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMessage"
+                    style="@style/TextViewStyleHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_16"
+                    android:gravity="center"
+                    android:text="Terms And\n Conditions"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ScrollView
+                    android:id="@+id/svText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/TxtAgree"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvMessage">
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginVertical="@dimen/dp_10"
+                        android:gravity="start"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet vel felis, augue. A sollicitudin nisi sit in etiam enim aliquam id ornare. Nulla sapien pellentesque risus ultrices sit feugiat pulvinar ut. Viverra malesuada neque gravida odio quis iaculis. Vitae dolor diam mi, rutrum adipiscing. Turpis leo eu eu eu. Nunc ullamcorper ut magnis libero ipsum nam non aliquam volutpat. A erat magna cras faucibus aliquet. Ac odio nulla adipiscing lectus at.
+Erat pulvinar id cras aliquet et nunc, euismod at. Adipiscing et nibh pulvinar nisl in penatibus eleifend ut egestas. Egestas donec purus tristique penatibus. Ac elementum, porttitor quis ac. Blandit diam massa elit enim viverra diam, laoreet tincidunt scelerisque. Dignissim arcu nunc euismod sed egestas velit et.
+Dolor nunc lectus vestibulum."
+                        android:textStyle="bold" />
+
+                </ScrollView>
+
+                <TextView
+                    android:id="@+id/TxtAgree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_agree_background"
+                    android:gravity="center"
+                    android:text="AGREE"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/svText" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

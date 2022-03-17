@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.loginSignUp.otp.OTPFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_rectangle"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextViewStyleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verification"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTittle"
+            style="@style/TextViewStyleHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:text="@string/we_sent_you_a_code_to_verify_your_phone_number"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPhone"
+            style="@style/TextViewStyleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTittle"
+            tools:text="+91 8872451846" />
+
+
+        <com.chaos.view.PinView
+            android:id="@+id/etOTP"
+            style="@style/PinWidget.PinView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_32"
+            android:gravity="center_horizontal"
+            android:hint="1234"
+            android:inputType="number"
+            android:padding="4dp"
+            app:itemSpacing="@dimen/dp_10"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_24"
+            app:hideLineWhenFilled="false"
+            app:itemCount="4"
+            app:layout_constraintTop_toBottomOf="@+id/tvPhone"
+            app:lineWidth="@dimen/dp_1"
+            app:viewType="rectangle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            style="@style/TextViewStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawableStart="@drawable/ic_baseline_access_time_24"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="bottom"
+            android:padding="@dimen/dp_5"
+            android:text="2:00"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etOTP" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvResend"
+            style="@style/TextViewStyleHint"
+            android:layout_margin="@dimen/dp_16"
+            android:text="@string/didn_t_receive_the_code_yet_resend_code"
+            app:layout_constraintTop_toBottomOf="@id/tvTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnVerify"
+            android:layout_margin="@dimen/dp_20"
+            android:text="@string/verify"
+            android:textAllCaps="true"
+            style="@style/ButtonRedBackgroundStyle"
+            app:layout_constraintTop_toBottomOf="@id/tvResend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

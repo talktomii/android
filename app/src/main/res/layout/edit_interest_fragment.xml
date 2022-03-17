@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.furniture.ui.tellusmore.TellUsMoreVM" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/gray"
+            android:drawableLeft="@drawable/back_arrow"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txtSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="Save"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtEditInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Interests"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="@+id/txtBack"
+            app:layout_constraintTop_toBottomOf="@+id/txtBack" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTopics"
+            chipLayout="{true}"
+            setRecyclerAdapter="@{vm.topicsAdapter}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtEditInterest"
+            android:layout_marginTop="@dimen/dp_10"
+            app:spanCount="2"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_interests" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

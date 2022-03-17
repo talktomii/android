@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.furniture.ui.loginSignUp.splash.SplashFragment"
+        android:label="splashFragment"
+        tools:layout="@layout/fragment_splash">
+
+        <action
+            android:id="@+id/action_splashFragment_to_login"
+            app:destination="@id/loginFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.furniture.ui.loginSignUp.login.LoginFragment"
+        android:label="loginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_signup"
+            app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.furniture.ui.loginSignUp.signup.SignUpFragment"
+        android:label="signupFragment"
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/action_signupFragment_to_createProfileFragment"
+            app:destination="@id/createProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createProfileFragment"
+        android:name="com.furniture.ui.loginSignUp.signup.CreateProfileFragment"
+        android:label="CreateProfileFragment">
+        <action
+            android:id="@+id/action_createProfileFragment_to_tellUsMore"
+            app:destination="@id/tellUsMore" />
+    </fragment>
+    <fragment
+        android:id="@+id/tellUsMore"
+        android:name="com.furniture.ui.tellusmore.TellUsMore"
+        android:label="TellUsMore" >
+        <action
+            android:id="@+id/action_tellUsMore_to_editPersonalInfo"
+            app:destination="@id/editPersonalInfo" />
+        <argument
+            android:name="isUser"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_tellUsMore_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPersonalInfo"
+        android:name="com.furniture.ui.editpersonalinfo.EditPersonalInfo"
+        android:label="EditPersonalInfo" >
+<!--        <action-->
+<!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
+<!--            app:destination="@id/homeFragment" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.furniture.ui.homefrag.HomesFragment"
+        android:label="HomeFragment" />
+
+    <fragment
+        android:id="@+id/editInterestFragment"
+        android:name="com.furniture.ui.home.profile.EditInterestFragment"
+        android:label="EditInterestFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.furniture.ui.home.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profile_to_editPersonalInfo"
+            app:destination="@id/editPersonalInfo" />
+
+        <action
+            android:id="@+id/action_profile_to_editInterestFragment"
+            app:destination="@id/editInterestFragment" />
+    </fragment>
+
+</navigation>

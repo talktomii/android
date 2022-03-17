@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.furniture.ui.loginSignUp.signup.CreateProfileVM" />
+
+    </data>
+
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_marginBottom="@dimen/dp_20"
+     android:layout_height="wrap_content">
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+         <TextView
+             android:id="@+id/txtSignIn"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Create Profile"
+             android:textAlignment="center"
+             android:textColor="@color/gray"
+             android:layout_marginTop="@dimen/dp_30"
+             android:textSize="30sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:id="@+id/layoutGrandiant"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/dp_120"
+             android:layout_marginStart="@dimen/dp_20"
+             android:layout_marginTop="8dp"
+             android:layout_marginEnd="@dimen/dp_20"
+             android:background="@drawable/bg_gradient_profile"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="1.0"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/txtSignIn">
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+         <ImageView
+             android:id="@+id/imgCam"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_camera"
+             android:layout_marginTop="@dimen/dp_10"
+             android:layout_marginEnd="@dimen/dp_10"
+             app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
+             app:layout_constraintTop_toTopOf="@+id/layoutGrandiant" />
+
+         <com.makeramen.roundedimageview.RoundedImageView
+             android:id="@+id/imgDefault"
+             android:layout_width="120dp"
+             android:layout_height="120dp"
+             android:src="@drawable/ic_user"
+             android:layout_marginTop="@dimen/dp_60"
+             app:riv_corner_radius="@dimen/dp_60"
+             android:scaleType="centerCrop"
+             app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
+             app:layout_constraintStart_toStartOf="@+id/layoutGrandiant"
+             app:layout_constraintTop_toTopOf="@+id/layoutGrandiant">
+
+         </com.makeramen.roundedimageview.RoundedImageView>
+
+         <androidx.appcompat.widget.AppCompatImageView
+             android:id="@+id/ivCamera"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/ic_camera2"
+             android:layout_marginBottom="@dimen/dp_10"
+             app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
+             app:layout_constraintEnd_toEndOf="@+id/imgDefault" />
+
+         <TextView
+             android:id="@+id/txtFirst"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="First Name"
+             android:textSize="@dimen/sp_12"
+             android:layout_marginStart="@dimen/dp_20"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
+
+         <EditText
+             android:id="@+id/txtFirstName"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="15dp"
+             android:layout_marginEnd="15dp"
+             android:drawablePadding="10dp"
+             android:gravity="center_vertical"
+             android:hint="Camaron"
+             android:padding="15dp"
+             android:textColor="@color/gray"
+             android:textSize="16sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/txtFirst" />
+
+         <TextView
+             android:id="@+id/textView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/dp_20"
+             android:layout_marginTop="@dimen/dp_10"
+             android:text="Last Name"
+             android:textSize="@dimen/sp_12"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/txtFirstName" />
+
+         <EditText
+             android:id="@+id/txtLastName"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="15dp"
+             android:layout_marginEnd="15dp"
+             android:drawablePadding="10dp"
+             android:gravity="center_vertical"
+             android:hint="Williamson"
+             android:padding="15dp"
+             android:textColor="@color/gray"
+             android:textSize="16sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+         <TextView
+             android:id="@+id/textView2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/dp_20"
+             android:layout_marginTop="@dimen/dp_10"
+             android:text="User Name"
+             android:textSize="@dimen/sp_12"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
+
+         <EditText
+             android:id="@+id/txtUserName"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="15dp"
+             android:layout_marginEnd="15dp"
+             android:drawablePadding="10dp"
+             android:gravity="center_vertical"
+             android:hint="camaro525"
+             android:padding="15dp"
+             android:textColor="@color/gray"
+             android:textSize="16sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+         <RadioGroup
+             android:id="@+id/radioGroup"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/dp_16"
+             android:orientation="vertical"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/txtUserName">
+
+             <RadioButton
+                 android:id="@+id/radioUser"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:checked="true"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginEnd="@dimen/dp_12"
+                 android:buttonTint="@color/blue"
+                 android:paddingStart="@dimen/dp_20"
+                 android:text="User" />
+
+             <RadioButton
+                 android:id="@+id/radioInfluencer"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginStart="@dimen/dp_1"
+                 android:buttonTint="@color/blue"
+                 android:paddingStart="@dimen/dp_12"
+                 android:text="Influencer" />
+
+         </RadioGroup>
+
+
+         <TextView
+             android:id="@+id/btnNEXT"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+             android:layout_marginStart="20dp"
+             android:layout_marginEnd="@dimen/dp_20"
+             android:layout_marginTop="@dimen/dp_20"
+             android:background="@drawable/ic_signin"
+             android:gravity="center"
+             android:text="NEXT"
+             android:textAlignment="center"
+             android:textColor="@color/white"
+             android:textSize="18sp"
+             app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+
+
+
+
+
+
+
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ </ScrollView>
+
+</layout>

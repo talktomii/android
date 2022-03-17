@@ -55,6 +55,11 @@ class MainActivity : DaggerAppCompatActivity() {
                         viewModel.navController.navigate(R.id.profileFragment)
 
                     }
+
+                    R.id.nav_home ->{
+
+                        viewModel.navController.navigate(R.id.homeFragment)
+                    }
                 }
             }
             true

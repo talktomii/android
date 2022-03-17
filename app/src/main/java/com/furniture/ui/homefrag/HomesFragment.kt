@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.furniture.R
 import com.furniture.databinding.HomeFragmentBinding
 import com.furniture.ui.editpersonalinfo.EditPersonalInfoVM
+import com.furniture.ui.home.profile.AdapterInterests
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -32,6 +33,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModels
+
+        binding.rvPopular.adapter = AdapterPopular()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

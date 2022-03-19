@@ -25,6 +25,20 @@
         tools:replace="android:theme"
         tools:targetApi="m">
         <activity
+            android:name=".ui.mycards.activities.MyCardsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".ui.mycards.activities.PaymentDetailsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:name=".VideoActivity"
             android:exported="false" />
         <activity
@@ -38,7 +52,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- <activity -->

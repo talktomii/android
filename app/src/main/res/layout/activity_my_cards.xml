@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.mycards.activities.MyCardsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddcreditcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:fontFamily="@font/inter_extra_bold"
+                    android:text="@string/add_creditcard"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/dp_24"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textscanCreditCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_scan_card_rounder"
+                    android:drawableRight="@drawable/scan_cardimg"
+                    android:fontFamily="@font/inter_regular"
+                    android:padding="13dp"
+                    android:text="Scan Credit Card"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dp_16"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddcreditcard" />
+
+
+                <TextView
+                    android:id="@+id/textCardNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Card Number"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textscanCreditCard"
+                    app:layout_constraintTop_toBottomOf="@+id/textscanCreditCard" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="0000 0000 0000 0000"
+                    android:maxLength="16"
+                    android:inputType="number"
+                    android:textColor="@color/gray"
+                    android:textFontWeight="400"
+                    android:textSize="17sp"
+                    app:hintTextColor="@color/hint_color"
+                    app:layout_constraintTop_toBottomOf="@+id/textCardNumber" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/etCardNumber"
+                    tools:layout_editor_absoluteX="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/cvvLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/view1"
+                    app:layout_constraintTop_toBottomOf="@+id/view1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textCardExpireDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="Expire Date"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/sp_12"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/view1"
+                            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCardExpireDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_2"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@android:color/transparent"
+                            android:drawableRight="@drawable/calender"
+                            android:fontFamily="@font/inter_regular"
+                            android:hint="MM/YY"
+                            android:textColor="@color/gray"
+                            android:textFontWeight="400"
+                            android:textSize="17sp"
+                            app:hintTextColor="@color/hint_color"
+                            app:layout_constraintTop_toBottomOf="@+id/textCardExpireDate" />
+
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@color/gray"
+                            app:layout_constraintTop_toBottomOf="@+id/etCardExpireDate"
+                            tools:layout_editor_absoluteX="10dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textCVV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="CVC/CVV"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/sp_12"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/view1"
+                            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCVV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_2"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@android:color/transparent"
+                            android:drawableRight="@drawable/info"
+                            android:fontFamily="@font/inter_regular"
+                            android:hint="***"
+                            android:inputType="numberPassword"
+                            android:textColor="@color/gray"
+                            android:maxLength="3"
+                            android:textFontWeight="400"
+                            android:textSize="17sp"
+                            app:hintTextColor="@color/hint_color"
+                            app:layout_constraintTop_toBottomOf="@+id/textCVV" />
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@color/gray"
+                            app:layout_constraintTop_toBottomOf="@+id/etCVV"
+                            tools:layout_editor_absoluteX="10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textCardHolderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Cardholder Name"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/cvvLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/cvvLayout" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCardHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="e. g.John Doe"
+                    android:textColor="@color/gray"
+                    android:textFontWeight="400"
+                    android:textSize="17sp"
+                    app:hintTextColor="@color/hint_color"
+                    app:layout_constraintTop_toBottomOf="@+id/textCardHolderName" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/etCardHolder"
+                    tools:layout_editor_absoluteX="10dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/btnAddCard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:background="@drawable/ic_signin"
+            android:gravity="center"
+            android:text="ADD CARD"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_15" />
+    </RelativeLayout>
+</layout>

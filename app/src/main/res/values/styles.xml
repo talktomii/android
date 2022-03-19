@@ -54,4 +54,14 @@
         <item name="android:progressDrawable">@drawable/custom_rating_bar_small</item>
     </style>
 
+    <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottomsheet_card</item>
+    </style>
+
 </resources>

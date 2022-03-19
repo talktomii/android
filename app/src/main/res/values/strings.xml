@@ -188,5 +188,16 @@
     <string name="my_cards">My Cards</string>
     <string name="add_card">Add Card</string>
     <string name="mycard_text">53****1234</string>
-
+    <string name="add_creditcard">Add Credit Card</string>
+    <string name="back">Back</string>
+    <string name="payment_details">Payment details</string>
+    <string name="referenceID">Reference ID</string>
+    <string name="date">Date</string>
+    <string name="type">Type</string>
+    <string name= "description">Description</string>
+    <string name="amount">Amount</string>
+    <string name="repeat_payment">Repeat Payment</string>
+    <string name="refund_payment">Refund Payment</string>
+    <string name="download_receipt">Download receipt</string>
+    <string name="hint"><font size="15">Search by date, payment etc</font></string>
 </resources>

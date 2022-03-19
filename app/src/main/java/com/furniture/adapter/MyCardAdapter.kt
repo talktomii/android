@@ -23,7 +23,7 @@ class MyCardAdapter(private val mList: List<CardItemsViewModel>) :
 
         val itemsViewModel = mList[position]
         holder.itemName.text = itemsViewModel.card_Number
-        holder.itemImg.setBackgroundResource(itemsViewModel.card_Img)
+        holder.itemImg.setImageResource(itemsViewModel.card_Img)
 
     }
 

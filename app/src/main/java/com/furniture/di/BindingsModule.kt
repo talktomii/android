@@ -1,14 +1,12 @@
 package com.furniture.di
 
 import com.furniture.VideoActivity
-import com.furniture.databinding.TermsAndConditionsDialogBinding
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.InstaWebActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
 import com.furniture.ui.home.profile.EditInterestFragment
 import com.furniture.ui.home.profile.ProfileFragment
-import com.furniture.ui.homefrag.HomesFragment
 import com.furniture.ui.loginSignUp.MainActivity
 import com.furniture.ui.loginSignUp.StartFragment
 import com.furniture.ui.loginSignUp.login.LoginFragment
@@ -16,6 +14,10 @@ import com.furniture.ui.loginSignUp.signup.CreateProfileFragment
 import com.furniture.ui.loginSignUp.signup.SignUpFragment
 import com.furniture.ui.loginSignUp.splash.SplashFragment
 import com.furniture.ui.mycards.MyCards
+import com.furniture.ui.mycards.activities.MyCardsActivity
+import com.furniture.ui.mycards.activities.PaymentDetailsActivity
+import com.furniture.ui.mycards.fragments.CardFragment
+import com.furniture.ui.mycards.fragments.PaymentFragment
 import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
 import dagger.Module
@@ -37,6 +39,11 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun videoActivity(): VideoActivity
 
+    @ContributesAndroidInjector
+    abstract fun mycardsActivity(): MyCardsActivity
+
+    @ContributesAndroidInjector
+    abstract fun paymentDetailActivity(): PaymentDetailsActivity
 
     @ContributesAndroidInjector
     abstract fun loginFragment(): LoginFragment
@@ -77,6 +84,12 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun homeFragment(): HomeFragment
+
+    @ContributesAndroidInjector
+    abstract fun cardFragment(): CardFragment
+
+    @ContributesAndroidInjector
+    abstract fun paymentFragment(): PaymentFragment
 
 
 }

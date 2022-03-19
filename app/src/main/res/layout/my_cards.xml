@@ -13,13 +13,15 @@
 
     </data>
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.mycards.MyCards">
 
             <LinearLayout
@@ -74,46 +76,31 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="@dimen/dp_30"
                 android:layout_marginHorizontal="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_20"
-                android:textSize="@dimen/dp_14"
-                app:tabTextColor="@color/black"
+                android:layout_marginTop="@dimen/dp_30"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mycardsHeaderLayout"
                 app:tabBackground="@drawable/tab_color_selector"
-                app:tabIndicator="@null"
-                app:tabTextAppearance="@font/inter_regular">
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="0dp"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextAppearance="@style/CustomTextAppearanceTab"
+                app:tabTextColor="@color/black" />
 
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout">
-
-            </androidx.viewpager.widget.ViewPager>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCards"
-                chipLayout="{true}"
-                setRecyclerAdapter="@{vm.mycardsAdapter}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@+id/viewPager"
-                app:spanCount="2"
-                tools:itemCount="5"
-                tools:listitem="@layout/mycards_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+        </androidx.viewpager2.widget.ViewPager2>
+    </LinearLayout>
 </layout>

@@ -14,9 +14,9 @@ class MyCardsVM @Inject constructor() : ViewModel() {
     val mycardsAdapter by lazy { RecyclerAdapter<CardItemsViewModel>(R.layout.mycards_item) }
 
     private val cardList = listOf(
-        CardItemsViewModel(card_Number = "53****1234",card_Img = R.drawable.master_card1),
-        CardItemsViewModel(card_Number = "53****1234",card_Img = R.drawable.master_card1),
-        CardItemsViewModel(card_Number = "53****1234",card_Img = R.drawable.visa_card),
+        CardItemsViewModel(card_Number = "53****1234", card_Img = R.drawable.master_card1),
+        CardItemsViewModel(card_Number = "53****1234", card_Img = R.drawable.master_card1),
+        CardItemsViewModel(card_Number = "53****1234", card_Img = R.drawable.visa_card),
     )
 
     init {
@@ -24,7 +24,8 @@ class MyCardsVM @Inject constructor() : ViewModel() {
     }
 
 }
+
 data class CardItemsViewModel(
-    val card_Number : String,
-    val card_Img : Int
+    val card_Number: String,
+    val card_Img: Int
 ) : AbstractModel()

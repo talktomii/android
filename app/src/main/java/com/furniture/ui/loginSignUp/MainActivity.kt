@@ -84,7 +84,8 @@ class MainActivity : DaggerAppCompatActivity() {
             if (
                 destination.id == R.id.homeFragment||
                 destination.id == R.id.profileFragment||
-                destination.id == R.id.searchFragment
+                destination.id == R.id.searchFragment ||
+                destination.id == R.id.influencerProfileFragment
 
             ) {
                 binding.menuBottom.selectedItemId = destination.id

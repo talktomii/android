@@ -3,13 +3,13 @@ package com.furniture.ui.homefrag
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.furniture.databinding.ItemInterestsBinding
 import com.furniture.databinding.ItemPopularBinding
 
-class AdapterPopular: RecyclerView.Adapter<AdapterPopular.ViewHolder>(){
+class AdapterPopular(var homesFragment: HomesFragment) :
+    RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
 
-    class ViewHolder(val binding: ItemPopularBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(val binding: ItemPopularBinding) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
@@ -20,12 +20,14 @@ class AdapterPopular: RecyclerView.Adapter<AdapterPopular.ViewHolder>(){
     }
 
 
-
     override fun getItemCount(): Int {
         return 5
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.ivCoverPhoto.setOnClickListener {
+            homesFragment.onCoverClicked()
+        }
 
     }
 }

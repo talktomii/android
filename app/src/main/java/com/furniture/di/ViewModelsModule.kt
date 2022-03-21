@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.furniture.ui.home.HomeViewModel
 import com.furniture.ui.loginSignUp.LoginViewModel
+import com.furniture.ui.mycards.data.MyCardsViewModel
 
 
 import dagger.Binds
@@ -34,5 +35,10 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(LoginViewModel::class)
     abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyCardsViewModel::class)
+    abstract fun bindAddCardModel(viewModel: MyCardsViewModel): ViewModel
 
 }

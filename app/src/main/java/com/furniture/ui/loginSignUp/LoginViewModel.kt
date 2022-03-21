@@ -239,4 +239,8 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
 
         })
     }
+
+    fun addCard(hashMap: HashMap<String, Any>){
+
+    }
 }

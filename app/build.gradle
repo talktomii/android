@@ -202,6 +202,7 @@ permission*/
         exclude group: 'org.apache.httpcomponents'
     }
 
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     implementation 'com.google.android:flexbox:0.3.0-alpha3'
 
 }

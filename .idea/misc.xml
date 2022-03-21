@@ -91,6 +91,7 @@
         <entry key="app/src/main/res/layout/activity_service_type.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/activity_upload_image.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/bottomsheet_refund_payment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/edit_interest_fragment.xml" value="0.22192028985507245" />
         <entry key="app/src/main/res/layout/edit_personal_info_fragment.xml" value="0.17889492753623187" />
         <entry key="app/src/main/res/layout/fragment_booking_list.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_bookings.xml" value="0.1625" />

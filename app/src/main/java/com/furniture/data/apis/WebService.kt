@@ -3,6 +3,9 @@ package com.furniture.data.apis
 
 import com.furniture.data.model.*
 import com.furniture.data.network.responseUtil.ApiResponse
+import com.furniture.ui.mycards.data.CardDetail
+import com.furniture.ui.mycards.data.getAllData
+import com.furniture.ui.mycards.data.getCardDetail
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -43,9 +46,9 @@ interface WebService {
         private const val ALL_CITIES = "address/all_cities"
         private const val UPDATE_ORDER_STATUS = "vendor/order/change_status"
         private const val VALIDATE_COUPON_CODE = "order/validate_coupon"
-        private const val ADD_CARD = "save-card"
+        private const val ADD_CARD = "card/addCard"
         private const val PAYMENT_PROCCESS = "fatoorah"
-        private const val GET_CARDS = "add-card"
+        private const val GET_CARDS = "card/getCardByuid/622877f9e3e5080bdcde6ebf"
         private const val DELETE_CARD = "delete-card"
         private const val SOCIAL_LOGIN = "check_social_id"
 
@@ -98,7 +101,7 @@ interface WebService {
     fun getUser(): Call<ApiResponse<UserData>>
 
     @GET(GET_CARDS)
-    fun getCards(): Call<ApiResponse<List<CardData>>>
+    fun getCards(): Call<ApiResponse<getAllData>>
 
     @Multipart
     @POST(EDIT_PROFILE)

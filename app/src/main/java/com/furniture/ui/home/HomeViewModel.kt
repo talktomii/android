@@ -1,5 +1,7 @@
 package com.furniture.ui.home
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
 import com.furniture.data.model.*
@@ -43,7 +45,6 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val paymentProccess by lazy { SingleLiveEvent<Resource<PaymentResponse>>() }
     val paymentStatus by lazy { SingleLiveEvent<Resource<Any>>() }
-
 
 
     fun validateCouponCode(hashMap: HashMap<String, String>) {
@@ -91,9 +92,10 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
                     response: Response<ApiResponse<Any>>
                 ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status == 200)
+                        if (response.body()?.status == 200) {
+                            Log.d("Response ------", response.body()!!.data.toString())
                             addCard.value = Resource.success(response.body()?.detail)
-                        else addCard.value = Resource.error(
+                        } else addCard.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
                                 response.body()?.message
@@ -332,6 +334,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun getOrderDateTimeApi(id: Int?) {
         addToCart.value = Resource.loading()
         webService.getOrderDateTimeApi(id)
@@ -365,6 +368,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun orderListApi(type: String) {
         myCartList.value = Resource.loading()
         webService.orderListApi(type)
@@ -468,6 +472,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
                 }
             })
     }
+
     fun addToCart(body: CartModel) {
         addToCart.value = Resource.loading()
         webService.addToCart(body)
@@ -571,6 +576,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun addAddress(hashMap: HashMap<String, String>) {
         addaddress.value = Resource.loading()
         webService.addAddress(hashMap)
@@ -604,6 +610,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun getAddresses() {
         address.value = Resource.loading()
         webService.getAddresses()
@@ -637,6 +644,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun logoutApi() {
         logout.value = Resource.loading()
         webService.logout()
@@ -665,6 +673,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
                         )
                     }
                 }
+
                 override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
                     logout.value = Resource.error(ApiUtils.failure(t))
                 }
@@ -785,6 +794,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
             })
     }
+
     fun getHomeApi() {
         getHomeData.value = Resource.loading()
         //
@@ -1030,41 +1040,41 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
             })
     }
 
-    fun getCards() {
-        cards.value = Resource.loading()
-        webService.getCards()
-            .enqueue(object : Callback<ApiResponse<List<CardData>>> {
-                override fun onResponse(
-                    call: Call<ApiResponse<List<CardData>>>,
-                    response: Response<ApiResponse<List<CardData>>>
-                ) {
-
-                    if (response.isSuccessful) {
-                        if (response.body()?.status == 200)
-                            cards.value = Resource.success(response.body()?.detail)
-                        else cards.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
-
-                    } else {
-                        cards.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.errorBody()?.string()
-                            )
-                        )
-                    }
-                }
-
-                override fun onFailure(call: Call<ApiResponse<List<CardData>>>, t: Throwable) {
-                    cards.value = Resource.error(ApiUtils.failure(t))
-                }
-
-            })
-    }
+//    fun getCards() {
+//        cards.value = Resource.loading()
+//        webService.getCards()
+//            .enqueue(object : Callback<ApiResponse<List<CardData>>> {
+//                override fun onResponse(
+//                    call: Call<ApiResponse<List<CardData>>>,
+//                    response: Response<ApiResponse<List<CardData>>>
+//                ) {
+//
+//                    if (response.isSuccessful) {
+//                        if (response.body()?.status == 200)
+//                            cards.value = Resource.success(response.body()?.detail)
+//                        else cards.value = Resource.error(
+//                            ApiUtils.getError(
+//                                response.code(),
+//                                response.body()?.message
+//                            )
+//                        )
+//
+//                    } else {
+//                        cards.value = Resource.error(
+//                            ApiUtils.getError(
+//                                response.code(),
+//                                response.errorBody()?.string()
+//                            )
+//                        )
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ApiResponse<List<CardData>>>, t: Throwable) {
+//                    cards.value = Resource.error(ApiUtils.failure(t))
+//                }
+//
+//            })
+//    }
 
 
     fun processPayment(hashMap: java.util.HashMap<String, String>) {
@@ -1095,6 +1105,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
                         )
                     }
                 }
+
                 override fun onFailure(call: Call<ApiResponse<PaymentResponse>>, t: Throwable) {
                     paymentProccess.value = Resource.error(ApiUtils.failure(t))
                 }

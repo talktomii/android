@@ -61,7 +61,7 @@ object NetworkModule {
             } else
                 request.addHeader("Accept", "application/json")
                     .addHeader("Language", prefsManager.getDefaultLocale() ?: "en")
-            
+
             chain.proceed(request.build())
         }
     }

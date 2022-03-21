@@ -22,7 +22,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/ivLogo"
-                    android:src="@drawable/ic_homelogo" />
+                   />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -53,8 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@+id/ivCart"
-                    android:layout_toLeftOf="@id/ivCart"
-                    android:src="@drawable/ic_notification" />
+                    android:layout_toLeftOf="@id/ivCart" />
 
             </RelativeLayout>
 

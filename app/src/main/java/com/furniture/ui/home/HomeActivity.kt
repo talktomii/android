@@ -44,7 +44,17 @@ class HomeActivity : DaggerAppCompatActivity(), PermissionCallback {
 
     private fun setListener() {
         binding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        binding.btnMenu.setOnClickListener {
+            if(binding.drawerLayout.isDrawerOpen(binding.navigationView)){
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+
+            }else{
+                binding.drawerLayout.openDrawer(binding.navigationView)
+            }
+        }
     }
+
     private fun generateKeyHash():String {
         try {
 

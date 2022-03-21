@@ -18,7 +18,6 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:background="@drawable/ic_rectangle"
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -26,7 +25,6 @@
                     android:layout_marginTop="@dimen/dp_24"
                     android:layout_width="@dimen/dp_200"
                     android:layout_height="@dimen/dp_200"
-                    android:src="@drawable/ic_illustrations"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

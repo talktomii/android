@@ -60,22 +60,39 @@ class MainActivity : DaggerAppCompatActivity() {
 
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
+
+                    R.id.nav_search ->{
+                        viewModel.navController.navigate(R.id.searchFragment)
+                    }
                 }
             }
             true
 
         }
 
+        binding.btnMenu.setOnClickListener {
+            if(binding.drawerLayout.isDrawerOpen(binding.navigationView)){
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+
+            }else{
+                binding.drawerLayout.openDrawer(binding.navigationView)
+            }
+        }
+
+
         viewModel.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (
                 destination.id == R.id.homeFragment||
-                destination.id == R.id.profileFragment
+                destination.id == R.id.profileFragment||
+                destination.id == R.id.searchFragment
 
             ) {
                 binding.menuBottom.selectedItemId = destination.id
                 binding.menuBottom.isVisible = true
+                binding.btnMenu.isVisible = true
             } else {
                 binding.menuBottom.isVisible = false
+                binding.btnMenu.isVisible = false
             }
         }
 

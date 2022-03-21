@@ -1,10 +1,6 @@
 package com.furniture
 
-import android.graphics.Camera
 import android.os.Bundle
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import com.furniture.databinding.ActivityVideoBinding
 import com.furniture.utlis.PrefsManager
 import com.furniture.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerAppCompatActivity
@@ -17,7 +13,7 @@ import android.widget.Button
 
 class VideoActivity : DaggerAppCompatActivity() {
 
-    lateinit var binding: ActivityVideoBinding
+//    lateinit var binding: ActivityVideoBinding
 
     lateinit var progressDialog: ProgressDialog
 
@@ -26,7 +22,7 @@ class VideoActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView( this,R.layout.activity_video)
+//        binding = DataBindingUtil.setContentView( this,R.layout.activity_video)
 
         }
     }

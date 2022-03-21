@@ -30,7 +30,7 @@ class AdapterCategories(var context: Context): RecyclerView.Adapter<AdapterCateg
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(position%3==0){
-            holder.binding.iVImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_splash))
+            holder.binding.iVImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_car1))
         }
     }
 }

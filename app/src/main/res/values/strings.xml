@@ -100,6 +100,7 @@
     <string name="date_time">Date &amp; Time</string>
     <string name="cart">Cart</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="done">Done</string>
     <string name="confirm_booking">Confirm Booking</string>
     <string name="thank_you_for_submitting_your_request">Thank you for submitting your request. We will get back to you with payment link in next 24hrs.</string>
@@ -194,10 +195,14 @@
     <string name="referenceID">Reference ID</string>
     <string name="date">Date</string>
     <string name="type">Type</string>
-    <string name= "description">Description</string>
+    <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="repeat_payment">Repeat Payment</string>
     <string name="refund_payment">Refund Payment</string>
     <string name="download_receipt">Download receipt</string>
     <string name="hint"><font size="15">Search by date, payment etc</font></string>
+    <string name="bank_settings">My Bank Settings</string>
+    <string name="bank_content">Add Bank account to withdraw your earnings</string>
+    <string name="add_bank_account">Add Bank Account</string>
+    <string name="bank_content1">Laborum veniam irure magna culpa adipisicing aute et non. Laboris proident dolor do est. </string>
 </resources>

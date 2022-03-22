@@ -32,6 +32,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import android.widget.DatePicker.OnDateChangedListener
 
 
@@ -43,6 +44,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     lateinit var viewModel: MyCardsViewModel
 
     lateinit var addCardButton : TextView
+    lateinit var updateCardButton : TextView
     lateinit var cardNumber : TextInputEditText
     lateinit var cardHolderName : TextInputEditText
     lateinit var cardExpireDate : TextInputEditText
@@ -52,7 +54,33 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, com.furniture.R.layout.activity_my_cards)
+
+        cardHolderName = binding.etCardHolder
+        addCardButton = binding.btnAddCard
         cardExpireDate = binding.etCardExpireDate
+        cardNumber = binding.etCardNumber
+        updateCardButton = binding.btnUpdateCard
+
+        if(intent.getStringExtra("update") == "update"){
+            addCardButton.visibility = View.GONE
+            updateCardButton.visibility = View.VISIBLE
+            binding.etCardNumber.setText(intent.getStringExtra("cardnumber"))
+            binding.etCVV.setText(intent.getStringExtra("cvv"))
+            binding.etCardHolder.setText(intent.getStringExtra("cardholder"))
+            var str = intent.getStringExtra("expiredate")!!
+            binding.etCardExpireDate.setText(if (str.length < 7) str else str.substring(0, 7))
+            updateCardButton.setOnClickListener {
+                val hashmap = HashMap<String, String>()
+                hashmap["uid"] = intent.getStringExtra("uid")!!
+                hashmap["cardNumber"] = binding.etCardNumber.text.toString()
+                hashmap["expiryDate"] = binding.etCardExpireDate.text.toString()
+                hashmap["cvv"] = binding.etCVV.text.toString()
+                hashmap["holderName"] = binding.etCardHolder.text.toString()
+                viewModel.updateCard(hashmap)
+                finish()
+            }
+        }
+
         val materialDateBuilder  = MaterialDatePicker.Builder.datePicker()
         materialDateBuilder.setTitleText("Select a Expire Date");
         val materialDatePicker = materialDateBuilder.build();
@@ -60,7 +88,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
             MaterialPickerOnPositiveButtonClickListener<Any?> {
                 cardExpireDate.setText(materialDatePicker.headerText)
             })
-        cardNumber = binding.etCardNumber
+
         cardNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -81,8 +109,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         cardExpireDate.setOnClickListener {
             materialDatePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER");
         }
-        cardHolderName = binding.etCardHolder
-        addCardButton = binding.btnAddCard
+
         addCardButton.setOnClickListener {
             val hashmap = HashMap<String, String>()
             hashmap["uid"] = "622877f9e3e5080bdcde6ebf"

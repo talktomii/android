@@ -9,7 +9,7 @@ data class CardDetail(
     val uid: String,
     val cardNumber: String,
     val expiryDate: String,
-    val cvv: Int,
+    val cvv: String,
     val holderName: String,
     val __v: String
 ) : Parcelable
@@ -22,3 +22,4 @@ data class getCardDetail(
 data class getAllData(
     val card : List<CardDetail>?=null
 )
+

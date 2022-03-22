@@ -9,6 +9,7 @@ import com.furniture.adapter.MyCardAdapter
 import com.furniture.data.apis.WebService
 import com.furniture.data.model.CardData
 import com.furniture.data.model.UserData
+import com.furniture.data.network.Config
 import com.furniture.data.network.responseUtil.ApiResponse
 import com.furniture.data.network.responseUtil.ApiUtils
 import com.furniture.data.network.responseUtil.Resource
@@ -31,6 +32,8 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
 
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val cards by lazy { SingleLiveEvent<Resource<getAllData>>() }
+    val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
+    val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
     private var context: Context? = null
 
     fun ViewModelFactory(context: Context?) {
@@ -54,18 +57,21 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
                     for (i in data!!.payload!!.card!!) {
                         val str = i.cardNumber
                         val sb = StringBuilder("*".repeat(str.length))
-
                         for (i in 0 until str.length) {
                             if (i >= str.length - 4) {
                                 sb.replace(i, i + 1, str[i].toString())
 
                             }
                         }
-
                         dataList.add(
                             CardItemsViewModel(
-                                maskString(i.cardNumber, 2, 14, '*').toString(),
-                                R.drawable.master_card1
+                                i._id,
+                                i.uid,
+                                i.cardNumber,
+                                R.drawable.master_card1,
+                                i.expiryDate,
+                                i.cvv,
+                                i.holderName
                             )
                         )
                         Log.d("datalist---", dataList.toString())
@@ -96,7 +102,7 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
 
         })
     }
-
+//    maskString(i.cardNumber, 2, 14, '*').toString(),
     fun changeCharInPosition(position: Int, ch: Char, str: String): String? {
         val charArray = str.toCharArray()
         charArray[position] = ch
@@ -153,4 +159,77 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
             })
     }
 
+    fun updateCard(hashMap: HashMap<String, String>) {
+        updateCard.value = Resource.loading()
+        Log.d("updated ::: ",Config.BASE_URL_LOCAL + WebService.UPDATE_CARD + MyCardAdapter.update_url)
+        webService.updateCard( Config.BASE_URL_LOCAL + WebService.UPDATE_CARD + MyCardAdapter.update_url ,hashMap)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+
+                    Log.d("call --- > ",call.toString())
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == 200) {
+                            Log.d("Response ------", response.body()!!.data.toString())
+//                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
+                            updateCard.value = Resource.success(response.body()?.detail)
+                        } else updateCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.body()?.message
+                            )
+                        )
+                    } else {
+                        updateCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    updateCard.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+    fun deleteCard() {
+        deleteCard.value = Resource.loading()
+        webService.deleteCard()
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == 200) {
+                            Log.d("Response ------", response.body()!!.data.toString())
+//                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
+                            deleteCard.value = Resource.success(response.body()?.detail)
+                        } else deleteCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.body()?.message
+                            )
+                        )
+                    } else {
+                        deleteCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    deleteCard.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
 }

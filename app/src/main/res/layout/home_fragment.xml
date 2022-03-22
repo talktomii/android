@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.homefrag.HomesFragment">
 
-        <include layout="@layout/my_cards"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

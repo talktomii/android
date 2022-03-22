@@ -46,6 +46,26 @@ class MainActivity : DaggerAppCompatActivity() {
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
+        binding.txtMyCards.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.cardFragment)
+            binding.menuBottom.isVisible = true
+            binding.btnMenu.isVisible = true
+        }
+
+        binding.txtMyBankSettings.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.bankSettingsFragment)
+            binding.menuBottom.isVisible = true
+            binding.btnMenu.isVisible = true
+        }
+
+        binding.txtSettings.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.settingsFragment)
+            binding.menuBottom.isVisible = true
+            binding.btnMenu.isVisible = true
+        }
 
         binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item->
 
@@ -55,22 +75,45 @@ class MainActivity : DaggerAppCompatActivity() {
                         viewModel.navController.navigate(R.id.profileFragment)
 
                     }
+
+                    R.id.nav_home ->{
+                        viewModel.navController.navigate(R.id.homeFragment)
+                    }
+
+
+//                    R.id.nav_search ->{
+//                        viewModel.navController.navigate(R.id.searchFragment)
+//                    }
                 }
             }
             true
 
         }
 
+        binding.btnMenu.setOnClickListener {
+            if(binding.drawerLayout.isDrawerOpen(binding.navigationView)){
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+
+            }else{
+                binding.drawerLayout.openDrawer(binding.navigationView)
+            }
+        }
+
+
         viewModel.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (
                 destination.id == R.id.homeFragment||
                 destination.id == R.id.profileFragment
+//                destination.id == R.id.searchFragment ||
+//                destination.id == R.id.influencerProfileFragment
 
             ) {
                 binding.menuBottom.selectedItemId = destination.id
                 binding.menuBottom.isVisible = true
+                binding.btnMenu.isVisible = true
             } else {
                 binding.menuBottom.isVisible = false
+                binding.btnMenu.isVisible = false
             }
         }
 

@@ -1,6 +1,7 @@
 package com.furniture.data.apis
 
 
+import com.furniture.adapter.MyCardAdapter
 import com.furniture.data.model.*
 import com.furniture.data.network.responseUtil.ApiResponse
 import com.furniture.ui.mycards.data.CardDetail
@@ -47,6 +48,9 @@ interface WebService {
         private const val UPDATE_ORDER_STATUS = "vendor/order/change_status"
         private const val VALIDATE_COUPON_CODE = "order/validate_coupon"
         private const val ADD_CARD = "card/addCard"
+        const val UPDATE_CARD = "card/updateCard/"
+        val NEW_UPDATE_CARD : String = MyCardAdapter.update_url.toString()
+        private const val DELETE_CARD_ITEM = "card/deleteCard/6232f2c5d905a01a3c9b318e"
         private const val PAYMENT_PROCCESS = "fatoorah"
         private const val GET_CARDS = "card/getCardByuid/622877f9e3e5080bdcde6ebf"
         private const val DELETE_CARD = "delete-card"
@@ -248,6 +252,18 @@ interface WebService {
 //    @GET(PAYMENT_STATUS)
 //    fun getPaymentStatus(
 //    ): Call<ApiResponse<Any>>
+
+    @POST()
+    @Streaming
+    @FormUrlEncoded
+    fun updateCard(
+        @Url url : String,
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
+
+
+    @DELETE(DELETE_CARD_ITEM)
+    fun deleteCard(): Call<ApiResponse<Any>>
 
     @POST(PAYMENT_STATUS)
     @FormUrlEncoded

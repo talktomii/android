@@ -62,14 +62,24 @@
         android:id="@+id/editPersonalInfo"
         android:name="com.furniture.ui.editpersonalinfo.EditPersonalInfo"
         android:label="EditPersonalInfo" >
-<!--        <action-->
-<!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
-<!--            app:destination="@id/homeFragment" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
+        <!--            app:destination="@id/homeFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.furniture.ui.mycards.MyCards"
-        android:label="HomeFragment " />
+        android:name="com.furniture.ui.homefrag.HomesFragment"
+        android:label="HomeFragment" >
+
+<!--        <action-->
+<!--            android:id="@+id/action_home_to_influencer_profile"-->
+<!--            app:destination="@id/influencerProfileFragment" />-->
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/influencerProfileFragment"-->
+<!--        android:name="com.furniture.ui.home.profile.InfluencerProfileFragment"-->
+<!--        android:label="InfluencerProfileFragment" />-->
 
     <fragment
         android:id="@+id/editInterestFragment"
@@ -89,5 +99,27 @@
             android:id="@+id/action_profile_to_editInterestFragment"
             app:destination="@id/editInterestFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.furniture.ui.mycards.MyCards"
+        android:label="fragment_card"
+        tools:layout="@layout/my_cards"/>
+
+    <fragment
+        android:id="@+id/bankSettingsFragment"
+        android:name="com.furniture.ui.banksettings.MyBankSettings"
+        android:label="fragment_bank_settings"
+        tools:layout="@layout/my_bank_settings"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.furniture.ui.settings.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/settings"/>
+<!--    <fragment-->
+<!--        android:id="@+id/searchFragment"-->
+<!--        android:name="com.furniture.ui.search.SearchFragment"-->
+<!--        android:label="fragment_search"-->
+<!--        tools:layout="@layout/search_fragment"/>-->
 
 </navigation>

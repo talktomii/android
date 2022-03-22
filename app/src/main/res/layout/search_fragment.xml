@@ -32,10 +32,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_filter"
             android:layout_marginEnd="@dimen/dp_30"
+            android:src="@drawable/ic_filter"
+            android:layout_marginStart="@dimen/dp_20"
             app:layout_constraintBottom_toBottomOf="@+id/etSearch"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/etSearch"
             app:layout_constraintTop_toTopOf="@+id/etSearch" />
 
         <TextView

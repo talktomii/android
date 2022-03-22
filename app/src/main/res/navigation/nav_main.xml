@@ -106,4 +106,10 @@
         android:label="fragment_search"
         tools:layout="@layout/search_fragment"/>
 
+    <fragment
+        android:id="@+id/appointmentsFragment"
+        android:name="com.furniture.ui.appointment.AppointmentsFragment"
+        android:label="fragment_appointments"
+        tools:layout="@layout/fragment_appointments"/>
+
 </navigation>

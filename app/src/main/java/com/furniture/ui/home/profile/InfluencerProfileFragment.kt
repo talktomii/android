@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.ui.home.HomeViewModel
+import com.furniture.utlis.BackToHomeDialog
+import com.furniture.utlis.CallDialog
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -40,6 +42,11 @@ class InfluencerProfileFragment : DaggerFragment() {
     private fun setListener() {
         binding.txtBack.setOnClickListener {
             requireActivity().onBackPressed()
+        }
+
+        binding.txtCallNow.setOnClickListener {
+            val dialog = CallDialog()
+            dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
         }
 
     }

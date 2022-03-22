@@ -64,6 +64,10 @@ class MainActivity : DaggerAppCompatActivity() {
                     R.id.nav_search ->{
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
+
+                    R.id.nav_appointments ->{
+                        viewModel.navController.navigate(R.id.appointmentsFragment)
+                    }
                 }
             }
             true
@@ -85,7 +89,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.homeFragment||
                 destination.id == R.id.profileFragment||
                 destination.id == R.id.searchFragment ||
-                destination.id == R.id.influencerProfileFragment
+                destination.id == R.id.influencerProfileFragment||
+                destination.id == R.id.appointmentsFragment
 
             ) {
                 binding.menuBottom.selectedItemId = destination.id

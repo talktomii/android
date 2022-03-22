@@ -18,7 +18,7 @@
                     android:id="@+id/layoutGrandiant"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_120"
-                    android:background="@drawable/bg_gradient_profile"
+                    android:background="@drawable/ic_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,7 @@ package com.furniture.di
 
 import com.furniture.VideoActivity
 import com.furniture.databinding.TermsAndConditionsDialogBinding
+import com.furniture.ui.appointment.AppointmentsFragment
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
@@ -17,6 +18,8 @@ import com.furniture.ui.loginSignUp.splash.SplashFragment
 import com.furniture.ui.search.SearchFragment
 import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
+import com.furniture.utlis.CallDialog
+import com.furniture.utlis.DeleteAppointmentDialog
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -61,9 +64,18 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun createProfileFragment(): CreateProfileFragment
 
+    @ContributesAndroidInjector
+    abstract fun appointmentsFragment(): AppointmentsFragment
+
 
     @ContributesAndroidInjector
     abstract fun backToHomeDialog(): BackToHomeDialog
+
+    @ContributesAndroidInjector
+    abstract fun callDialog(): CallDialog
+
+    @ContributesAndroidInjector
+    abstract fun deleteAppointmentDialog(): DeleteAppointmentDialog
 
 
 

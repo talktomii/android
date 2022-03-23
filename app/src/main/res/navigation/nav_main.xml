@@ -98,6 +98,10 @@
         <action
             android:id="@+id/action_profile_to_editInterestFragment"
             app:destination="@id/editInterestFragment" />
+
+        <action
+            android:id="@+id/action_profile_to_myBudgesFragment"
+            app:destination="@id/myBudgesFragment" />
     </fragment>
 
     <fragment
@@ -111,5 +115,12 @@
         android:name="com.furniture.ui.appointment.AppointmentsFragment"
         android:label="fragment_appointments"
         tools:layout="@layout/fragment_appointments"/>
+
+    <fragment
+        android:id="@+id/myBudgesFragment"
+        android:name="com.furniture.ui.home.profile.MyBudgesFragment"
+        android:label="fragment_myBudges"
+        tools:layout="@layout/fragment_my_badges"/>
+
 
 </navigation>

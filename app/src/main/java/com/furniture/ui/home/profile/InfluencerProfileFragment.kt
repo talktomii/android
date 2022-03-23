@@ -8,6 +8,7 @@ import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.ui.home.HomeViewModel
 import com.furniture.utlis.BackToHomeDialog
 import com.furniture.utlis.CallDialog
+import com.furniture.utlis.DeleteAppointmentDialog
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -47,6 +48,11 @@ class InfluencerProfileFragment : DaggerFragment() {
         binding.txtCallNow.setOnClickListener {
             val dialog = CallDialog()
             dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
+        }
+
+        binding.txtAboutMe.setOnClickListener {
+            val dialog = DeleteAppointmentDialog()
+            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
         }
 
     }

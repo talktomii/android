@@ -93,7 +93,7 @@
                         android:textSize="@dimen/sp_16"
                         android:textStyle="bold"
                         android:textColor="@color/red"
-                        android:layout_marginEnd="@dimen/dp_20"
+                        android:layout_marginEnd="@dimen/dp_40"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="1"

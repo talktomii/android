@@ -45,6 +45,10 @@ class ProfileFragment : DaggerFragment() {
             view.findNavController().navigate(R.id.action_profile_to_editInterestFragment)
         }
 
+        binding.txtBudgesCount.setOnClickListener {
+            view.findNavController().navigate(R.id.action_profile_to_myBudgesFragment)
+        }
+
     }
 
     companion object {

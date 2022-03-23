@@ -8,6 +8,7 @@ import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
 import com.furniture.ui.home.profile.EditInterestFragment
 import com.furniture.ui.home.profile.InfluencerProfileFragment
+import com.furniture.ui.home.profile.MyBudgesFragment
 import com.furniture.ui.home.profile.ProfileFragment
 import com.furniture.ui.homefrag.HomesFragment
 import com.furniture.ui.loginSignUp.MainActivity
@@ -59,6 +60,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun searchFragment(): SearchFragment
+
+    @ContributesAndroidInjector
+    abstract fun myBudgesFragment(): MyBudgesFragment
 
 
     @ContributesAndroidInjector

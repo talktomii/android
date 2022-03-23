@@ -92,10 +92,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/TextCallNow"
+                android:id="@+id/txtCallNow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:background="@drawable/bg_blue_button"
                 android:drawableLeft="@drawable/ic_call1"

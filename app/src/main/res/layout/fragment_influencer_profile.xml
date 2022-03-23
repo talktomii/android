@@ -12,8 +12,10 @@
             android:paddingBottom="@dimen/dp_20"
             android:layout_height="match_parent">
 
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutGrandiant"
+                android:id="@+id/coverPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_120"
                 android:background="@drawable/ic_bg"
@@ -66,8 +68,8 @@
                 app:riv_corner_radius="@dimen/dp_60"
                 android:layout_marginStart="@dimen/dp_30"
                 android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="@+id/layoutGrandiant"
-                app:layout_constraintTop_toTopOf="@+id/layoutGrandiant">
+                app:layout_constraintStart_toStartOf="@+id/coverPhoto"
+                app:layout_constraintTop_toTopOf="@+id/coverPhoto">
 
             </com.makeramen.roundedimageview.RoundedImageView>
 
@@ -126,7 +128,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imgDefault">
 
                 <TextView
-                    android:id="@+id/TextName"
+                    android:id="@+id/txtAboutMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -160,10 +162,10 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/TextName"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAboutMe"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/TextName"
-                    app:layout_constraintTop_toTopOf="@+id/TextName" />
+                    app:layout_constraintStart_toEndOf="@+id/txtAboutMe"
+                    app:layout_constraintTop_toTopOf="@+id/txtAboutMe" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -406,7 +408,9 @@
                 android:id="@+id/txtBookACall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:background="@drawable/ic_signin"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
@@ -414,11 +418,10 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvTimeSlot" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

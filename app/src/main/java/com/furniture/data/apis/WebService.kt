@@ -50,7 +50,7 @@ interface WebService {
         private const val ADD_CARD = "card/addCard"
         const val UPDATE_CARD = "card/updateCard/"
         val NEW_UPDATE_CARD : String = MyCardAdapter.update_url.toString()
-        private const val DELETE_CARD_ITEM = "card/deleteCard/6232f2c5d905a01a3c9b318e"
+        private const val DELETE_CARD_ITEM = "card/deleteCard/62382e455ccbb6952f15f25d"
         private const val PAYMENT_PROCCESS = "fatoorah"
         private const val GET_CARDS = "card/getCardByuid/622877f9e3e5080bdcde6ebf"
         private const val DELETE_CARD = "delete-card"
@@ -249,16 +249,12 @@ interface WebService {
     fun addCard(
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<Any>>
-//    @GET(PAYMENT_STATUS)
-//    fun getPaymentStatus(
-//    ): Call<ApiResponse<Any>>
 
-    @POST()
-    @Streaming
+    @POST("card/updateCard/{id}")
     @FormUrlEncoded
     fun updateCard(
-        @Url url : String,
-        @FieldMap map: HashMap<String, String>
+        @Path("id") id: String?,
+        @FieldMap map: HashMap<String, Any>
     ): Call<ApiResponse<Any>>
 
 

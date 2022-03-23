@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.furniture.R
 import com.furniture.databinding.ActivityMainBinding
+import com.furniture.ui.helpsupport.HelpSupport
 import com.furniture.ui.home.homeFragment.HomeFragment
 import com.furniture.ui.home.profile.ProfileFragment
 import com.furniture.utlis.LocaleHelper
@@ -39,6 +40,13 @@ class MainActivity : DaggerAppCompatActivity() {
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        binding.constWallet.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.myWalletFragment)
+            binding.menuBottom.isVisible = true
+            binding.btnMenu.isVisible = false
+        }
+
         binding.viewModel = viewModel
         viewModel.navController = findNavController(R.id.nav_host_fragment)
 
@@ -65,6 +73,12 @@ class MainActivity : DaggerAppCompatActivity() {
             viewModel.navController.navigate(R.id.settingsFragment)
             binding.menuBottom.isVisible = true
             binding.btnMenu.isVisible = true
+        }
+
+        binding.txtHelpSupport.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            val intent = Intent(this,HelpSupport::class.java)
+            startActivity(intent)
         }
 
         binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item->

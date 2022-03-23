@@ -205,4 +205,15 @@
     <string name="bank_content">Add Bank account to withdraw your earnings</string>
     <string name="add_bank_account">Add Bank Account</string>
     <string name="bank_content1">Laborum veniam irure magna culpa adipisicing aute et non. Laboris proident dolor do est. </string>
+    <string name="refillwallet">Refill Wallet</string>
+    <string name="helpsupport">Help and Support</string>
+    <string name="trending">Trending</string>
+    <string name="more_info">More info about Talktomii</string>
+    <string name="offer">Offers and Sales</string>
+    <string name="howtouse">How to use it?</string>
+    <string name="morehelp">More Help</string>
+    <string name="firststep">First Steps</string>
+    <string name="support">Supports 24/7</string>
+    <string name="newrules">New Rules</string>
+    <string name="chat">Chat with Support</string>
 </resources>

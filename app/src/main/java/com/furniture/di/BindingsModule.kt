@@ -4,6 +4,8 @@ import com.furniture.VideoActivity
 import com.furniture.ui.banksettings.MyBankSettings
 import com.furniture.ui.banksettings.activities.AddBankAccountActivity
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
+import com.furniture.ui.helpsupport.ChatSupportActivity
+import com.furniture.ui.helpsupport.HelpSupport
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.InstaWebActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
@@ -21,6 +23,12 @@ import com.furniture.ui.mycards.activities.MyCardsActivity
 import com.furniture.ui.mycards.activities.PaymentDetailsActivity
 import com.furniture.ui.mycards.fragments.CardFragment
 import com.furniture.ui.mycards.fragments.PaymentFragment
+import com.furniture.ui.mywallet.MyWallet
+import com.furniture.ui.mywallet.activities.GetPaidActivity
+import com.furniture.ui.mywallet.activities.RefillWalletActivity
+import com.furniture.ui.mywallet.fragments.EarningFragment
+import com.furniture.ui.mywallet.fragments.ExpenseFragment
+import com.furniture.ui.mywallet.fragments.RefillFragment
 import com.furniture.ui.settings.Settings
 import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
@@ -53,6 +61,18 @@ abstract class BindingsModule {
     abstract fun addBankAccountActivity(): AddBankAccountActivity
 
     @ContributesAndroidInjector
+    abstract fun walletRefillActivity(): RefillWalletActivity
+
+    @ContributesAndroidInjector
+    abstract fun walletGetPaidActivity(): GetPaidActivity
+
+    @ContributesAndroidInjector
+    abstract fun helpsupportActivity(): HelpSupport
+
+    @ContributesAndroidInjector
+    abstract fun chatActivity(): ChatSupportActivity
+
+    @ContributesAndroidInjector
     abstract fun loginFragment(): LoginFragment
 
     @ContributesAndroidInjector
@@ -72,6 +92,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun settings(): Settings
+
+    @ContributesAndroidInjector
+    abstract fun myWallet(): MyWallet
 
     @ContributesAndroidInjector
     abstract fun signupFragment(): SignUpFragment
@@ -106,6 +129,15 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun paymentFragment(): PaymentFragment
+
+    @ContributesAndroidInjector
+    abstract fun earningFragment(): EarningFragment
+
+    @ContributesAndroidInjector
+    abstract fun refillFragment(): RefillFragment
+
+    @ContributesAndroidInjector
+    abstract fun expenseFragment(): ExpenseFragment
 
 
 }

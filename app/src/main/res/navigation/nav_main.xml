@@ -116,6 +116,11 @@
         android:name="com.furniture.ui.settings.Settings"
         android:label="fragment_settings"
         tools:layout="@layout/settings"/>
+    <fragment
+        android:id="@+id/myWalletFragment"
+        android:name="com.furniture.ui.mywallet.MyWallet"
+        android:label="fragment_mywallet"
+        tools:layout="@layout/my_wallet"/>
 <!--    <fragment-->
 <!--        android:id="@+id/searchFragment"-->
 <!--        android:name="com.furniture.ui.search.SearchFragment"-->

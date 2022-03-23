@@ -14,7 +14,6 @@ import com.furniture.data.network.responseUtil.ApiResponse
 import com.furniture.data.network.responseUtil.ApiUtils
 import com.furniture.data.network.responseUtil.Resource
 import com.furniture.di.SingleLiveEvent
-import com.furniture.ui.mycards.CardItemsViewModel
 import com.furniture.ui.mycards.fragments.CardFragment
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -159,10 +158,10 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
             })
     }
 
-    fun updateCard(hashMap: HashMap<String, String>) {
+    fun updateCard(hashMap: HashMap<String, Any>) {
         updateCard.value = Resource.loading()
-        Log.d("updated ::: ",Config.BASE_URL_LOCAL + WebService.UPDATE_CARD + MyCardAdapter.update_url)
-        webService.updateCard( Config.BASE_URL_LOCAL + WebService.UPDATE_CARD + MyCardAdapter.update_url ,hashMap)
+        Log.d("updated ::: ", hashMap.toString())
+        webService.updateCard("62382e455ccbb6952f15f25d",hashMap)
             .enqueue(object : Callback<ApiResponse<Any>> {
                 override fun onResponse(
                     call: Call<ApiResponse<Any>>,
@@ -171,6 +170,7 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
 
                     Log.d("call --- > ",call.toString())
                     if (response.isSuccessful) {
+                        Log.d("success --->  ", response.body().toString())
                         if (response.body()?.status == 200) {
                             Log.d("Response ------", response.body()!!.data.toString())
 //                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
@@ -232,4 +232,5 @@ class MyCardsViewModel @Inject constructor(private val webService: WebService) :
 
             })
     }
+
 }

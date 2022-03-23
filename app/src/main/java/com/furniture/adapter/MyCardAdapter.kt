@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.furniture.ui.mycards.CardItemsViewModel
 import com.furniture.ui.mycards.data.MyCardsViewModel
 import javax.inject.Inject
 import android.view.MenuItem
@@ -19,6 +18,7 @@ import android.view.MenuInflater
 import com.furniture.R
 import com.furniture.data.apis.WebService
 import com.furniture.ui.mycards.activities.MyCardsActivity
+import com.furniture.ui.mycards.data.CardItemsViewModel
 
 
 class MyCardAdapter(val mList: List<CardItemsViewModel>) :

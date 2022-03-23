@@ -70,12 +70,13 @@ class MyCardsActivity : DaggerAppCompatActivity() {
             var str = intent.getStringExtra("expiredate")!!
             binding.etCardExpireDate.setText(if (str.length < 7) str else str.substring(0, 7))
             updateCardButton.setOnClickListener {
-                val hashmap = HashMap<String, String>()
-                hashmap["uid"] = intent.getStringExtra("uid")!!
-                hashmap["cardNumber"] = binding.etCardNumber.text.toString()
-                hashmap["expiryDate"] = binding.etCardExpireDate.text.toString()
-                hashmap["cvv"] = binding.etCVV.text.toString()
-                hashmap["holderName"] = binding.etCardHolder.text.toString()
+                val hashmap = HashMap<String, Any>()
+                hashmap["uid"] = "622877f9e3e5080bdcde6ebf"
+                hashmap["cardNumber"] = "2345 4323 4567"
+                hashmap["expiryDate"] = "2023-04"
+                hashmap["cvv"] = 244
+                hashmap["holderName"] = "allu arjun"
+                Log.d("hashmap --- ", hashmap.toString())
                 viewModel.updateCard(hashmap)
                 finish()
             }

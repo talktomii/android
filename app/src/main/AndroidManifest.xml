@@ -25,6 +25,16 @@
         tools:replace="android:theme"
         tools:targetApi="m">
         <activity
+            android:name=".ui.reportabuse.ReportAbuseActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true" />
+        <activity
+            android:name=".ui.callhistory.activities.CallInvoiceActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.mywallet.activities.IncomeDetailsActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.helpsupport.ChatSupportActivity"
             android:exported="true" />
         <activity
@@ -60,6 +70,7 @@
             android:name=".ui.loginSignUp.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

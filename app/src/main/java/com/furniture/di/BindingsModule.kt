@@ -3,6 +3,8 @@ package com.furniture.di
 import com.furniture.VideoActivity
 import com.furniture.ui.banksettings.MyBankSettings
 import com.furniture.ui.banksettings.activities.AddBankAccountActivity
+import com.furniture.ui.callhistory.CallHistory
+import com.furniture.ui.callhistory.activities.CallInvoiceActivity
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.helpsupport.ChatSupportActivity
 import com.furniture.ui.helpsupport.HelpSupport
@@ -25,10 +27,12 @@ import com.furniture.ui.mycards.fragments.CardFragment
 import com.furniture.ui.mycards.fragments.PaymentFragment
 import com.furniture.ui.mywallet.MyWallet
 import com.furniture.ui.mywallet.activities.GetPaidActivity
+import com.furniture.ui.mywallet.activities.IncomeDetailsActivity
 import com.furniture.ui.mywallet.activities.RefillWalletActivity
 import com.furniture.ui.mywallet.fragments.EarningFragment
 import com.furniture.ui.mywallet.fragments.ExpenseFragment
 import com.furniture.ui.mywallet.fragments.RefillFragment
+import com.furniture.ui.reportabuse.ReportAbuseActivity
 import com.furniture.ui.settings.Settings
 import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
@@ -67,10 +71,19 @@ abstract class BindingsModule {
     abstract fun walletGetPaidActivity(): GetPaidActivity
 
     @ContributesAndroidInjector
+    abstract fun reportAbuseActivity(): ReportAbuseActivity
+
+    @ContributesAndroidInjector
     abstract fun helpsupportActivity(): HelpSupport
 
     @ContributesAndroidInjector
     abstract fun chatActivity(): ChatSupportActivity
+
+    @ContributesAndroidInjector
+    abstract fun incomeDetailActivity(): IncomeDetailsActivity
+
+    @ContributesAndroidInjector
+    abstract fun callInvoiceActivity(): CallInvoiceActivity
 
     @ContributesAndroidInjector
     abstract fun loginFragment(): LoginFragment
@@ -95,6 +108,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun myWallet(): MyWallet
+
+    @ContributesAndroidInjector
+    abstract fun callHistory(): CallHistory
 
     @ContributesAndroidInjector
     abstract fun signupFragment(): SignUpFragment

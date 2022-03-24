@@ -216,4 +216,19 @@
     <string name="support">Supports 24/7</string>
     <string name="newrules">New Rules</string>
     <string name="chat">Chat with Support</string>
+    <string name="delete_card">53****1234 card has deleted</string>
+    <string name="delete_card1">Are you sure that you want to delete 53****1234 card?</string>
+    <string name="income_detail">Income Details</string>
+    <string name="platformfee">Platform Fee</string>
+    <string name="tips">Tips</string>
+    <string name="call_duration">Call Duration</string>
+    <string name="call_charges">Call Charges</string>
+    <string name="call_history">Call History</string>
+    <string name="block_user">Block User</string>
+    <string name="delete_history">Delete History</string>
+    <string name="clear_history">Clear History</string>
+    <string name="blockedtext">Are you sure that you want to block Ronald Richards?</string>
+    <string name="confirm_block">Ronald Richards has blocked</string>
+    <string name="call_invoice">Call Invoice</string>
+    <string name="report_abuse">Report Abuse</string>
 </resources>

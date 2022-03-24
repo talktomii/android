@@ -58,21 +58,24 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             viewModel.navController.navigate(R.id.cardFragment)
             binding.menuBottom.isVisible = true
-            binding.btnMenu.isVisible = true
         }
 
         binding.txtMyBankSettings.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             viewModel.navController.navigate(R.id.bankSettingsFragment)
             binding.menuBottom.isVisible = true
-            binding.btnMenu.isVisible = true
         }
 
         binding.txtSettings.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             viewModel.navController.navigate(R.id.settingsFragment)
             binding.menuBottom.isVisible = true
-            binding.btnMenu.isVisible = true
+        }
+
+        binding.txtCallHistory.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.callHistoryFragment)
+            binding.menuBottom.isVisible = true
         }
 
         binding.txtHelpSupport.setOnClickListener {

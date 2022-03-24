@@ -1,20 +1,18 @@
-package com.furniture.ui.home.profile
+package com.furniture.ui.loginSignUp.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
-import com.furniture.databinding.FragmentInfluencerProfileBinding
-import com.furniture.databinding.FragmentMyBadgesBinding
+import com.furniture.databinding.FragmentForgetPasswordBinding
+import com.furniture.databinding.FragmentResetPasswordBinding
 import com.furniture.ui.home.HomeViewModel
 import dagger.android.support.DaggerFragment
-import devs.mulham.horizontalcalendar.HorizontalCalendar
 import javax.inject.Inject
 
-class MyBudgesFragment  : DaggerFragment() {
+class FragmentResetPassword : DaggerFragment() {
 
-    private lateinit var binding: FragmentMyBadgesBinding
+    private lateinit var binding: FragmentResetPasswordBinding
 
 
     @Inject
@@ -26,23 +24,22 @@ class MyBudgesFragment  : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentMyBadgesBinding.inflate(inflater, container, false)
+        binding = FragmentResetPasswordBinding.inflate(inflater, container, false)
         return binding.root
 
-
-
+        setListener()
     }
 
     private fun setListener() {
-        binding.txtClose.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
+
+
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListener()
-        binding.rvMyBudges.adapter = AdapterMyBudges()
+
 
     }
 }

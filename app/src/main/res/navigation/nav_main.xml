@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_login_to_signup"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_login_to_forgetPassword"
+            app:destination="@id/forgetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -121,6 +124,40 @@
         android:name="com.furniture.ui.home.profile.MyBudgesFragment"
         android:label="fragment_myBudges"
         tools:layout="@layout/fragment_my_badges"/>
+
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.furniture.ui.loginSignUp.login.ForgetPasswordFragment"
+        android:label="fragment_forgetPassword"
+        tools:layout="@layout/fragment_forget_password">
+
+        <action
+            android:id="@+id/action_forgetPassword_to_forget"
+            app:destination="@id/forgetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgetFragment"
+        android:name="com.furniture.ui.loginSignUp.login.ForgetFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_forget">
+
+        <action
+            android:id="@+id/action_forget_to_resetPassword"
+            app:destination="@id/resetPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.furniture.ui.loginSignUp.login.FragmentResetPassword"
+        android:label="fragment_restPassword"
+        tools:layout="@layout/fragment_reset_password"/>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.furniture.ui.home.notifications.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notifications"/>
 
 
 </navigation>

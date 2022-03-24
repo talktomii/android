@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     var navHostFragment: NavHostFragment? = null
     private val viewModel: MainVM by viewModels()
@@ -47,26 +47,30 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
 
-        binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item->
+        binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item ->
 
-            if (item.itemId != viewModel.navController.currentDestination!!.id){
-                when(item.itemId){
+            if (item.itemId != viewModel.navController.currentDestination!!.id) {
+                when (item.itemId) {
                     R.id.nav_profile -> {
                         viewModel.navController.navigate(R.id.profileFragment)
 
                     }
 
-                    R.id.nav_home ->{
+                    R.id.nav_home -> {
 
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
 
-                    R.id.nav_search ->{
+                    R.id.nav_search -> {
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
 
-                    R.id.nav_appointments ->{
+                    R.id.nav_appointments -> {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
+                    }
+
+                    R.id.nav_notifications -> {
+                        viewModel.navController.navigate(R.id.notificationFragment)
                     }
                 }
             }
@@ -75,10 +79,10 @@ class MainActivity : DaggerAppCompatActivity() {
         }
 
         binding.btnMenu.setOnClickListener {
-            if(binding.drawerLayout.isDrawerOpen(binding.navigationView)){
+            if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
 
-            }else{
+            } else {
                 binding.drawerLayout.openDrawer(binding.navigationView)
             }
         }
@@ -86,11 +90,12 @@ class MainActivity : DaggerAppCompatActivity() {
 
         viewModel.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (
-                destination.id == R.id.homeFragment||
-                destination.id == R.id.profileFragment||
+                destination.id == R.id.homeFragment ||
+                destination.id == R.id.profileFragment ||
                 destination.id == R.id.searchFragment ||
-                destination.id == R.id.influencerProfileFragment||
-                destination.id == R.id.appointmentsFragment
+                destination.id == R.id.influencerProfileFragment ||
+                destination.id == R.id.appointmentsFragment ||
+                destination.id == R.id.notificationFragment
 
             ) {
                 binding.menuBottom.selectedItemId = destination.id
@@ -100,10 +105,10 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.menuBottom.isVisible = false
                 binding.btnMenu.isVisible = false
             }
+            binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

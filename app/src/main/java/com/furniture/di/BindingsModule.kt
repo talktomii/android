@@ -6,12 +6,16 @@ import com.furniture.ui.appointment.AppointmentsFragment
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
+import com.furniture.ui.home.notifications.NotificationFragment
 import com.furniture.ui.home.profile.EditInterestFragment
 import com.furniture.ui.home.profile.InfluencerProfileFragment
 import com.furniture.ui.home.profile.MyBudgesFragment
 import com.furniture.ui.home.profile.ProfileFragment
 import com.furniture.ui.homefrag.HomesFragment
 import com.furniture.ui.loginSignUp.MainActivity
+import com.furniture.ui.loginSignUp.login.ForgetFragment
+import com.furniture.ui.loginSignUp.login.ForgetPasswordFragment
+import com.furniture.ui.loginSignUp.login.FragmentResetPassword
 import com.furniture.ui.loginSignUp.login.LoginFragment
 import com.furniture.ui.loginSignUp.signup.CreateProfileFragment
 import com.furniture.ui.loginSignUp.signup.SignUpFragment
@@ -63,6 +67,18 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun myBudgesFragment(): MyBudgesFragment
+
+    @ContributesAndroidInjector
+    abstract fun forgetPasswordFragment(): ForgetPasswordFragment
+
+    @ContributesAndroidInjector
+    abstract fun forgetFragment(): ForgetFragment
+
+    @ContributesAndroidInjector
+    abstract fun resetPasswordFragment(): FragmentResetPassword
+
+    @ContributesAndroidInjector
+    abstract fun notificationFragment(): NotificationFragment
 
 
     @ContributesAndroidInjector

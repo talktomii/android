@@ -35,7 +35,7 @@ class EditInterestFragment : DaggerFragment(R.layout.edit_interest_fragment) {
         binding.vm = viewModels
         return binding.root
 
-        setListener()
+
     }
 
     private fun setListener() {
@@ -46,6 +46,7 @@ class EditInterestFragment : DaggerFragment(R.layout.edit_interest_fragment) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setListener()
         binding.vm = viewModels
         val recyclerview = binding.rvTopics
 //        viewModels.isUser.set(args.isUser)

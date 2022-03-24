@@ -1,20 +1,18 @@
-package com.furniture.ui.home.profile
+package com.furniture.ui.home.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
-import com.furniture.databinding.FragmentInfluencerProfileBinding
-import com.furniture.databinding.FragmentMyBadgesBinding
+import com.furniture.databinding.FragmentNotificationsBinding
 import com.furniture.ui.home.HomeViewModel
+import com.furniture.ui.home.profile.AdapterInterests
 import dagger.android.support.DaggerFragment
-import devs.mulham.horizontalcalendar.HorizontalCalendar
 import javax.inject.Inject
 
-class MyBudgesFragment  : DaggerFragment() {
+class NotificationFragment : DaggerFragment() {
 
-    private lateinit var binding: FragmentMyBadgesBinding
+    private lateinit var binding: FragmentNotificationsBinding
 
 
     @Inject
@@ -26,23 +24,21 @@ class MyBudgesFragment  : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentMyBadgesBinding.inflate(inflater, container, false)
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         return binding.root
-
-
 
     }
 
     private fun setListener() {
-        binding.txtClose.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListener()
-        binding.rvMyBudges.adapter = AdapterMyBudges()
 
+        binding.rvTodayNotifi.adapter = AdapterTodayNotification()
+        binding.rvYesterdayNotification.adapter = AdapterYesterdayNotification()
+        setListener()
     }
 }

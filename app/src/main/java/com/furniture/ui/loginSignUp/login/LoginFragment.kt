@@ -93,6 +93,10 @@ class LoginFragment : DaggerFragment() {
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signup)
         }
+
+        binding.txtForgetPass.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_forgetPassword)
+        }
     }
 
     var instaIntent =

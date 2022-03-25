@@ -180,6 +180,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/typesFilterContainer"
                 tools:layout_editor_absoluteX="10dp" />
 
+            <RelativeLayout
+                android:id="@+id/bankCardViewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2"
+                >
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/addBankCard"
                 android:layout_width="match_parent"
@@ -189,11 +198,7 @@
                 app:cardBackgroundColor="@color/mycard_bgcolor"
                 app:cardCornerRadius="@dimen/dp_6"
                 app:cardElevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2"
                 tools:ignore="MissingConstraints">
-
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/bankGroup"
@@ -204,7 +209,87 @@
                     android:src="@drawable/bank_group">
 
                 </androidx.appcompat.widget.AppCompatImageView>
+
             </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/lineViewLayout"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_marginTop="-10dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bankCardViewLayout"
+                >
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="@dimen/dp_20"
+                    android:background="@color/gray"
+                    android:layout_marginEnd="@dimen/dp_80"
+                    android:layout_gravity="center"
+                    tools:layout_editor_absoluteX="10dp" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_gravity="center"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginStart="85dp"
+                    android:background="@color/gray"
+                    tools:layout_editor_absoluteX="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/numberViewLayout"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lineViewLayout"
+                >
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:background="@drawable/bg_refillwallet_text2"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_6"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="Routing number"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/dp_14">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/dp_150"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:background="@drawable/bg_refillwallet_text2"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_6"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="Account number"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/dp_14">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textRoutingNumber"
@@ -214,10 +299,11 @@
                 android:fontFamily="@font/inter_regular"
                 android:text="Routing Number"
                 android:textColor="#C5C5C5"
+                android:layout_marginStart="@dimen/dp_12"
                 android:textFontWeight="400"
                 android:textSize="@dimen/sp_12"
-                app:layout_constraintStart_toStartOf="@+id/addBankCard"
-                app:layout_constraintTop_toBottomOf="@+id/addBankCard" />
+                app:layout_constraintStart_toStartOf="@+id/numberViewLayout"
+                app:layout_constraintTop_toBottomOf="@+id/numberViewLayout" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRoutingNumber"

@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="end"
     android:layout_marginLeft="15dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginBottom="15dp"
-    android:orientation="vertical">
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/messageOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:background="@drawable/bg_refillwallet_text"
-        android:padding="16dp"
+        android:layout_marginStart="@dimen/dp_80"
+        android:background="@drawable/ic_signin"
+        android:padding="@dimen/dp_12"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constrainedWidth="true"
+        android:layout_weight="400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/avatar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_user"
+        android:src="@drawable/avtar"
+        android:layout_marginStart="@dimen/dp_20"
         app:riv_corner_radius="@dimen/dp_60"
         tools:ignore="MissingConstraints" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

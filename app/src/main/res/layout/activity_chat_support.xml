@@ -3,22 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="vm"
-            type="com.furniture.ui.helpsupport.HelpSupportVM" />
-
-    </data>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/helpLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,6 +45,8 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtSupport"
+                android:layout_below="@id/headerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_15"
@@ -66,7 +57,22 @@
                 android:textFontWeight="700"
                 android:textSize="@dimen/dp_24"
                 android:textStyle="bold" />
-        </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChat"
+                chipLayout="{true}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/txtSupport"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="116dp"
+                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:spanCount="2"
+                tools:itemCount="5" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

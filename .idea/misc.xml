@@ -89,12 +89,12 @@
         <entry key="app/src/main/res/drawable/tab_color_selector_wallet.xml" value="0.17532894736842106" />
         <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/activity_add_address.xml" value="0.20104166666666667" />
-        <entry key="app/src/main/res/layout/activity_add_bank_account.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_add_bank_account.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_card.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/activity_add_my_card.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/activity_call_invoice.xml" value="0.21" />
         <entry key="app/src/main/res/layout/activity_cart.xml" value="0.23802083333333332" />
-        <entry key="app/src/main/res/layout/activity_chat_support.xml" value="0.14" />
+        <entry key="app/src/main/res/layout/activity_chat_support.xml" value="0.21" />
         <entry key="app/src/main/res/layout/activity_choose_product_type.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/activity_get_paid.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12" />
@@ -117,7 +117,7 @@
         <entry key="app/src/main/res/layout/bottomsheet_refund_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/call_history.xml" value="0.33" />
         <entry key="app/src/main/res/layout/call_history_item.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/chat_support_shape.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/chat_support_shape.xml" value="0.18" />
         <entry key="app/src/main/res/layout/chatuser_shape.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/confirm_block_user_popup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/edit_interest_fragment.xml" value="0.22192028985507245" />

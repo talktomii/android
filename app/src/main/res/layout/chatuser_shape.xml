@@ -5,29 +5,31 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
-    android:layout_marginTop="15dp"
+    android:layout_marginTop="@dimen/dp_10"
     android:layout_marginRight="15dp"
-    android:layout_marginBottom="15dp"
+    android:layout_marginBottom="@dimen/dp_10"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/messageIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:background="@drawable/ic_signin"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:background="@drawable/bg_refillwallet_text"
         android:padding="16dp"
-        android:textColor="@color/white"
+        android:textColor="#323F4B"
         android:textSize="16sp"
         app:layout_constrainedWidth="true"
+        android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/avatar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
         android:scaleType="centerCrop"
         android:src="@drawable/chat_supporticon"
         app:riv_corner_radius="@dimen/dp_60"

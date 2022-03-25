@@ -9,11 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.furniture.databinding.CallDialogBinding
 import com.furniture.databinding.DialogDeleteAppointmentBinding
+import com.furniture.databinding.DialogExtendTimeBinding
 import dagger.android.support.DaggerDialogFragment
 
-class DeleteAppointmentDialog  : DaggerDialogFragment() {
+class ExtendTimeDialog  : DaggerDialogFragment() {
 
-    lateinit var binding: DialogDeleteAppointmentBinding
+    lateinit var binding: DialogExtendTimeBinding
 
 
     override fun onCreateView(
@@ -21,7 +22,7 @@ class DeleteAppointmentDialog  : DaggerDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DialogDeleteAppointmentBinding.inflate(inflater, container, false)
+        binding = DialogExtendTimeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,10 +37,12 @@ class DeleteAppointmentDialog  : DaggerDialogFragment() {
                 dismiss()
             }
 
+
+
     }
 
     companion object{
-        val TAG="DeleteAppointmentDialog"
+        val TAG="ExtendTimeDialog"
     }
 
     override fun onStart() {

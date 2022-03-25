@@ -7,11 +7,9 @@ import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
 import com.furniture.ui.home.notifications.NotificationFragment
-import com.furniture.ui.home.profile.EditInterestFragment
-import com.furniture.ui.home.profile.InfluencerProfileFragment
-import com.furniture.ui.home.profile.MyBudgesFragment
-import com.furniture.ui.home.profile.ProfileFragment
+import com.furniture.ui.home.profile.*
 import com.furniture.ui.homefrag.HomesFragment
+import com.furniture.ui.homefrag.InfluencerHomeFragment
 import com.furniture.ui.loginSignUp.MainActivity
 import com.furniture.ui.loginSignUp.login.ForgetFragment
 import com.furniture.ui.loginSignUp.login.ForgetPasswordFragment
@@ -25,6 +23,7 @@ import com.furniture.ui.tellusmore.TellUsMore
 import com.furniture.utlis.BackToHomeDialog
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
+import com.furniture.utlis.ExtendTimeDialog
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -87,12 +86,24 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun appointmentsFragment(): AppointmentsFragment
 
+    @ContributesAndroidInjector
+    abstract fun homeInlfuenceFragment(): InfluencerHomeFragment
+
+    @ContributesAndroidInjector
+    abstract fun callFragment(): CallFragment
+
+    @ContributesAndroidInjector
+    abstract fun callEndFragment(): CallEndFragment
+
 
     @ContributesAndroidInjector
     abstract fun backToHomeDialog(): BackToHomeDialog
 
     @ContributesAndroidInjector
     abstract fun callDialog(): CallDialog
+
+    @ContributesAndroidInjector
+    abstract fun extendTimeDialog(): ExtendTimeDialog
 
     @ContributesAndroidInjector
     abstract fun deleteAppointmentDialog(): DeleteAppointmentDialog

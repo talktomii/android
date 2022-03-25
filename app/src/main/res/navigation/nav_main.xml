@@ -60,6 +60,10 @@
         <action
             android:id="@+id/action_tellUsMore_to_homeFragment"
             app:destination="@id/homeFragment" />
+
+<!--        <action-->
+<!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
+<!--            app:destination="@id/homeInfluencerFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/editPersonalInfo"
@@ -82,7 +86,12 @@
     <fragment
         android:id="@+id/influencerProfileFragment"
         android:name="com.furniture.ui.home.profile.InfluencerProfileFragment"
-        android:label="InfluencerProfileFragment" />
+        android:label="InfluencerProfileFragment" >
+
+        <action
+            android:id="@+id/action_influencer_profile_to_call_fragmnet"
+            app:destination="@id/callFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/editInterestFragment"
@@ -158,6 +167,24 @@
         android:name="com.furniture.ui.home.notifications.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notifications"/>
+
+    <fragment
+        android:id="@+id/homeInfluencerFragment"
+        android:name="com.furniture.ui.homefrag.InfluencerHomeFragment"
+        android:label="fragment_home_influencer"
+        tools:layout="@layout/fragment_home_influencer"/>
+
+    <fragment
+        android:id="@+id/callFragment"
+        android:name="com.furniture.ui.home.profile.CallFragment"
+        android:label="fragment_call"
+        tools:layout="@layout/fragment_call"/>
+
+    <fragment
+        android:id="@+id/callEndFragment"
+        android:name="com.furniture.ui.home.profile.CallEndFragment"
+        android:label="fragment_callEnd"
+        tools:layout="@layout/call_end_fragment"/>
 
 
 </navigation>

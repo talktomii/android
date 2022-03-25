@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.ui.home.HomeViewModel
 import com.furniture.utlis.BackToHomeDialog
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
+import com.prolificinteractive.materialcalendarview.R
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -53,6 +56,10 @@ class InfluencerProfileFragment : DaggerFragment() {
         binding.txtAboutMe.setOnClickListener {
             val dialog = DeleteAppointmentDialog()
             dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
+        }
+
+        binding.txtBookACall.setOnClickListener {
+            view?.findNavController()?.navigate(com.furniture.R.id.action_influencer_profile_to_call_fragmnet)
         }
 
     }

@@ -13,17 +13,19 @@ class AdapterLeaveTip : RecyclerView.Adapter<AdapterLeaveTip.ViewHolder>(){
 
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterLeaveTip.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemLeaveTipBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
+
     override fun getItemCount(): Int {
         return 5
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+ override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
     }
 }

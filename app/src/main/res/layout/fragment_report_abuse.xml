@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/back_arrow"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtReportAbuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Report Abuse"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="@+id/txtback"
+            app:layout_constraintTop_toBottomOf="@+id/txtback" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -16,7 +16,6 @@ class CallEndFragment : DaggerFragment() {
 
     private lateinit var binding: CallEndFragmentBinding
 
-
     @Inject
     lateinit var viewModel: HomeViewModel
 
@@ -24,13 +23,19 @@ class CallEndFragment : DaggerFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View {
         // Inflate the layout for this fragment
         binding = CallEndFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
+
     private fun setListener() {
+
+        binding.txtClose.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
     }
 

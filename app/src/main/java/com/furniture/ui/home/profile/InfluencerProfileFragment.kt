@@ -42,7 +42,6 @@ class InfluencerProfileFragment : DaggerFragment() {
 
     }
 
-
     private fun setListener() {
         binding.txtBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -53,16 +52,20 @@ class InfluencerProfileFragment : DaggerFragment() {
             dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
         }
 
+
         binding.txtAboutMe.setOnClickListener {
             val dialog = DeleteAppointmentDialog()
             dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
         }
 
+
         binding.txtBookACall.setOnClickListener {
             view?.findNavController()?.navigate(com.furniture.R.id.action_influencer_profile_to_call_fragmnet)
         }
 
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,10 +74,12 @@ class InfluencerProfileFragment : DaggerFragment() {
 
         setListener()
 
+
         val endDate: Calendar = Calendar.getInstance()
         endDate.add(Calendar.MONTH, 1)
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
+
 
         horizontalCalendar =
             HorizontalCalendar.Builder(requireActivity(), com.furniture.R.id.calendarView)
@@ -91,6 +96,7 @@ class InfluencerProfileFragment : DaggerFragment() {
 
             }
         }
+
 
         binding.rvTimeSlot.adapter = AdapterTimeSlot()
 

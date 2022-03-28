@@ -56,27 +56,33 @@ class MainActivity : DaggerAppCompatActivity() {
 
                     }
 
+
                     R.id.nav_home -> {
 
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
 
+
                     R.id.nav_search -> {
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
 
+
                     R.id.nav_appointments -> {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
                     }
+
 
                     R.id.nav_notifications -> {
                         viewModel.navController.navigate(R.id.notificationFragment)
                     }
                 }
             }
+
             true
 
         }
+
 
         binding.btnMenu.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
@@ -87,8 +93,8 @@ class MainActivity : DaggerAppCompatActivity() {
             }
         }
 
-
         viewModel.navController.addOnDestinationChangedListener { _, destination, _ ->
+
             if (
                 destination.id == R.id.homeFragment ||
                 destination.id == R.id.profileFragment ||
@@ -98,18 +104,20 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.notificationFragment
 
             ) {
+
                 binding.menuBottom.selectedItemId = destination.id
                 binding.menuBottom.isVisible = true
                 binding.btnMenu.isVisible = true
+
             } else {
                 binding.menuBottom.isVisible = false
                 binding.btnMenu.isVisible = false
             }
+
             binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

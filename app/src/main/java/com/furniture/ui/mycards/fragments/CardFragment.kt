@@ -1,6 +1,7 @@
 package com.furniture.ui.mycards.fragments
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -33,6 +34,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+import android.content.SharedPreferences
+
+
+
 
 class CardFragment : DaggerFragment(R.layout.fragment_card) {
 

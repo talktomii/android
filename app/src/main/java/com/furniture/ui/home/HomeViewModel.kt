@@ -10,6 +10,8 @@ import com.furniture.data.network.responseUtil.ApiUtils
 import com.furniture.data.network.responseUtil.Resource
 import com.furniture.data.repos.UserRepository
 import com.furniture.di.SingleLiveEvent
+import com.furniture.ui.loginSignUp.MainActivity
+import com.furniture.ui.mycards.data.addCardData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -85,11 +87,11 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
     fun addCard(hashMap: HashMap<String, String>) {
         addCard.value = Resource.loading()
-        webService.addCard(hashMap)
-            .enqueue(object : Callback<ApiResponse<Any>> {
+        webService.addCard("Bearer " + MainActivity.retrivedToken,hashMap)
+            .enqueue(object : Callback<ApiResponse<addCardData>> {
                 override fun onResponse(
-                    call: Call<ApiResponse<Any>>,
-                    response: Response<ApiResponse<Any>>
+                    call: Call<ApiResponse<addCardData>>,
+                    response: Response<ApiResponse<addCardData>>
                 ) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == 200) {
@@ -113,7 +115,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
                     }
                 }
 
-                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse<addCardData>>, t: Throwable) {
                     addCard.value = Resource.error(ApiUtils.failure(t))
                 }
 

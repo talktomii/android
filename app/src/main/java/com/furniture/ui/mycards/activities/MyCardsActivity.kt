@@ -2,7 +2,6 @@ package com.furniture.ui.mycards.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.furniture.databinding.ActivityHomeBinding
 import com.furniture.databinding.ActivityMyCardsBinding
@@ -17,12 +16,10 @@ import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import com.google.android.material.textfield.TextInputEditText
-import android.widget.EditText
 import com.google.android.material.datepicker.MaterialDatePicker;
 import android.annotation.SuppressLint
 
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
-import android.widget.DatePicker
 
 import android.R
 
@@ -33,7 +30,11 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.Log
+import android.view.WindowManager
+import android.widget.*
 import android.widget.DatePicker.OnDateChangedListener
+import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 
 class MyCardsActivity : DaggerAppCompatActivity() {
@@ -43,13 +44,26 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModel: MyCardsViewModel
 
-    lateinit var addCardButton : TextView
-    lateinit var updateCardButton : TextView
-    lateinit var cardNumber : TextInputEditText
-    lateinit var cardHolderName : TextInputEditText
-    lateinit var cardExpireDate : TextInputEditText
+    lateinit var addCardButton: TextView
+    lateinit var updateCardButton: TextView
+    lateinit var cardNumber: TextInputEditText
+    lateinit var cardHolderName: TextInputEditText
+    lateinit var cardExpireDate: TextInputEditText
+    lateinit var cardCVV: TextInputEditText
+
+    lateinit var yYear: String
+    lateinit var mMonth: String
 
     lateinit var inputDate: String
+
+    companion object {
+        lateinit var layout: RelativeLayout
+        lateinit var progress : ProgressBar
+        fun finish() {
+            finish()
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +74,11 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         cardExpireDate = binding.etCardExpireDate
         cardNumber = binding.etCardNumber
         updateCardButton = binding.btnUpdateCard
+        layout = binding.relativeLayout
+        cardCVV = binding.etCVV
+        progress = binding.addCardProgress
 
-        if(intent.getStringExtra("update") == "update"){
+        if (intent.getStringExtra("update") == "update") {
             addCardButton.visibility = View.GONE
             updateCardButton.visibility = View.VISIBLE
             binding.etCardNumber.setText(intent.getStringExtra("cardnumber"))
@@ -82,12 +99,17 @@ class MyCardsActivity : DaggerAppCompatActivity() {
             }
         }
 
-        val materialDateBuilder  = MaterialDatePicker.Builder.datePicker()
+        val materialDateBuilder = MaterialDatePicker.Builder.datePicker()
         materialDateBuilder.setTitleText("Select a Expire Date");
         val materialDatePicker = materialDateBuilder.build();
         materialDatePicker.addOnPositiveButtonClickListener(
             MaterialPickerOnPositiveButtonClickListener<Any?> {
                 cardExpireDate.setText(materialDatePicker.headerText)
+                yYear =
+                    materialDatePicker.headerText.substring(materialDatePicker.headerText.length - 4)
+                mMonth = materialDatePicker.headerText.substring(0, 2)
+                cardExpireDate.setSelection(cardExpireDate.text!!.length)
+                Log.d("dates is --- ", yYear + mMonth)
             })
 
         cardNumber.addTextChangedListener(object : TextWatcher {
@@ -112,16 +134,48 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         }
 
         addCardButton.setOnClickListener {
-            val hashmap = HashMap<String, String>()
-            hashmap["uid"] = "622877f9e3e5080bdcde6ebf"
-            hashmap["cardNumber"] = binding.etCardNumber.text.toString()
-            hashmap["expiryDate"] = binding.etCardExpireDate.text.toString()
-            hashmap["cvv"] = binding.etCVV.text.toString()
-            hashmap["holderName"] = binding.etCardHolder.text.toString()
-            viewModel.addCard(hashmap)
-            finish()
+            if (cardNumber.text.toString() == "") {
+                val snackbar = Snackbar.make(
+                    layout,
+                    "Please Add Card number",
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            } else if (cardExpireDate.text.toString() == "") {
+                val snackbar = Snackbar.make(
+                    layout,
+                    "Please Add Expire Date",
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            } else if (cardCVV.text.toString() == "") {
+                val snackbar = Snackbar.make(
+                    layout,
+                    "Please Add CVV",
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            } else if (cardHolderName.text.toString() == "") {
+                val snackbar = Snackbar.make(
+                    layout,
+                    "Please Add Card Holder Name",
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            } else {
+                val hashmap = HashMap<String, String>()
+                hashmap["cardNumber"] = binding.etCardNumber.text.toString().replace(" ", "")
+                hashmap["exp_month"] = mMonth
+                hashmap["exp_year"] = yYear
+                hashmap["cvv"] = binding.etCVV.text.toString()
+                hashmap["holderName"] = binding.etCardHolder.text.toString()
+                progress.visibility = View.VISIBLE
+//                window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                viewModel.addCard(hashmap)
+            }
         }
     }
+
     fun formatStrWithSpaces(can: CharSequence): String? {
         val sb = StringBuffer()
         for (i in 0 until can.length) {

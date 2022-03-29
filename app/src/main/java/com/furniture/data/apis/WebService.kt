@@ -1,12 +1,11 @@
 package com.furniture.data.apis
 
 
+import com.example.example.ExampleJson2KtKotlin
 import com.furniture.adapter.MyCardAdapter
 import com.furniture.data.model.*
 import com.furniture.data.network.responseUtil.ApiResponse
-import com.furniture.ui.mycards.data.CardDetail
-import com.furniture.ui.mycards.data.getAllData
-import com.furniture.ui.mycards.data.getCardDetail
+import com.furniture.ui.mycards.data.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -50,9 +49,9 @@ interface WebService {
         private const val ADD_CARD = "card/addCard"
         const val UPDATE_CARD = "card/updateCard/"
         val NEW_UPDATE_CARD : String = MyCardAdapter.update_url.toString()
-        private const val DELETE_CARD_ITEM = "card/deleteCard/62382e455ccbb6952f15f25d"
+        private const val DELETE_CARD_ITEM = "card/deleteCard/"
         private const val PAYMENT_PROCCESS = "fatoorah"
-        private const val GET_CARDS = "card/getCardByuid/622877f9e3e5080bdcde6ebf"
+        private const val GET_CARDS = "card/getCardByuid/623dac1b6ee1ef298842b9ad"
         private const val DELETE_CARD = "delete-card"
         private const val SOCIAL_LOGIN = "check_social_id"
 
@@ -105,7 +104,9 @@ interface WebService {
     fun getUser(): Call<ApiResponse<UserData>>
 
     @GET(GET_CARDS)
-    fun getCards(): Call<ApiResponse<getAllData>>
+    fun getCards(
+        @Header("Authorization") auth : String
+    ): Call<ExampleJson2KtKotlin>
 
     @Multipart
     @POST(EDIT_PROFILE)
@@ -247,8 +248,9 @@ interface WebService {
     @POST(ADD_CARD)
     @FormUrlEncoded
     fun addCard(
+        @Header("Authorization") auth : String,
         @FieldMap map: HashMap<String, String>
-    ): Call<ApiResponse<Any>>
+    ): Call<ApiResponse<addCardData>>
 
     @POST("card/updateCard/{id}")
     @FormUrlEncoded
@@ -259,7 +261,7 @@ interface WebService {
 
 
     @DELETE(DELETE_CARD_ITEM)
-    fun deleteCard(): Call<ApiResponse<Any>>
+    fun deleteCard( @Path("id") id: String?,  @Header("Authorization") auth : String): Call<ApiResponse<Any>>
 
     @POST(PAYMENT_STATUS)
     @FormUrlEncoded

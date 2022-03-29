@@ -16,10 +16,22 @@ data class CardDetail(
 
 data class getCardDetail(
     val message : String,
-    val payload : ArrayList<getAllData>? = null
+    val payload : getAllData? = null
+)
+data class getAllData(
+    val card : Array<lList>?=null
+)
+data class lList(
+    val data : List<internalData> ?= null
+)
+data class internalData(
+    val card : ArrayList<allcards> ?= null
+)
+data class allcards(
+    val last4 : String ?= null
+)
+data class addCardData(
+    val message : String
 )
 
-data class getAllData(
-    val card : List<CardDetail>?=null
-)
 

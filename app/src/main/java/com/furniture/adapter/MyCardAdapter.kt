@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.furniture.ui.mycards.data.MyCardsViewModel
 import javax.inject.Inject
 import android.widget.PopupMenu
+import androidx.lifecycle.ViewModelProvider
 import com.furniture.R
 import com.furniture.data.apis.WebService
 import com.furniture.ui.mycards.activities.MyCardsActivity
@@ -24,14 +25,13 @@ import com.furniture.ui.mycards.data.CardItemsViewModel
 class MyCardAdapter(val mList: List<CardItemsViewModel>) :
     RecyclerView.Adapter<MyCardAdapter.ViewHolder>() {
 
-    @Inject
-    lateinit var viewModel: MyCardsViewModel
 
     companion object{
         @SuppressLint("StaticFieldLeak")
         private var context: Context? = null
         var data : CardItemsViewModel ?= null
         var update_url : String ?= null
+        val viewModel: MyCardsViewModel ?= null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,22 +45,10 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>) :
 
         val itemsViewModel = mList[position]
         data = mList[position]
-        Log.d("data is :::", data!!.id)
-        update_url = mList[position].id
+        val viewModel = ViewModelProvider().get(SheduleViewModel::class.java)
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
-                    R.id.action_edit -> {
-                        val intent = Intent(context,MyCardsActivity::class.java)
-                        intent.putExtra("update","update")
-                        intent.putExtra("id",mList[position].id)
-                        intent.putExtra("uid",mList[position].uid)
-                        intent.putExtra("cardnumber",mList[position].card_Number)
-                        intent.putExtra("cardholder",mList[position].card_holder)
-                        intent.putExtra("cvv",mList[position].cvv)
-                        intent.putExtra("expiredate",mList[position].expire_date)
-                        context!!.startActivity(intent)
-                    }
                     R.id.action_delete -> {
                         val dialog = Dialog(context!!)
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -74,6 +62,8 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>) :
                             dialog.dismiss()
                         }
                         delete.setOnClickListener {
+                            if(::view)
+                            viewModel!!.deleteCard(mList[position].id.trim())
                             val dialog_delete = Dialog(context!!)
                             dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
                             dialog_delete.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
@@ -93,8 +83,8 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>) :
                 return false
             }
         }
-        holder.itemName.text = itemsViewModel.card_Number
-        holder.itemImg.setImageResource(itemsViewModel.card_Img)
+        holder.itemName.text = itemsViewModel.last4
+        holder.itemImg.setImageResource(itemsViewModel.img)
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
             val popupMenu = PopupMenu(context, view)
             val menuInflater = MenuInflater(context)

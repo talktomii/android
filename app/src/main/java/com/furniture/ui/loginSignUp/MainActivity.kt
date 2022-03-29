@@ -19,6 +19,9 @@ import com.furniture.utlis.PrefsManager
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+import android.content.SharedPreferences
+import android.util.Log
+
 
 class MainActivity : DaggerAppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
@@ -28,6 +31,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     companion object {
         lateinit var context: WeakReference<Context>
+        var retrivedToken : String = ""
     }
 
 
@@ -39,6 +43,14 @@ class MainActivity : DaggerAppCompatActivity() {
 
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        // save login token here
+        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTAzLTI5VDExOjQ3OjM4LjMyOVoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODU1NDQ1OH0.XLtY439FxmhTtm9faNDNVDgnuvHJx5yhT3JRNj8rfLY"
+        val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
+        preferences.edit().putString("TOKEN", token).apply()
+//        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        retrivedToken = preferences.getString("TOKEN", null)!!.trim()
+
 
         binding.constWallet.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -133,6 +145,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.btnMenu.isVisible = false
             }
         }
+
 
     }
 

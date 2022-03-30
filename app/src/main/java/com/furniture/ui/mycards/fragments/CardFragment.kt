@@ -35,8 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 import android.content.SharedPreferences
-
-
+import android.widget.ProgressBar
 
 
 class CardFragment : DaggerFragment(R.layout.fragment_card) {
@@ -51,6 +50,7 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
     lateinit var dataModel: MyCardsViewModel
     lateinit var webService : WebService
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +58,9 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
         binding = FragmentCardBinding.inflate(inflater, container, false)
 //        binding.vm = viewModels
         recycleview = binding.rvCards
+        progress = binding.displayCardProgress
+        progress.visibility  = View.VISIBLE
+        recycleview.visibility = View.GONE
         dataModel.getCards()
         return binding.root
     }
@@ -70,5 +73,6 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
 
     companion object{
         lateinit var recycleview: RecyclerView
+        lateinit var progress : ProgressBar
     }
 }

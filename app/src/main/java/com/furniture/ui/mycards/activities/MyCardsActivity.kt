@@ -60,7 +60,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         lateinit var layout: RelativeLayout
         lateinit var progress : ProgressBar
         fun finish() {
-            finish()
+            MyCardsActivity.finish()
         }
     }
 
@@ -78,26 +78,6 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         cardCVV = binding.etCVV
         progress = binding.addCardProgress
 
-        if (intent.getStringExtra("update") == "update") {
-            addCardButton.visibility = View.GONE
-            updateCardButton.visibility = View.VISIBLE
-            binding.etCardNumber.setText(intent.getStringExtra("cardnumber"))
-            binding.etCVV.setText(intent.getStringExtra("cvv"))
-            binding.etCardHolder.setText(intent.getStringExtra("cardholder"))
-            var str = intent.getStringExtra("expiredate")!!
-            binding.etCardExpireDate.setText(if (str.length < 7) str else str.substring(0, 7))
-            updateCardButton.setOnClickListener {
-                val hashmap = HashMap<String, Any>()
-                hashmap["uid"] = "622877f9e3e5080bdcde6ebf"
-                hashmap["cardNumber"] = "2345 4323 4567"
-                hashmap["expiryDate"] = "2023-04"
-                hashmap["cvv"] = 244
-                hashmap["holderName"] = "allu arjun"
-                Log.d("hashmap --- ", hashmap.toString())
-                viewModel.updateCard(hashmap)
-                finish()
-            }
-        }
 
         val materialDateBuilder = MaterialDatePicker.Builder.datePicker()
         materialDateBuilder.setTitleText("Select a Expire Date");

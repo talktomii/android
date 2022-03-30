@@ -16,22 +16,29 @@ import com.furniture.ui.mycards.data.MyCardsViewModel
 import javax.inject.Inject
 import android.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
+import com.furniture.ApplicationComponent
 import com.furniture.R
 import com.furniture.data.apis.WebService
 import com.furniture.ui.mycards.activities.MyCardsActivity
 import com.furniture.ui.mycards.data.CardItemsViewModel
+import com.furniture.utlis.AppController
+
+
+
 
 
 class MyCardAdapter(val mList: List<CardItemsViewModel>) :
     RecyclerView.Adapter<MyCardAdapter.ViewHolder>() {
 
+    @Inject
+    lateinit var viewModel: MyCardsViewModel
+    var webService: WebService? = null
 
     companion object{
         @SuppressLint("StaticFieldLeak")
         private var context: Context? = null
         var data : CardItemsViewModel ?= null
         var update_url : String ?= null
-        val viewModel: MyCardsViewModel ?= null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +52,6 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>) :
 
         val itemsViewModel = mList[position]
         data = mList[position]
-        val viewModel = ViewModelProvider().get(SheduleViewModel::class.java)
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -62,8 +68,11 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>) :
                             dialog.dismiss()
                         }
                         delete.setOnClickListener {
-                            if(::view)
-                            viewModel!!.deleteCard(mList[position].id.trim())
+                            Log.d("Delete card is :" ,mList[position].id.trim())
+                            if (!::viewModel.isInitialized) {
+                                viewModel = MyCardsViewModel(webService!!)
+                            }
+                            viewModel.deleteCard(mList[position].id.trim())
                             val dialog_delete = Dialog(context!!)
                             dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
                             dialog_delete.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));

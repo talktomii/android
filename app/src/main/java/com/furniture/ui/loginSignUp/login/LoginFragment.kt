@@ -107,7 +107,6 @@ class LoginFragment : DaggerFragment() {
                 map["device_type"] = "ANDROID"
                 map["name"] = user?.username ?: ""
                 map["social_type"] = "instagram"
-                viewModel.socialLogin(map)
             }
         }
 
@@ -136,7 +135,7 @@ class LoginFragment : DaggerFragment() {
         //map["avatar"] = imageUrl
         map["social_type"] = "google"
 
-        viewModel.socialLogin(map)
+
     }
 
     fun initializeGoogle() {
@@ -178,7 +177,6 @@ class LoginFragment : DaggerFragment() {
                                  }*/
                                 map["device_type"] = "ANDROID"
                                 map["social_type"] = "facebook"
-                                viewModel.socialLogin(map)
 
                             } catch (e: JSONException) {
                                 e.printStackTrace()

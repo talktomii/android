@@ -1,9 +1,11 @@
 package com.furniture
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.furniture.data.repos.UserRepository
 import com.furniture.di.DaggerAppComponent
+import com.furniture.utlis.AppController
 import com.furniture.utlis.PrefsManager
 import com.google.android.libraries.places.api.Places
 import dagger.android.AndroidInjector
@@ -25,6 +27,8 @@ class ApplicationComponent : DaggerApplication() {
         super.onCreate()
         Places.initialize(getApplicationContext(), getString(R.string.google_api_key))
         setsApplication(this)
+        mInstance = this
+        context = getApplicationContext()
     }
 
 
@@ -52,6 +56,16 @@ class ApplicationComponent : DaggerApplication() {
 
         fun setsApplication(sApplication: Application) {
             isApplication = sApplication
+        }
+
+        private var mInstance: ApplicationComponent? = null
+        private var context: Context? = null
+        fun getContext(): Context? {
+            return context
+        }
+
+        fun getmInstance(): ApplicationComponent? {
+            return mInstance
         }
     }
 }

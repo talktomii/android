@@ -9,7 +9,6 @@ import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.helpsupport.ChatSupportActivity
 import com.furniture.ui.helpsupport.HelpSupport
 import com.furniture.ui.home.HomeActivity
-import com.furniture.ui.home.InstaWebActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
 import com.furniture.ui.home.profile.EditInterestFragment
 import com.furniture.ui.home.profile.ProfileFragment
@@ -41,9 +40,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BindingsModule {
-
-    @ContributesAndroidInjector
-    abstract fun instaWebActivity(): InstaWebActivity
 
     @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity

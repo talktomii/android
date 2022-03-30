@@ -3,16 +3,11 @@ package com.furniture.ui.mycards.data
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.example.example.ExampleJson2KtKotlin
+import com.example.example.PayloadCards
 import com.furniture.R
 import com.furniture.adapter.MyCardAdapter
 import com.furniture.data.apis.WebService
-import com.furniture.data.model.CardData
-import com.furniture.data.model.UserData
-import com.furniture.data.network.Config
 import com.furniture.data.network.responseUtil.ApiResponse
 import com.furniture.data.network.responseUtil.ApiUtils
 import com.furniture.data.network.responseUtil.Resource
@@ -29,19 +24,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
-import java.lang.StringBuilder
 import javax.inject.Inject
 import com.google.android.material.snackbar.Snackbar
-import com.google.api.client.json.Json
 import org.json.JSONObject
-
-import retrofit2.adapter.rxjava2.Result.response
 
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
 
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
-    val cards by lazy { SingleLiveEvent<Resource<ExampleJson2KtKotlin>>() }
+    val cards by lazy { SingleLiveEvent<Resource<PayloadCards>>() }
     val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
     private var context: Context? = null
@@ -50,18 +41,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         this.context = context
     }
 
-    companion object{
-
-    }
-
     fun getCards() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         webService.getCards("Bearer " + MainActivity.retrivedToken)
-            .enqueue(object : Callback<ExampleJson2KtKotlin> {
+            .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
-                    call: Call<ExampleJson2KtKotlin>,
-                    response: Response<ExampleJson2KtKotlin>
+                    call: Call<PayloadCards>,
+                    response: Response<PayloadCards>
                 ) {
                     Timber.d("--%s", response.body().toString())
                     val dataList = ArrayList<CardItemsViewModel>()
@@ -79,13 +66,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             )
                         }
 
-
                         val layoutManager = FlexboxLayoutManager()
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW
                         CardFragment.recycleview.layoutManager = layoutManager
                         val adapter = MyCardAdapter(dataList)
                         CardFragment.recycleview.adapter = adapter
+                        CardFragment.progress.visibility  = View.GONE
+                        CardFragment.recycleview.visibility = View.VISIBLE
 
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -99,7 +87,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     }
                 }
 
-                override fun onFailure(call: Call<ExampleJson2KtKotlin>, t: Throwable) {
+                override fun onFailure(call: Call<PayloadCards>, t: Throwable) {
                     cards.value = Resource.error(ApiUtils.failure(t))
 
                 }
@@ -180,46 +168,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
                 override fun onFailure(call: Call<ApiResponse<addCardData>>, t: Throwable) {
                     addCard.value = Resource.error(ApiUtils.failure(t))
-                }
-
-            })
-    }
-
-    fun updateCard(hashMap: HashMap<String, Any>) {
-        updateCard.value = Resource.loading()
-        Log.d("updated ::: ", hashMap.toString())
-        webService.updateCard("62382e455ccbb6952f15f25d", hashMap)
-            .enqueue(object : Callback<ApiResponse<Any>> {
-                override fun onResponse(
-                    call: Call<ApiResponse<Any>>,
-                    response: Response<ApiResponse<Any>>
-                ) {
-
-                    Log.d("call --- > ", call.toString())
-                    if (response.isSuccessful) {
-                        Log.d("success --->  ", response.body().toString())
-                        if (response.body()?.status == 200) {
-                            Log.d("Response ------", response.body()!!.data.toString())
-//                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
-                            updateCard.value = Resource.success(response.body()?.detail)
-                        } else updateCard.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
-                    } else {
-                        updateCard.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.errorBody()?.string()
-                            )
-                        )
-                    }
-                }
-
-                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
-                    updateCard.value = Resource.error(ApiUtils.failure(t))
                 }
 
             })

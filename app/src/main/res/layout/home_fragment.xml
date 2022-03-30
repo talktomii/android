@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.furniture.ui.homefrag.HomeVM" />
+            type="com.talktomii.ui.homefrag.HomeVM" />
 
     </data>
 

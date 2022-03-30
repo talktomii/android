@@ -31,7 +31,6 @@
                     android:text="Back"
                     android:padding="@dimen/dp_10"
                     android:textSize="14sp"
-                    android:drawableLeft="@drawable/back_arrow"
                     android:background="@drawable/bg_back_background"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_10"

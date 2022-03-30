@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.furniture.ui.loginSignUp.signup.CreateProfileVM" />
+            type="com.talktomii.ui.loginSignUp.signup.CreateProfileVM" />
 
     </data>
 

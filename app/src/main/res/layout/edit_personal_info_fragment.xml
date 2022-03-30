@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.editpersonalinfo.EditPersonalInfoVM" />
+            type="com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM" />
 
     </data>
 
@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_50"
                     android:onClick="@{vm::onClick}"
-                    android:src="@drawable/back_arrow"
+                    android:src="@drawable/back_arrow1"
                     app:layout_constraintBaseline_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 

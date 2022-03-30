@@ -16,7 +16,8 @@ import com.furniture.ui.home.HomeScreenViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, CommonInterface {
+class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, CommonInterface,
+    AdapterPopular.onViewPopularClick {
 
     private lateinit var binding: HomeFragmentBinding
     private val viewModels by viewModels<HomeScreenViewModel>()
@@ -42,12 +43,14 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun initAdapter() {
-        adapterPopular = AdapterPopular(requireContext(),popularArrayList)
+        adapterPopular = AdapterPopular(requireContext(), popularArrayList, this)
         binding.rvPopular.adapter = adapterPopular
     }
 
-    fun onCoverClicked() {
-        findNavController().navigate(R.id.action_home_to_influencer_profile)
+    private fun onCoverClicked(admin: Admin) {
+        val bundle: Bundle? = null
+        bundle?.putSerializable("profileId", admin._id)
+        findNavController().navigate(R.id.action_home_to_influencer_profile, bundle)
     }
 
     fun init() {
@@ -71,6 +74,10 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onHomeAdmins(payload: Payload) {
 //        popularArrayList.addAll(payload.admin)
         adapterPopular!!.setPopularList(payload.admin)
+    }
+
+    override fun onViewPopularClick(admin: Admin) {
+        onCoverClicked(admin)
     }
 
 }

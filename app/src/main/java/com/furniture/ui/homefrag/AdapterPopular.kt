@@ -9,7 +9,11 @@ import com.furniture.R
 import com.furniture.data.model.admin.Admin
 import com.furniture.databinding.ItemPopularBinding
 
-class AdapterPopular(private var context: Context, private val popularArrayList: ArrayList<Admin>) :
+class AdapterPopular(
+    private var context: Context,
+    private val popularArrayList: ArrayList<Admin>,
+    var listener: onViewPopularClick
+) :
     RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
 
@@ -32,13 +36,22 @@ class AdapterPopular(private var context: Context, private val popularArrayList:
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .into(holder.binding.ivCoverPhoto)
 
-        Glide.with(context).load(popularArrayList[position].profilePhoto).placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
+        Glide.with(context).load(popularArrayList[position].profilePhoto)
+            .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
             .into(holder.binding.imgDefault)
+
+        holder.binding.ivCall.setOnClickListener {
+            listener.onViewPopularClick(popularArrayList[position])
+        }
 
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
+    }
+
+    interface onViewPopularClick {
+        fun onViewPopularClick(admin: Admin)
     }
 }

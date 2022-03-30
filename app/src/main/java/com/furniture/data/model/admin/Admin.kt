@@ -1,5 +1,7 @@
 package com.furniture.data.model.admin
 
+import java.io.Serializable
+
 data class Admin(
     val __v: Int,
     val _id: String,
@@ -24,4 +26,4 @@ data class Admin(
     val socialNetwork: List<SocialNetwork>,
     val status: Status,
     val userName: String
-)
+):Serializable

@@ -1,24 +1,20 @@
 package com.furniture.ui.home.profile
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.ui.home.HomeViewModel
-import com.furniture.utlis.BackToHomeDialog
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
-import com.prolificinteractive.materialcalendarview.R
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
-import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
-
-
 import devs.mulham.horizontalcalendar.HorizontalCalendar
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.util.*
+import javax.inject.Inject
 
 
 class InfluencerProfileFragment : DaggerFragment() {
@@ -42,6 +38,12 @@ class InfluencerProfileFragment : DaggerFragment() {
 
     }
 
+    private fun init() {
+        if (arguments != null) {
+
+        }
+    }
+
     private fun setListener() {
         binding.txtBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -60,7 +62,8 @@ class InfluencerProfileFragment : DaggerFragment() {
 
 
         binding.txtBookACall.setOnClickListener {
-            view?.findNavController()?.navigate(com.furniture.R.id.action_influencer_profile_to_call_fragmnet)
+            view?.findNavController()
+                ?.navigate(com.furniture.R.id.action_influencer_profile_to_call_fragmnet)
         }
 
 

@@ -35,8 +35,10 @@ const val USER_DATA = "user data"
 const val USER_LANGUAGE = "user language"
 const val PUSH_DATA = "PUSH_DATA"
 const val SUCESS = "200"
+const val AUTHORIZATION ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTAzLTMwVDEwOjM1OjEzLjg1M1oiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODYzNjUxM30.ZjMIkwPyQBSX3K2uWNAsTTbxIyxDIV2i0kL7sM-D6RQ"
 
 object ITEM_VIEW_TYPE {
     const val MOST_POPULAR = 1
     const val ALL_SERVICE = 0
 }
+

@@ -2,8 +2,11 @@ package com.furniture.data.apis
 
 
 import com.furniture.data.model.AllInterst
+import com.furniture.data.model.admin.AdminResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
 
 
 interface WebService {
@@ -34,6 +37,13 @@ interface WebService {
 
 
     @GET(ALL_INFLUENCE)
-    suspend fun getInfluence(): Response<AllInterst>
+    suspend fun getAllAdmin(
+        @Header("Authorization") authHeader: String
+    ): Response<AdminResponse>
 
+    @GET(ALL_INFLUENCE + "?interest={id}")
+    suspend fun getAdminByInterest(
+        @Path("id") id: String,
+        @Header("Authorization") authHeader: String
+    ): Response<AdminResponse>
 }

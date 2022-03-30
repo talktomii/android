@@ -1,12 +1,15 @@
 package com.furniture.ui.homefrag
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.furniture.R
 import com.furniture.data.model.admin.Admin
 import com.furniture.databinding.ItemPopularBinding
 
-class AdapterPopular(var homesFragment: HomesFragment, private val popularArrayList: ArrayList<Admin>) :
+class AdapterPopular(private var context: Context, private val popularArrayList: ArrayList<Admin>) :
     RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
 
@@ -25,10 +28,12 @@ class AdapterPopular(var homesFragment: HomesFragment, private val popularArrayL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.txtName.text = popularArrayList[position].name
-        holder.binding.txtName.text = popularArrayList[position].name
-        holder.binding.ivCoverPhoto.setOnClickListener {
-            homesFragment.onCoverClicked()
-        }
+        holder.binding.textView6.text = popularArrayList[position].userName
+        Glide.with(context).load(popularArrayList[position].coverPhoto)
+            .into(holder.binding.ivCoverPhoto)
+
+        Glide.with(context).load(popularArrayList[position].profilePhoto).placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
+            .into(holder.binding.imgDefault)
 
     }
 

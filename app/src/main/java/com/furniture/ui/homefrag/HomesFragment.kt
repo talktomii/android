@@ -42,7 +42,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun initAdapter() {
-        adapterPopular = AdapterPopular(this,popularArrayList)
+        adapterPopular = AdapterPopular(requireContext(),popularArrayList)
         binding.rvPopular.adapter = adapterPopular
     }
 

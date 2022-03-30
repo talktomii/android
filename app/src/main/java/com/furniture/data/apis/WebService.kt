@@ -12,6 +12,7 @@ interface WebService {
         private const val ADD_PHONE = "user/add_phone_number"
 
         private const val ALL_INTERST = "interest/getAllInterest"
+        private const val ALL_INFLUENCE = "admin/get-admins"
 
     }
 
@@ -30,5 +31,9 @@ interface WebService {
 
     @GET(ALL_INTERST)
     suspend fun getAllInterest(): Response<AllInterst>
+
+
+    @GET(ALL_INFLUENCE)
+    suspend fun getInfluence(): Response<AllInterst>
 
 }

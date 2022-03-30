@@ -81,6 +81,10 @@
         <action
             android:id="@+id/action_home_to_influencer_profile"
             app:destination="@id/influencerProfileFragment" />
+        <argument
+            android:name="ID"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -120,7 +124,11 @@
         android:id="@+id/searchFragment"
         android:name="com.furniture.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/search_fragment"/>
+        tools:layout="@layout/search_fragment">
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/appointmentsFragment"

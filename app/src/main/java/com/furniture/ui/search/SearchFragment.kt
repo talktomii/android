@@ -1,6 +1,8 @@
 package com.furniture.ui.search
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     @Inject
     lateinit var viewModel: SearchViewModel
     private var adapterCategories: AdapterCategories? = null
+    private val search: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,9 +43,6 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
 
     private fun initAdapter() {
         adapterCategories = AdapterCategories(requireContext(), this)
-//        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-//        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-//        binding.rvCategories.layoutManager = layoutManager
         binding.rvCategories.adapter = adapterCategories
 
     }
@@ -50,7 +50,21 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     private fun init() {
         viewModel.searchInterface = this
         viewModel.commonInterface = this
-        viewModel.getAllInstruction()
+        viewModel.getAllInstruction(search)
+
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.getAllInstruction(binding.etSearch.text.toString())
+            }
+
+        })
     }
 
     override fun onStarted() {
@@ -61,6 +75,7 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     }
 
     override fun onSearchAllInstruction(data: Payload) {
+        adapterCategories?.interestArrayList = arrayListOf()
         adapterCategories!!.setImagesList(data.interest)
     }
 

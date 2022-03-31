@@ -1,10 +1,7 @@
 package com.furniture.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
-import com.furniture.data.model.AllInterst
 import com.furniture.data.network.Coroutines
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.SearchInterface
@@ -14,14 +11,18 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
     var searchInterface: SearchInterface? = null
     var commonInterface: CommonInterface? = null
-    private var onSearchResponse: LiveData<AllInterst> = MutableLiveData()
 
 
-    fun getAllInstruction() {
+    fun getAllInstruction(search: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAllInterest()
+                val authResponse =
+                    if (search.isEmpty()) {
+                        webService.getAllInterest()
+                    } else {
+                        webService.getSearchInterest(search)
+                    }
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         searchInterface?.onSearchAllInstruction(authResponse.body()!!.payload)

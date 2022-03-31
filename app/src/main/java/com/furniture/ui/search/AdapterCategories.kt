@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.furniture.data.model.Interest
 import com.furniture.databinding.ItemCategoriesBinding
 import com.furniture.interfaces.SearchItemClick
@@ -13,7 +15,7 @@ import com.furniture.interfaces.SearchItemClick
 class AdapterCategories(private var context: Context, private var listener: SearchItemClick) :
     RecyclerView.Adapter<AdapterCategories.ViewHolder>() {
 
-    private var interestArrayList: ArrayList<Interest> = ArrayList()
+    var interestArrayList: ArrayList<Interest> = ArrayList()
 
     class ViewHolder(val binding: ItemCategoriesBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -38,12 +40,16 @@ class AdapterCategories(private var context: Context, private var listener: Sear
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        if (position % 3 == 0) {
-//            holder.binding.iVImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_car1))
-//        }
-
-//        holder.binding.txtStatus.text = interestArrayList[position].name
-        Glide.with(context).load(interestArrayList[position].image).into(holder.binding.iVImage)
+        if (position % 3 == 0) {
+            Glide.with(context).load(interestArrayList[position].image)
+                .apply(RequestOptions().override(MATCH_PARENT, 400))
+                .into(holder.binding.iVImage)
+        } else {
+            Glide.with(context).load(interestArrayList[position].image)
+                .apply(RequestOptions().override(MATCH_PARENT, 350))
+                .into(holder.binding.iVImage)
+        }
+        holder.binding.txtStatus.text = interestArrayList[position].name
 
         holder.binding.constraintItemCategory.setOnClickListener(View.OnClickListener {
             listener.onViewSearchClick(interestArrayList[position])

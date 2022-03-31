@@ -17,6 +17,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import android.content.SharedPreferences
+import android.widget.TextView
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -28,11 +30,15 @@ class MainActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
+        var totalSideBarAmount : TextView ?= null
     }
 
 
     @Inject
     lateinit var prefsManager: PrefsManager
+
+    @Inject
+    lateinit var dataModel: MyCardsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +47,15 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // save login token here
-        val token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTAzLTMwVDA3OjAwOjQ2LjQyN1oiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODYyMzY0Nn0.UdVV9VKSKGn25BI_ub2cRTmG90E5KCygpUWRi6ETmjY"
+        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTAzLTMxVDA0OjM5OjA2Ljc4OFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg3MDE1NDZ9.kBj2pBSZFZhymsEHpMLaJtPGTeT1nlXi77q0VzoZlQ0"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = preferences.getString("TOKEN", null)!!.trim()
 
+        totalSideBarAmount = binding.textView9
+
+        dataModel.getTotalAmount()
 
         binding.constWallet.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)

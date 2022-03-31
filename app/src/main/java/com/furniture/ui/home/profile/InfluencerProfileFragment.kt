@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.furniture.data.model.admin1.Admin1
@@ -139,18 +138,15 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
 
-    override fun onAdminDetails(admin: Admin1) {
-        socialMediaAdapter?.setItemList(admin.socialNetwork)
-        if (admin.interest.size > 0) {
+    override fun onAdminDetails(admin1: Admin1) {
+        socialMediaAdapter?.setItemList(admin1.socialNetwork)
+        if (admin1.interest.size > 0) {
             binding.txtInterests.visibility = View.VISIBLE
-            adapterInterests?.setItemList(admin.interest)
+            adapterInterests?.setItemList(admin1.interest)
             binding.txtItemCount.visibility = View.VISIBLE
         } else {
             binding.txtInterests.visibility = View.GONE
             binding.txtItemCount.visibility = View.GONE
         }
-        binding.txtName.text = admin.name
-        binding.textView5.text = admin.userName
-        binding.txtLocation.text = admin.location
     }
 }

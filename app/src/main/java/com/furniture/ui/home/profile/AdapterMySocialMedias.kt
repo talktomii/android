@@ -39,6 +39,6 @@ class AdapterMySocialMedias(private var context: Context) :
         socialNetworkArrayList.addAll(
             socialNetwork
         )
-        notifyDataSetChanged()
+            notifyDataSetChanged()
     }
 }

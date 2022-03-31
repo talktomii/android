@@ -12,6 +12,7 @@
         <variable
             name="viewModel1"
             type="com.furniture.viewmodel.UserViewModel" />
+
         <variable
             name="viewModel2"
             type="com.furniture.ui.home.HomeScreenViewModel" />
@@ -129,13 +130,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
                 android:text="@{viewModel2.userField.status.name}"
-                tools:text="Available"
                 android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/textView5" />
+                app:layout_constraintTop_toTopOf="@+id/textView5"
+                tools:text="Available" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
@@ -211,13 +212,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
-                    tools:text="New York, USA"
                     android:text="@{viewModel2.userField.location}"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView10"
+                    tools:text="New York, USA" />
 
 
                 <TextView
@@ -229,6 +230,7 @@
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="@+id/txtLocation"
                     app:layout_constraintTop_toBottomOf="@+id/txtLocation" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSocialMedia"
                     android:layout_width="match_parent"
@@ -239,7 +241,7 @@
                     app:layout_constraintStart_toStartOf="@+id/txtLocation"
                     app:layout_constraintTop_toBottomOf="@+id/txtFollow"
                     tools:itemCount="3"
-                    tools:listitem="@layout/item_social_media"/>
+                    tools:listitem="@layout/item_social_media" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

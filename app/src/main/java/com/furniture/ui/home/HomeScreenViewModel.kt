@@ -18,7 +18,6 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var adminDetailInterface: AdminDetailInterface? = null
     var commonInterface: CommonInterface? = null
     var userField = ObservableField<Admin1>()
-    var username: ObservableField<String> = ObservableField()
 
     fun getInfluence(string: String) {
         commonInterface!!.onStarted()
@@ -51,8 +50,8 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 val authResponse = webService.getAdminByID(string, AUTHORIZATION)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
+                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                         userField.set(authResponse.body()!!.payload.admin[0])
-                        username.set(authResponse.body()?.payload?.admin?.get(0)?.userName)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

@@ -32,30 +32,31 @@
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent" />
 
-         <androidx.constraintlayout.widget.ConstraintLayout
-             android:id="@+id/layoutGrandiant"
+         <ImageView
+             android:id="@+id/coverImage"
              android:layout_width="match_parent"
              android:layout_height="@dimen/dp_120"
              android:layout_marginStart="@dimen/dp_20"
              android:layout_marginTop="8dp"
+             android:scaleType="center"
              android:layout_marginEnd="@dimen/dp_20"
-             android:background="@drawable/ic_bg"
+             android:src="@drawable/ic_bg"
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintHorizontal_bias="1.0"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toBottomOf="@+id/txtSignIn">
 
-         </androidx.constraintlayout.widget.ConstraintLayout>
+         </ImageView>
 
-         <ImageView
+         <androidx.appcompat.widget.AppCompatImageView
              android:id="@+id/imgCam"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:src="@drawable/ic_camera"
              android:layout_marginTop="@dimen/dp_10"
              android:layout_marginEnd="@dimen/dp_10"
-             app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
-             app:layout_constraintTop_toTopOf="@+id/layoutGrandiant" />
+             app:layout_constraintEnd_toEndOf="@+id/coverImage"
+             app:layout_constraintTop_toTopOf="@+id/coverImage" />
 
          <com.makeramen.roundedimageview.RoundedImageView
              android:id="@+id/imgDefault"
@@ -65,9 +66,9 @@
              android:layout_marginTop="@dimen/dp_60"
              app:riv_corner_radius="@dimen/dp_60"
              android:scaleType="centerCrop"
-             app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
-             app:layout_constraintStart_toStartOf="@+id/layoutGrandiant"
-             app:layout_constraintTop_toTopOf="@+id/layoutGrandiant">
+             app:layout_constraintEnd_toEndOf="@+id/coverImage"
+             app:layout_constraintStart_toStartOf="@+id/coverImage"
+             app:layout_constraintTop_toTopOf="@+id/coverImage">
 
          </com.makeramen.roundedimageview.RoundedImageView>
 

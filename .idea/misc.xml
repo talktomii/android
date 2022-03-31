@@ -3,13 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/edit_interest_fragment.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_forget.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_home_influencer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_influencer_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/home_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_all_service.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_categories.xml" value="0.264" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_customer_storie.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_notification.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_popular.xml" value="0.264" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_today_notification.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/preferred_topics_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/search_fragment.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/tell_us_more.xml" value="0.25416666666666665" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />

@@ -1,10 +1,10 @@
-package com.furniture.data.model.admin
+package com.furniture.data.model.admin1
 
 import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
+import com.furniture.data.model.admin.*
 import java.io.Serializable
 
-data class Admin(
+data class Admin1(
     val __v: Int,
     val _id: String,
     val aboutYou: Any,
@@ -24,8 +24,13 @@ data class Admin(
     val price: List<Price>,
     val profilePhoto: String,
     val registrationDate: String,
-    val role: String,
+    val role: Role,
     val socialNetwork: List<SocialNetwork>,
     val status: Status,
     val userName: String
-):Serializable , BaseObservable()
+) : Serializable, BaseObservable()
+
+data class Role(
+    val _id: String,
+    val roleName: String
+)

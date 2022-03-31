@@ -3,6 +3,7 @@ package com.furniture.data.apis
 
 import com.furniture.data.model.AllInterst
 import com.furniture.data.model.admin.AdminResponse
+import com.furniture.data.model.admin1.AdminResponse1
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -52,5 +53,5 @@ interface WebService {
     suspend fun getAdminByID(
         @Path("id") id: String,
         @Header("Authorization") authHeader: String
-    ): Response<AdminResponse>
+    ): Response<AdminResponse1>
 }

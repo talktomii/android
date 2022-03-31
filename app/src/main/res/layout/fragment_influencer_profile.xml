@@ -9,6 +9,10 @@
             name="viewModel"
             type="com.furniture.data.model.admin.Admin" />
 
+        <variable
+            name="viewModel1"
+            type="com.furniture.viewmodel.UserViewModel" />
+
     </data>
 
     <ScrollView
@@ -95,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="@{viewModel.name}"
+                android:text="@{viewModel1.user.userName}"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -109,11 +113,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="\@Leslie"
+                android:text="@{viewModel1.user.name}"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
-                app:layout_constraintTop_toBottomOf="@+id/txtName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtName"
+                tools:text="\@Leslie" />
 
             <TextView
                 android:id="@+id/txtStatus"

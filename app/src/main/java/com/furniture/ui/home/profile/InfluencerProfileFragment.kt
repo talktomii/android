@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.furniture.data.model.admin.Payload
+import com.furniture.data.model.admin1.Admin1
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.HomeInterface
@@ -45,6 +46,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterfa
     private fun init() {
         viewModel.commonInterface = this
         viewModel.homeInterface = this
+        binding.lifecycleOwner = this
+
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
         }
@@ -120,7 +123,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterfa
     override fun onStarted() {
     }
 
-    override fun onHomeAdmins(payload: Payload) {
+    override fun onHomeAdmins(payload: Admin1) {
         binding.viewModel = payload.admin[0]
     }
 }

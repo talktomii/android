@@ -42,5 +42,24 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
+    fun getAdminById(string: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                var authResponse = webService.getAdminByID(string, AUTHORIZATION)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+                        homeInterface?.onHomeAdmins(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
 
 }

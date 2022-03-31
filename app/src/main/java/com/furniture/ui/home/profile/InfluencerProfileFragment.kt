@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.furniture.data.model.admin.Payload
 import com.furniture.databinding.FragmentInfluencerProfileBinding
-import com.furniture.ui.home.HomeViewModel
+import com.furniture.interfaces.CommonInterface
+import com.furniture.interfaces.HomeInterface
+import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
 import dagger.android.support.DaggerFragment
@@ -17,13 +20,13 @@ import java.util.*
 import javax.inject.Inject
 
 
-class InfluencerProfileFragment : DaggerFragment() {
+class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterface {
 
     private lateinit var binding: FragmentInfluencerProfileBinding
 
-
     @Inject
-    lateinit var viewModel: HomeViewModel
+    lateinit var viewModel: HomeScreenViewModel
+
 
     private var horizontalCalendar: HorizontalCalendar? = null
 
@@ -38,10 +41,14 @@ class InfluencerProfileFragment : DaggerFragment() {
 
     }
 
-    private fun init() {
-        if (arguments != null) {
 
+    private fun init() {
+        viewModel.commonInterface = this
+        viewModel.homeInterface = this
+        if (arguments != null) {
+            requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
         }
+
     }
 
     private fun setListener() {
@@ -103,6 +110,17 @@ class InfluencerProfileFragment : DaggerFragment() {
 
         binding.rvTimeSlot.adapter = AdapterTimeSlot()
 
+        init()
+    }
 
+    override fun onFailure(message: String) {
+
+    }
+
+    override fun onStarted() {
+    }
+
+    override fun onHomeAdmins(payload: Payload) {
+        binding.viewModel = payload.admin[0]
     }
 }

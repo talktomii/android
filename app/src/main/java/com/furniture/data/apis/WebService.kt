@@ -16,6 +16,7 @@ interface WebService {
 
         private const val ALL_INTERST = "interest/getAllInterest"
         private const val ALL_INFLUENCE = "admin/get-admins"
+        private const val GET_ADMIN = "admin/get-admin"
 
     }
 
@@ -43,6 +44,12 @@ interface WebService {
 
     @GET(ALL_INFLUENCE + "?interest={id}")
     suspend fun getAdminByInterest(
+        @Path("id") id: String,
+        @Header("Authorization") authHeader: String
+    ): Response<AdminResponse>
+
+    @GET(GET_ADMIN + "/{id}")
+    suspend fun getAdminByID(
         @Path("id") id: String,
         @Header("Authorization") authHeader: String
     ): Response<AdminResponse>

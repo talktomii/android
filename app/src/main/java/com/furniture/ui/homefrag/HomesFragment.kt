@@ -48,8 +48,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun onCoverClicked(admin: Admin) {
-        val bundle: Bundle? = null
-        bundle?.putSerializable("profileId", admin._id)
+        val bundle = Bundle()
+        bundle.putSerializable("profileId", admin._id)
         findNavController().navigate(R.id.action_home_to_influencer_profile, bundle)
     }
 

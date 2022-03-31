@@ -3,15 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.furniture.data.model.admin.Admin" />
+
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:paddingBottom="@dimen/dp_20"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_20">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,13 +35,13 @@
                     android:id="@+id/txtBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Back"
-                    android:padding="@dimen/dp_10"
-                    android:textSize="14sp"
-                    android:drawableLeft="@drawable/back_arrow"
-                    android:background="@drawable/bg_back_background"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_back_background"
+                    android:drawableLeft="@drawable/back_arrow"
+                    android:padding="@dimen/dp_10"
+                    android:text="Back"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,9 +49,9 @@
                     android:id="@+id/ivBookMark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bookmark"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/ic_bookmark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,13 +70,13 @@
                 android:id="@+id/imgDefault"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
-                android:src="@drawable/ic_user"
-                android:layout_marginTop="100dp"
-                app:riv_corner_radius="@dimen/dp_60"
                 android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="100dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_user"
                 app:layout_constraintStart_toStartOf="@+id/coverPhoto"
-                app:layout_constraintTop_toTopOf="@+id/coverPhoto">
+                app:layout_constraintTop_toTopOf="@+id/coverPhoto"
+                app:riv_corner_radius="@dimen/dp_60">
 
             </com.makeramen.roundedimageview.RoundedImageView>
 
@@ -77,9 +84,9 @@
                 android:id="@+id/ivCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tick1"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_50"
+                android:src="@drawable/tick1"
                 app:layout_constraintStart_toStartOf="@+id/imgDefault"
                 app:layout_constraintTop_toTopOf="@+id/imgDefault" />
 
@@ -88,13 +95,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="Leslie Alexander"
+                android:text="@{viewModel.name}"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
                 app:layout_constraintStart_toEndOf="@+id/imgDefault"
-                app:layout_constraintTop_toTopOf="@+id/imgDefault" />
+                app:layout_constraintTop_toTopOf="@+id/imgDefault"
+                tools:text="Leslie Alexander" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -111,11 +119,11 @@
                 android:id="@+id/txtStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
                 android:text="Available"
+                android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/green"
-                android:layout_marginStart="@dimen/dp_20"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -193,11 +201,11 @@
                     android:id="@+id/txtLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:text="New York, USA"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"
-                    android:layout_marginTop="@dimen/dp_5"
                     app:layout_constraintStart_toStartOf="@+id/textView10"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -205,9 +213,9 @@
                     android:id="@+id/txtFollow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:text="Follow me"
                     android:textSize="@dimen/sp_12"
-                    android:layout_marginTop="@dimen/dp_5"
                     app:layout_constraintStart_toStartOf="@+id/txtLocation"
                     app:layout_constraintTop_toBottomOf="@+id/txtLocation" />
 
@@ -215,8 +223,8 @@
                     android:id="@+id/ivInsta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_insta"
                     android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_insta"
                     app:layout_constraintStart_toStartOf="@+id/txtFollow"
                     app:layout_constraintTop_toBottomOf="@+id/txtFollow" />
 
@@ -266,11 +274,11 @@
                     android:id="@+id/txtPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:text="$ 15/15min"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"
-                    android:layout_marginTop="@dimen/dp_5"
                     app:layout_constraintStart_toStartOf="@+id/txtPr"
                     app:layout_constraintTop_toBottomOf="@+id/txtPr" />
 
@@ -278,9 +286,9 @@
                     android:id="@+id/txtBudges"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:text="Badges"
                     android:textSize="@dimen/sp_12"
-                    android:layout_marginTop="@dimen/dp_5"
                     app:layout_constraintStart_toStartOf="@+id/txtPrice"
                     app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
@@ -315,12 +323,12 @@
                     android:id="@+id/txtCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:drawableLeft="@drawable/plus"
+                    android:drawablePadding="@dimen/dp_5"
                     android:text="3"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
-                    android:drawableLeft="@drawable/plus"
-                    android:drawablePadding="@dimen/dp_5"
-                    android:layout_marginStart="@dimen/dp_20"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBug"
                     app:layout_constraintStart_toEndOf="@+id/ivBug"
                     app:layout_constraintTop_toTopOf="@+id/ivBug" />
@@ -331,10 +339,10 @@
                 android:id="@+id/txtInterests"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
                 android:text="Interests"
                 android:textSize="12sp"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
@@ -355,12 +363,12 @@
                 android:id="@+id/txtItemCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
+                android:layout_marginStart="40dp"
                 android:drawableLeft="@drawable/plus"
                 android:drawablePadding="@dimen/dp_2"
-                android:textStyle="bold"
+                android:text="3"
                 android:textColor="@color/blue"
-                android:layout_marginStart="40dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/rvInterest"
                 app:layout_constraintStart_toEndOf="@+id/rvInterest"
                 app:layout_constraintTop_toTopOf="@+id/rvInterest" />
@@ -369,12 +377,12 @@
                 android:id="@+id/textBookCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Book a Call"
-                android:textSize="@dimen/sp_24"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/dp_30"
                 android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="Book a Call"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_24"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvInterest" />
 
@@ -395,12 +403,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:orientation="horizontal"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_time_slot"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView">
+                app:layout_constraintTop_toBottomOf="@+id/calendarView"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_time_slot">
 
             </androidx.recyclerview.widget.RecyclerView>
 

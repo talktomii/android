@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:id="@+id/constraintItemCategory"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginBottom="15dp">
 

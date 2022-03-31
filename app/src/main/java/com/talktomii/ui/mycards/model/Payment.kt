@@ -1,9 +1,9 @@
-package com.talktomii.ui.mywallet.models
+package com.talktomii.ui.mycards.model
 
 import com.google.gson.annotations.SerializedName
 
+data class Payment(
 
-data class Wallet(
     @SerializedName("apid") var apid: String? = null,
     @SerializedName("paymentId") var paymentId: String? = null,
     @SerializedName("_id") var Id: String? = null,

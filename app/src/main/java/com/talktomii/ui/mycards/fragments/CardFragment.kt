@@ -44,12 +44,6 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
     companion object{
         lateinit var recycleview: RecyclerView
         lateinit var progress : ProgressBar

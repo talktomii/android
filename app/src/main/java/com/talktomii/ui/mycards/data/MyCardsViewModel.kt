@@ -33,6 +33,7 @@ import com.talktomii.ui.mywallet.models.addWalletData
 import org.json.JSONObject
 import android.widget.Toast
 import com.facebook.FacebookSdk.getApplicationContext
+import com.talktomii.adapter.MyPaymentAdapter
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.RefillFragment
@@ -44,6 +45,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import com.talktomii.ui.loginSignUp.MainActivity
+import com.talktomii.ui.mycards.PaymentItemsViewModel
+import com.talktomii.ui.mycards.fragments.PaymentFragment
+import com.talktomii.ui.mycards.model.PaymentPayload
 import java.text.ParseException
 
 
@@ -56,16 +60,18 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
     private var context: Context? = null
+    val payments by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
 
     fun ViewModelFactory(context: Context?) {
         this.context = context
     }
 
-    companion object{
-        var arrayStrings : ArrayList<String> ?= null
-        var carditemMap : HashMap<String,String> ?= null
-        var selectedCardItem : String = ""
+    companion object {
+        var arrayStrings: ArrayList<String>? = null
+        var carditemMap: HashMap<String, String>? = null
+        var selectedCardItem: String = ""
     }
+
     fun getCards() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
@@ -95,9 +101,9 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW
                         CardFragment.recycleview.layoutManager = layoutManager
-                        val adapter = MyCardAdapter(dataList,webService)
+                        val adapter = MyCardAdapter(dataList, webService)
                         CardFragment.recycleview.adapter = adapter
-                        CardFragment.progress.visibility  = View.GONE
+                        CardFragment.progress.visibility = View.GONE
                         CardFragment.recycleview.visibility = View.VISIBLE
 
                     } else {
@@ -138,11 +144,11 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         carditemMap = HashMap()
                         for (i in data!!.card!!.data) {
                             val refilldata = "****" + i.card!!.last4!!.toString()
-                            if(arrayStrings!!.contains(refilldata)){
+                            if (arrayStrings!!.contains(refilldata)) {
 
-                            }else{
+                            } else {
                                 arrayStrings!!.add(refilldata)
-                                carditemMap!!.put(i.id.toString(),refilldata)
+                                carditemMap!!.put(i.id.toString(), refilldata)
                             }
 
 
@@ -154,7 +160,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         RefillWalletActivity.filterTypes!!.setAdapter(adapter)
-                        RefillWalletActivity.filterTypes!!.setOnItemClickListener(object : AdapterView.OnItemClickListener{
+                        RefillWalletActivity.filterTypes!!.setOnItemClickListener(object :
+                            AdapterView.OnItemClickListener {
                             override fun onItemClick(
                                 p0: AdapterView<*>?,
                                 p1: View?,
@@ -164,7 +171,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 Log.d("selected_item", carditemMap!!.keys.toString())
                                 for (entry in carditemMap!!.entries) {
                                     if (entry.value === adapter.getItem(p2)) {
-                                        System.out.println("The key for value " + adapter.getItem(p2).toString() + " is " + entry.key)
+                                        System.out.println(
+                                            "The key for value " + adapter.getItem(p2)
+                                                .toString() + " is " + entry.key
+                                        )
                                         selectedCardItem = entry.key
                                         break
                                     }
@@ -271,9 +281,9 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun deleteCard(id : String) {
+    fun deleteCard(id: String) {
         deleteCard.value = Resource.loading()
-        webService.deleteCard(id,"Bearer " + MainActivity.retrivedToken)
+        webService.deleteCard(id, "Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<ApiResponse<Any>> {
                 override fun onResponse(
                     call: Call<ApiResponse<Any>>,
@@ -324,10 +334,15 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         snackbar.show()
                         RefillWalletActivity.etAmount!!.text.clear()
                         RefillWalletActivity.walletProgress!!.visibility = View.GONE
-                        RefillWalletActivity.finishFunction()
-                        getWallet()
-                        getTotalAmount()
-                        getCurrentAmount()
+                        if (RefillWalletActivity.repeatAmount != null) {
+                            RefillWalletActivity.finishFunction()
+                            getPayment()
+                        } else {
+                            getWallet()
+                            getTotalAmount()
+                            getCurrentAmount()
+                        }
+
                     } else {
                         addWallet.value = Resource.error(
                             ApiUtils.getError(
@@ -408,7 +423,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         RefillFragment.recyclerview!!.layoutManager = layoutManager
                         val adapter = WalletRefillAdapter(dataList)
                         RefillFragment.recyclerview!!.adapter = adapter
-                        RefillFragment.progress!!.visibility  = View.GONE
+                        RefillFragment.progress!!.visibility = View.GONE
                         RefillFragment.recyclerview!!.visibility = View.VISIBLE
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -430,7 +445,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun getCurrentAmount(){
+    fun getCurrentAmount() {
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
@@ -464,7 +479,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
-    fun getTotalAmount(){
+
+    fun getTotalAmount() {
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
@@ -478,7 +494,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
-                        MainActivity.totalSideBarAmount!!.text = "$" + data!!.walletData!!.currentAmount
+                        MainActivity.totalSideBarAmount!!.text =
+                            "$" + data!!.walletData!!.currentAmount
                     } else {
                         Log.d("card data is : ", " : " + response.body())
                         wallets.value = Resource.error(
@@ -499,4 +516,71 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
+    fun getPayment() {
+        payments.value = Resource.loading()
+        Log.d("token : ", MainActivity.retrivedToken)
+        val dataList = ArrayList<PaymentItemsViewModel>()
+        webService.getPayment("Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<PaymentPayload> {
+                override fun onResponse(
+                    call: Call<PaymentPayload>,
+                    response: Response<PaymentPayload>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    if (response.isSuccessful) {
+//                        cards.value = Resource.success(response.body()!!.payload)
+                        val data = response.body()!!.payload
+                        for (i in data!!.wallet) {
+                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
+                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
+                            var date: Date? = null
+                            try {
+                                date = sdf1.parse(i.createdAt)
+                                val newDate = sdf2.format(date)
+                                println(newDate)
+                                Log.e("Date", i.toString())
+                                var paymentId = ""
+                                if(i.paymentId != null){
+                                    paymentId = i.paymentId!!
+                                }
+                                dataList.add(
+                                    PaymentItemsViewModel(
+                                        wallet_id = paymentId,
+                                        wallet_name = "Wallet " + i.type!!,
+                                        wallet_date = newDate,
+                                        wallet_price = "-$" + i.amount
+                                    )
+                                )
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        PaymentFragment.recycleview.layoutManager = layoutManager
+                        val adapter = MyPaymentAdapter(dataList)
+                        PaymentFragment.recycleview.adapter = adapter
+                        PaymentFragment.progress.visibility = View.GONE
+                        PaymentFragment.recycleview.visibility = View.VISIBLE
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        payments.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<PaymentPayload>, t: Throwable) {
+                    payments.value = Resource.error(ApiUtils.failure(t))
+
+                }
+
+            })
+    }
 }

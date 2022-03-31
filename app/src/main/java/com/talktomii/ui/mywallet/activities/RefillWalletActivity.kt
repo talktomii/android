@@ -15,6 +15,7 @@ import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.app.Activity
+import android.content.Intent
 import com.talktomii.ui.mycards.data.getAllData
 
 
@@ -47,6 +48,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         binding.tvrefillBack.setOnClickListener {
             finish()
         }
+        repeatAmount = intent.getStringExtra("repeatamount").toString()
         binding.btnSubmitRefill.setOnClickListener {
             if(binding.addselectedAmount.text.toString().isNullOrEmpty()){
                 val snackbar = Snackbar.make(
@@ -70,8 +72,17 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
                 if(MyCardsViewModel.selectedCardItem != "") {
                     walletProgress!!.visibility = View.VISIBLE
                     dataModel.addWallet(hashmap)
+                    if(repeatAmount != null){
+                    }
                 }
             }
+        }
+
+
+        if(repeatAmount != null){
+            binding.addselectedAmount.setText(repeatAmount.toString())
+        }else{
+            binding.addselectedAmount.setText("")
         }
         filterTypes = binding.typesFilter
         dataModel.getCardlistWallet()
@@ -86,6 +97,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         var walletProgress : ProgressBar ?= null
         var etAmount : EditText ?= null
         lateinit var context : Context
+        var repeatAmount : String = ""
         fun getContext(context: Context){
             this.context = context
         }

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_40"
+        android:layout_margin="@dimen/dp_30"
+        android:src="@drawable/pdf_top_icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Receipt "
+            android:textColor="@color/black"
+            android:textFontWeight="800"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text=" 1494333779292107-1-11"
+            android:textColor="@color/black"
+            android:textFontWeight="800"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Date "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="13.02.2022  1:00PM"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="#F3F3F3"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Date "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="13.02.2022  1:00PM"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Payment method "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="VISA 53****1234"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="#F3F3F3"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Address "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:maxLines="1"
+            android:text="1901 Thornridge Cir. Shiloh, Hawaii 81063"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="VAT Number "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="1234567899"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="#F3F3F3"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Product "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="abc"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="TAX "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="$0"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="#F3F3F3"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extra_bold"
+            android:text="Total "
+            android:textColor="@color/black"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_extra_bold"
+            android:gravity="end"
+            android:text="$200"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="@dimen/dp_14"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

@@ -4,6 +4,7 @@ package com.talktomii.data.apis
 import com.example.example.PayloadCards
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.ui.mycards.data.addCardData
+import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
 import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
@@ -18,6 +19,7 @@ interface WebService {
         private const val GET_CARDS = "card/getCardByuid/623d9832f521ab28b8f8373a"
         private const val ADD_WALLET = "walletHistory/addWalletHistory"
         private const val GET_WALLET = "walletHistory/getWalletHistoryByuid/623d9832f521ab28b8f8373a"
+        private const val GET_PAYMENT = "walletHistory/getWalletHistoryByuid/623d9832f521ab28b8f8373a"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount/623d9832f521ab28b8f8373a"
     }
 
@@ -52,4 +54,9 @@ interface WebService {
     fun getCurrentAmount(
         @Header("Authorization") auth : String
     ): Call<CurrentWalletPaylod>
+
+    @GET(GET_PAYMENT)
+    fun getPayment(
+        @Header("Authorization") auth : String
+    ): Call<PaymentPayload>
 }

@@ -208,6 +208,8 @@ permission*/
     implementation 'com.google.android:flexbox:0.3.0-alpha3'
 
     implementation 'org.json:json:20200518'
+
+    implementation 'com.itextpdf:itextpdf:5.0.6'
 }
 
 static def getDateTime() {

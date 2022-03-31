@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.furniture.ui.mywallet.models.WalletRefillItemModel" />
+            type="com.talktomii.ui.mywallet.models.WalletRefillItemModel" />
     </data>
 
 

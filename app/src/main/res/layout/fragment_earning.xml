@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.mywallet.MyWalletVM" />
+            type="com.talktomii.ui.mywallet.MyWalletVM" />
 
     </data>
 

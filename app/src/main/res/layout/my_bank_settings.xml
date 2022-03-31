@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.banksettings.MyBankSettingsVM" />
+            type="com.talktomii.ui.banksettings.MyBankSettingsVM" />
 
     </data>
 

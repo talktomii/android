@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.furniture.data.model.MostPopularModel" />
+            type="com.talktomii.data.model.MostPopularModel" />
 
     </data>
 
@@ -20,7 +20,6 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_50"
-            android:src="@drawable/ic_service"
             setImageFromUrl="@{data.full_image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.tellusmore.TellUsMoreVM" />
+            type="com.talktomii.ui.tellusmore.TellUsMoreVM" />
 
     </data>
 
@@ -20,6 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/dp_10"
         tools:context=".ui.tellusmore.TellUsMore">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,11 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_30"
-            android:fontFamily="@font/inter_extra_bold"
             android:text="@string/tell_us_more_about_you"
-            android:textFontWeight="700"
-            android:textSize="@dimen/dp_40"
+            android:textSize="35sp"
             android:textStyle="bold"
+            android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +41,13 @@
             android:id="@+id/tvPreferredTopics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginHorizontal="@dimen/dp_12"
             android:fontFamily="@font/inter_bold"
             android:text="@string/preferred_topics"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTellUsMore" />
@@ -235,7 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/tiktok2" />
+                    android:src="@drawable/tictook" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

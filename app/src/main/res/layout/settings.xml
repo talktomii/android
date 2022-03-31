@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.settings.SettingsVM" />
+            type="com.talktomii.ui.settings.SettingsVM" />
 
     </data>
 

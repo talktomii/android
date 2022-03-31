@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/dp_20"
+            android:layout_height="match_parent">
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coverPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_120"
+                android:background="@drawable/ic_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/txtBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Back"
+                    android:padding="@dimen/dp_10"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_back_background"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivBookMark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bookmark"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/ic_share"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivBookMark"
+                    app:layout_constraintEnd_toStartOf="@+id/ivBookMark"
+                    app:layout_constraintTop_toTopOf="@+id/ivBookMark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgDefault"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/ic_user"
+                android:layout_marginTop="100dp"
+                app:riv_corner_radius="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_30"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="@+id/coverPhoto"
+                app:layout_constraintTop_toTopOf="@+id/coverPhoto">
+
+            </com.makeramen.roundedimageview.RoundedImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tick1"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_50"
+                app:layout_constraintStart_toStartOf="@+id/imgDefault"
+                app:layout_constraintTop_toTopOf="@+id/imgDefault" />
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:text="Leslie Alexander"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
+                app:layout_constraintStart_toEndOf="@+id/imgDefault"
+                app:layout_constraintTop_toTopOf="@+id/imgDefault" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="\@Leslie"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtName"
+                app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:layout_marginStart="@dimen/dp_20"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintTop_toBottomOf="@+id/imgDefault">
+
+                <TextView
+                    android:id="@+id/txtAboutMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/bg_white_strok"
+                    android:drawableLeft="@drawable/ic_video"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:paddingStart="40dp"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_40"
+                    android:paddingBottom="10dp"
+                    android:text="About Me"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtCallNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_blue_button"
+                    android:drawableLeft="@drawable/ic_call1"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:paddingStart="50dp"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_40"
+                    android:paddingBottom="10dp"
+                    android:text="call now"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAboutMe"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txtAboutMe"
+                    app:layout_constraintTop_toTopOf="@+id/txtAboutMe" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:text="Location"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New York, USA"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/dp_16"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/dp_5"
+                    app:layout_constraintStart_toStartOf="@+id/textView10"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                <TextView
+                    android:id="@+id/txtFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Follow me"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginTop="@dimen/dp_5"
+                    app:layout_constraintStart_toStartOf="@+id/txtLocation"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLocation" />
+
+                <ImageView
+                    android:id="@+id/ivInsta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_insta"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/txtFollow"
+                    app:layout_constraintTop_toBottomOf="@+id/txtFollow" />
+
+                <ImageView
+                    android:id="@+id/ivTwitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_twitter"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivInsta"
+                    app:layout_constraintStart_toEndOf="@+id/ivInsta"
+                    app:layout_constraintTop_toBottomOf="@+id/txtFollow" />
+
+                <ImageView
+                    android:id="@+id/ivTiktok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_ticktock"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
+                    app:layout_constraintStart_toEndOf="@+id/ivTwitter"
+                    app:layout_constraintTop_toTopOf="@+id/ivTwitter" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                <TextView
+                    android:id="@+id/txtPr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:text="Price"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$ 15/15min"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/dp_16"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/dp_5"
+                    app:layout_constraintStart_toStartOf="@+id/txtPr"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPr" />
+
+                <TextView
+                    android:id="@+id/txtBudges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Badges"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_marginTop="@dimen/dp_5"
+                    app:layout_constraintStart_toStartOf="@+id/txtPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+
+                <ImageView
+                    android:id="@+id/ivBudge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_badge1"
+                    app:layout_constraintStart_toStartOf="@+id/txtBudges"
+                    app:layout_constraintTop_toBottomOf="@+id/txtBudges" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_badge2"
+                    app:layout_constraintStart_toStartOf="@+id/ivBudge"
+                    app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+                <ImageView
+                    android:id="@+id/ivBug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:src="@drawable/ic_badge3"
+                    app:layout_constraintStart_toEndOf="@+id/ivBudge"
+                    app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+                <TextView
+                    android:id="@+id/txtCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/plus"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:layout_marginStart="@dimen/dp_20"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivBug"
+                    app:layout_constraintStart_toEndOf="@+id/ivBug"
+                    app:layout_constraintTop_toTopOf="@+id/ivBug" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txtInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interests"
+                android:textSize="12sp"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvInterest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@+id/txtInterests"
+                app:layout_constraintTop_toBottomOf="@+id/txtInterests"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_interests">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/txtItemCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:drawableLeft="@drawable/plus"
+                android:drawablePadding="@dimen/dp_2"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:layout_marginStart="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rvInterest"
+                app:layout_constraintStart_toEndOf="@+id/rvInterest"
+                app:layout_constraintTop_toTopOf="@+id/rvInterest" />
+
+            <TextView
+                android:id="@+id/textBookCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book a Call"
+                android:textSize="@dimen/sp_24"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginStart="@dimen/dp_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvInterest" />
+
+            <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@+id/textBookCall"
+                app:selectedDateBackground="@color/colorAccent"
+                app:selectorColor="@android:color/transparent"
+                app:textColorNormal="@color/black"
+                app:textColorSelected="@color/white" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimeSlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_time_slot"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/txtBookACall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/ic_signin"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="BOOK A CALL"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvTimeSlot" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>

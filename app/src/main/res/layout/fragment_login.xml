@@ -73,6 +73,7 @@
             android:padding="15dp"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:password="true"
             app:layout_constraintEnd_toEndOf="@+id/txtEmailId"
             app:layout_constraintStart_toStartOf="@+id/txtEmailId"
             app:layout_constraintTop_toBottomOf="@+id/txtEmailId" />
@@ -83,8 +84,8 @@
             android:layout_height="wrap_content"
             android:text="Forgot your password"
             android:textSize="13sp"
+            android:textColor="@color/colorAccent"
             android:layout_marginTop="10dp"
-
             app:layout_constraintEnd_toEndOf="@+id/edPassword"
             app:layout_constraintTop_toBottomOf="@+id/edPassword" />
 
@@ -94,7 +95,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/ic_signin"
             android:gravity="center"
             android:text="SIGN IN"
@@ -125,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_google"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="@dimen/dp_20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtLoginWith" />

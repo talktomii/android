@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.editpersonalinfo.EditPersonalInfoVM" />
+            type="com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM" />
 
     </data>
 

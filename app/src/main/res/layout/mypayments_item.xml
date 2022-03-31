@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.furniture.ui.mycards.PaymentItemsViewModel" />
+            type="com.talktomii.ui.mycards.PaymentItemsViewModel" />
     </data>
 
 

@@ -1,16 +1,19 @@
 package com.furniture.ui.home.profile
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.furniture.data.model.admin.Interest
 import com.furniture.databinding.ItemInterestsBinding
 
-class AdapterInterests : RecyclerView.Adapter<AdapterInterests.ViewHolder>(){
+class AdapterInterests(private var context: Context) :
+    RecyclerView.Adapter<AdapterInterests.ViewHolder>() {
 
 
-    class ViewHolder(val binding: ItemInterestsBinding) : RecyclerView.ViewHolder(binding.root){
+    private var interestArrayList: ArrayList<Interest> = arrayListOf()
 
-    }
+    class ViewHolder(val binding: ItemInterestsBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterInterests.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,12 +22,17 @@ class AdapterInterests : RecyclerView.Adapter<AdapterInterests.ViewHolder>(){
     }
 
 
-
     override fun getItemCount(): Int {
-        return 3
+        return interestArrayList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.tvItemName.text = interestArrayList[position].name
 
+    }
+
+    fun setItemList(interest: ArrayList<Interest>) {
+        interestArrayList.addAll(interest)
+        notifyDataSetChanged()
     }
 }

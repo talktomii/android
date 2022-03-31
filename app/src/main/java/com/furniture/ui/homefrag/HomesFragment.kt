@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.furniture.R
 import com.furniture.data.model.admin.Admin
 import com.furniture.data.model.admin.Payload
-import com.furniture.data.model.admin1.Admin1
 import com.furniture.databinding.HomeFragmentBinding
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.HomeInterface
@@ -72,13 +71,14 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onStarted() {
     }
 
-    override fun onHomeAdmins(payload: Admin1) {
-//        popularArrayList.addAll(payload.admin)
-        adapterPopular!!.setPopularList(payload.admin)
-    }
 
     override fun onViewPopularClick(admin: Admin) {
         onCoverClicked(admin)
+    }
+
+    override fun onHomeAdmins(payload: Payload) {
+        adapterPopular!!.setPopularList(payload.admin)
+
     }
 
 }

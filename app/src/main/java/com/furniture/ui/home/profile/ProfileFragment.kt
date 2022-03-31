@@ -1,13 +1,11 @@
 package com.furniture.ui.home.profile
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.furniture.R
-import com.furniture.databinding.EditInterestFragmentBinding
 import com.furniture.databinding.FragmentProfileBinding
 import com.furniture.ui.home.HomeViewModel
 import dagger.android.support.DaggerFragment
@@ -34,7 +32,7 @@ class ProfileFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvInterest.adapter = AdapterInterests()
+        binding.rvInterest.adapter = AdapterInterests(requireContext())
         binding.rvAvailability.adapter = AdapterAvailability()
 
         binding.TextEditProfile.setOnClickListener {

@@ -25,7 +25,7 @@ data class Admin(
     val profilePhoto: String,
     val registrationDate: String,
     val role: String,
-    val socialNetwork: List<SocialNetwork>,
+    val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
     val userName: String
 ):Serializable , BaseObservable()

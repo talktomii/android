@@ -214,6 +214,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textView10"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
+
                 <TextView
                     android:id="@+id/txtFollow"
                     android:layout_width="wrap_content"
@@ -223,36 +224,17 @@
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="@+id/txtLocation"
                     app:layout_constraintTop_toBottomOf="@+id/txtLocation" />
-
-                <ImageView
-                    android:id="@+id/ivInsta"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSocialMedia"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/ic_insta"
-                    app:layout_constraintStart_toStartOf="@+id/txtFollow"
-                    app:layout_constraintTop_toBottomOf="@+id/txtFollow" />
-
-                <ImageView
-                    android:id="@+id/ivTwitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/ic_twitter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivInsta"
-                    app:layout_constraintStart_toEndOf="@+id/ivInsta"
-                    app:layout_constraintTop_toBottomOf="@+id/txtFollow" />
-
-                <ImageView
-                    android:id="@+id/ivTiktok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/ic_ticktock"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
-                    app:layout_constraintStart_toEndOf="@+id/ivTwitter"
-                    app:layout_constraintTop_toTopOf="@+id/ivTwitter" />
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="@+id/txtLocation"
+                    app:layout_constraintTop_toBottomOf="@+id/txtFollow"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_social_media"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

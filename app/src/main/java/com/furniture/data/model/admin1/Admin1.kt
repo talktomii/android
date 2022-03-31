@@ -14,7 +14,7 @@ data class Admin1(
     val coverPhoto: String,
     val customerId: String,
     val email: String,
-    val interest: List<Interest>,
+    val interest: ArrayList<Interest>,
     val isActive: Boolean,
     val isSocial: Boolean,
     val latestToken: String,
@@ -25,7 +25,7 @@ data class Admin1(
     val profilePhoto: String,
     val registrationDate: String,
     val role: Role,
-    val socialNetwork: List<SocialNetwork>,
+    val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
     val userName: String
 ) : Serializable, BaseObservable()

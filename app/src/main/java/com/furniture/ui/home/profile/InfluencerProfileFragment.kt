@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.furniture.data.model.admin.Payload
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.furniture.data.model.admin1.Admin1
 import com.furniture.databinding.FragmentInfluencerProfileBinding
+import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
-import com.furniture.interfaces.HomeInterface
 import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
@@ -21,9 +21,11 @@ import java.util.*
 import javax.inject.Inject
 
 
-class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterface {
+class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface {
 
     private lateinit var binding: FragmentInfluencerProfileBinding
+    private var socialMediaAdapter: AdapterMySocialMedias? = null
+    private var adapterInterests: AdapterInterests? = null
 
     @Inject
     lateinit var viewModel: HomeScreenViewModel
@@ -45,12 +47,26 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterfa
 
     private fun init() {
         viewModel.commonInterface = this
-        viewModel.homeInterface = this
+        viewModel.adminDetailInterface = this
         binding.lifecycleOwner = this
 
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
         }
+        initAdapter()
+    }
+
+    private fun initAdapter() {
+        socialMediaAdapter = AdapterMySocialMedias(requireContext())
+        binding.rvSocialMedia.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvSocialMedia.adapter = socialMediaAdapter
+
+        adapterInterests = AdapterInterests(requireContext())
+        binding.rvInterest.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvInterest.adapter = adapterInterests
+
 
     }
 
@@ -83,7 +99,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterfa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvInterest.adapter = AdapterInterests()
 
         setListener()
 
@@ -123,7 +138,19 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, HomeInterfa
     override fun onStarted() {
     }
 
-    override fun onHomeAdmins(payload: Admin1) {
-        binding.viewModel = payload.admin[0]
+
+    override fun onAdminDetails(admin: Admin1) {
+        socialMediaAdapter?.setItemList(admin.socialNetwork)
+        if (admin.interest.size > 0) {
+            binding.txtInterests.visibility = View.VISIBLE
+            adapterInterests?.setItemList(admin.interest)
+            binding.txtItemCount.visibility = View.VISIBLE
+        } else {
+            binding.txtInterests.visibility = View.GONE
+            binding.txtItemCount.visibility = View.GONE
+        }
+        binding.txtName.text = admin.name
+        binding.textView5.text = admin.userName
+        binding.txtLocation.text = admin.location
     }
 }

@@ -28,7 +28,7 @@ data class Admin1(
     val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
     val userName: String
-) : Serializable, BaseObservable()
+) : Serializable
 
 data class Role(
     val _id: String,

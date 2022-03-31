@@ -2,6 +2,7 @@ package com.furniture.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.ui.home.HomeViewModel
 import com.furniture.ui.loginSignUp.LoginViewModel
 
@@ -35,4 +36,11 @@ abstract class ViewModelsModule {
     @ViewModelKey(LoginViewModel::class)
     abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeScreenViewModel::class)
+    abstract fun homeScreenViewModel(viewModel: HomeScreenViewModel): ViewModel
+
 }
+
+//run please

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.furniture.data.model.admin1.Admin1
@@ -26,10 +27,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
     private var adapterInterests: AdapterInterests? = null
-
     @Inject
     lateinit var viewModel: HomeScreenViewModel
-
 
     private var horizontalCalendar: HorizontalCalendar? = null
 
@@ -40,7 +39,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
-
 
     }
 
@@ -95,10 +93,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     }
 
+//    try
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel2 = viewModel
 
         setListener()
 

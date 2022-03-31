@@ -12,6 +12,9 @@
         <variable
             name="viewModel1"
             type="com.furniture.viewmodel.UserViewModel" />
+        <variable
+            name="viewModel2"
+            type="com.furniture.ui.home.HomeScreenViewModel" />
 
     </data>
 
@@ -99,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="@{viewModel1.user.userName}"
+                android:text="@{viewModel2.userField.name}"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -113,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="@{viewModel1.user.name}"
+                android:text="@{viewModel2.userField.userName}"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
@@ -125,7 +128,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="Available"
+                android:text="@{viewModel2.userField.status.name}"
+                tools:text="Available"
                 android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -207,7 +211,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
-                    android:text="New York, USA"
+                    tools:text="New York, USA"
+                    android:text="@{viewModel2.userField.location}"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"

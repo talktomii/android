@@ -1,14 +1,10 @@
 package com.furniture.ui.home
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
-import com.furniture.data.model.admin.Admin
 import com.furniture.data.model.admin1.Admin1
 import com.furniture.data.network.Coroutines
-import com.furniture.data.network.responseUtil.Resource
-import com.furniture.di.SingleLiveEvent
 import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.HomeInterface
@@ -21,16 +17,14 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var homeInterface: HomeInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
     var commonInterface: CommonInterface? = null
-    private val adminData = ObservableField<Admin1>()
-    val adminProfile by lazy { SingleLiveEvent<Resource<Admin>>() }
-    val takePhoto = MutableLiveData<Admin1>()
-
+    var userField = ObservableField<Admin1>()
+    var username: ObservableField<String> = ObservableField()
 
     fun getInfluence(string: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                var authResponse = if (string.isEmpty()) {
+                val authResponse = if (string.isEmpty()) {
                     webService.getAllAdmin(AUTHORIZATION)
                 } else {
                     webService.getAdminByInterest(AUTHORIZATION, string)
@@ -57,10 +51,8 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 val authResponse = webService.getAdminByID(string, AUTHORIZATION)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
-                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
-//                        takePhoto.value =
-//                        UserViewModel().setUserViewModel(authResponse.body()!!.payload.admin[0])
-
+                        userField.set(authResponse.body()!!.payload.admin[0])
+                        username.set(authResponse.body()?.payload?.admin?.get(0)?.userName)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

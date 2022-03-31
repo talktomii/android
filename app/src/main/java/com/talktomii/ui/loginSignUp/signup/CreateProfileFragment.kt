@@ -43,6 +43,8 @@ class CreateProfileFragment : DaggerFragment() {
 
         }
 
+//        var email=requireArguments()["email"].toString()
+//        var password =requireArguments()["password"].toString()
         setListener()
     }
 

@@ -418,7 +418,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
+                        Timber.d("00000" + cards.value?.message)
                     }
                 }
 
@@ -453,7 +453,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
+                        Timber.d("00000" + cards.value?.message)
                     }
                 }
 
@@ -487,7 +487,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
+                        Timber.d("00000" + cards.value?.message)
                     }
                 }
 

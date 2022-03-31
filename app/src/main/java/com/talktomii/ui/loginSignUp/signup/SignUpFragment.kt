@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
@@ -17,8 +18,10 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
+
 class SignUpFragment : DaggerFragment() {
     private lateinit var binding: FragmentSignUpBinding
+
 
     @Inject
     lateinit var viewModel: LoginViewModel
@@ -27,6 +30,7 @@ class SignUpFragment : DaggerFragment() {
     @Inject
     lateinit var prefsManager: PrefsManager
     val hashMap: HashMap<String, String> = HashMap()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +41,7 @@ class SignUpFragment : DaggerFragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
@@ -46,6 +51,7 @@ class SignUpFragment : DaggerFragment() {
 
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment)
+//                bundleOf("email" to binding.txtEmail,"password" to binding.edPassword))
 
         }
     }

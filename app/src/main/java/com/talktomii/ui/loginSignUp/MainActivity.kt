@@ -47,7 +47,7 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // save login token here
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTAzLTMxVDA0OjM5OjA2Ljc4OFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg3MDE1NDZ9.kBj2pBSZFZhymsEHpMLaJtPGTeT1nlXi77q0VzoZlQ0"
+        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTAzLTMxVDA2OjUyOjUzLjYyOFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg3MDk1NzN9.LQRWUaDJj9F7bKw4BVEI3RxzzDyS9KhYq5T9zfmyxmM"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)

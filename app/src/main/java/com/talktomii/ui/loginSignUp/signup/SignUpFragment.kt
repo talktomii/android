@@ -36,7 +36,7 @@ class SignUpFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+// Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,11 +47,11 @@ class SignUpFragment : DaggerFragment() {
         init()
         setListener()
         setSpannable()
-        bindObservers()
+// bindObservers()
 
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment)
-//                bundleOf("email" to binding.txtEmail,"password" to binding.edPassword))
+            findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment,
+                bundleOf("email" to binding.txtEmail,"password" to binding.edPassword))
 
         }
     }
@@ -71,27 +71,27 @@ class SignUpFragment : DaggerFragment() {
         }
     }
 
-//    private fun validation(number: String, email: String): Boolean {
-//        return when {
-//            number.isEmpty() -> {
-//                binding.etMobile.showSnackBar(getString(R.string.validation_number))
-//                false
-//            }
-//            number.length < 6 -> {
-//                binding.etMobile.showSnackBar(getString(R.string.validation_number_lenght))
-//                false
-//            }
-//            email.isEmpty() -> {
-//                binding.etEmail.showSnackBar(getString(R.string.validation_email))
-//                false
-//            }
-//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                binding.etEmail.showSnackBar(getString(R.string.validation_email_address))
-//                false
-//            }
-//            else -> true
-//        }
-//    }
+// private fun validation(number: String, email: String): Boolean {
+// return when {
+// number.isEmpty() -> {
+// binding.etMobile.showSnackBar(getString(R.string.validation_number))
+// false
+// }
+// number.length < 6 -> {
+// binding.etMobile.showSnackBar(getString(R.string.validation_number_lenght))
+// false
+// }
+// email.isEmpty() -> {
+// binding.etEmail.showSnackBar(getString(R.string.validation_email))
+// false
+// }
+// !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+// binding.etEmail.showSnackBar(getString(R.string.validation_email_address))
+// false
+// }
+// else -> true
+// }
+// }
 
 
     private fun bindObservers() {
@@ -103,7 +103,7 @@ class SignUpFragment : DaggerFragment() {
                     requireContext().showMessage(getString(R.string.otp_send_successful))
                     val bundle = Bundle()
                     bundle.putSerializable(HASHMAP_KEY, hashMap)
-//                    findNavController().navigate(R.id.otpFragment, bundle)
+// findNavController().navigate(R.id.otpFragment, bundle)
                     viewModel.getSendOtp.value = null
                 }
 

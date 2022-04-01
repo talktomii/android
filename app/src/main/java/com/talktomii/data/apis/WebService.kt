@@ -7,6 +7,7 @@ import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
 import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,6 +15,7 @@ import retrofit2.http.*
 interface WebService {
     companion object {
         private const val ADD_CARD = "card/addCard"
+        private const val REGISTER = "admin/signup"
         private const val DELETE_CARD_ITEM = "card/deleteCard/"
         private const val GET_CARDS = "card/getCardByuid/623d9832f521ab28b8f8373a"
         private const val ADD_WALLET = "walletHistory/addWalletHistory"
@@ -52,4 +54,11 @@ interface WebService {
     fun getCurrentAmount(
         @Header("Authorization") auth : String
     ): Call<CurrentWalletPaylod>
+
+
+    @Multipart
+    @POST(REGISTER)
+    fun createProfile(
+        @PartMap map: HashMap<String, RequestBody>
+    ): Call<ApiResponse<Any>>
 }

@@ -27,18 +27,20 @@
         <activity
             android:name=".VideoActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.FurnitureMarket.NoActionBar" />
+
         <activity
             android:name=".ui.loginSignUp.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- <activity -->

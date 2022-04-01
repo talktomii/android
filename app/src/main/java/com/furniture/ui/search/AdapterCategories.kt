@@ -17,28 +17,23 @@ class AdapterCategories(private var context: Context, private var listener: Sear
 
     class ViewHolder(val binding: ItemCategoriesBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): AdapterCategories.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterCategories.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemCategoriesBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
-
     override fun getItemCount(): Int {
         return interestArrayList.size
     }
 
-
     fun setImagesList(interest: ArrayList<Interest>) {
-        this.interestArrayList.clear()
         this.interestArrayList = interest
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var model = interestArrayList.get(position)
 //        if (position % 3 == 0) {
 //            Glide.with(context).load(interestArrayList[position].image)
 //                .apply(RequestOptions().override(MATCH_PARENT, 400))
@@ -48,8 +43,8 @@ class AdapterCategories(private var context: Context, private var listener: Sear
 //                .apply(RequestOptions().override(MATCH_PARENT, 350))
 //                .into(holder.binding.iVImage)
 //        }
-        Glide.with(context).load(interestArrayList[position].image).into(holder.binding.iVImage)
-        holder.binding.txtStatus.text = interestArrayList[position].name
+        Glide.with(context).load(model.image).into(holder.binding.iVImage)
+        holder.binding.txtStatus.text = model.name
 
         holder.binding.constraintItemCategory.setOnClickListener(View.OnClickListener {
             listener.onViewSearchClick(interestArrayList[position])

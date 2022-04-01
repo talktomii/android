@@ -3,7 +3,6 @@ package com.furniture.ui.loginSignUp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -11,8 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.furniture.R
 import com.furniture.databinding.ActivityMainBinding
-import com.furniture.ui.home.homeFragment.HomeFragment
-import com.furniture.ui.home.profile.ProfileFragment
 import com.furniture.utlis.LocaleHelper
 import com.furniture.utlis.PrefsManager
 import dagger.android.support.DaggerAppCompatActivity
@@ -53,20 +50,15 @@ class MainActivity : DaggerAppCompatActivity() {
                 when (item.itemId) {
                     R.id.nav_profile -> {
                         viewModel.navController.navigate(R.id.profileFragment)
-
                     }
-
 
                     R.id.nav_home -> {
-
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
-
 
                     R.id.nav_search -> {
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
-
 
                     R.id.nav_appointments -> {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
@@ -83,11 +75,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
         }
 
-
         binding.btnMenu.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
-
             } else {
                 binding.drawerLayout.openDrawer(binding.navigationView)
             }
@@ -101,7 +91,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment
+                destination.id == R.id.notificationFragment ||
+                destination.id == R.id.bookmarkFragment
 
             ) {
 
@@ -117,6 +108,13 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
+
+        //drawer
+        binding.txtBookmarks.setOnClickListener {
+            viewModel.navController.navigate(R.id.bookmarkFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -124,4 +122,5 @@ class MainActivity : DaggerAppCompatActivity() {
         val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
+
 }

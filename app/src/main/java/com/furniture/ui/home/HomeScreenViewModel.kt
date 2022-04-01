@@ -1,5 +1,7 @@
 package com.furniture.ui.home
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
@@ -18,6 +20,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var adminDetailInterface: AdminDetailInterface? = null
     var commonInterface: CommonInterface? = null
     var userField = ObservableField<Admin1>()
+    var bookMark = ObservableField<Boolean>()
 
     fun getInfluence(string: String) {
         commonInterface!!.onStarted()
@@ -51,6 +54,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
+                        bookMark.set(authResponse.body()!!.payload.admin[0].isBookmark)
                         userField.set(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
@@ -63,6 +67,60 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
             }
         }
     }
+
+    fun addBookmark() {
+
+        var hashMap: HashMap<String, Any> = hashMapOf()
+        hashMap.put("ifid", userField.get()!!._id)
+
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.addFavourite(hashMap, AUTHORIZATION)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            bookMark.set(true)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun removeBookmark() {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.removeBookmark(userField.get()!!._id, AUTHORIZATION)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            bookMark.set(false)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    @BindingAdapter("android:src")
+    fun setImageViewResource(imageView: ImageView, resource: Int) {
+        imageView.setImageResource(resource)
+    }
+
 
 }
 

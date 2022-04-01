@@ -8,10 +8,10 @@ import javax.inject.Inject
 
 class EditPersonalInfoVM @Inject constructor() : ViewModel() {
 
-
-    fun onClick(view:View){
-        when(view.id){
+    fun onClick(view: View) {
+        when (view.id) {
             R.id.ivBack, R.id.tvBack -> view.findNavController().popBackStack()
         }
     }
+
 }

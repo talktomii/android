@@ -35,7 +35,10 @@ const val USER_DATA = "user data"
 const val USER_LANGUAGE = "user language"
 const val PUSH_DATA = "PUSH_DATA"
 const val SUCESS = "200"
-const val AUTHORIZATION ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTAzLTMxVDEwOjAyOjI5LjY0NFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODcyMDk0OX0.xmzM95Xs8Jd9VPJTCKfXZA5WmneNPoDM2Vrol8PT-1E"
+const val AUTHORIZATION =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTA0LTAxVDExOjMxOjEzLjA0NFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODgxMjY3M30.rce8Iv193dT67vYJPwMbLQ-GtweJcMbNjLbh97E4uN0"
+
+const val uid = "623dac1b6ee1ef298842b9ad"
 
 object ITEM_VIEW_TYPE {
     const val MOST_POPULAR = 1

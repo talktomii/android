@@ -49,34 +49,34 @@
     <fragment
         android:id="@+id/tellUsMore"
         android:name="com.furniture.ui.tellusmore.TellUsMore"
-        android:label="TellUsMore" >
+        android:label="TellUsMore">
         <action
             android:id="@+id/action_tellUsMore_to_editPersonalInfo"
             app:destination="@id/editPersonalInfo" />
         <argument
             android:name="isUser"
-            app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_tellUsMore_to_homeFragment"
             app:destination="@id/homeFragment" />
 
-<!--        <action-->
-<!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
-<!--            app:destination="@id/homeInfluencerFragment" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
+        <!--            app:destination="@id/homeInfluencerFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/editPersonalInfo"
         android:name="com.furniture.ui.editpersonalinfo.EditPersonalInfo"
-        android:label="EditPersonalInfo" >
-<!--        <action-->
-<!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
-<!--            app:destination="@id/homeFragment" />-->
+        android:label="EditPersonalInfo">
+        <!--        <action-->
+        <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
+        <!--            app:destination="@id/homeFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.furniture.ui.homefrag.HomesFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
 
         <action
             android:id="@+id/action_home_to_influencer_profile"
@@ -90,7 +90,7 @@
     <fragment
         android:id="@+id/influencerProfileFragment"
         android:name="com.furniture.ui.home.profile.InfluencerProfileFragment"
-        android:label="InfluencerProfileFragment" >
+        android:label="InfluencerProfileFragment">
 
         <action
             android:id="@+id/action_influencer_profile_to_call_fragmnet"
@@ -134,13 +134,13 @@
         android:id="@+id/appointmentsFragment"
         android:name="com.furniture.ui.appointment.AppointmentsFragment"
         android:label="fragment_appointments"
-        tools:layout="@layout/fragment_appointments"/>
+        tools:layout="@layout/fragment_appointments" />
 
     <fragment
         android:id="@+id/myBudgesFragment"
         android:name="com.furniture.ui.home.profile.MyBudgesFragment"
         android:label="fragment_myBudges"
-        tools:layout="@layout/fragment_my_badges"/>
+        tools:layout="@layout/fragment_my_badges" />
 
     <fragment
         android:id="@+id/forgetPasswordFragment"
@@ -168,31 +168,42 @@
         android:id="@+id/resetPasswordFragment"
         android:name="com.furniture.ui.loginSignUp.login.FragmentResetPassword"
         android:label="fragment_restPassword"
-        tools:layout="@layout/fragment_reset_password"/>
+        tools:layout="@layout/fragment_reset_password" />
 
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.furniture.ui.home.notifications.NotificationFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_notifications"/>
+        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/homeInfluencerFragment"
         android:name="com.furniture.ui.homefrag.InfluencerHomeFragment"
         android:label="fragment_home_influencer"
-        tools:layout="@layout/fragment_home_influencer"/>
+        tools:layout="@layout/fragment_home_influencer" />
 
     <fragment
         android:id="@+id/callFragment"
         android:name="com.furniture.ui.home.profile.CallFragment"
         android:label="fragment_call"
-        tools:layout="@layout/fragment_call"/>
+        tools:layout="@layout/fragment_call" />
 
     <fragment
         android:id="@+id/callEndFragment"
         android:name="com.furniture.ui.home.profile.CallEndFragment"
         android:label="fragment_callEnd"
-        tools:layout="@layout/call_end_fragment"/>
+        tools:layout="@layout/call_end_fragment" />
+
+    <!--    drawer-->
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.furniture.ui.drawer.bookmark.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_influencerProfileFragment"
+            app:destination="@id/influencerProfileFragment" />
+    </fragment>
 
 
 </navigation>

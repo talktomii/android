@@ -10,10 +10,6 @@
             type="com.furniture.data.model.admin.Admin" />
 
         <variable
-            name="viewModel1"
-            type="com.furniture.viewmodel.UserViewModel" />
-
-        <variable
             name="viewModel2"
             type="com.furniture.ui.home.HomeScreenViewModel" />
 
@@ -59,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:src="@drawable/ic_bookmark"
+                    android:src="@{viewModel2.bookMark?@drawable/ic_bookmark:@drawable/apple}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

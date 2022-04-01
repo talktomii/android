@@ -3,6 +3,7 @@ package com.furniture.di
 import com.furniture.VideoActivity
 import com.furniture.databinding.TermsAndConditionsDialogBinding
 import com.furniture.ui.appointment.AppointmentsFragment
+import com.furniture.ui.drawer.bookmark.BookmarkFragment
 import com.furniture.ui.editpersonalinfo.EditPersonalInfo
 import com.furniture.ui.home.HomeActivity
 import com.furniture.ui.home.homeFragment.HomeFragment
@@ -124,5 +125,9 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun homeFragment(): HomeFragment
 
+
+    //drawer
+    @ContributesAndroidInjector
+    abstract fun bookmarkfragment(): BookmarkFragment
 
 }

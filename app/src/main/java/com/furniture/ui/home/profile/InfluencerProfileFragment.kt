@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.furniture.R
 import com.furniture.data.model.admin1.Admin1
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.interfaces.AdminDetailInterface
@@ -26,27 +27,22 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
     private var adapterInterests: AdapterInterests? = null
+
     @Inject
     lateinit var viewModel: HomeScreenViewModel
 
     private var horizontalCalendar: HorizontalCalendar? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
-
     }
-
 
     private fun init() {
         viewModel.commonInterface = this
         viewModel.adminDetailInterface = this
         binding.lifecycleOwner = this
-
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
         }
@@ -63,8 +59,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.rvInterest.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvInterest.adapter = adapterInterests
-
-
     }
 
     private fun setListener() {
@@ -89,6 +83,15 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 ?.navigate(com.furniture.R.id.action_influencer_profile_to_call_fragmnet)
         }
 
+        binding.ivBookMark.setOnClickListener {
+            if (viewModel.userField.get()!!.isBookmark) {
+                viewModel.removeBookmark()
+                binding.ivBookMark.setImageResource(R.drawable.apple)
+            } else {
+                viewModel.addBookmark()
+                binding.ivBookMark.setImageResource(R.drawable.ic_bookmark)
+            }
+        }
 
     }
 
@@ -101,12 +104,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         setListener()
 
-
         val endDate: Calendar = Calendar.getInstance()
         endDate.add(Calendar.MONTH, 1)
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
-
 
         horizontalCalendar =
             HorizontalCalendar.Builder(requireActivity(), com.furniture.R.id.calendarView)
@@ -119,7 +120,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
 
             override fun onDateSelected(date: Calendar?, position: Int) {
-
 
             }
         }

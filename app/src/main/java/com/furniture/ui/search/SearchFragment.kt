@@ -25,15 +25,11 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     lateinit var viewModel: SearchViewModel
     private var adapterCategories: AdapterCategories? = null
     private val search: String = ""
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = SearchFragmentBinding.inflate(inflater, container, false)
         initAdapter()
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +40,6 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     private fun initAdapter() {
         adapterCategories = AdapterCategories(requireContext(), this)
         binding.rvCategories.adapter = adapterCategories
-
     }
 
     private fun init() {
@@ -75,6 +70,7 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     }
 
     override fun onSearchAllInstruction(data: Payload) {
+        adapterCategories?.interestArrayList = arrayListOf()
         adapterCategories!!.setImagesList(data.interest)
     }
 

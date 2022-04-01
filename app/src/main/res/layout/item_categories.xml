@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:id="@+id/constraintItemCategory"
-        android:layout_height="250dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginBottom="15dp">
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        app:cardCornerRadius="8px"
+        app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/iVImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_sample" />
+        <RelativeLayout
+            android:id="@+id/constraintItemCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_trans_white_background"
-            app:layout_constraintBottom_toBottomOf="@+id/iVImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/txtStatus"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/iVImage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Relationship" />
+                tools:src="@drawable/ic_sample" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trans_white"
+                android:gravity="left|center">
+                <!--            android:background="@drawable/bg_trans_white_background"-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Relationship" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

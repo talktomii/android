@@ -9,5 +9,4 @@ interface HomeInterface {
 
 interface AdminDetailInterface{
     fun onAdminDetails(admin1: Admin1)
-
 }

@@ -217,7 +217,7 @@
     <string name="newrules">New Rules</string>
     <string name="chat">Chat with Support</string>
     <string name="delete_card">53****1234 card has deleted</string>
-    <string name="delete_card1">Are you sure that you want to delete 53****1234 card?</string>
+    <string name="delete_card1">Are you sure that you want to delete</string>
     <string name="income_detail">Income Details</string>
     <string name="platformfee">Platform Fee</string>
     <string name="tips">Tips</string>
@@ -231,4 +231,5 @@
     <string name="confirm_block">Ronald Richards has blocked</string>
     <string name="call_invoice">Call Invoice</string>
     <string name="report_abuse">Report Abuse</string>
+    <string name="delete_bank">Are you sure that you want to delete bank details of </string>
 </resources>

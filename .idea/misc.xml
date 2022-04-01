@@ -197,6 +197,9 @@
         <entry key="app/src/main/res/layout/my_bank_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/my_cards.xml" value="0.14" />
         <entry key="app/src/main/res/layout/my_wallet.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/mybank_delete_popup.xml" value="0.15729166666666666" />
+        <entry key="app/src/main/res/layout/mybank_item.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/mybank_popup.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/layout/mycard_delete_popup.xml" value="0.33" />
         <entry key="app/src/main/res/layout/mycard_popup.xml" value="0.33" />
         <entry key="app/src/main/res/layout/mycards_item.xml" value="0.33" />
@@ -210,6 +213,7 @@
         <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/wallet_earning_item.xml" value="0.16513157894736843" />
         <entry key="app/src/main/res/layout/wallet_refill_item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/bank_popup.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/menu/call_history_popup.xml" value="0.12760416666666666" />
         <entry key="app/src/main/res/menu/clear_history_popup.xml" value="0.12760416666666666" />

@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dp_20"
     android:layout_gravity="center"
+    android:layout_marginStart="@dimen/dp_20"
     android:layout_marginEnd="@dimen/dp_20"
     app:cardBackgroundColor="#F9F8FC"
     app:cardCornerRadius="@dimen/dp_20">
@@ -16,17 +16,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="52dp"
-            android:layout_height="@dimen/dp_36"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/dp_8"
-            android:src="@drawable/info_icon"></androidx.appcompat.widget.AppCompatImageView>
+            android:gravity="center"
+            >
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="52dp"
+                android:layout_height="@dimen/dp_36"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/add_bank_account_icon" />
+        </RelativeLayout>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/displayCardNumber"
+            android:id="@+id/bankdetailDeletedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,7 +42,6 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:fontFamily="@font/inter_regular"
             android:gravity="center"
-            android:text="@string/delete_card1"
             android:textColor="#323F4B"
             android:textFontWeight="700"
             android:textSize="@dimen/dp_16">
@@ -56,7 +61,7 @@
             >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cancel_btn"
+                android:id="@+id/closeBankPopup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -67,27 +72,6 @@
                 android:layout_weight="1"
                 android:text="Cancel"
                 android:textColor="#323F4B"
-                android:textFontWeight="400"
-                android:textSize="@dimen/dp_16">
-
-            </androidx.appcompat.widget.AppCompatTextView>
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/gray"
-                tools:layout_editor_absoluteX="10dp" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/deleteCardBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_15"
-                android:fontFamily="@font/inter_regular"
-                android:gravity="center"
-                android:text="Delete"
-                android:textColor="#D82F4E"
                 android:textFontWeight="400"
                 android:textSize="@dimen/dp_16">
 

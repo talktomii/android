@@ -33,7 +33,13 @@ import com.talktomii.ui.mywallet.models.addWalletData
 import org.json.JSONObject
 import android.widget.Toast
 import com.facebook.FacebookSdk.getApplicationContext
+import com.talktomii.adapter.MyBankAdapter
 import com.talktomii.adapter.MyPaymentAdapter
+import com.talktomii.ui.banksettings.BankItemModel
+import com.talktomii.ui.banksettings.MyBankSettings
+import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
+import com.talktomii.ui.banksettings.models.BankData
+import com.talktomii.ui.banksettings.models.addBankData
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.RefillFragment
@@ -49,6 +55,7 @@ import com.talktomii.ui.mycards.PaymentItemsViewModel
 import com.talktomii.ui.mycards.fragments.PaymentFragment
 import com.talktomii.ui.mycards.model.PaymentPayload
 import java.text.ParseException
+import java.util.logging.Handler
 
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
@@ -59,8 +66,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     val wallets by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
     val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
+    val deleteBank by lazy { SingleLiveEvent<Resource<Any>>() }
     private var context: Context? = null
     val payments by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
+    val banks by lazy { SingleLiveEvent<Resource<BankData>>() }
 
     fun ViewModelFactory(context: Context?) {
         this.context = context
@@ -540,7 +549,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 println(newDate)
                                 Log.e("Date", i.toString())
                                 var paymentId = ""
-                                if(i.paymentId != null){
+                                if (i.paymentId != null) {
                                     paymentId = i.paymentId!!
                                 }
                                 dataList.add(
@@ -579,6 +588,207 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 override fun onFailure(call: Call<PaymentPayload>, t: Throwable) {
                     payments.value = Resource.error(ApiUtils.failure(t))
 
+                }
+
+            })
+    }
+
+    fun getBank() {
+        banks.value = Resource.loading()
+        Log.d("token bank: ", MainActivity.retrivedToken)
+        val dataList = ArrayList<BankItemModel>()
+        webService.getBank("Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<BankData> {
+                override fun onResponse(
+                    call: Call<BankData>,
+                    response: Response<BankData>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    if (response.isSuccessful) {
+                        Log.d("success here : ", "yesssss")
+                        val data = response.body()!!.payload
+                        for (i in data!!.BANK) {
+                            try {
+                                dataList.add(
+                                    BankItemModel(
+                                        i.Id!!,
+                                        i.holderName!!.toUpperCase(),
+                                        i.bankType!!,
+                                        i.routingNumber!!,
+                                        i.accountNumber!!
+                                    )
+                                )
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+                        Log.d("datalist bank data : ", " j " + dataList.toString())
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        MyBankSettings.recycleview.layoutManager = layoutManager
+                        val adapter = MyBankAdapter(dataList, webService)
+                        MyBankSettings.recycleview.adapter = adapter
+                        MyBankSettings.progress.visibility = View.GONE
+                        MyBankSettings.recycleview.visibility = View.VISIBLE
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        banks.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<BankData>, t: Throwable) {
+                    Log.d("bank failed : ", " : " + t.message)
+                    banks.value = Resource.error(ApiUtils.failure(t))
+
+                }
+
+            })
+    }
+
+    fun addBank(hashMap: HashMap<String, String>) {
+        addWallet.value = Resource.loading()
+        webService.addBank("Bearer " + MainActivity.retrivedToken, hashMap)
+            .enqueue(object : Callback<ApiResponse<addBankData>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<addBankData>>,
+                    response: Response<ApiResponse<addBankData>>
+                ) {
+                    if (response.isSuccessful) {
+                        AddBankAccountActivity.progress.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            AddBankAccountActivity.layout!!,
+                            response.body()!!.message!!,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        AddBankAccountActivity.finishFunction()
+                        getBank()
+                    } else {
+                        addWallet.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        val data = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout!!,
+                                "Something wrong",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        } catch (e: Exception) {
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout!!,
+                                "Something wrong",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<addBankData>>, t: Throwable) {
+                    addWallet.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+    fun deleteBank(id: String) {
+        deleteBank.value = Resource.loading()
+        webService.deleteBank(id, "Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == 200) {
+                            Log.d("Response ------", response.body()!!.data.toString())
+//                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
+                            deleteBank.value = Resource.success(response.body()?.detail)
+                        } else deleteBank.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.body()?.message
+                            )
+                        )
+                    } else {
+                        deleteBank.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    deleteBank.value = Resource.error(ApiUtils.failure(t))
+                }
+            })
+    }
+
+    fun updateBank(id : String,hashMap: HashMap<String, String>) {
+        addWallet.value = Resource.loading()
+        webService.updateBank(id,"Bearer " + MainActivity.retrivedToken, hashMap)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        val snackbar = Snackbar.make(
+                            AddBankAccountActivity.layout!!,
+                            response.body()!!.message!!,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        AddBankAccountActivity.progress.visibility = View.GONE
+                        AddBankAccountActivity.finishFunction()
+                        getBank()
+                    } else {
+                        addWallet.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        val data = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout!!,
+                                "Something wrong",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        } catch (e: Exception) {
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout!!,
+                                "Something wrong",
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    addWallet.value = Resource.error(ApiUtils.failure(t))
                 }
 
             })

@@ -26,7 +26,7 @@
             android:src="@drawable/info_icon"></androidx.appcompat.widget.AppCompatImageView>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/displayCardNumber"
+            android:id="@+id/deleteBankDetailText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -36,7 +36,6 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:fontFamily="@font/inter_regular"
             android:gravity="center"
-            android:text="@string/delete_card1"
             android:textColor="#323F4B"
             android:textFontWeight="700"
             android:textSize="@dimen/dp_16">
@@ -56,7 +55,7 @@
             >
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cancel_btn"
+                android:id="@+id/CancelBankBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -77,7 +76,7 @@
                 android:background="@color/gray"
                 tools:layout_editor_absoluteX="10dp" />
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/deleteCardBtn"
+                android:id="@+id/deleteBankBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

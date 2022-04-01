@@ -9,7 +9,6 @@ import javax.inject.Inject
 class MyPaymentsVM @Inject constructor() : ViewModel() {
 
     val mypaymentAdapter by lazy { RecyclerAdapter<PaymentItemsViewModel>(R.layout.mypayments_item) }
-
 }
 
 data class PaymentItemsViewModel(

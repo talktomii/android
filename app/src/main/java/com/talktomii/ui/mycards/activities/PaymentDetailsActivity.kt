@@ -1,17 +1,20 @@
 package com.talktomii.ui.mycards.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import com.talktomii.R
 import com.talktomii.databinding.ActivityPaymentDetailsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 import dagger.android.support.DaggerAppCompatActivity
-import java.util.*
 import android.os.Environment
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.view.View
 import android.widget.Toast
 import com.itextpdf.text.Document
@@ -19,26 +22,40 @@ import com.itextpdf.text.Image
 import com.itextpdf.text.pdf.PdfWriter
 import java.io.*
 import java.lang.Exception
-import android.content.ActivityNotFoundException
-import android.net.Uri
-import android.util.Log
 import com.itextpdf.text.pdf.PdfReader
 import com.itextpdf.text.pdf.PdfImportedPage
 import android.view.View.MeasureSpec
 import android.util.DisplayMetrics
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.LinearLayout
-import androidx.print.PrintHelper
 import com.itextpdf.text.PageSize
+import com.talktomii.R
+import android.widget.LinearLayout
+import android.view.WindowManager
+import com.talktomii.ui.loginSignUp.MainActivity
+
+import android.content.ActivityNotFoundException
+import android.net.Uri
+import androidx.core.content.FileProvider
+
+import android.os.Build
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+
+
+
 
 
 class PaymentDetailsActivity : DaggerAppCompatActivity() {
 
     lateinit var binding: ActivityPaymentDetailsBinding
 
+    private var llScroll: LinearLayout? = null
+    private var bitmap: Bitmap? = null
+
+    private val mBottomSheetBehavior: BottomSheetBehavior<*>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment_details)
+        llScroll = binding.printdata
         binding.headerLayout.setOnClickListener {
             finish()
         }
@@ -47,12 +64,12 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
         binding.paymentType.text = intent.getStringExtra("type")
         binding.paymentAmount.text = intent.getStringExtra("amount")!!.replace("-", "")
         binding.repeatPaymentLayout.setOnClickListener {
-            val intent = Intent(this,RefillWalletActivity::class.java)
-            intent.putExtra("repeatamount",binding.paymentAmount.text.toString().replace("$",""))
+            val intent = Intent(this, RefillWalletActivity::class.java)
+            intent.putExtra("repeatamount", binding.paymentAmount.text.toString().replace("$", ""))
             startActivity(intent)
         }
         binding.refundPaymentLayout.setOnClickListener {
-            val dialog = BottomSheetDialog(this)
+            val dialog = BottomSheetDialog(this,R.style.MyTransparentBottomSheetDialogTheme)
             val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
             val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
             btnClose.setOnClickListener {
@@ -63,8 +80,11 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
             dialog.show()
         }
         binding.downloadReceipt.setOnClickListener {
+//            bitmap = loadBitmapFromView(llScroll!!, 400, 800)
+//            createPdf()
             layoutToImage(binding.printdata)
             imageToPDF()
+            openGeneratedPDF()
         }
     }
 
@@ -73,20 +93,22 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
 
         view.setDrawingCacheEnabled(true)
         view.measure(
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+            MeasureSpec.makeMeasureSpec(view.width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(view.height, MeasureSpec.AT_MOST)
         )
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight())
 
         view.buildDrawingCache(true)
         val bm: Bitmap = Bitmap.createBitmap(view.getDrawingCache())
         view.setDrawingCacheEnabled(false) // clear drawing cache
-//        val bm: Bitmap = view.getDrawingCache()
         val share = Intent(Intent.ACTION_SEND)
         share.type = "image/jpeg"
         val bytes = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val f = File(Environment.getExternalStorageDirectory().toString() + File.separator.toString() + "image.jpg")
+        val f = File(
+            Environment.getExternalStorageDirectory()
+                .toString() + File.separator.toString() + "image.jpg"
+        )
         try {
             f.createNewFile()
             val fo = FileOutputStream(f)
@@ -101,9 +123,9 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
         try {
             val document = Document(PageSize.A4, 36F, 36F, 36F, 36F)
             dirpath = Environment.getExternalStorageDirectory().toString()
-            val writer : PdfWriter = PdfWriter.getInstance(
+            PdfWriter.getInstance(
                 document,
-                FileOutputStream("$dirpath/NewPDF.pdf")
+                FileOutputStream("$dirpath/pdffromScroll.pdf")
             ) //  Change pdf's name.
 
             document.open()
@@ -130,20 +152,33 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
             document.add(img)
             document.close()
             Toast.makeText(this, "PDF Generated successfully!..", Toast.LENGTH_SHORT).show()
-            val pdfReader = PdfReader("$dirpath/NewPDF.pdf")
-            val image = Image.getInstance("image.jpg")
-            val n: Int = pdfReader.getNumberOfPages()
-            var page: PdfImportedPage
-            // Traversing through all the pages
-            // Traversing through all the pages
-            for (i in 1..n) {
-                page = writer.getImportedPage(pdfReader, i)
-                val instance = Image.getInstance(page)
-                //Save a specific page threshold for displaying in a scroll view inside your App
-            }
-            document.close()
 
         } catch (e: Exception) {
+        }
+    }
+
+    private fun openGeneratedPDF() {
+        val file = File("$dirpath/pdffromScroll.pdf")
+        if (file.exists()) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val apkURI =
+                    FileProvider.getUriForFile(applicationContext, "$packageName.provider", file)
+                intent.setDataAndType(apkURI, "application/pdf")
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), "application/pdf")
+            }
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(
+                    this,
+                    "No Application available to view pdf",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 

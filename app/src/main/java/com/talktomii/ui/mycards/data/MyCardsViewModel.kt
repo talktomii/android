@@ -40,6 +40,8 @@ import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
+import com.talktomii.ui.coupon.CouponActivity
+import com.talktomii.ui.coupon.models.CouponData
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.RefillFragment
@@ -793,4 +795,46 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
+    fun addCoupon(name : String) {
+        webService.addCoupon(name,"Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<CouponData> {
+                override fun onResponse(
+                    call: Call<CouponData>,
+                    response: Response<CouponData>
+                ) {
+                    if (response.isSuccessful) {
+                        val snackbar = Snackbar.make(
+                            CouponActivity.layout,
+                            response.body()!!.message!!,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        CouponActivity.progress.visibility = View.GONE
+                        CouponActivity.finishFunction()
+                    } else {
+                        val snackbar = Snackbar.make(
+                            CouponActivity.layout,
+                           "Something Wrong",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        CouponActivity.progress.visibility = View.GONE
+                    }
+                }
+
+                override fun onFailure(call: Call<CouponData>, t: Throwable) {
+                    val snackbar = Snackbar.make(
+                        CouponActivity.layout,
+                        "Coupon Not Added",
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                    CouponActivity.progress.visibility = View.GONE
+                }
+
+            })
+    }
 }
+
+

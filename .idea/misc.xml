@@ -104,10 +104,12 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.36512820512820515" />
         <entry key="app/src/main/res/drawable/back_arrow.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/drawable/back_arrow1.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/drawable/back_select.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable/back_tabs.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable/back_tabs_wallet.xml" value="0.17532894736842106" />
         <entry key="app/src/main/res/drawable/bg_accent_border_strock.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_back_background.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/drawable/bg_black_border_strock.xml" value="0.3302564102564103" />
         <entry key="app/src/main/res/drawable/bg_bottomsheet_card.xml" value="0.1421875" />
         <entry key="app/src/main/res/drawable/bg_bottomsheet_data.xml" value="0.1421875" />
@@ -132,6 +134,7 @@
         <entry key="app/src/main/res/drawable/bg_wallet_gradient.xml" value="0.16085526315789472" />
         <entry key="app/src/main/res/drawable/bg_white_button.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/blue_drak_background.xml" value="0.32864583333333336" />
+        <entry key="app/src/main/res/drawable/button_selector_squar.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/drawable/g_scan_card_rounder.xml" value="0.16354166666666667" />
         <entry key="app/src/main/res/drawable/round_corner_card.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tab_color_selector.xml" value="0.20364583333333333" />
@@ -145,6 +148,8 @@
         <entry key="app/src/main/res/layout/activity_cart.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/activity_chat_support.xml" value="0.21" />
         <entry key="app/src/main/res/layout/activity_choose_product_type.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/activity_coupon.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_demo.xml" value="0.11666666666666667" />
         <entry key="app/src/main/res/layout/activity_get_paid.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_income_details.xml" value="0.296195652173913" />
@@ -171,6 +176,7 @@
         <entry key="app/src/main/res/layout/confirm_block_user_popup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/edit_interest_fragment.xml" value="0.22192028985507245" />
         <entry key="app/src/main/res/layout/edit_personal_info_fragment.xml" value="0.17889492753623187" />
+        <entry key="app/src/main/res/layout/fragment_appointments.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_booking_list.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_bookings.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.1875" />
@@ -196,7 +202,7 @@
         <entry key="app/src/main/res/layout/item_payment_method.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/my_bank_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/my_cards.xml" value="0.14" />
-        <entry key="app/src/main/res/layout/my_wallet.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/my_wallet.xml" value="0.33" />
         <entry key="app/src/main/res/layout/mybank_delete_popup.xml" value="0.15729166666666666" />
         <entry key="app/src/main/res/layout/mybank_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/mybank_popup.xml" value="0.15729166666666666" />
@@ -211,6 +217,7 @@
         <entry key="app/src/main/res/layout/settings.xml" value="0.11" />
         <entry key="app/src/main/res/layout/tell_us_more.xml" value="0.2" />
         <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/test_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/wallet_earning_item.xml" value="0.16513157894736843" />
         <entry key="app/src/main/res/layout/wallet_refill_item.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bank_popup.xml" value="0.15729166666666666" />

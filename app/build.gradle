@@ -209,7 +209,9 @@ permission*/
 
     implementation 'org.json:json:20200518'
 
-    implementation 'com.itextpdf:itextpdf:5.0.6'
+//    implementation 'com.itextpdf:itextpdf:5.0.6'
+
+    implementation 'com.github.kapilmhr:DesignToPDF:1.0'
 }
 
 static def getDateTime() {

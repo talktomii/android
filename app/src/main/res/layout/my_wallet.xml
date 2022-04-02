@@ -57,67 +57,128 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
                 android:orientation="horizontal">
-
+                
                 <LinearLayout
-                    android:id="@+id/refillLayout"
-                    android:layout_width="@dimen/dp_150"
-                    android:layout_height="@dimen/dp_40"
-                    android:background="@drawable/bg_line">
+                    android:id="@+id/refillWalletLayout"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginHorizontal="@dimen/dp_12"
+                        app:cardBackgroundColor="@color/mycard_bgcolor"
+                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardElevation="@dimen/dp_10"
+                        tools:ignore="MissingConstraints">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dp_5"
-                        android:src="@drawable/wallet_icon"
-                        android:tint="@color/white">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:padding="2dp"
+                            android:src="@drawable/refill_wallet_img"
+                            android:layout_gravity="center"
+                            >
 
-                    </androidx.appcompat.widget.AppCompatImageView>
-
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </androidx.cardview.widget.CardView>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:fontFamily="@font/inter_regular"
-                        android:gravity="center"
-                        android:text="Refill Wallet"
-                        android:textColor="@color/white"
                         android:textFontWeight="600"
-                        android:textSize="@dimen/dp_14">
+                        android:textSize="@dimen/dp_12"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="Refill Wallet"
+                        >
 
                     </androidx.appcompat.widget.AppCompatTextView>
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/getPaidLayout"
-                    android:layout_width="@dimen/dp_150"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:background="@drawable/bg_line">
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginHorizontal="@dimen/dp_12"
+                        app:cardBackgroundColor="@color/mycard_bgcolor"
+                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardElevation="@dimen/dp_10"
+                        tools:ignore="MissingConstraints">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/dp_5"
-                        android:src="@drawable/get_paid_icon"
-                        android:tint="@color/white">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:padding="2dp"
+                            android:src="@drawable/get_paid_img"
+                            android:layout_gravity="center"
+                            >
 
-                    </androidx.appcompat.widget.AppCompatImageView>
-
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </androidx.cardview.widget.CardView>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:fontFamily="@font/inter_regular"
-                        android:text="Get Paid"
-                        android:textColor="@color/white"
                         android:textFontWeight="600"
-                        android:textSize="@dimen/dp_14">
+                        android:textSize="@dimen/dp_12"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="Get Paid"
+                        >
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/addCouponLayout"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginHorizontal="@dimen/dp_12"
+                        app:cardBackgroundColor="@color/mycard_bgcolor"
+                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardElevation="@dimen/dp_10"
+                        tools:ignore="MissingConstraints">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:padding="2dp"
+                            android:src="@drawable/add_coupon_img"
+                            android:layout_gravity="center"
+                            >
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/dp_12"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="Add Coupon"
+                        >
 
                     </androidx.appcompat.widget.AppCompatTextView>
                 </LinearLayout>
@@ -130,7 +191,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/walletHeaderLayout"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-25dp"
             android:background="@drawable/round_corner_card">
 
             <LinearLayout

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/test_lyout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -31,6 +30,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_receipt_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extra_bold"
@@ -60,12 +60,12 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/inter_extra_bold"
             android:gravity="end"
-            android:text="13.02.2022  1:00PM"
             android:textColor="@color/black"
             android:textFontWeight="400"
             android:textSize="@dimen/dp_14"
@@ -86,19 +86,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extra_bold"
-            android:text="Date "
+            android:text="Payment method "
             android:textColor="@color/black"
             android:textFontWeight="700"
             android:textSize="@dimen/dp_16"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_payment_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/inter_extra_bold"
             android:gravity="end"
-            android:text="13.02.2022  1:00PM"
+            android:text="VISA 53****1234"
             android:textColor="@color/black"
             android:textFontWeight="400"
             android:textSize="@dimen/dp_14"
@@ -117,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extra_bold"
-            android:text="Payment method "
+            android:text="Provider "
             android:textColor="@color/black"
             android:textFontWeight="700"
             android:textSize="@dimen/dp_16"
@@ -129,7 +130,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/inter_extra_bold"
             android:gravity="end"
-            android:text="VISA 53****1234"
+            android:text="Taltomii inc."
             android:textColor="@color/black"
             android:textFontWeight="400"
             android:textSize="@dimen/dp_14"
@@ -157,6 +158,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -191,6 +193,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_VAT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -224,6 +227,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -255,6 +259,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_tax"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -288,6 +293,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pdf_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

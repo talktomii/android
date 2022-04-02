@@ -5,6 +5,7 @@ import com.example.example.PayloadCards
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
+import com.talktomii.ui.coupon.models.CouponData
 import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
@@ -28,6 +29,7 @@ interface WebService {
             "walletHistory/getCurrentAmount/623d9832f521ab28b8f8373a"
         private const val ADD_BANK = "bank/addBank"
         private const val GET_BANK = "bank/getBankByuid/622877f9e3e5080bdcde6ebf"
+        private const val ADD_COUPON = "coupon/addCoupon"
     }
 
     @GET(GET_CARDS)
@@ -95,4 +97,10 @@ interface WebService {
         @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<ApiResponse<Any>>
+
+    @PUT("coupon/applyCoupon/{code}")
+    fun addCoupon(
+        @Path("code") code: String?,
+        @Header("Authorization") auth: String,
+    ): Call<CouponData>
 }

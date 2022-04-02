@@ -6,6 +6,7 @@ import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.callhistory.CallHistory
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
+import com.talktomii.ui.coupon.CouponActivity
 import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
 import com.talktomii.ui.helpsupport.ChatSupportActivity
 import com.talktomii.ui.helpsupport.HelpSupport
@@ -49,11 +50,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BindingsModule {
 
-
-
     @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity
-
 
     @ContributesAndroidInjector
     abstract fun homeActivity(): HomeActivity
@@ -90,6 +88,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun callInvoiceActivity(): CallInvoiceActivity
+
+    @ContributesAndroidInjector
+    abstract fun couponActivity(): CouponActivity
 
     @ContributesAndroidInjector
     abstract fun loginFragment(): LoginFragment
@@ -167,8 +168,6 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun deleteAppointmentDialog(): DeleteAppointmentDialog
-
-
 
     @ContributesAndroidInjector
     abstract fun profileFragment(): ProfileFragment

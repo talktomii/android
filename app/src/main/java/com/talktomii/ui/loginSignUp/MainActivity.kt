@@ -46,8 +46,8 @@ class MainActivity : DaggerAppCompatActivity() {
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        // save login token here
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTA0LTAxVDExOjM2OjMwLjcxOFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg4MTI5OTB9.LpmPFBDrJ78gE3vstJ84Om-Q20iQT78jhqGlYQVMLOU"
+        // save login token
+        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTA0LTAyVDEwOjE3OjQ4LjkwOFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg4OTQ2Njh9.TxjBaS-4NaPt5n6jkW5jEPkuyqkhh03R6GtD0mHTAWI"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
@@ -107,25 +107,20 @@ class MainActivity : DaggerAppCompatActivity() {
                 when (item.itemId) {
                     R.id.nav_profile -> {
                         viewModel.navController.navigate(R.id.profileFragment)
-
                     }
-
 
                     R.id.nav_home -> {
 
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
 
-
                     R.id.nav_search -> {
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
 
-
                     R.id.nav_appointments -> {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
                     }
-
 
                     R.id.nav_notifications -> {
                         viewModel.navController.navigate(R.id.notificationFragment)
@@ -134,7 +129,6 @@ class MainActivity : DaggerAppCompatActivity() {
                     R.id.nav_home -> {
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
-
 
 //                    R.id.nav_search ->{
 //                        viewModel.navController.navigate(R.id.searchFragment)

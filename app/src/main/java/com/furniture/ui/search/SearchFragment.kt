@@ -47,20 +47,27 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
         viewModel.commonInterface = this
         viewModel.getAllInstruction(search)
 
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            binding.etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-            }
+                }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
 
-            override fun afterTextChanged(p0: Editable?) {
+                override fun afterTextChanged(p0: Editable?) {
+                    if (binding.etSearch.text.isEmpty()) {
+                        viewModel.getAllInstruction(binding.etSearch.text.toString())
+                    }
+                }
+
+            })
+
+            binding.ivFilter.setOnClickListener {
                 viewModel.getAllInstruction(binding.etSearch.text.toString())
             }
 
-        })
-    }
+        }
 
     override fun onStarted() {
 

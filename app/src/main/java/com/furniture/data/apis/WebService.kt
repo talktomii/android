@@ -6,6 +6,7 @@ import com.furniture.data.model.addbookmark.AddBookMarkResponse
 import com.furniture.data.model.admin.AdminResponse
 import com.furniture.data.model.admin1.AdminResponse1
 import com.furniture.data.model.drawer.bookmark.BookMarkResponse
+import com.furniture.data.model.getallslotbydate.GetAllSlotByDateResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -21,6 +22,9 @@ interface WebService {
         private const val ADD_BOOKMARK = "favoriteService/addService"
         private const val REMOVE_BOOKMARK = "favoriteService/deleteService"
         private const val GET_BOOKMARKS = "favoriteService/getService"
+        private const val ADD_APPOINMENT = "appointment/addAppointment"
+        private const val UPDATE_APPOINMENT = "appointment/updateAppointment/"
+        private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
 
     }
 
@@ -78,5 +82,21 @@ interface WebService {
         @Header("Authorization") authHeader: String
     ): Response<BookMarkResponse>
 
+    @POST(ADD_APPOINMENT)
+    suspend fun addAppoinment(
+        @Body id: HashMap<String, Any>,
+        @Header("Authorization") authHeader: String
+    ): Response<BookMarkResponse>
 
+    @POST(UPDATE_APPOINMENT + "/{id}")
+    suspend fun updateAppoinment(
+        @Path("id") id: String,
+        @Header("Authorization") authHeader: String
+    ): Response<BookMarkResponse>
+
+    @GET(GET_ALL_SLOT_BY_DATE)
+    suspend fun getAllSlotByDate(
+        @Query("date") date: String,
+        @Query("ifid") ifid: String,
+    ): Response<GetAllSlotByDateResponse>
 }

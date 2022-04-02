@@ -8,6 +8,7 @@ import com.furniture.data.network.Coroutines
 import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.HomeInterface
+import com.furniture.interfaces.OnSlotSelectedInterface
 import com.furniture.utlis.AUTHORIZATION
 import com.google.android.gms.common.api.ApiException
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var commonInterface: CommonInterface? = null
     var userField = ObservableField<Admin1>()
     var bookMark = ObservableField<Boolean>()
-
+    var onSlotSelectedInterface: OnSlotSelectedInterface? = null
     fun getInfluence(string: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
@@ -123,7 +124,27 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     }
 
     companion object
-
+    fun getAllSlotByDate(date: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getAllSlotByDate(date, userField.get()!!._id)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            onSlotSelectedInterface!!.onslotselect(authResponse.body()!!.payload.timeStops[0])
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
 
 }
 

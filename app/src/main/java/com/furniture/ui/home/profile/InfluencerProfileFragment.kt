@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.furniture.R
 import com.furniture.data.model.admin1.Admin1
+import com.furniture.data.model.getallslotbydate.TimeStop
 import com.furniture.databinding.FragmentInfluencerProfileBinding
 import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
+import com.furniture.interfaces.OnSlotSelectedInterface
 import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
@@ -19,11 +20,13 @@ import com.furniture.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 
-class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface {
+class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
+    OnSlotSelectedInterface {
 
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
@@ -35,7 +38,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,6 +53,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         viewModel.commonInterface = this
         viewModel.adminDetailInterface = this
+        viewModel.onSlotSelectedInterface = this
         binding.lifecycleOwner = this
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
@@ -95,8 +103,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     }
 
-//    try
-
+    //    try
+    val startDate: Calendar = Calendar.getInstance()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -105,9 +113,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         setListener()
 
         val endDate: Calendar = Calendar.getInstance()
-        endDate.add(Calendar.MONTH, 1)
-        val startDate: Calendar = Calendar.getInstance()
-        startDate.add(Calendar.MONTH, -1)
+        endDate.add(Calendar.DAY_OF_MONTH, +7)
+//        val startDate: Calendar = Calendar.getInstance()
+//        startDate.add(Calendar.DAY_OF_MONTH, 0)
 
         horizontalCalendar =
             HorizontalCalendar.Builder(requireActivity(), com.furniture.R.id.calendarView)
@@ -115,17 +123,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 .configure()
                 .showTopText(false)
                 .end()
-                .datesNumberOnScreen(5)
+                .datesNumberOnScreen(7)
                 .build()
+
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
-
             override fun onDateSelected(date: Calendar?, position: Int) {
-
+                viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(date!!.time))
             }
         }
-
-
-        binding.rvTimeSlot.adapter = AdapterTimeSlot()
 
         init()
     }
@@ -144,6 +149,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
 
     override fun onAdminDetails(admin1: Admin1) {
+        viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
+
         progressDialog.dismiss()
         socialMediaAdapter?.setItemList(admin1.socialNetwork)
         if (admin1.interest.size > 0) {
@@ -155,4 +162,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             binding.txtItemCount.visibility = View.GONE
         }
     }
+
+    override fun onslotselect(timeStop: TimeStop) {
+        progressDialog.dismiss()
+        binding.rvTimeSlot.adapter = AdapterTimeSlot(timeStop)
+    }
+
 }

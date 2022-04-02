@@ -1,7 +1,5 @@
 package com.furniture.ui.home
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
@@ -36,7 +34,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         homeInterface?.onHomeAdmins(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -54,11 +52,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
-                        bookMark.set(authResponse.body()!!.payload.admin[0].isBookmark)
+                        bookMark.set(authResponse.body()!!.payload.admin[0].bookmark)
                         userField.set(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -73,7 +71,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         var hashMap: HashMap<String, Any> = hashMapOf()
         hashMap.put("ifid", userField.get()!!._id)
 
-        commonInterface!!.onStarted()
+//        commonInterface!!.onStarted()
         Coroutines.main {
             try {
                 val authResponse = webService.addFavourite(hashMap, AUTHORIZATION)
@@ -84,7 +82,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+//                    commonInterface!!.onFailureAPI(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -95,7 +93,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     }
 
     fun removeBookmark() {
-        commonInterface!!.onStarted()
+//        commonInterface!!.onStarted()
         Coroutines.main {
             try {
                 val authResponse = webService.removeBookmark(userField.get()!!._id, AUTHORIZATION)
@@ -106,7 +104,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -116,10 +114,15 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
-    @BindingAdapter("android:src")
-    fun setImageViewResource(imageView: ImageView, resource: Int) {
-        imageView.setImageResource(resource)
+    fun checkAndSetBookMark() {
+        if (bookMark.get() == true) {
+            removeBookmark()
+        } else {
+            addBookmark()
+        }
     }
+
+    companion object
 
 
 }

@@ -18,12 +18,12 @@ class ProgressDialog() {
         dialog.setCancelable(false)
     }
 
-    private fun show() {
+    fun show() {
         if (!dialog.isShowing)
             dialog.show()
     }
 
-    private fun dismiss() {
+    fun dismiss() {
         if (dialog.isShowing)
             dialog.dismiss()
     }

@@ -16,7 +16,7 @@ data class Admin1(
     val email: String,
     val interest: ArrayList<Interest>,
     val isActive: Boolean,
-    var isBookmark: Boolean,
+    var bookmark: Boolean,
     val isSocial: Boolean,
     val latestToken: String,
     val location: String,

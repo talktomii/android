@@ -49,19 +49,29 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <RelativeLayout
                     android:id="@+id/ivBookMark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:src="@{viewModel2.bookMark?@drawable/ic_bookmark:@drawable/apple}"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/gray_round"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/bookmark"
+                        android:tint="@{viewModel2.bookMark ? @color/colorAccent: @color/black}" />
+                </RelativeLayout>
+
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivShare"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_share"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBookMark"

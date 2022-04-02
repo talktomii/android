@@ -66,7 +66,7 @@ interface WebService {
         @Header("Authorization") authHeader: String
     ): Response<AddBookMarkResponse>
 
-    @GET(REMOVE_BOOKMARK + "/{id}")
+    @DELETE(REMOVE_BOOKMARK + "/{id}")
     suspend fun removeBookmark(
         @Path("id") id: String,
         @Header("Authorization") authHeader: String

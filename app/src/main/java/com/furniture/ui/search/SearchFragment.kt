@@ -69,6 +69,10 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     override fun onFailure(message: String) {
     }
 
+    override fun onFailureAPI(message: String) {
+
+    }
+
     override fun onSearchAllInstruction(data: Payload) {
         adapterCategories?.interestArrayList = arrayListOf()
         adapterCategories!!.setImagesList(data.interest)

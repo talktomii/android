@@ -11,10 +11,12 @@ import com.furniture.data.model.drawer.bookmark.Service
 import com.furniture.databinding.FragmentBookmarkBinding
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.drawer.BookMarkInterface
+import com.furniture.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, CommonInterface, BookMarkInterface {
+class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, CommonInterface,
+    BookMarkInterface {
     lateinit var binding: FragmentBookmarkBinding
 
     @Inject
@@ -22,8 +24,13 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
 
     private var adapter: AdapterBookmark? = null
     private var arrayList: ArrayList<Service> = arrayListOf()
+    private lateinit var progressDialog: ProgressDialog
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,7 +46,8 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
         binding.rvPopular.adapter = adapter
     }
 
-    fun init() {
+    private fun init() {
+        progressDialog = ProgressDialog(requireActivity())
 
         viewModel.commonInterface = this
         viewModel.onbookmarkinterface = this
@@ -47,13 +55,19 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     }
 
     override fun onFailure(message: String) {
+        progressDialog.dismiss()
+    }
+
+    override fun onFailureAPI(message: String) {
+        progressDialog.dismiss()
     }
 
     override fun onStarted() {
-
+        progressDialog.show()
     }
 
     override fun onBookmarkAdmins(payload: Payload) {
+        progressDialog.dismiss()
         adapter!!.setPopularList(payload.service)
     }
 
@@ -64,7 +78,10 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     private fun onCoverClicked(service: Service) {
         val bundle = Bundle()
         bundle.putSerializable("profileId", service.uid._id)
-        findNavController().navigate(R.id.action_bookmarkFragment_to_influencerProfileFragment, bundle)
+        findNavController().navigate(
+            R.id.action_bookmarkFragment_to_influencerProfileFragment,
+            bundle
+        )
     }
 
 }

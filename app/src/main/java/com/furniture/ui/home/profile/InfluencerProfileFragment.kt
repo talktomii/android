@@ -15,6 +15,7 @@ import com.furniture.interfaces.CommonInterface
 import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
+import com.furniture.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -32,6 +33,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     lateinit var viewModel: HomeScreenViewModel
 
     private var horizontalCalendar: HorizontalCalendar? = null
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -40,6 +42,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
     private fun init() {
+        progressDialog = ProgressDialog(requireActivity())
+
         viewModel.commonInterface = this
         viewModel.adminDetailInterface = this
         binding.lifecycleOwner = this
@@ -84,13 +88,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         binding.ivBookMark.setOnClickListener {
-            if (viewModel.userField.get()!!.isBookmark) {
-                viewModel.removeBookmark()
-                binding.ivBookMark.setImageResource(R.drawable.apple)
-            } else {
-                viewModel.addBookmark()
-                binding.ivBookMark.setImageResource(R.drawable.ic_bookmark)
-            }
+            viewModel.checkAndSetBookMark()
+
+
         }
 
     }
@@ -131,14 +131,20 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
     override fun onFailure(message: String) {
+        progressDialog.dismiss()
+    }
 
+    override fun onFailureAPI(message: String) {
+        progressDialog.dismiss()
     }
 
     override fun onStarted() {
+        progressDialog.show()
     }
 
 
     override fun onAdminDetails(admin1: Admin1) {
+        progressDialog.dismiss()
         socialMediaAdapter?.setItemList(admin1.socialNetwork)
         if (admin1.interest.size > 0) {
             binding.txtInterests.visibility = View.VISIBLE

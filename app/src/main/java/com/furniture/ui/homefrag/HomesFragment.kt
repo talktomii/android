@@ -13,6 +13,7 @@ import com.furniture.databinding.HomeFragmentBinding
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.HomeInterface
 import com.furniture.ui.home.HomeScreenViewModel
+import com.furniture.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     @Inject
     lateinit var viewModel: HomeScreenViewModel
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +55,9 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         findNavController().navigate(R.id.action_home_to_influencer_profile, bundle)
     }
 
-    fun init() {
+    private fun init() {
+        progressDialog = ProgressDialog(requireActivity())
+
         viewModel.commonInterface = this
         viewModel.homeInterface = this
         if (arguments?.getString("id") != null) {
@@ -65,10 +69,15 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     override fun onFailure(message: String) {
+        progressDialog.dismiss()
+    }
 
+    override fun onFailureAPI(message: String) {
+        progressDialog.dismiss()
     }
 
     override fun onStarted() {
+        progressDialog.show()
     }
 
 
@@ -77,6 +86,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     override fun onHomeAdmins(payload: Payload) {
+        progressDialog.dismiss()
         adapterPopular!!.setPopularList(payload.admin)
 
     }

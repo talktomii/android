@@ -49,11 +49,13 @@ class SignUpFragment : DaggerFragment() {
         setSpannable()
 // bindObservers()
 
+
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment,
-                bundleOf("email" to binding.txtEmail,"password" to binding.edPassword))
+                bundleOf("email" to binding.txtEmailId.text.toString(),"password" to binding.edPassword.text.toString()))
 
-        }
+          }
+
     }
 
 

@@ -17,6 +17,7 @@ import com.talktomii.utlis.ImageUtils
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.setImageFromFile
+import com.talktomii.utlis.showSnackBar
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -147,7 +148,7 @@ class CreateProfileFragment : DaggerFragment() {
 
     fun radioCheck() {
 
-        if (vailidation()) {
+        if (validation(firstname = binding.txtFirstName.text.toString() , profilePhoto = binding.imgDefault.toString(), lastname = binding.txtLastName.text.toString(),username = binding.txtUserName.text.toString())) {
             val map: HashMap<String, RequestBody> = HashMap()
             map["name"] =
                 "${binding.txtFirstName.text.toString()} ${binding.txtLastName.text.toString()}".toRequestBody(
@@ -158,7 +159,7 @@ class CreateProfileFragment : DaggerFragment() {
                 "${requireArguments()["email"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["password"] =
                 "${requireArguments()["password"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
-            map["role"] = "2874823".toRequestBody("text/plain".toMediaTypeOrNull())
+            map["role"] = "61aa0369803e260c3821ad0a".toRequestBody("text/plain".toMediaTypeOrNull())
             map["userName"] =
                 "${binding.txtUserName.text.toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["isSocial"] = "false".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -179,8 +180,27 @@ class CreateProfileFragment : DaggerFragment() {
 
     }
 
-    private fun vailidation(): Boolean {
-        return true
+    private fun validation(profilePhoto: String, firstname: String, lastname: String, username: String): Boolean {
+        return when{
+            profilePhoto.isNullOrEmpty() ->{
+                binding.imgDefault.showSnackBar("please upload profile photo")
+                false
+            }
+            firstname.isNullOrEmpty() ->{
+                binding.txtFirstName.showSnackBar("please enter first name")
+                false
+            }
+            lastname.isNullOrEmpty()->{
+                binding.txtLastName.showSnackBar("please enter last name")
+                false
+            }
+            username.isNullOrEmpty() ->{
+                binding.txtUserName.showSnackBar("please enter username")
+                false
+            }
+
+            else -> true
+        }
     }
 }
 

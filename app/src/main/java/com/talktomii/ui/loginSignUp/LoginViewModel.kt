@@ -3,6 +3,7 @@ package com.talktomii.ui.loginSignUp
 
 import androidx.lifecycle.ViewModel
 import com.talktomii.data.apis.WebService
+import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.UserData
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.data.network.responseUtil.ApiUtils
@@ -17,19 +18,19 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
 
     val getSendOtp by lazy { SingleLiveEvent<Resource<Any>>() }
-    val createProfile by lazy { SingleLiveEvent<Resource<Any>>() }
+    val createProfile by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
 
     fun createProfile(map: HashMap<String, RequestBody>) {
         createProfile.value = Resource.loading()
         webService.createProfile(map)
-            .enqueue(object : Callback<ApiResponse<Any>> {
+            .enqueue(object : Callback<ApiResponse<RegisterModel>> {
                 override fun onResponse(
-                    call: Call<ApiResponse<Any>>,
-                    response: Response<ApiResponse<Any>>
+                    call: Call<ApiResponse<RegisterModel>>,
+                    response: Response<ApiResponse<RegisterModel>>
                 ) {
                     if (response.isSuccessful) {
                         if (response.body()?.status == 200)
-                            createProfile.value = Resource.success(response.body()?.detail)
+                            createProfile.value = Resource.success(response.body()?.payload)
                         else createProfile.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
@@ -47,7 +48,7 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
                     }
                 }
 
-                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                override fun onFailure(call: Call<ApiResponse<RegisterModel>>, t: Throwable) {
                     createProfile.value = Resource.error(ApiUtils.failure(t))
                 }
 

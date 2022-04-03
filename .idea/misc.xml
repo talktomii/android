@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_create_profile.xml" value="0.20885416666666667" />
+        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_sign_up.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />
@@ -218,7 +220,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="corretto-11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="corretto-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

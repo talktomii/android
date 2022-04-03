@@ -2,6 +2,7 @@ package com.talktomii.data.apis
 
 
 import com.example.example.PayloadCards
+import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
@@ -60,5 +61,5 @@ interface WebService {
     @POST(REGISTER)
     fun createProfile(
         @PartMap map: HashMap<String, RequestBody>
-    ): Call<ApiResponse<Any>>
+    ): Call<ApiResponse<RegisterModel>>
 }

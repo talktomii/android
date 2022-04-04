@@ -114,6 +114,10 @@ class MainActivity : DaggerAppCompatActivity() {
             viewModel.navController.navigate(R.id.bookmarkFragment)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
+        binding.txtSettings.setOnClickListener {
+            viewModel.navController.navigate(R.id.bookmarkFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
 
     }
 

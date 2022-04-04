@@ -14,6 +14,7 @@ import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
 import com.furniture.interfaces.OnSlotSelectedInterface
 import com.furniture.ui.home.HomeScreenViewModel
+import com.furniture.utlis.AboutMeDialog
 import com.furniture.utlis.CallDialog
 import com.furniture.utlis.DeleteAppointmentDialog
 import com.furniture.utlis.dialogs.ProgressDialog
@@ -100,7 +101,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
 
         }
-
+        binding.txtAboutMe.setOnClickListener {
+            val dialog = AboutMeDialog()
+            dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+        }
     }
 
     //    try

@@ -227,7 +227,7 @@
     <string name="block_user">Block User</string>
     <string name="delete_history">Delete History</string>
     <string name="clear_history">Clear History</string>
-    <string name="blockedtext">Are you sure that you want to block Ronald Richards?</string>
+    <string name="blockedtext">Are you sure that you want to block </string>
     <string name="confirm_block">Ronald Richards has blocked</string>
     <string name="call_invoice">Call Invoice</string>
     <string name="report_abuse">Report Abuse</string>

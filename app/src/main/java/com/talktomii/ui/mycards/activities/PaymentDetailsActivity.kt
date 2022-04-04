@@ -37,9 +37,9 @@ import pdf.app.library.Callback
 import pdf.app.library.DesignPdf
 import android.view.ViewGroup
 import android.content.Context
+import io.github.lucasfsc.html2pdf.Html2Pdf
 
-
-class PaymentDetailsActivity : DaggerAppCompatActivity() {
+class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteConversion {
 
     lateinit var binding: ActivityPaymentDetailsBinding
 
@@ -57,11 +57,8 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
     val v_type: TextView? = null
     var v_amount: TextView? = null
     var v_id: TextView? = null
-    var receipt_id : String = "Receipt"
-
-
-    private val filePath = Environment.getExternalStorageDirectory().toString() + "/PDF/"
-
+    var receipt_id : String = ""
+    var filepath : File ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment_details)
@@ -74,8 +71,11 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
         binding.paymentType.text = intent.getStringExtra("type")
         binding.paymentAmount.text = intent.getStringExtra("amount")!!.replace("-", "")
 
-        receipt_id = intent.getStringExtra("id")!!
+        val r_id = intent.getStringExtra("id")
+        val date = intent.getStringExtra("date")
+        val t_amount = intent.getStringExtra("amount")!!.replace("-", "")
 
+        receipt_id = intent.getStringExtra("id")!!
         binding.repeatPaymentLayout.setOnClickListener {
             val intent = Intent(this, RefillWalletActivity::class.java)
             intent.putExtra("repeatamount", binding.paymentAmount.text.toString().replace("$", ""))
@@ -93,70 +93,97 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
             dialog.show()
         }
 
-        views = View(this)
-
-        views = LayoutInflater.from(this).inflate(R.layout.test_layout, null)
-
-
-        val vi = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val v: View = vi.inflate(R.layout.test_layout, null)
-
-        val textView = v.findViewById<View>(R.id.pdf_total) as TextView
-        textView.text = "your text"
-
-        layout = views!!.findViewById(R.id.relLayout)
-        v_date = views!!.findViewById(R.id.pdf_date)
-        v_amount = views!!.findViewById(R.id.pdf_total)
-        v_id = views!!.findViewById(R.id.pdf_receipt_no)
-
-        (this as Activity).runOnUiThread(Runnable { (v_amount as TextView).text = "nnnnn" })
-
-        v_id!!.text = intent.getStringExtra("id").toString()
-        v_date!!.text = intent.getStringExtra("date").toString()
-        v_amount!!.text = intent.getStringExtra("amount")!!.replace("-", "").toString()
 
         binding.downloadReceipt.setOnClickListener {
-            Log.d("a", "a")
-            val display: Display = windowManager.defaultDisplay
-            val size = Point()
-            display.getSize(size)
-            val width: Int = size.x
-            val height: Int = size.y
-            DesignPdf.with(this).addView(v)
-                .setFilePath(filePath, receipt_id)
-                .setMargins(0, 0, 10, 10)
-                .setViewVisibilty(false)
-                .setHeightnWidth(height, width)
-                .create(object : Callback {
-                    override fun onSuccess(file: File) {
-                        Toast.makeText(
-                            this@PaymentDetailsActivity,
-                            "path: " + file.absolutePath,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.d("path", file.absolutePath)
-                    }
+            if(receipt_id == ""){
+                filepath =  File(Environment.getExternalStorageDirectory().toString() + "/PDF/receipt123.pdf")
+            }else{
+                filepath =  File(Environment.getExternalStorageDirectory().toString() + "/PDF/" + receipt_id + ".pdf")
+            }
+            val converter = Html2Pdf.Companion.Builder()
+                .context(this)
+                .html("<!DOCTYPE html>\n" +
+                        "<html lang=\"en\">\n" +
+                        "  <head>\n" +
+                        "    <meta charset=\"utf-8\" />\n" +
+                        "    <title>Talk to me</title>\n" +
+                        "  </head>\n" +
+                        "  <body>\n" +
+                        "    <table\n" +
+                        "      style=\"\n" +
+                        "        border-collapse: collapse;\n" +
+                        "        border-spacing: 0;\n" +
+                        "        width: 100%;\n" +
+                        "      \"\n" +
+                        "    >\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><img src=\"file:///android_res/drawable/pdf_top_icon.png\"  alt=\"logo\"\n" +
+                        "          style=\"width: 140px;\"/></td>\n" +
+                        "      </tr>\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\">\n" +
+                        "          <b>Receipt : $r_id</b>\n" +
+                        "        </td>\n" +
+                        "      </tr>\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Date</b</td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">$date</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr style=\"background-color: #f2f2f2\">\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Payment Method</b</td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">VISA 50****1234</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Provider</b></td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">Taslktome inc.</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr style=\"background-color: #f2f2f2\">\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Address</b></td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">1901,Surat</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>VAT Number</b></td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">123456789</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr style=\"background-color: #f2f2f2\">\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Product</b></td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">Wallet Refill</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr>\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Tax</b></td>\n" +
+                        "         <td style=\"text-align: right; padding: 23px 7px;\">$0</td>\n" +
+                        "      </tr>\n" +
+                        "      <tr style=\"background-color: #f2f2f2\">\n" +
+                        "        <td style=\"text-align: left; padding: 23px 7px;\"><b>Total</b></td>\n" +
+                        "        <td style=\"text-align: right; padding: 23px 7px;\">$t_amount</td>\n" +
+                        "      </tr>\n" +
+                        "    </table>\n" +
+                        "  </body>\n" +
+                        "</html>")
+                .file(filepath!!)
+                .build()
 
-                    override fun onError(e: Exception) {
-                        e.printStackTrace()
-                    }
-                })
+            //can be called with a callback to warn the user
+            converter.convertToPdf(this)
+
+            //or without a callback
+            converter.convertToPdf()
+            binding.openPDFProgress.visibility = View.VISIBLE
             Handler().postDelayed({
-                openGeneratedPDF()
-            }, 5000)
+                openGeneratedPDF(filepath!!)
+            },3000)
+
 
         }
     }
 
-    private fun openGeneratedPDF() {
-        dirpath = Environment.getExternalStorageDirectory().toString()
-        val file = File("$dirpath/PDF/" + receipt_id + ".pdf")
+    private fun openGeneratedPDF(file : File) {
+        binding.openPDFProgress.visibility = View.GONE
         if (file.exists()) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val apkURI =
-                    FileProvider.getUriForFile(applicationContext, "$packageName.provider", file)
+                val apkURI = FileProvider.getUriForFile(applicationContext, "$packageName.provider", file)
                 intent.setDataAndType(apkURI, "application/pdf")
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             } else {
@@ -172,6 +199,14 @@ class PaymentDetailsActivity : DaggerAppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    override fun onFailed() {
+
+    }
+
+    override fun onSuccess() {
+
     }
 
 }

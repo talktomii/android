@@ -40,6 +40,10 @@ import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
+import com.talktomii.ui.callhistory.adapters.CallHistoryAdapter
+import com.talktomii.ui.callhistory.models.CallHistory
+import com.talktomii.ui.callhistory.models.CallHistoryData
+import com.talktomii.ui.callhistory.models.CallHistoryItemModel
 import com.talktomii.ui.coupon.CouponActivity
 import com.talktomii.ui.coupon.models.CouponData
 import com.talktomii.ui.mywallet.MyWallet
@@ -69,6 +73,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteBank by lazy { SingleLiveEvent<Resource<Any>>() }
+    val deleteCallHistory by lazy { SingleLiveEvent<Resource<Any>>() }
     private var context: Context? = null
     val payments by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
     val banks by lazy { SingleLiveEvent<Resource<BankData>>() }
@@ -743,9 +748,9 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun updateBank(id : String,hashMap: HashMap<String, String>) {
+    fun updateBank(id: String, hashMap: HashMap<String, String>) {
         addWallet.value = Resource.loading()
-        webService.updateBank(id,"Bearer " + MainActivity.retrivedToken, hashMap)
+        webService.updateBank(id, "Bearer " + MainActivity.retrivedToken, hashMap)
             .enqueue(object : Callback<ApiResponse<Any>> {
                 override fun onResponse(
                     call: Call<ApiResponse<Any>>,
@@ -796,8 +801,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun addCoupon(name : String) {
-        webService.addCoupon(name,"Bearer " + MainActivity.retrivedToken)
+    fun addCoupon(name: String) {
+        webService.addCoupon(name, "Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<CouponData> {
                 override fun onResponse(
                     call: Call<CouponData>,
@@ -812,10 +817,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         snackbar.show()
                         CouponActivity.progress.visibility = View.GONE
                         CouponActivity.finishFunction()
+                        getCurrentAmount()
+                        getTotalAmount()
                     } else {
                         val snackbar = Snackbar.make(
                             CouponActivity.layout,
-                           "Something Wrong",
+                            "Something Wrong",
                             Snackbar.LENGTH_SHORT
                         )
                         snackbar.show()
@@ -831,6 +838,128 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     )
                     snackbar.show()
                     CouponActivity.progress.visibility = View.GONE
+                }
+            })
+    }
+
+    fun getCallHistory() {
+        webService.getCallHistory("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<CallHistoryData> {
+                override fun onResponse(
+                    call: Call<CallHistoryData>,
+                    response: Response<CallHistoryData>
+                ) {
+                    val dataList = ArrayList<CallHistoryItemModel>()
+                    if (response.isSuccessful) {
+                        val data = response.body()!!.payload
+                        for (i in data!!.callHistory) {
+                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
+                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
+                            var date: Date? = null
+                            try {
+                                date = sdf1.parse(i.date)
+                                val newDate = sdf2.format(date)
+                                println(newDate)
+                                Log.d("profile LLL ", i.uid!!.userName!!)
+                                dataList.add(
+                                    CallHistoryItemModel(
+                                        i.ifid!!.Id!!,
+                                        i.ifid!!.userName!!,
+                                        i.ifid!!.profilePhoto!!,
+                                        i.Id!!,
+                                        i.ifid!!.profilePhoto!!,
+                                        i.ifid!!.userName!!,
+                                        newDate,
+                                        i.price!!,
+                                        i.duration!!
+                                    )
+                                )
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager = layoutManager
+                        val adapter = CallHistoryAdapter(dataList, webService)
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.adapter = adapter
+                        com.talktomii.ui.callhistory.CallHistory.progress.visibility = View.GONE
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility = View.VISIBLE
+
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        cards.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<CallHistoryData>, t: Throwable) {
+                    cards.value = Resource.error(ApiUtils.failure(t))
+                    t.message?.let { Log.d("profile LLL ", it) }
+                }
+
+            })
+    }
+    fun deleteCallHistory(id: String) {
+        deleteCallHistory.value = Resource.loading()
+        webService.deleteCallHistory(id, "Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("Response ------", response.body()!!.message!!)
+                        getCallHistory()
+                    } else {
+                        deleteCallHistory.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    deleteCallHistory.value = Resource.error(ApiUtils.failure(t))
+                    Log.d("problem   ::", t.message!!)
+                }
+
+            })
+    }
+    fun blockUser(hashMap: HashMap<String, String>) {
+        deleteCallHistory.value = Resource.loading()
+        webService.blockUser("Bearer " + MainActivity.retrivedToken,hashMap)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("Response ------", response.body()!!.message!!)
+                        getCallHistory()
+                    } else {
+                        deleteCallHistory.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    deleteCallHistory.value = Resource.error(ApiUtils.failure(t))
+                    Log.d("problem   ::", t.message!!)
                 }
 
             })

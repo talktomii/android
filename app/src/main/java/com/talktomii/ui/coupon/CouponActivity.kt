@@ -45,6 +45,7 @@ class CouponActivity : DaggerAppCompatActivity() {
                 )
                 snackbar.show()
             }else{
+                progress.visibility = View.VISIBLE
                 viewModel.addCoupon(binding.etCouponCode.text.toString().trim())
             }
         }

@@ -44,6 +44,7 @@
               app:layout_constraintBottom_toBottomOf="@+id/imgDefault" />
       </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/blocked_user_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

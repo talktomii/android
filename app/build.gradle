@@ -212,6 +212,8 @@ permission*/
 //    implementation 'com.itextpdf:itextpdf:5.0.6'
 
     implementation 'com.github.kapilmhr:DesignToPDF:1.0'
+    implementation 'com.github.LucasFsc:Html2Pdf:0.2-beta'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 static def getDateTime() {

@@ -5,6 +5,7 @@ import com.example.example.PayloadCards
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
+import com.talktomii.ui.callhistory.models.CallHistoryData
 import com.talktomii.ui.coupon.models.CouponData
 import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mycards.model.PaymentPayload
@@ -28,8 +29,11 @@ interface WebService {
         private const val GET_CURRENT_AMOUNT =
             "walletHistory/getCurrentAmount/623d9832f521ab28b8f8373a"
         private const val ADD_BANK = "bank/addBank"
-        private const val GET_BANK = "bank/getBankByuid/622877f9e3e5080bdcde6ebf"
+        private const val GET_BANK = "bank/getBankByuid/623d9832f521ab28b8f8373a"
         private const val ADD_COUPON = "coupon/addCoupon"
+        private const val GET_CALL_HISTORY = "callHistory/getCallHistoryByuid"
+        private const val DELETE_CALL_HISTORY = "appointment/deleteCallHistory"
+        private const val BLOCK_USER = "admin/blockUser"
     }
 
     @GET(GET_CARDS)
@@ -103,4 +107,23 @@ interface WebService {
         @Path("code") code: String?,
         @Header("Authorization") auth: String,
     ): Call<CouponData>
+
+    @GET(GET_CALL_HISTORY)
+    fun getCallHistory(
+        @Query("id") id : String,
+        @Header("Authorization") auth: String,
+    ):Call<CallHistoryData>
+
+    @PUT("appointment/deleteCallHistory/{id}")
+    fun deleteCallHistory(
+        @Path("id") id: String?,
+        @Header("Authorization") auth: String
+    ): Call<ApiResponse<Any>>
+
+    @PUT(BLOCK_USER)
+    @FormUrlEncoded
+    fun blockUser(
+        @Header("Authorization") auth: String,
+        @FieldMap map: HashMap<String, String>
+    ):Call<ApiResponse<Any>>
 }

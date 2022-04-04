@@ -41,11 +41,8 @@ class SplashFragment : DaggerFragment() {
     private fun openFragments() {
         if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
 
-            requireActivity().finishAffinity()
-            val intent = Intent(context, HomeActivity::class.java)
-            if (getUser(prefsManager)?.name?.isEmpty() == true)
-                intent.putExtra("incompleteProfile", false)
-            startActivity(intent)
+            findNavController().popBackStack()
+            findNavController().navigate(R.id.homeFragment)
         } else {
 
             findNavController().popBackStack()

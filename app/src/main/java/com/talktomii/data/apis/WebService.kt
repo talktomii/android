@@ -3,6 +3,7 @@ package com.talktomii.data.apis
 
 import com.example.example.PayloadCards
 import com.talktomii.data.model.RegisterModel
+import com.talktomii.data.model.RolesModel
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
@@ -17,6 +18,8 @@ interface WebService {
     companion object {
         private const val ADD_CARD = "card/addCard"
         private const val REGISTER = "admin/signup"
+        private const val LOGIN = "admin/login"
+        private const val GET_ALL_ROLE = "role"
         private const val DELETE_CARD_ITEM = "card/deleteCard/"
         private const val GET_CARDS = "card/getCardByuid/623d9832f521ab28b8f8373a"
         private const val ADD_WALLET = "walletHistory/addWalletHistory"
@@ -62,4 +65,16 @@ interface WebService {
     fun createProfile(
         @PartMap map: HashMap<String, RequestBody>
     ): Call<ApiResponse<RegisterModel>>
+
+
+    @FormUrlEncoded
+    @POST(LOGIN)
+    fun loginApi(
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<RegisterModel>>
+
+    @GET(GET_ALL_ROLE)
+    fun getRole(
+    ): Call<ApiResponse<RolesModel>>
+
 }

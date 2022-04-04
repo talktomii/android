@@ -47,12 +47,14 @@ class SignUpFragment : DaggerFragment() {
         init()
         setListener()
         setSpannable()
-// bindObservers()
+         bindObservers()
 
 
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment,
                 bundleOf("email" to binding.txtEmailId.text.toString(),"password" to binding.edPassword.text.toString()))
+
+
 
           }
 
@@ -97,16 +99,13 @@ class SignUpFragment : DaggerFragment() {
 
 
     private fun bindObservers() {
-        viewModel.getSendOtp.observe(requireActivity(), Observer {
+        viewModel.role.observe(requireActivity(), Observer {
             it ?: return@Observer
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.setLoading(false)
-                    requireContext().showMessage(getString(R.string.otp_send_successful))
-                    val bundle = Bundle()
-                    bundle.putSerializable(HASHMAP_KEY, hashMap)
-// findNavController().navigate(R.id.otpFragment, bundle)
-                    viewModel.getSendOtp.value = null
+                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data)
+                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
                 }
 
                 Status.ERROR -> {

@@ -5,6 +5,7 @@ data class Admin(
     val coverPhoto: String,
     val email: String,
     val isSocial: Boolean,
+    val couponIsUsed: Boolean,
     val name: String,
     val profilePhoto: String,
     val role: Role,

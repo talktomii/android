@@ -27,6 +27,10 @@
         <action
             android:id="@+id/action_login_to_forgetPassword"
             app:destination="@id/forgetPasswordFragment" />
+
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"

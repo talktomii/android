@@ -1,6 +1,6 @@
 package com.talktomii.data.model
 
 data class Status(
-    val modificationDate: Long,
+    val modificationDate: String,
     val name: String
 )

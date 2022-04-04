@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_create_profile.xml" value="0.20885416666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_sign_up.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />
@@ -41,7 +39,7 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_add_card.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_cart.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_checkout.xml" value="0.3546875" />
-        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_map.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
@@ -59,6 +57,7 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/feagment_appointments.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_appointments.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_call.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_card.xml" value="0.3296296296296296" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_create_profile.xml" value="0.34923076923076923" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_enter_phone.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_forget.xml" value="0.3546875" />
@@ -94,6 +93,7 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_time_slot.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_today_notification.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_yesterday_notification.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/my_cards.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/order_confirmed_layout.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/preferred_topics_item.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/sapmle_fragment.xml" value="0.3546875" />
@@ -103,6 +103,9 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/tell_us_more.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/bottom_navigation.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/call_history_popup.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/clear_history_popup.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/pop_up_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/profile_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.36512820512820515" />

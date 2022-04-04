@@ -56,6 +56,7 @@ class CreateProfileFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressDialog= ProgressDialog(requireActivity())
+        viewModel.getRoles()
         binding.btnNEXT.setOnClickListener {
             radioCheck()
 
@@ -148,7 +149,10 @@ class CreateProfileFragment : DaggerFragment() {
 
     fun radioCheck() {
 
-        if (validation(firstname = binding.txtFirstName.text.toString() , profilePhoto = binding.imgDefault.toString(), lastname = binding.txtLastName.text.toString(),username = binding.txtUserName.text.toString())) {
+        if (validation(firstname = binding.txtFirstName.text.toString() ,
+                profilePhoto = binding.imgDefault.toString(),
+                lastname = binding.txtLastName.text.toString(),
+                username = binding.txtUserName.text.toString())) {
             val map: HashMap<String, RequestBody> = HashMap()
             map["name"] =
                 "${binding.txtFirstName.text.toString()} ${binding.txtLastName.text.toString()}".toRequestBody(

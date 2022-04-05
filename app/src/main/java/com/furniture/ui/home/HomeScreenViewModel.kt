@@ -123,7 +123,6 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
-    companion object
     fun getAllSlotByDate(date: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
@@ -145,7 +144,6 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
             }
         }
     }
-
 }
 
 

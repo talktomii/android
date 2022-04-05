@@ -199,11 +199,22 @@
         android:id="@+id/bookmarkFragment"
         android:name="com.furniture.ui.drawer.bookmark.BookmarkFragment"
         android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" >
+        tools:layout="@layout/fragment_bookmark">
         <action
             android:id="@+id/action_bookmarkFragment_to_influencerProfileFragment"
             app:destination="@id/influencerProfileFragment" />
     </fragment>
 
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.furniture.ui.drawer.settings.SettingsFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settingsFragment_to_editPersonalInfo"
+            app:destination="@id/editPersonalInfo" />
+    </fragment>
 
 </navigation>

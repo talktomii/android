@@ -25,6 +25,8 @@ interface WebService {
         private const val ADD_APPOINMENT = "appointment/addAppointment"
         private const val UPDATE_APPOINMENT = "appointment/updateAppointment/"
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
+        private const val UPDATE_PHOTO = "admin/updatePhoto"
+        private const val UPDATE_ADMIN = "admin/updateAdmin"
 
     }
 
@@ -99,4 +101,18 @@ interface WebService {
         @Query("date") date: String,
         @Query("ifid") ifid: String,
     ): Response<GetAllSlotByDateResponse>
+
+    @GET(UPDATE_PHOTO)
+    suspend fun updatePhoto(
+        @Body id: HashMap<String, Any>,
+        @Header("Authorization") authHeader: String
+    ): Response<AdminResponse1>
+
+    @PUT(UPDATE_ADMIN + "/{id}")
+    suspend fun updateProfile(
+        @Path("id") id: String,
+        @Body data: HashMap<String, Any>,
+        @Header("Authorization") authHeader: String
+    ): Response<AdminResponse1>
+
 }

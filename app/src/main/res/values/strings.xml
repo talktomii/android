@@ -185,5 +185,6 @@
     <string name="tell_us_more_about_you" translatable="false">Tell us more \nAbout You</string>
     <string name="preferred_topics" translatable="false">Preferred Topics</string>
     <string name="search">Search</string>
+    <string name="privacy_and_safety">Privacy and safety</string>
 
 </resources>

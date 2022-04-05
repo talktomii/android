@@ -92,7 +92,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
                 destination.id == R.id.notificationFragment ||
-                destination.id == R.id.bookmarkFragment
+                destination.id == R.id.bookmarkFragment ||
+                destination.id == R.id.settingsFragment
 
             ) {
 
@@ -115,7 +116,7 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
         binding.txtSettings.setOnClickListener {
-            viewModel.navController.navigate(R.id.bookmarkFragment)
+            viewModel.navController.navigate(R.id.settingsFragment)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 

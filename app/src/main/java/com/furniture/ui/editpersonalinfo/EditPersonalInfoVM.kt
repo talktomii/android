@@ -13,6 +13,7 @@ import com.furniture.data.network.Coroutines
 import com.furniture.interfaces.AdminDetailInterface
 import com.furniture.interfaces.CommonInterface
 import com.furniture.utlis.AUTHORIZATION
+import com.furniture.utlis.uid
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
 import javax.inject.Inject
@@ -40,6 +41,28 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                     }
                 } else {
                     commonInterface!!.onFailureAPI(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun updateProfile(data: HashMap<String, Any>) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.updateProfile(uid, data, AUTHORIZATION)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

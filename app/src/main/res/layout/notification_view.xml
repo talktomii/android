@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+<!--    <ImageView-->
+<!--        android:id="@+id/ivCall"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_call2"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivCall"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:src="@drawable/ic_call2"
+        app:riv_corner_radius="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop">
+
+    </com.makeramen.roundedimageview.RoundedImageView>
+    <ImageView
+        android:id="@+id/ivStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_red_dot"
+        android:layout_marginEnd="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="@+id/ivCall"
+        app:layout_constraintEnd_toEndOf="@+id/ivCall" />
+
+    <TextView
+        android:id="@+id/txtYouAreMissed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:text="You are missed call from"
+        app:layout_constraintStart_toEndOf="@+id/ivCall"
+        app:layout_constraintTop_toTopOf="@+id/ivCall" />
+
+    <TextView
+        android:id="@+id/txtUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@Username"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivCall"
+        app:layout_constraintStart_toStartOf="@+id/txtYouAreMissed"
+        app:layout_constraintTop_toBottomOf="@+id/txtYouAreMissed" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 min ago"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/gray"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/txtUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtYouAreMissed" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/reportabuseLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -70,70 +71,50 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
+
+                    <RelativeLayout
                         android:layout_marginHorizontal="@dimen/dp_12"
-                        android:layout_marginTop="@dimen/dp_20"
-                        app:cardBackgroundColor="@color/mycard_bgcolor"
-                        app:cardCornerRadius="@dimen/dp_6"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvbankSettingText"
-                        tools:ignore="MissingConstraints">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/mycard_bgcolor"
+                        android:gravity="center">
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/typesFilterContainer"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center">
+                            android:background="@color/mycard_bgcolor"
+                            android:gravity="start"
+                            android:textColorHint="#565656"
+                            app:boxBackgroundColor="@color/mycard_bgcolor"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:cardBackgroundColor="@color/mycard_bgcolor"
+                            app:endIconDrawable="@drawable/dropdown_end_icon"
+                            app:endIconTint="#55ADFF"
+                            app:hintTextColor="#565656">
 
-                            <androidx.appcompat.widget.AppCompatTextView
+                            <AutoCompleteTextView
+                                android:id="@+id/typesFilter"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginHorizontal="@dimen/dp_12"
+                                android:background="@color/mycard_bgcolor"
+                                android:ellipsize="end"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Reason 1"
-                                android:textColor="#455154"
-                                android:textFontWeight="700"
-                                android:textSize="@dimen/dp_16" />
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginHorizontal="@dimen/dp_12"
-                        android:layout_marginTop="@dimen/dp_20"
-                        app:cardBackgroundColor="@color/mycard_bgcolor"
-                        app:cardCornerRadius="@dimen/dp_6"
-                        app:cardElevation="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvbankSettingText"
-                        tools:ignore="MissingConstraints">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginHorizontal="@dimen/dp_12"
-                                android:fontFamily="@font/inter_regular"
-                                android:text="Reason 2"
-                                android:textColor="#455154"
-                                android:textFontWeight="700"
-                                android:textSize="@dimen/dp_16" />
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-
+                                android:inputType="none"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="2dp"
+                                android:singleLine="true"
+                                android:text="Select Report abuse type"
+                                android:textColor="#565656"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/dp_16"
+                                tools:ignore="LabelFor" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </RelativeLayout>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -155,16 +136,17 @@
                             android:gravity="center">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/addReportAbuseMessage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:paddingVertical="@dimen/dp_20"
-                                android:paddingHorizontal="@dimen/dp_10"
                                 android:layout_marginHorizontal="@dimen/dp_12"
-                                android:fontFamily="@font/inter_regular"
-                                android:hint="Add message"
-                                android:textColor="#455154"
-                                android:gravity="top"
                                 android:background="@android:color/transparent"
+                                android:fontFamily="@font/inter_regular"
+                                android:gravity="top"
+                                android:hint="Add message"
+                                android:paddingHorizontal="@dimen/dp_10"
+                                android:paddingVertical="@dimen/dp_20"
+                                android:textColor="#455154"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/dp_16" />
                         </RelativeLayout>

@@ -7,11 +7,14 @@ import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
 import com.talktomii.ui.callhistory.models.CallHistoryData
 import com.talktomii.ui.coupon.models.CouponData
+import com.talktomii.ui.home.notifications.models.NotificationData
 import com.talktomii.ui.mycards.data.addCardData
 import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
 import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
+import com.talktomii.ui.reportabuse.models.AddReport
+import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -20,24 +23,20 @@ interface WebService {
     companion object {
         private const val ADD_CARD = "card/addCard"
         private const val DELETE_CARD_ITEM = "card/deleteCard/"
-        private const val GET_CARDS = "card/getCardByuid/623d9832f521ab28b8f8373a"
         private const val ADD_WALLET = "walletHistory/addWalletHistory"
-        private const val GET_WALLET =
-            "walletHistory/getWalletHistoryByuid/623d9832f521ab28b8f8373a"
-        private const val GET_PAYMENT =
-            "walletHistory/getWalletHistoryByuid/623d9832f521ab28b8f8373a"
-        private const val GET_CURRENT_AMOUNT =
-            "walletHistory/getCurrentAmount/623d9832f521ab28b8f8373a"
         private const val ADD_BANK = "bank/addBank"
-        private const val GET_BANK = "bank/getBankByuid/623d9832f521ab28b8f8373a"
         private const val ADD_COUPON = "coupon/addCoupon"
         private const val GET_CALL_HISTORY = "callHistory/getCallHistoryByuid"
         private const val DELETE_CALL_HISTORY = "appointment/deleteCallHistory"
         private const val BLOCK_USER = "admin/blockUser"
+        private const val GET_NOTIFICATION = "notification/getNotification"
+        private const val GET_REPORTABUSE_TYPE = "reportAbuse/getReportAbuse"
+        private const val ADD_FEEDBACK = "feedback/addFeedback"
     }
 
-    @GET(GET_CARDS)
+    @GET("card/getCardByuid/{id}")
     fun getCards(
+        @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<PayloadCards>
 
@@ -61,18 +60,21 @@ interface WebService {
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<addWalletData>>
 
-    @GET(GET_WALLET)
+    @GET("walletHistory/getWalletHistoryByuid/{id}")
     fun getWallet(
+        @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<WalletPayload>
 
-    @GET(GET_CURRENT_AMOUNT)
+    @GET("walletHistory/getCurrentAmount/{id}")
     fun getCurrentAmount(
+        @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<CurrentWalletPaylod>
 
-    @GET(GET_PAYMENT)
+    @GET("walletHistory/getWalletHistoryByuid/{id}")
     fun getPayment(
+        @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<PaymentPayload>
 
@@ -83,8 +85,9 @@ interface WebService {
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<addBankData>>
 
-    @GET(GET_BANK)
+    @GET("bank/getBankByuid/{id}")
     fun getBank(
+        @Path("id") id: String?,
         @Header("Authorization") auth: String,
     ): Call<BankData>
 
@@ -126,4 +129,22 @@ interface WebService {
         @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ):Call<ApiResponse<Any>>
+
+    @GET("notification/getNotification/{id}")
+    fun getNotifications(
+        @Path("id") id: String?,
+        @Header("Authorization") auth: String
+    ): Call<NotificationData>
+
+    @GET(GET_REPORTABUSE_TYPE)
+    fun getType(
+        @Header("Authorization") auth: String,
+    ): Call<ReportAbuseData>
+
+    @POST(ADD_FEEDBACK)
+    @FormUrlEncoded
+    fun addFeedback(
+        @Header("Authorization") auth: String,
+        @FieldMap map: HashMap<String, String>
+    ): Call<AddReport>
 }

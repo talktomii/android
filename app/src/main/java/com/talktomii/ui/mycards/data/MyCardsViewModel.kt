@@ -2,6 +2,7 @@ package com.talktomii.ui.mycards.data
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -46,6 +47,10 @@ import com.talktomii.ui.callhistory.models.CallHistoryData
 import com.talktomii.ui.callhistory.models.CallHistoryItemModel
 import com.talktomii.ui.coupon.CouponActivity
 import com.talktomii.ui.coupon.models.CouponData
+import com.talktomii.ui.home.notifications.AdapterTodayNotification
+import com.talktomii.ui.home.notifications.NotificationFragment
+import com.talktomii.ui.home.notifications.NotificationItemModel
+import com.talktomii.ui.home.notifications.models.NotificationData
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.RefillFragment
@@ -60,8 +65,17 @@ import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.ui.mycards.PaymentItemsViewModel
 import com.talktomii.ui.mycards.fragments.PaymentFragment
 import com.talktomii.ui.mycards.model.PaymentPayload
+import com.talktomii.ui.reportabuse.ReportAbuseActivity
+import com.talktomii.ui.reportabuse.models.AddReport
+import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import java.text.ParseException
 import java.util.logging.Handler
+import org.json.JSONException
+
+import retrofit2.adapter.rxjava2.Result.response
+
+
+
 
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
@@ -69,14 +83,29 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val addWallet by lazy { SingleLiveEvent<Resource<Any>>() }
     val cards by lazy { SingleLiveEvent<Resource<PayloadCards>>() }
+    val type by lazy { SingleLiveEvent<Resource<ReportAbuseData>>() }
+    val notification by lazy { SingleLiveEvent<Resource<NotificationData>>() }
     val wallets by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
     val updateCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteBank by lazy { SingleLiveEvent<Resource<Any>>() }
     val deleteCallHistory by lazy { SingleLiveEvent<Resource<Any>>() }
+    val addFeedback by lazy { SingleLiveEvent<Resource<AddReport>>() }
     private var context: Context? = null
     val payments by lazy { SingleLiveEvent<Resource<WalletPayload>>() }
     val banks by lazy { SingleLiveEvent<Resource<BankData>>() }
+
+    private val SECOND_MILLIS = 1000
+    private val MINUTE_MILLIS = 60 * SECOND_MILLIS
+    private val HOUR_MILLIS = 60 * MINUTE_MILLIS
+    private val DAY_MILLIS = 24 * HOUR_MILLIS
+
+    private fun currentDate(): Date? {
+        val calendar = Calendar.getInstance()
+        return calendar.time
+    }
+
+
 
     fun ViewModelFactory(context: Context?) {
         this.context = context
@@ -85,13 +114,15 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     companion object {
         var arrayStrings: ArrayList<String>? = null
         var carditemMap: HashMap<String, String>? = null
+        var type_item: HashMap<String, String>? = null
         var selectedCardItem: String = ""
+        var selectedType: String = ""
     }
 
     fun getCards() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
-        webService.getCards("Bearer " + MainActivity.retrivedToken)
+        webService.getCards("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
                     call: Call<PayloadCards>,
@@ -145,7 +176,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCardlistWallet() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
-        webService.getCards("Bearer " + MainActivity.retrivedToken)
+        webService.getCards("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
                     call: Call<PayloadCards>,
@@ -240,7 +271,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     }
 
     fun addCard(hashMap: HashMap<String, String>) {
-        addCard.value = Resource.loading()
+//        addCard.value = Resource.loading()
         webService.addCard("Bearer " + MainActivity.retrivedToken, hashMap)
             .enqueue(object : Callback<ApiResponse<addCardData>> {
                 override fun onResponse(
@@ -260,32 +291,25 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             getCards()
                         }
                     } else {
-                        addCard.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.errorBody()?.string()
-                            )
-                        )
-                        val data = response.errorBody()!!.string()
-                        Log.d("errordata", response.toString())
+//                        addCard.value = Resource.error(
+//                            ApiUtils.getError(
+//                                response.code(),
+//                                response.errorBody()?.string()
+//                            )
+//                        )
+                        var jsonObject: JSONObject? = null
                         try {
-                            val jObjError = JSONObject(data)
-
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
                             val snackbar = Snackbar.make(
                                 MyCardsActivity.layout,
-                                "Something wrong",
+                                userMessage,
                                 Snackbar.LENGTH_SHORT
                             )
                             snackbar.show()
-                        } catch (e: Exception) {
-                            val snackbar = Snackbar.make(
-                                MyCardsActivity.layout,
-                                "Something wrong",
-                                Snackbar.LENGTH_SHORT
-                            )
-                            snackbar.show()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
                         }
-
                         MyCardsActivity.progress.visibility = View.GONE
                     }
                 }
@@ -401,7 +425,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getWallet("Bearer " + MainActivity.retrivedToken)
+        webService.getWallet("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -465,7 +489,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getWallet("Bearer " + MainActivity.retrivedToken)
+        webService.getWallet("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -500,7 +524,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getCurrentAmount("Bearer " + MainActivity.retrivedToken)
+        webService.getCurrentAmount("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<CurrentWalletPaylod> {
                 override fun onResponse(
                     call: Call<CurrentWalletPaylod>,
@@ -536,7 +560,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         payments.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<PaymentItemsViewModel>()
-        webService.getPayment("Bearer " + MainActivity.retrivedToken)
+        webService.getPayment("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<PaymentPayload> {
                 override fun onResponse(
                     call: Call<PaymentPayload>,
@@ -604,7 +628,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         banks.value = Resource.loading()
         Log.d("token bank: ", MainActivity.retrivedToken)
         val dataList = ArrayList<BankItemModel>()
-        webService.getBank("Bearer " + MainActivity.retrivedToken)
+        webService.getBank("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
             .enqueue(object : Callback<BankData> {
                 override fun onResponse(
                     call: Call<BankData>,
@@ -685,24 +709,20 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 response.errorBody()?.string()
                             )
                         )
-                        val data = response.errorBody()!!.string()
+                        var jsonObject: JSONObject? = null
                         try {
-                            val jObjError = JSONObject(data)
-
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
                             val snackbar = Snackbar.make(
-                                AddBankAccountActivity.layout!!,
-                                "Something wrong",
+                                AddBankAccountActivity.layout,
+                                userMessage,
                                 Snackbar.LENGTH_SHORT
                             )
                             snackbar.show()
-                        } catch (e: Exception) {
-                            val snackbar = Snackbar.make(
-                                AddBankAccountActivity.layout!!,
-                                "Something wrong",
-                                Snackbar.LENGTH_SHORT
-                            )
-                            snackbar.show()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
                         }
+
                     }
                 }
 
@@ -960,6 +980,181 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
                     deleteCallHistory.value = Resource.error(ApiUtils.failure(t))
                     Log.d("problem   ::", t.message!!)
+                }
+
+            })
+    }
+    fun getNotifications() {
+        webService.getNotifications("623d90435959a60f08db110a","Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<NotificationData> {
+                override fun onResponse(
+                    call: Call<NotificationData>,
+                    response: Response<NotificationData>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    val dataList = ArrayList<NotificationItemModel>()
+                    if (response.isSuccessful) {
+                        val data = response.body()!!.payload
+                        for (i in data!!.notification) {
+                            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                            sdf.timeZone = TimeZone.getTimeZone("GMT")
+                            try {
+                                val time = sdf.parse(  i.createdAt).time
+                                val now = System.currentTimeMillis()
+                                val ago: CharSequence = DateUtils.getRelativeTimeSpanString(
+                                    time,
+                                    now,
+                                    DateUtils.MINUTE_IN_MILLIS
+                                )
+                                if(i.notificationBy!!.name == null){
+                                    dataList.add(
+                                        NotificationItemModel(
+                                            i.Id!!,
+                                            i.title!!,
+                                            "",
+                                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                                            ago.toString()
+                                        )
+                                    )
+                                }else{
+                                    dataList.add(
+                                        NotificationItemModel(
+                                            i.Id!!,
+                                            i.title!!,
+                                            "@" + i.notificationBy!!.userName!!,
+                                            i.notificationBy!!.profilePhoto!!,
+                                            ago.toString()
+                                        )
+                                    )
+                                }
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+
+                        }
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        NotificationFragment.recyclerView.layoutManager = layoutManager
+                        val adapter = AdapterTodayNotification(dataList, webService)
+                        NotificationFragment.recyclerView.adapter = adapter
+                        NotificationFragment.progress.visibility = View.GONE
+                        NotificationFragment.recyclerView.visibility = View.VISIBLE
+                    } else {
+                        notification.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<NotificationData>, t: Throwable) {
+                    notification.value = Resource.error(ApiUtils.failure(t))
+                    Log.d("notify --- ", t.message!!)
+                }
+
+            })
+    }
+
+    fun getType() {
+        webService.getType("Bearer " + MainActivity.retrivedToken)
+            .enqueue(object : Callback<ReportAbuseData> {
+                override fun onResponse(
+                    call: Call<ReportAbuseData>,
+                    response: Response<ReportAbuseData>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()!!.payload
+                        val types  = ArrayList<String>()
+                        type_item = HashMap()
+                        for (i in data!!.reportAbuse) {
+                            val refilldata = i.type
+                            if (types.contains(refilldata)) {
+                            } else {
+                                types.add(refilldata!!)
+                                type_item!!.put(i.Id!!, refilldata)
+                            }
+
+
+                        }
+                        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                            ReportAbuseActivity.context,
+                            android.R.layout.simple_spinner_dropdown_item,
+                            types.toMutableList()
+                        )
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        ReportAbuseActivity.filterTypes!!.setAdapter(adapter)
+                        ReportAbuseActivity.filterTypes!!.onItemClickListener =
+                            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
+                                for (entry in type_item!!.entries) {
+                                    if (entry.value === adapter.getItem(p2)) {
+                                        System.out.println(
+                                            "The key for value " + adapter.getItem(p2)
+                                                .toString() + " is " + entry.key
+                                        )
+                                        selectedType = entry.key
+                                        break
+                                    }
+                                }
+                            }
+
+                    } else {
+
+                        type.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<ReportAbuseData>, t: Throwable) {
+                    type.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+    fun addFeedback(hashMap: HashMap<String, String>) {
+        Log.d("Abuse Data :  ", hashMap.toString())
+        addFeedback.value = Resource.loading()
+        webService.addFeedback("Bearer " + MainActivity.retrivedToken, hashMap)
+            .enqueue(object : Callback<AddReport> {
+                override fun onResponse(
+                    call: Call<AddReport>,
+                    response: Response<AddReport>
+                ) {
+                    if (!response.isSuccessful) {
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                ReportAbuseActivity.layout,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    }else{
+                        val snackbar = Snackbar.make(
+                            ReportAbuseActivity.layout,
+                            response.body()!!.message!!,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        ReportAbuseActivity.finishFunction()
+                    }
+                }
+
+                override fun onFailure(call: Call<AddReport>, t: Throwable) {
+                    addFeedback.value = Resource.error(ApiUtils.failure(t))
                 }
 
             })

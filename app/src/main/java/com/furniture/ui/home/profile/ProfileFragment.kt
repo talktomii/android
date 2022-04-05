@@ -32,7 +32,7 @@ class ProfileFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvInterest.adapter = AdapterInterests(requireContext())
+        binding.rvInterest.adapter = AdapterInterests()
         binding.rvAvailability.adapter = AdapterAvailability()
 
         binding.TextEditProfile.setOnClickListener {

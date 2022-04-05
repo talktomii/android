@@ -68,7 +68,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvSocialMedia.adapter = socialMediaAdapter
 
-        adapterInterests = AdapterInterests(requireContext())
+        adapterInterests = AdapterInterests()
         binding.rvInterest.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvInterest.adapter = adapterInterests

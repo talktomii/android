@@ -213,8 +213,20 @@
         tools:layout="@layout/fragment_settings">
 
         <action
+            android:id="@+id/action_settingsFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
             android:id="@+id/action_settingsFragment_to_editPersonalInfo"
             app:destination="@id/editPersonalInfo" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/helpSupportFragment"
+        android:name="com.furniture.ui.drawer.helpsupport.HelpSupportFragment"
+        android:label="fragment_helpsupport"
+        tools:layout="@layout/fragment_helpsupport">
+
     </fragment>
 
 </navigation>

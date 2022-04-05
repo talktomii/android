@@ -7,20 +7,25 @@
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/back_arrow.xml" value="0.105" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/bg_back_background.xml" value="0.105" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/bg_dray_background.xml" value="0.105" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/bottomsheet_round_bg.xml" value="0.124" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/curve_background.xml" value="0.105" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/drawable/white_bg_round_curve.xml" value="0.124" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/bottomsheet_addprice.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/edit_interest_fragment.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/edit_personal_info_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_forget.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_helpsupport.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_home_influencer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_influencer_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_profile.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_setting.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/home_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_all_service.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_availability.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_categories.xml" value="0.152" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_customer_storie.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii/app/src/main/res/layout/item_interests.xml" value="0.25416666666666665" />

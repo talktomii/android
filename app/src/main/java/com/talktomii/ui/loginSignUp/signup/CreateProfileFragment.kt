@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.talktomii.data.model.Role
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentCreateProfileBinding
+import com.talktomii.ui.home.notifications.AdapterTodayNotification
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.utlis.ImageUtils
 import com.talktomii.utlis.PrefsManager
@@ -28,6 +30,7 @@ import javax.inject.Inject
 
 class CreateProfileFragment : DaggerFragment() {
 
+    private lateinit var selectedRole: Role
     private val viewModels by viewModels<CreateProfileVM>()
 
     @Inject
@@ -55,7 +58,7 @@ class CreateProfileFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog= ProgressDialog(requireActivity())
+        progressDialog = ProgressDialog(requireActivity())
         viewModel.getRoles()
         binding.btnNEXT.setOnClickListener {
             radioCheck()
@@ -66,6 +69,7 @@ class CreateProfileFragment : DaggerFragment() {
 //        var password =requireArguments()["password"].toString()
         setListener()
         addObserver()
+
     }
 
     private fun addObserver() {
@@ -75,12 +79,35 @@ class CreateProfileFragment : DaggerFragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.setLoading(false)
-                    val userOrInfluencer = when {
-                        binding.radioUser.isChecked -> true
-                        binding.radioInfluencer.isChecked -> false
-                        else -> null
-                    }
-                    view?.findNavController()?.navigate(CreateProfileFragmentDirections.actionCreateProfileFragmentToTellUsMore(isUser = userOrInfluencer?:false))
+//                    val userOrInfluencer = when {
+//                        binding.radioUser.isChecked -> true
+//                        binding.radioInfluencer.isChecked -> false
+//                        else -> null
+//                    }
+
+                    var userOrInfluencer = selectedRole.roleName == "user"
+                    view?.findNavController()?.navigate(
+                        CreateProfileFragmentDirections.actionCreateProfileFragmentToTellUsMore(
+                            isUser = userOrInfluencer?:false
+                        )
+                    )
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
+
+        viewModel.role.observe(requireActivity(), Observer {
+            it ?: return@Observer
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.setLoading(false)
+                    binding.rvRole.adapter = AdapterRole(it.data?.allRole?: arrayListOf(),this)
                 }
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
@@ -149,10 +176,13 @@ class CreateProfileFragment : DaggerFragment() {
 
     fun radioCheck() {
 
-        if (validation(firstname = binding.txtFirstName.text.toString() ,
-                profilePhoto = binding.imgDefault.toString(),
+        if (validation(
+                firstname = binding.txtFirstName.text.toString(),
+                profilePhoto = imageProfile.toString(),
                 lastname = binding.txtLastName.text.toString(),
-                username = binding.txtUserName.text.toString())) {
+                username = binding.txtUserName.text.toString()
+            )
+        ) {
             val map: HashMap<String, RequestBody> = HashMap()
             map["name"] =
                 "${binding.txtFirstName.text.toString()} ${binding.txtLastName.text.toString()}".toRequestBody(
@@ -163,7 +193,7 @@ class CreateProfileFragment : DaggerFragment() {
                 "${requireArguments()["email"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["password"] =
                 "${requireArguments()["password"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
-            map["role"] = "61aa0369803e260c3821ad0a".toRequestBody("text/plain".toMediaTypeOrNull())
+            map["role"] = "${selectedRole._id}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["userName"] =
                 "${binding.txtUserName.text.toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["isSocial"] = "false".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -184,27 +214,36 @@ class CreateProfileFragment : DaggerFragment() {
 
     }
 
-    private fun validation(profilePhoto: String, firstname: String, lastname: String, username: String): Boolean {
-        return when{
-            profilePhoto.isNullOrEmpty() ->{
+    private fun validation(
+        profilePhoto: String,
+        firstname: String,
+        lastname: String,
+        username: String
+    ): Boolean {
+        return when {
+            profilePhoto.isNullOrEmpty() -> {
                 binding.imgDefault.showSnackBar("please upload profile photo")
                 false
             }
-            firstname.isNullOrEmpty() ->{
+            firstname.isNullOrEmpty() -> {
                 binding.txtFirstName.showSnackBar("please enter first name")
                 false
             }
-            lastname.isNullOrEmpty()->{
+            lastname.isNullOrEmpty() -> {
                 binding.txtLastName.showSnackBar("please enter last name")
                 false
             }
-            username.isNullOrEmpty() ->{
+            username.isNullOrEmpty() -> {
                 binding.txtUserName.showSnackBar("please enter username")
                 false
             }
 
             else -> true
         }
+    }
+
+    fun onRoleChanged(role: Role) {
+        selectedRole = role
     }
 }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,9 @@ import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.isConnectedToInternet
+import com.talktomii.utlis.showMessage
+import com.talktomii.utlis.showSnackBar
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -80,6 +84,7 @@ class LoginFragment : DaggerFragment() {
                     progressDialog.setLoading(false)
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    requireContext().showMessage("Login Successfully")
                     if (it.data?.admin?.role?.roleName == "user")
                         findNavController().navigate(R.id.homeFragment)
                     else
@@ -143,15 +148,41 @@ class LoginFragment : DaggerFragment() {
 
     private fun setListener() {
         binding.btnLogin.setOnClickListener {
-//            findNavController().navigate(R.id.action_login_to_home)
             var email = binding.txtEmailId.text.toString()
             var password = binding.edPassword.text.toString()
 
+            if (validation(email,password)){
+
+           if (isConnectedToInternet(requireContext(), true)) {
             var map = HashMap<String, String>()
             map["email"] = email
             map["password"] = password
 
             viewModel.loginApi(map)
+
+              }
+
+            }
+        }
+    }
+
+    private fun validation(email: String,password:String): Boolean {
+        return when{
+            email.isEmpty() ->{
+                binding.txtEmailId.showSnackBar("Please enter your email id")
+                false
+            }
+//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+//                binding.txtEmailId.showSnackBar("Please enter a valid email address")
+//                false
+//            }
+            password.isEmpty() ->{
+                binding.edPassword.showSnackBar("Please enter password")
+                false
+            }
+
+            else -> true
+
         }
 
     }
@@ -170,19 +201,5 @@ class LoginFragment : DaggerFragment() {
 
     }
 
-//    private fun validation(number: String): Boolean {
-//        return when {
-//            number.isEmpty() -> {
-//                binding.etMobile.showSnackBar(getString(R.string.validation_number))
-//                false
-//            }
-//            number.length < 6 -> {
-//                binding.etMobile.showSnackBar(getString(R.string.validation_number_lenght))
-//                false
-//            }
-//
-//            else -> true
-//        }
-//    }
 
 }

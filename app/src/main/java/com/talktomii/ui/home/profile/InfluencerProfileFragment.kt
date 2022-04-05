@@ -49,9 +49,9 @@ class InfluencerProfileFragment : DaggerFragment() {
             dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
         }
 
-//        binding.txtBookACall.setOnClickListener {
-//            view?.findNavController()?.navigate(com.talktomii.R.id.action_influencer_profile_to_call_fragmnet)
-//        }
+        binding.txtBookACall.setOnClickListener {
+            view?.findNavController()?.navigate(com.talktomii.R.id.action_influencer_profile_to_call_fragmnet)
+        }
 
 
     }

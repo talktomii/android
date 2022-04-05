@@ -33,14 +33,7 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
                     response: Response<ApiResponse<RegisterModel>>
                 ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status == 200)
                             createProfile.value = Resource.success(response.body()?.payload)
-                        else createProfile.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
 
                     } else {
                         createProfile.value = Resource.error(
@@ -68,14 +61,8 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
                     response: Response<ApiResponse<RegisterModel>>
                 ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status == 200)
-                            login.value = Resource.success(response.body()?.payload)
-                        else login.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
+
+                        login.value = Resource.success(response.body()?.payload)
 
                     } else {
                         login.value = Resource.error(
@@ -104,15 +91,7 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
                     response: Response<ApiResponse<RolesModel>>
                 ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status == 200)
-                            role.value = Resource.success(response.body()?.payload)
-
-                        else role.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
+                        role.value = Resource.success(response.body()?.payload)
 
                     } else {
                         role.value = Resource.error(

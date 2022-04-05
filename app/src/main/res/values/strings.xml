@@ -231,4 +231,17 @@
     <string name="confirm_block">Ronald Richards has blocked</string>
     <string name="call_invoice">Call Invoice</string>
     <string name="report_abuse">Report Abuse</string>
+
+
+    <string name="app__name" translatable="false">Talktomii</string>
+
+    <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
+    <!-- Get your own App ID at https://dashboard.agora.io/ -->
+    <!-- After you entered the App ID, remove <##> outside of Your App ID -->
+    <!-- For formal released project, please use Security Keys/Token
+        https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms -->
+    <string name="agora_app_id" translatable="false">9048bd89642e4679ba79ee4f41ed3e50</string>
+    <!-- Please leave it if not enable App Certificate -->
+    <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
+    <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAD4jIWPPR6kOv7du3cTZl/Qgtnvl3l5oST1jFpWimkMOQx+f9gAAAAAEADJZeRX/XBNYgEAAQAncU1i</string>
 </resources>

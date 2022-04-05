@@ -176,7 +176,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment
+                destination.id == R.id.notificationFragment||
+                destination.id == R.id.homeInfluencerFragment
 
             ) {
 

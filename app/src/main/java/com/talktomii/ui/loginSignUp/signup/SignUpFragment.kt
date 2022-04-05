@@ -49,12 +49,9 @@ class SignUpFragment : DaggerFragment() {
         setSpannable()
          bindObservers()
 
-
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment,
                 bundleOf("email" to binding.txtEmailId.text.toString(),"password" to binding.edPassword.text.toString()))
-
-
 
           }
 
@@ -66,12 +63,17 @@ class SignUpFragment : DaggerFragment() {
     }
 
     private fun setSpannable() {
+
     }
 
     private fun setListener() {
         binding.tvTermsAndConditions.setOnClickListener {
             val dialog = BackToHomeDialog(this)
             dialog.show(requireActivity().supportFragmentManager, BackToHomeDialog.TAG)
+        }
+
+        binding.tvSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_signupFragment_to_signIn)
         }
     }
 
@@ -99,25 +101,26 @@ class SignUpFragment : DaggerFragment() {
 
 
     private fun bindObservers() {
-        viewModel.role.observe(requireActivity(), Observer {
-            it ?: return@Observer
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressDialog.setLoading(false)
-                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data)
-                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
-                }
-
-                Status.ERROR -> {
-                    progressDialog.setLoading(false)
-                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
-                }
-                Status.LOADING -> {
-                    progressDialog.setLoading(true)
-                }
-
-            }
-        })
+//        viewModel.role.observe(requireActivity(), Observer {
+//            it ?: return@Observer
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    progressDialog.setLoading(false)
+//                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data)
+//                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+//                    binding.rvRole.adapter = AdapterRole(it.data?.allRole?: arrayListOf(),this)
+//                }
+//
+//                Status.ERROR -> {
+//                    progressDialog.setLoading(false)
+//                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+//                }
+//                Status.LOADING -> {
+//                    progressDialog.setLoading(true)
+//                }
+//
+//            }
+//        })
     }
 
 

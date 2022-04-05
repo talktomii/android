@@ -35,8 +35,10 @@ const val USER_DATA = "user data"
 const val USER_LANGUAGE = "user language"
 const val PUSH_DATA = "PUSH_DATA"
 const val SUCESS = "200"
+const val PROFILE_IMAGE = "profilePhoto"
+const val COVER_IMAGE = "coverPhoto"
 const val AUTHORIZATION =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGE3YTI5NDgzZjI0YWI1MDk0MGI4MiIsImRhdGUiOiIyMDIyLTA0LTA0VDA4OjQ1OjIyLjc5OVoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJiaW5hbDI5QGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0OTA2MTkyMn0.DJP-du9MDMwWZteVV45zb3-lSsuM08tCVLLWSeC2TjA"
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGE3YTI5NDgzZjI0YWI1MDk0MGI4MiIsImRhdGUiOiIyMDIyLTA0LTA1VDA2OjMzOjAwLjA2OFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJiaW5hbDI5QGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0OTE0MDM4MH0.aEQbPvcoLtdesft-M7iMiF9aFyy1YEd9ja8U6xZyBBE"
 
 const val uid = "624a7a29483f24ab50940b82"
 

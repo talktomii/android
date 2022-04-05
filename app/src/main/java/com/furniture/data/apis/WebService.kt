@@ -7,6 +7,8 @@ import com.furniture.data.model.admin.AdminResponse
 import com.furniture.data.model.admin1.AdminResponse1
 import com.furniture.data.model.drawer.bookmark.BookMarkResponse
 import com.furniture.data.model.getallslotbydate.GetAllSlotByDateResponse
+import com.furniture.data.model.photo.UpdatePhoto
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -102,13 +104,15 @@ interface WebService {
         @Query("ifid") ifid: String,
     ): Response<GetAllSlotByDateResponse>
 
-    @GET(UPDATE_PHOTO)
+    @Multipart
+    @PUT("$UPDATE_PHOTO/{id}")
     suspend fun updatePhoto(
-        @Body id: HashMap<String, Any>,
+        @Path("id") id: String,
+        @PartMap map: HashMap<String, RequestBody>,
         @Header("Authorization") authHeader: String
-    ): Response<AdminResponse1>
+    ): Response<UpdatePhoto>
 
-    @PUT(UPDATE_ADMIN + "/{id}")
+    @PUT("$UPDATE_ADMIN/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
         @Body data: HashMap<String, Any>,

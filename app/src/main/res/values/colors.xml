@@ -23,9 +23,11 @@
     <color name="blue_check">#55ADFF</color>
     <color name="blue_dark">#6d67dd</color>
     <color name="hint_color">#C5C5C5</color>
-
+    <color name="hint_color2">#565656</color>
     <color name="blue_drawable">#052859</color>
     <color name="green">#2BD154</color>
     <color name="black_shade">#EAEAEA</color>
     <color name="eaeaea">#EAEAEA</color>
+    <color name="card_color">#2F80ED</color>
+    <color name="mycard_bgcolor">#F9F8FC</color>
 </resources>

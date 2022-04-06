@@ -1,5 +1,6 @@
 package com.furniture.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.furniture.data.apis.WebService
 import com.furniture.data.model.*
@@ -8,8 +9,8 @@ import com.furniture.data.network.responseUtil.ApiUtils
 import com.furniture.data.network.responseUtil.Resource
 import com.furniture.data.repos.UserRepository
 import com.furniture.di.SingleLiveEvent
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import com.furniture.ui.loginSignUp.MainActivity
+import com.furniture.ui.mycards.data.addCardData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +44,6 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val paymentProccess by lazy { SingleLiveEvent<Resource<PaymentResponse>>() }
     val paymentStatus by lazy { SingleLiveEvent<Resource<Any>>() }
-
 
 
 //    fun validateCouponCode(hashMap: HashMap<String, String>) {
@@ -121,9 +121,41 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 //    }
 
 
+    fun addCard(hashMap: HashMap<String, String>) {
+        addCard.value = Resource.loading()
+        webService.addCard("Bearer " + MainActivity.retrivedToken, hashMap)
+            .enqueue(object : Callback<ApiResponse<addCardData>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<addCardData>>,
+                    response: Response<ApiResponse<addCardData>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()?.status == 200) {
+                            Log.d("Response ------", response.body()!!.data.toString())
+                            addCard.value = Resource.success(response.body()?.detail)
+                        } else addCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.body()?.message
+                            )
+                        )
 
 
+                    } else {
+                        addCard.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
 
+                override fun onFailure(call: Call<ApiResponse<addCardData>>, t: Throwable) {
+                    addCard.value = Resource.error(ApiUtils.failure(t))
+                }
 
+            })
+    }
 
 }

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.mywallet.activities.RefillWalletActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/headerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:src="@drawable/back_arrow1" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvrefillBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:fontFamily="@font/inter_extra_bold"
+                        android:text="@string/back"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/dp_16" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/refillwallet"
+                    android:textColor="#585B68"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/dp_24"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_150"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_refillwallet_text"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:hint="$10"
+                    android:inputType="number"
+                    android:textColor="#585B68"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/dp_80"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@drawable/bg_refillwallet_text2"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_6"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="$100"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/dp_18">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@drawable/bg_refillwallet_text2"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_6"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="$200"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/dp_18">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_refillwallet_text2"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_6"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:text="$300"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/dp_18">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btnNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:background="@drawable/ic_signin"
+                    android:gravity="center"
+                    android:text="REFILL"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:background="@drawable/bg_master_card">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="52dp"
+                            android:layout_height="@dimen/dp_36"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:padding="@dimen/dp_8"
+                            android:src="@drawable/master_card1"
+
+                            >
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/typesFilterContainer"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:background="@color/white"
+                        android:gravity="start"
+                        android:textColorHint="#565656"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconDrawable="@drawable/dropdown_end_icon"
+                        app:endIconTint="#55ADFF"
+                        app:hintTextColor="#565656"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textaccountType">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/typesFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/inter_regular"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:paddingStart="0dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="2dp"
+                            android:singleLine="true"
+                            android:text="53****1234"
+                            android:textColor="@color/black"
+                            android:textFontWeight="500"
+                            android:textSize="16dp"
+                            tools:ignore="LabelFor" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

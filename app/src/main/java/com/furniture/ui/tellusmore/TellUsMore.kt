@@ -37,15 +37,15 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
         savedInstanceState: Bundle?
     ): View? {
         binding = TellUsMoreBinding.inflate(inflater, container, false)
+        binding.vm = viewModels
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = viewModels
+
         val recyclerview = binding.rvTopics
         viewModels.isUser.set(args.isUser)
-
         val layoutManager = FlexboxLayoutManager()
         layoutManager.flexWrap = FlexWrap.WRAP
         layoutManager.flexDirection = FlexDirection.ROW

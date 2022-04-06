@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.furniture.ui.home.HomeScreenViewModel
 import com.furniture.ui.home.HomeViewModel
 import com.furniture.ui.loginSignUp.LoginViewModel
+import com.furniture.ui.mycards.data.MyCardsViewModel
 
 
 import dagger.Binds
@@ -41,6 +42,8 @@ abstract class ViewModelsModule {
     @ViewModelKey(HomeScreenViewModel::class)
     abstract fun homeScreenViewModel(viewModel: HomeScreenViewModel): ViewModel
 
-}
+    //run please
+    @ViewModelKey(MyCardsViewModel::class)
+    abstract fun bindAddCardModel(viewModel: MyCardsViewModel): ViewModel
 
-//run please
+}

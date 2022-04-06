@@ -140,7 +140,6 @@ class LoginFragment : DaggerFragment() {
         //map["avatar"] = imageUrl
         map["social_type"] = "google"
 
-//        viewModel.socialLogin(map)
     }
 
     fun initializeGoogle() {
@@ -162,49 +161,49 @@ class LoginFragment : DaggerFragment() {
 
 //        binding.fbLoginButton.registerCallback(
 //            callbackManager,
-            object : FacebookCallback<LoginResult?> {
-                override fun onSuccess(loginResult: LoginResult?) {
-                    val request =
-                        GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
-                            try {
-                                println("-------- ${data}")
-                                val map = HashMap<String, String>()
+        object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                val request =
+                    GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
+                        try {
+                            println("-------- ${data}")
+                            val map = HashMap<String, String>()
 
-                                map["social_id"] = data.getString("id")
-                                map["device_token"] = deviceToken ?: ""
-                                map["email"] = if (data.has("email"))
-                                    data.getString("email") else data.getString("id") + "@facebook.com"
-                                map["name"] = data.getString("name")
+                            map["social_id"] = data.getString("id")
+                            map["device_token"] = deviceToken ?: ""
+                            map["email"] = if (data.has("email"))
+                                data.getString("email") else data.getString("id") + "@facebook.com"
+                            map["name"] = data.getString("name")
 
-                                /* if (data.has("picture")) {
-                                     map["avatar"] = data.getJSONObject("picture").getJSONObject("data")
-                                         .getString("url")
-                                 }*/
-                                map["device_type"] = "ANDROID"
-                                map["social_type"] = "facebook"
+                            /* if (data.has("picture")) {
+                                 map["avatar"] = data.getJSONObject("picture").getJSONObject("data")
+                                     .getString("url")
+                             }*/
+                            map["device_type"] = "ANDROID"
+                            map["social_type"] = "facebook"
 //                                viewModel.socialLogin(map)
 
-                            } catch (e: JSONException) {
-                                e.printStackTrace()
-                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
                         }
-                    val parameters = Bundle()
-                    parameters.putString(
-                        "fields",
-                        "id, name, link, picture.type(large), email, gender,first_name,last_name"
-                    )
-                    request.parameters = parameters
-                    request.executeAsync()
-                }
-
-                override fun onCancel() {
-                    print("---cancle--")
-                }
-
-                override fun onError(exception: FacebookException?) {
-                    exception?.stackTrace
-                }
+                    }
+                val parameters = Bundle()
+                parameters.putString(
+                    "fields",
+                    "id, name, link, picture.type(large), email, gender,first_name,last_name"
+                )
+                request.parameters = parameters
+                request.executeAsync()
             }
+
+            override fun onCancel() {
+                print("---cancle--")
+            }
+
+            override fun onError(exception: FacebookException?) {
+                exception?.stackTrace
+            }
+        }
     }
 
     private fun setListener() {

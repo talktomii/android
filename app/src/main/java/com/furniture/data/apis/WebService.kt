@@ -1,6 +1,7 @@
 package com.furniture.data.apis
 
 
+import com.example.example.PayloadCards
 import com.furniture.data.model.AllInterst
 import com.furniture.data.model.addbookmark.AddBookMarkResponse
 import com.furniture.data.model.admin.AdminResponse
@@ -8,13 +9,19 @@ import com.furniture.data.model.admin1.AdminResponse1
 import com.furniture.data.model.drawer.bookmark.BookMarkResponse
 import com.furniture.data.model.getallslotbydate.GetAllSlotByDateResponse
 import com.furniture.data.model.photo.UpdatePhoto
+import com.furniture.data.network.responseUtil.ApiResponse
+import com.furniture.ui.mycards.data.addCardData
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 
 interface WebService {
     companion object {
+        private const val ADD_CARD = "card/addCard"
+        private const val DELETE_CARD_ITEM = "card/deleteCard/"
+        private const val GET_CARDS = "card/getCardByuid/623dac1b6ee1ef298842b9ad"
         private const val SEND_OTP = "user/sendOTP"
         private const val ADD_PHONE = "user/add_phone_number"
 
@@ -32,18 +39,23 @@ interface WebService {
 
     }
 
+    @GET(GET_CARDS)
+    fun getCards(
+        @Header("Authorization") auth: String
+    ): Call<PayloadCards>
 
-//    @FormUrlEncoded
-//    @POST(SOCIAL_LOGIN)
-//    fun socialLogin(@FieldMap hashMap: HashMap<String, String>): Call<ApiResponse<UserData>>
+    @POST(ADD_CARD)
+    @FormUrlEncoded
+    fun addCard(
+        @Header("Authorization") auth: String,
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<addCardData>>
 
-
-//    @GET("https://graph.instagram.com/{user_id}")
-//    fun getInstaUserApis(
-//        @Path("user_id") user_id: String,
-//        @Query("fields") fields: String,
-//        @Query("access_token") access_token: String
-//    ): Call<UserData>
+    @DELETE("card/deleteCard/{id}")
+    fun deleteCard(
+        @Path("id") id: String?,
+        @Header("Authorization") auth: String
+    ): Call<ApiResponse<Any>>
 
     @GET(ALL_INTERST)
     suspend fun getAllInterest(): Response<AllInterst>
@@ -118,5 +130,6 @@ interface WebService {
         @Body data: HashMap<String, Any>,
         @Header("Authorization") authHeader: String
     ): Response<AdminResponse1>
+
 
 }

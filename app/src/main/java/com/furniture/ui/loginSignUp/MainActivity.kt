@@ -27,6 +27,7 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
 
+
     @Inject
     lateinit var prefsManager: PrefsManager
 

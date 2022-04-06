@@ -232,4 +232,56 @@
     <string name="call_invoice">Call Invoice</string>
     <string name="report_abuse">Report Abuse</string>
     <string name="delete_bank">Are you sure that you want to delete bank details of </string>
+    <string name="q1">1. What is TalktoMii?</string>
+    <string name="a1">TalktoMii is a platform that allows Influencers and Content Creators to connect with their Followers by one-on-one voice calls. Simply put, Influencers and Content Creators set a fee that varies for their followers to contact them. Users will gain access to have personal one-on-one conversations with the Influencer and Content Creator by paying this fee to have these conversations with their favourites.</string>
+    <string name="q2">2. Does TalktoMii work on a subscription?</string>
+    <string name="a2">No, we do not. Sign Up is absolutely free for both Content Creators and Influencers as well as Users. The only costs associated are the platform fee, call charges and bank charges.</string>
+    <string name="q3">3. How much do I make as an Influencer or Content Creator?</string>
+    <string name="a3">You get to set your own rate as an Influencer or Content Creator so your earnings are relative to your rate. Be sure to do your homework and make your rates competitive and user friendly. You are only charged the platform fee, call charges and bank charges.</string>
+    <string name="q4">4. How does TalktoMii work?</string>
+    <string name="a4">TalktoMii allows a Content Creator or Influencer to set up their profile on the platform detailing their niche market and social handles and enables them to set a rate for a 15 minute call with their followers. Profiles are verified and badges can be earned from their followers for outstanding interaction which allows them to be more visible and appealing to other users.
+Followers get to set up their profile and pay to connect with their favourite Influencer or Content Creator one-on-one by voice call.
+</string>
+    <string name="q5">5. Who owns TalktoMii?</string>
+    <string name="a5">TalktoMii is owned by TalktoMii Limited Liability Company. The company is independently owned and managed by a board of investors.</string>
+    <string name="q6">6. Who uses TalktoMii?</string>
+    <string name="a6">TalktoMii has Content Creators and Influencers from various areas of interests which include beauty, fitness, current affairs to name a few.
+This is the platform for you if you are a Content Creator or Influencer who wants to monetise their time and for Users who always wanted to talk to their favourite Influencer or Content Creator.
+</string>
+    <string name="q7">7. Where is TalktoMii based?</string>
+    <string name="a7">TalktoMii operates in the US, UK and EU.</string>
+    <string name="q8">8. How do you make money on TalktoMii?</string>
+    <string name="a8">As an Influencer or Content Creator, you set your rate per 15 minute call and monetise your time. TalktoMii does engage in constant marketing but in order to maximise your earnings, it is in your best interest to promote your presence on the platform. This can be achieved by promoting on all your social media platforms on a regular basis. It is also important to honour all your appointments and give the user maximum benefit for their call by being engaging and attentive.
+</string>
+    <string name="q9">9. When Do I Get Paid by TalktoMii?</string>
+    <string name="a9">You get paid 7 working days after requesting a withdrawal of funds.</string>
+    <string name="q10">10. Do Content creators and Influencers pay taxes on TalktoMii?</string>
+    <string name="a10">Taxes are the responsibility of the Influencer and Content Creator to ensure their compliance.</string>
+    <string name="q11">11. How Much Money does TalktoMii Take from Creators?</string>
+    <string name="a11">TalktoMii takes 20% platform fees.</string>
+    <string name="q12">12. How Do You monetise your Presence on TalktoMii?</string>
+    <string name="a12">You can leverage your social media following by promoting your presence on Talktomii.
+Make sure to engage with your followers and encourage them to reach out to you on the platform.
+Ensure that all your appointments are executed with enthusiasm and attentiveness to ensure repeat appointments and residual bookings.</string>
+    <string name="q13">13. What is my protection from abuse on TalktoMii?</string>
+    <string name="a13">We take abuse of any kind very seriously and urge all users and Content Creators or Influencers to report untoward behaviour either by chat or email. Furthermore, you have full control as both the user or Content Creator to block the offending individual.
+</string>
+    <string name="q14">14. How can I save Influencer profiles that I would like to call in the future?</string>
+    <string name="a14">TalktoMii has a Bookmark feature that allows you to create a personal library to save all your favourites.</string>
+    <string name="q15">15. How secure is my data?</string>
+    <string name="a15">TalktoMii does not store any details and all financial information is stored on Stripe, our third party payment gateway who is fully compliant with all laws including GDPR.</string>
+    <string name="q16">16. Do Users see your contact details on TalktoMii?</string>
+    <string name="a16">Your contact details are entirely hidden on the platform and users are connected through an internet voice call so no actual phone numbers are visible.</string>
+    <string name="q17">17. How do I become more visible on the platform?</string>
+    <string name="a17">Make sure to complete your profile and list your niche areas. Be sure to impress your users to earn badges and elevate your profile.</string>
+    <string name="q18">18. How can I earn badges?</string>
+    <string name="a18">You can earn badges by exceeding your users expectations on your call.</string>
+    <string name="q19">19. How do the appointments work?</string>
+    <string name="a19">Influencers set their schedule with their availability. Users are able to view rates and availability and book a suitable time to call.</string>
+    <string name="q20">20. What happens if I need to cancel my booking?</string>
+    <string name="a20">You are allowed to cancel the appointment 24 hours before the appointment. Both users and Influencers will be charged a penalty for appointments canceled with less than 24 hours notice.</string>
+    <string name="q21">What penalty are Influencers charged for cancellations?</string>
+    <string name="a21">Influencers will be charged 20% of their call rate if less than 24 hours notice or nothing if 24 hours or more.</string>
+    <string name="q22">What penalty are users charged for cancellations?</string>
+    <string name="a22">Users will be charged 100% of the Influencers rate if canceled in under 24 hours and no penalty if above 24 hours.</string>
 </resources>

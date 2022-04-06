@@ -1,6 +1,7 @@
 package com.talktomii.di
 
 import com.talktomii.VideoActivity
+import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.appointment.AppointmentsFragment
 import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
@@ -91,6 +92,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun couponActivity(): CouponActivity
+
+    @ContributesAndroidInjector
+    abstract fun faqActivity(): FaqActivity
 
     @ContributesAndroidInjector
     abstract fun loginFragment(): LoginFragment

@@ -24,6 +24,15 @@
         tools:replace="android:theme"
         tools:targetApi="m">
         <activity
+            android:name=".ui.FAQ.FaqActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.coupon.CouponActivity"
             android:exported="true" />
         <activity
@@ -72,11 +81,7 @@
             android:name=".ui.loginSignUp.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity> <!-- <activity -->
         <!-- android:name=".ui.home.map.MapActivity" -->
         <!-- android:exported="true" -->

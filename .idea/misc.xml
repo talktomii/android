@@ -136,6 +136,9 @@
         <entry key="app/src/main/res/drawable/blue_drak_background.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/drawable/button_selector_squar.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/drawable/g_scan_card_rounder.xml" value="0.16354166666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_expand_less_24.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/round_corner_card.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tab_color_selector.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable/tab_color_selector_wallet.xml" value="0.17532894736842106" />
@@ -150,6 +153,7 @@
         <entry key="app/src/main/res/layout/activity_choose_product_type.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/activity_coupon.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_demo.xml" value="0.11666666666666667" />
+        <entry key="app/src/main/res/layout/activity_faq.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_get_paid.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_income_details.xml" value="0.296195652173913" />

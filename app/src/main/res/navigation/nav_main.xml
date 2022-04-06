@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.furniture.ui.loginSignUp.splash.SplashFragment"
+        android:name="com.talktomii.ui.loginSignUp.splash.SplashFragment"
         android:label="splashFragment"
         tools:layout="@layout/fragment_splash">
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.furniture.ui.loginSignUp.login.LoginFragment"
+        android:name="com.talktomii.ui.loginSignUp.login.LoginFragment"
         android:label="loginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.furniture.ui.loginSignUp.signup.SignUpFragment"
+        android:name="com.talktomii.ui.loginSignUp.signup.SignUpFragment"
         android:label="signupFragment"
         tools:layout="@layout/fragment_sign_up">
 
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/createProfileFragment"
-        android:name="com.furniture.ui.loginSignUp.signup.CreateProfileFragment"
+        android:name="com.talktomii.ui.loginSignUp.signup.CreateProfileFragment"
         android:label="CreateProfileFragment">
         <action
             android:id="@+id/action_createProfileFragment_to_tellUsMore"
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/tellUsMore"
-        android:name="com.furniture.ui.tellusmore.TellUsMore"
+        android:name="com.talktomii.ui.tellusmore.TellUsMore"
         android:label="TellUsMore">
         <action
             android:id="@+id/action_tellUsMore_to_editPersonalInfo"
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPersonalInfo"
-        android:name="com.furniture.ui.editpersonalinfo.EditPersonalInfo"
+        android:name="com.talktomii.ui.editpersonalinfo.EditPersonalInfo"
         android:label="EditPersonalInfo">
         <!--        <action-->
         <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.furniture.ui.homefrag.HomesFragment"
+        android:name="com.talktomii.ui.homefrag.HomesFragment"
         android:label="HomeFragment">
 
         <action
@@ -97,7 +97,7 @@
 
     <fragment
         android:id="@+id/influencerProfileFragment"
-        android:name="com.furniture.ui.home.profile.InfluencerProfileFragment"
+        android:name="com.talktomii.ui.home.profile.InfluencerProfileFragment"
         android:label="InfluencerProfileFragment">
 
         <action
@@ -107,11 +107,11 @@
 
     <fragment
         android:id="@+id/editInterestFragment"
-        android:name="com.furniture.ui.home.profile.EditInterestFragment"
+        android:name="com.talktomii.ui.home.profile.EditInterestFragment"
         android:label="EditInterestFragment" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.furniture.ui.home.profile.ProfileFragment"
+        android:name="com.talktomii.ui.home.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
 
@@ -130,7 +130,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.furniture.ui.search.SearchFragment"
+        android:name="com.talktomii.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/search_fragment">
         <action
@@ -140,19 +140,19 @@
 
     <fragment
         android:id="@+id/appointmentsFragment"
-        android:name="com.furniture.ui.appointment.AppointmentsFragment"
+        android:name="com.talktomii.ui.appointment.AppointmentsFragment"
         android:label="fragment_appointments"
         tools:layout="@layout/fragment_appointments" />
 
     <fragment
         android:id="@+id/myBudgesFragment"
-        android:name="com.furniture.ui.home.profile.MyBudgesFragment"
+        android:name="com.talktomii.ui.home.profile.MyBudgesFragment"
         android:label="fragment_myBudges"
         tools:layout="@layout/fragment_my_badges" />
 
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.furniture.ui.loginSignUp.login.ForgetPasswordFragment"
+        android:name="com.talktomii.ui.loginSignUp.login.ForgetPasswordFragment"
         android:label="fragment_forgetPassword"
         tools:layout="@layout/fragment_forget_password">
 
@@ -163,7 +163,7 @@
 
     <fragment
         android:id="@+id/forgetFragment"
-        android:name="com.furniture.ui.loginSignUp.login.ForgetFragment"
+        android:name="com.talktomii.ui.loginSignUp.login.ForgetFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_forget">
 
@@ -174,38 +174,38 @@
 
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.furniture.ui.loginSignUp.login.FragmentResetPassword"
+        android:name="com.talktomii.ui.loginSignUp.login.FragmentResetPassword"
         android:label="fragment_restPassword"
         tools:layout="@layout/fragment_reset_password" />
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.furniture.ui.home.notifications.NotificationFragment"
+        android:name="com.talktomii.ui.home.notifications.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/homeInfluencerFragment"
-        android:name="com.furniture.ui.homefrag.InfluencerHomeFragment"
+        android:name="com.talktomii.ui.homefrag.InfluencerHomeFragment"
         android:label="fragment_home_influencer"
         tools:layout="@layout/fragment_home_influencer" />
 
     <fragment
         android:id="@+id/callFragment"
-        android:name="com.furniture.ui.home.profile.CallFragment"
+        android:name="com.talktomii.ui.home.profile.CallFragment"
         android:label="fragment_call"
         tools:layout="@layout/fragment_call" />
 
     <fragment
         android:id="@+id/callEndFragment"
-        android:name="com.furniture.ui.home.profile.CallEndFragment"
+        android:name="com.talktomii.ui.home.profile.CallEndFragment"
         android:label="fragment_callEnd"
         tools:layout="@layout/call_end_fragment" />
 
     <!--    drawer-->
     <fragment
         android:id="@+id/bookmarkFragment"
-        android:name="com.furniture.ui.drawer.bookmark.BookmarkFragment"
+        android:name="com.talktomii.ui.drawer.bookmark.BookmarkFragment"
         android:label="fragment_bookmark"
         tools:layout="@layout/fragment_bookmark">
         <action
@@ -216,7 +216,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.furniture.ui.drawer.settings.SettingsFragment"
+        android:name="com.talktomii.ui.drawer.settings.SettingsFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_settings">
 
@@ -231,7 +231,7 @@
 
     <fragment
         android:id="@+id/helpSupportFragment"
-        android:name="com.furniture.ui.drawer.helpsupport.HelpSupportFragment"
+        android:name="com.talktomii.ui.drawer.helpsupport.HelpSupportFragment"
         android:label="fragment_helpsupport"
         tools:layout="@layout/fragment_helpsupport">
 

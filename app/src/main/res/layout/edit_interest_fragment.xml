@@ -11,7 +11,7 @@
 
         <variable
             name="vm"
-            type="com.furniture.ui.tellusmore.TellUsMoreVM" />
+            type="com.talktomii.ui.tellusmore.TellUsMoreVM" />
 
     </data>
 

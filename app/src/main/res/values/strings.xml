@@ -232,5 +232,6 @@
     <string name="call_invoice">Call Invoice</string>
     <string name="report_abuse">Report Abuse</string>
     <string name="privacy_and_safety">Privacy and safety</string>
+    <string name="more">More</string>
 
 </resources>

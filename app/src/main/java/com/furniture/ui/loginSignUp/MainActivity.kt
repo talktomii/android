@@ -97,8 +97,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
             if (item.itemId != viewModel.navController.currentDestination!!.id) {
                 when (item.itemId) {
-                    R.id.nav_profile -> {
-                        viewModel.navController.navigate(R.id.profileFragment)
+                    R.id.nav_more -> {
+                        binding.drawerLayout.openDrawer(binding.navigationView)
                     }
 
                     R.id.nav_home -> {
@@ -151,8 +151,9 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.appointmentsFragment ||
                 destination.id == R.id.notificationFragment ||
                 destination.id == R.id.bookmarkFragment ||
-                destination.id == R.id.settingsFragment
-
+                destination.id == R.id.settingsFragment ||
+                destination.id == R.id.helpSupportFragment ||
+                destination.id == R.id.editPersonalInfo
             ) {
 
                 binding.menuBottom.selectedItemId = destination.id
@@ -199,6 +200,15 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.menuBottom.isVisible = false
                 binding.btnMenu.isVisible = false
             }
+        }
+        binding.txtHelpSupport.setOnClickListener {
+            viewModel.navController.navigate(R.id.helpSupportFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+
+        binding.txtProfile.setOnClickListener {
+            viewModel.navController.navigate(R.id.editPersonalInfo)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
     }

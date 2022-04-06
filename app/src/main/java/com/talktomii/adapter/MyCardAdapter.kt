@@ -19,12 +19,12 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.ui.mycards.data.CardItemsViewModel
 
 
-
-class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebService? = null) :
+class MyCardAdapter(val mList: List<CardItemsViewModel>) :
     RecyclerView.Adapter<MyCardAdapter.ViewHolder>() {
 
     @Inject
     lateinit var viewModel: MyCardsViewModel
+    var webService: WebService? = null
 
     companion object{
         @SuppressLint("StaticFieldLeak")
@@ -37,7 +37,6 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.mycards_item, parent, false)
         context = parent.context
-        webService = this.webService
         return ViewHolder(view)
     }
 
@@ -75,10 +74,6 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                             val close = dialog_delete.findViewById(R.id.closeCardPopup) as TextView
                             close.setOnClickListener {
                                 dialog_delete.dismiss()
-                                if (!::viewModel.isInitialized) {
-                                    viewModel = MyCardsViewModel(webService!!)
-                                }
-                                viewModel.getCards()
                             }
                             dialog.hide()
                             dialog_delete.show()

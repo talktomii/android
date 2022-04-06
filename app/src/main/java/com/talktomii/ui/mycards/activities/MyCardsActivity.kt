@@ -13,7 +13,6 @@ import android.view.View
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.datepicker.MaterialDatePicker;
 import android.annotation.SuppressLint
-import android.app.Activity
 
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 
@@ -25,7 +24,6 @@ import android.util.Log
 import android.widget.*
 import android.widget.DatePicker.OnDateChangedListener
 import com.google.android.material.snackbar.Snackbar
-import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 
 
 class MyCardsActivity : DaggerAppCompatActivity() {
@@ -50,13 +48,8 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var layout: RelativeLayout
         lateinit var progress : ProgressBar
-        lateinit var context : Context
-        fun getContext(context: Context){
-            this.context = context
-        }
-        fun finishFunction() {
-            val activity = context as Activity
-            activity.finish()
+        fun finish() {
+            MyCardsActivity.finish()
         }
     }
 
@@ -64,7 +57,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_my_cards)
-        getContext(this)
+
         cardHolderName = binding.etCardHolder
         addCardButton = binding.btnAddCard
         cardExpireDate = binding.etCardExpireDate

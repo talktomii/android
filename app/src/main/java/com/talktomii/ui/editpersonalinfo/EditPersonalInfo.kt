@@ -1,37 +1,218 @@
 package com.talktomii.ui.editpersonalinfo
 
-import androidx.lifecycle.ViewModelProvider
+import android.app.Activity
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.talktomii.R
+import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.photo.Admin
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
+import com.talktomii.interfaces.AdminDetailInterface
+import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.UpdatePhotoInterface
+import com.talktomii.ui.home.profile.AdapterAvailability
+import com.talktomii.ui.home.profile.AdapterInterests
+import com.talktomii.ui.home.profile.AdapterMySocialMedias
+import com.talktomii.ui.home.profile.AdapterPrice
+import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.uid
+import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.android.support.DaggerFragment
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.InputStream
 import javax.inject.Inject
 
-class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment) {
+
+class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
+    CommonInterface, UpdatePhotoInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
-    private val viewModels by viewModels<EditPersonalInfoVM>()
+    lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
+    lateinit var coverImg_launcher: ActivityResultLauncher<Intent>
 
     @Inject
     lateinit var viewModel: EditPersonalInfoVM
 
-
+    private lateinit var progressDialog: ProgressDialog
+    private var fileProfile: File? = null
+    private var fileCoverPhoto: File? = null
+    private var isChangeProfile = false
+    private var isChangeUserData = false
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = EditPersonalInfoFragmentBinding.inflate(inflater, container, false)
-        binding.vm = viewModels
+//        binding.vm = viewModels
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EditPersonalInfoVM::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+
+        profileImg_launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
+                    val data = result.data
+                    val filePath =
+                        com.talktomii.utlis.common.FileUtils.getPath(context, data!!.data)
+                    fileProfile = File(filePath)
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data.data!!
+                    Glide.with(requireContext()).load(fileUri).into(binding.imgDefault)
+                }
+
+            }
+
+        coverImg_launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val filePath =
+                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    fileCoverPhoto = File(filePath)
+                    val inputStream: InputStream =
+                        requireActivity().contentResolver.openInputStream(fileUri)!!
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    val image: Drawable = BitmapDrawable(requireContext().resources, bitmap)
+                    binding.layoutGrandiant.background = image
+                }
+
+            }
+
+        setListeners(view)
+        initAdapters()
     }
 
+    private fun init() {
+        progressDialog = ProgressDialog(requireActivity())
+        viewModel.adminDetailInterface = this
+        viewModel.commonInterface = this
+        viewModel.updatePhotoInterface = this
+        binding.viewModel = viewModel
+        viewModel.getAdminById(uid)
+    }
+    private fun initAdapters() {
+        binding.rvPrice.adapter = AdapterPrice()
+        binding.rvInterest.adapter = AdapterInterests()
+        binding.rvAvailability.adapter = AdapterAvailability()
+        binding.rvSocialMedia.adapter = AdapterMySocialMedias(requireContext())
+    }
+
+    private fun setListeners(view: View) {
+
+        binding.ivCamera.setOnClickListener {
+            ImagePicker.with(this).createIntent { intent ->
+                profileImg_launcher.launch(intent)
+            }
+        }
+
+        binding.imgCam.setOnClickListener {
+            ImagePicker.with(this).createIntent { intent ->
+                coverImg_launcher.launch(intent)
+            }
+        }
+
+        binding.tvSave.setOnClickListener {
+
+            if (isChangeProfile) {
+                val map: HashMap<String, RequestBody> = HashMap()
+                if (fileProfile != null) {
+                    val body = fileProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    map["profilePhoto\"; filename=\"imageProfile.png\" "] = body
+                }
+                if (fileCoverPhoto != null) {
+                    val body = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    map["coverPhoto\"; filename=\"imageCover.png\" "] = body
+                }
+                viewModel.updatePhoto(map)
+            }
+            if (isChangeUserData) {
+                val data: HashMap<String, Any> = hashMapOf()
+                data["name"] = binding.etFirstName.text.toString()
+                data["userName"] = binding.etUsername.text.toString()
+                viewModel.updateProfile(data)
+            }
+
+            binding.ivInterest.setOnClickListener {
+//                view.findNavController()
+//                    .navigate(R.id.action_editPersonalInfo_to_editInterestFragment)
+            }
+
+            binding.txtBudgesCount.setOnClickListener {
+//                view.findNavController().navigate(R.id.action_editPersonalInfo_to_myBudgesFragment)
+            }
+
+            binding.txtAddPrice.setOnClickListener {
+                val bottomsheet = AddPriceBottomSheetFragment(object : AddPriceInterface {
+                    override fun addprice() {
+
+                    }
+                })
+                bottomsheet.show(childFragmentManager, "addprice")
+            }
+        }
+    }
+
+
+    override fun onFailure(message: String) {
+        progressDialog.dismiss()
+    }
+
+    override fun onFailureAPI(message: String) {
+        progressDialog.dismiss()
+    }
+
+    override fun onStarted() {
+        progressDialog.show()
+    }
+
+
+    override fun onAdminDetails(admin1: Admin1) {
+        progressDialog.dismiss()
+
+//        Glide.with(requireContext()).load(admin1.profilePhoto).placeholder(R.drawable.ic_user)
+//            .error(R.drawable.ic_user).into(binding.imgDefault)
+//        if (admin1.coverPhoto != null) {
+//            val url = URL(admin1.coverPhoto)
+//            val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+//            val image: Drawable = BitmapDrawable(requireContext().resources, bitmap)
+//            binding.layoutGrandiant.background = image
+//        } else {
+//            binding.layoutGrandiant.background =
+//                ContextCompat.getDrawable(requireContext(), R.drawable.bg_gradient_profile)
+//        }
+        (binding.rvPrice.adapter as AdapterPrice).setItemList(viewModel.userField.get()!!.price)
+        (binding.rvInterest.adapter as AdapterInterests).setItemList(viewModel.userField.get()!!.interest)
+        (binding.rvAvailability.adapter as AdapterAvailability).setItemList(viewModel.userField.get()!!.availaibility)
+        (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
+
+    }
+
+    override fun onUpdatePhoto(admin: Admin) {
+        progressDialog.dismiss()
+    }
 }

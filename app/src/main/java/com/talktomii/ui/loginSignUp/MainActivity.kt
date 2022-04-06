@@ -2,6 +2,7 @@ package com.talktomii.ui.loginSignUp
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -16,9 +17,6 @@ import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
-import android.content.SharedPreferences
-import android.widget.TextView
-import com.talktomii.ui.mycards.data.MyCardsViewModel
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -30,15 +28,11 @@ class MainActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
-        var totalSideBarAmount : TextView ?= null
     }
 
 
     @Inject
     lateinit var prefsManager: PrefsManager
-
-    @Inject
-    lateinit var dataModel: MyCardsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +41,13 @@ class MainActivity : DaggerAppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // save login token here
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5ODMyZjUyMWFiMjhiOGY4MzczYSIsImRhdGUiOiIyMDIyLTAzLTMxVDA2OjUyOjUzLjYyOFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJmaW5hbEBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDg3MDk1NzN9.LQRWUaDJj9F7bKw4BVEI3RxzzDyS9KhYq5T9zfmyxmM"
+        val token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2RhYzFiNmVlMWVmMjk4ODQyYjlhZCIsImRhdGUiOiIyMDIyLTAzLTMwVDA3OjAwOjQ2LjQyN1oiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJqYW5pQGdtYWlsLmNvbSIsInNjb3BlIjoibG9naW4iLCJ0eXBlIjoidXNlciIsImlhdCI6MTY0ODYyMzY0Nn0.UdVV9VKSKGn25BI_ub2cRTmG90E5KCygpUWRi6ETmjY"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = preferences.getString("TOKEN", null)!!.trim()
 
-        totalSideBarAmount = binding.textView9
-
-        dataModel.getTotalAmount()
 
         binding.constWallet.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -105,22 +97,17 @@ class MainActivity : DaggerAppCompatActivity() {
 
             if (item.itemId != viewModel.navController.currentDestination!!.id) {
                 when (item.itemId) {
-                    R.id.nav_profile -> {
-                        viewModel.navController.navigate(R.id.profileFragment)
-
+                    R.id.nav_more -> {
+                        binding.drawerLayout.openDrawer(binding.navigationView)
                     }
-
 
                     R.id.nav_home -> {
-
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
-
 
                     R.id.nav_search -> {
                         viewModel.navController.navigate(R.id.searchFragment)
                     }
-
 
                     R.id.nav_appointments -> {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
@@ -149,18 +136,6 @@ class MainActivity : DaggerAppCompatActivity() {
         binding.btnMenu.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
-
-            } else {
-                binding.drawerLayout.openDrawer(binding.navigationView)
-            }
-        }
-
-
-
-        binding.btnMenu.setOnClickListener {
-            if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
-                binding.drawerLayout.closeDrawer(binding.navigationView)
-
             } else {
                 binding.drawerLayout.openDrawer(binding.navigationView)
             }
@@ -171,26 +146,69 @@ class MainActivity : DaggerAppCompatActivity() {
             if (
                 destination.id == R.id.homeFragment ||
                 destination.id == R.id.profileFragment ||
-                destination.id == R.id.homeFragment ||
-                destination.id == R.id.profileFragment ||
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment||
-                destination.id == R.id.homeInfluencerFragment
-
+                destination.id == R.id.notificationFragment ||
+                destination.id == R.id.bookmarkFragment ||
+                destination.id == R.id.settingsFragment ||
+                destination.id == R.id.helpSupportFragment ||
+                destination.id == R.id.editPersonalInfo
             ) {
 
                 binding.menuBottom.selectedItemId = destination.id
                 binding.menuBottom.isVisible = true
-                binding.btnMenu.isVisible = true
                 binding.btnMenu.isVisible = true
 
             } else {
                 binding.menuBottom.isVisible = false
                 binding.btnMenu.isVisible = false
             }
+
             binding.btnMenu.isVisible = destination.id == R.id.homeFragment
+        }
+
+
+        //drawer
+        binding.txtBookmarks.setOnClickListener {
+            viewModel.navController.navigate(R.id.bookmarkFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+        binding.txtSettings.setOnClickListener {
+            viewModel.navController.navigate(R.id.settingsFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+        if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+
+        } else {
+            binding.drawerLayout.openDrawer(binding.navigationView)
+        }
+
+        viewModel.navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (
+                destination.id == R.id.homeFragment ||
+                destination.id == R.id.profileFragment
+//                destination.id == R.id.searchFragment ||
+//                destination.id == R.id.influencerProfileFragment
+
+            ) {
+                binding.menuBottom.selectedItemId = destination.id
+                binding.menuBottom.isVisible = true
+                binding.btnMenu.isVisible = true
+            } else {
+                binding.menuBottom.isVisible = false
+                binding.btnMenu.isVisible = false
+            }
+        }
+        binding.txtHelpSupport.setOnClickListener {
+            viewModel.navController.navigate(R.id.helpSupportFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+
+        binding.txtProfile.setOnClickListener {
+            viewModel.navController.navigate(R.id.editPersonalInfo)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
     }
@@ -200,4 +218,5 @@ class MainActivity : DaggerAppCompatActivity() {
         val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
+
 }

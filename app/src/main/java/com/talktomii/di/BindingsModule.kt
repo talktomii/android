@@ -6,6 +6,8 @@ import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.callhistory.CallHistory
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
+import com.talktomii.ui.drawer.bookmark.BookmarkFragment
+import com.talktomii.ui.drawer.settings.SettingsFragment
 import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
 import com.talktomii.ui.helpsupport.ChatSupportActivity
 import com.talktomii.ui.helpsupport.HelpSupport
@@ -23,7 +25,6 @@ import com.talktomii.ui.loginSignUp.login.LoginFragment
 import com.talktomii.ui.loginSignUp.signup.CreateProfileFragment
 import com.talktomii.ui.loginSignUp.signup.SignUpFragment
 import com.talktomii.ui.loginSignUp.splash.SplashFragment
-import com.talktomii.ui.search.SearchFragment
 import com.talktomii.ui.mycards.MyCards
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.activities.PaymentDetailsActivity
@@ -37,6 +38,7 @@ import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
 import com.talktomii.ui.mywallet.fragments.RefillFragment
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
+import com.talktomii.ui.search.SearchFragment
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
 import com.talktomii.utlis.BackToHomeDialog
@@ -48,8 +50,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BindingsModule {
-
-
 
     @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity
@@ -139,7 +139,6 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun notificationFragment(): NotificationFragment
 
-
     @ContributesAndroidInjector
     abstract fun createProfileFragment(): CreateProfileFragment
 
@@ -167,7 +166,6 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun deleteAppointmentDialog(): DeleteAppointmentDialog
-
 
 
     @ContributesAndroidInjector
@@ -202,5 +200,12 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun expenseFragment(): ExpenseFragment
 
+
+    //drawer
+    @ContributesAndroidInjector
+    abstract fun bookmarkfragment(): BookmarkFragment
+
+    @ContributesAndroidInjector
+    abstract fun settingFragment(): SettingsFragment
 
 }

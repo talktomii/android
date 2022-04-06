@@ -5,9 +5,8 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/selector_home"
         android:title="@string/home"
-        app:showAsAction="always"
+        app:showAsAction="always" />
 
-        />
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/select_booking"
@@ -27,8 +26,9 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/selector_profile"
-        android:title="@string/profile"
+        android:id="@+id/nav_more"
+        android:icon="@drawable/menu_more"
+        android:title="@string/more"
         app:showAsAction="always" />
+
 </menu>

@@ -4,31 +4,29 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.messaging.FirebaseMessaging
+import com.facebook.login.LoginResult
 import com.talktomii.R
-import com.talktomii.data.network.ApisRespHandler
-import com.talktomii.data.network.responseUtil.Status
+import com.talktomii.data.model.UserData
 import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.isConnectedToInternet
-import com.talktomii.utlis.showMessage
-import com.talktomii.utlis.showSnackBar
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.android.support.DaggerFragment
+import org.json.JSONException
+import java.net.URL
 import javax.inject.Inject
 
 
@@ -44,7 +42,6 @@ class LoginFragment : DaggerFragment() {
 
     private val hashMap: HashMap<String, String> = HashMap()
 
-    private var isShowPass = false
 
     private var callbackManager: CallbackManager? = null
 
@@ -69,38 +66,10 @@ class LoginFragment : DaggerFragment() {
 
         setListener()
         setSpannable()
-        bindObservers()
+//        bindObservers()
 
-//        faceBookLogin()
+        faceBookLogin()
         getDeviceToken()
-    }
-
-    private fun bindObservers() {
-
-        viewModel.login.observe(requireActivity(), Observer {
-            it ?: return@Observer
-            when (it.status) {
-                Status.SUCCESS -> {
-                    progressDialog.setLoading(false)
-                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
-                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
-                    requireContext().showMessage("Login Successfully")
-                    if (it.data?.admin?.role?.roleName == "user")
-                        findNavController().navigate(R.id.homeFragment)
-                    else
-                        findNavController().navigate(R.id.homeInfluencerFragment)
-                }
-
-                Status.ERROR -> {
-                    progressDialog.setLoading(false)
-                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
-                }
-                Status.LOADING -> {
-                    progressDialog.setLoading(true)
-                }
-
-            }
-        })
     }
 
     private fun init() {
@@ -116,11 +85,11 @@ class LoginFragment : DaggerFragment() {
         }
     }
 
+
     private fun setSpannable() {
         binding.ivFacebook.setOnClickListener {
 
         }
-
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signup)
         }
@@ -128,64 +97,24 @@ class LoginFragment : DaggerFragment() {
         binding.txtForgetPass.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgetPassword)
         }
-        binding.ivGoogle.setOnClickListener {
-            googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
-        }
     }
 
-    fun initializeGoogle() {
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        mGoogleSignInClient.signOut()
-    }
+    var instaIntent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val user = data?.getParcelableExtra<UserData>("userData")
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager?.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun setListener() {
-        binding.btnLogin.setOnClickListener {
-            var email = binding.txtEmailId.text.toString()
-            var password = binding.edPassword.text.toString()
-
-            if (validation(email,password)){
-
-           if (isConnectedToInternet(requireContext(), true)) {
-            var map = HashMap<String, String>()
-            map["email"] = email
-            map["password"] = password
-
-            viewModel.loginApi(map)
-
-              }
-
+                val map = HashMap<String, String>()
+                map["social_id"] = (user?.id.toString())
+                map["device_token"] = deviceToken ?: ""
+                map["device_type"] = "ANDROID"
+                map["name"] = user?.username ?: ""
+                map["social_type"] = "instagram"
+//                viewModel.socialLogin(map)
             }
         }
-    }
 
-    private fun validation(email: String,password:String): Boolean {
-        return when{
-            email.isEmpty() ->{
-                binding.txtEmailId.showSnackBar("Please enter your email id")
-                false
-            }
-//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                binding.txtEmailId.showSnackBar("Please enter a valid email address")
-//                false
-//            }
-            password.isEmpty() ->{
-                binding.edPassword.showSnackBar("Please enter password")
-                false
-            }
-
-            else -> true
-
-        }
-
-    }
 
     var googleResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -197,9 +126,168 @@ class LoginFragment : DaggerFragment() {
             }
         }
 
-    private fun getGoogleAccountInfo(task: Task<GoogleSignInAccount>) {
+    fun getGoogleAccountInfo(completedTask: Task<GoogleSignInAccount>) {
+        val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
+        println("Google detail:  $account")
+        var imageUrl = ""
+        if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+
+        val map = HashMap<String, String>()
+        map["social_id"] = account.id ?: ""
+        map["device_token"] = deviceToken ?: ""
+        map["email"] = account.email ?: ""
+        map["name"] = account.displayName ?: ""
+        //map["avatar"] = imageUrl
+        map["social_type"] = "google"
 
     }
+
+    fun initializeGoogle() {
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        mGoogleSignInClient.signOut()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun faceBookLogin() {
+        callbackManager = CallbackManager.Factory.create()
+
+//        binding.fbLoginButton.registerCallback(
+//            callbackManager,
+        object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                val request =
+                    GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
+                        try {
+                            println("-------- ${data}")
+                            val map = HashMap<String, String>()
+
+                            map["social_id"] = data.getString("id")
+                            map["device_token"] = deviceToken ?: ""
+                            map["email"] = if (data.has("email"))
+                                data.getString("email") else data.getString("id") + "@facebook.com"
+                            map["name"] = data.getString("name")
+
+                            /* if (data.has("picture")) {
+                                 map["avatar"] = data.getJSONObject("picture").getJSONObject("data")
+                                     .getString("url")
+                             }*/
+                            map["device_type"] = "ANDROID"
+                            map["social_type"] = "facebook"
+//                                viewModel.socialLogin(map)
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    }
+                val parameters = Bundle()
+                parameters.putString(
+                    "fields",
+                    "id, name, link, picture.type(large), email, gender,first_name,last_name"
+                )
+                request.parameters = parameters
+                request.executeAsync()
+            }
+
+            override fun onCancel() {
+                print("---cancle--")
+            }
+
+            override fun onError(exception: FacebookException?) {
+                exception?.stackTrace
+            }
+        }
+    }
+
+    private fun setListener() {
+        binding.txtSignUp.setOnClickListener {
+
+        }
+    }
+
+
+//    private fun validation(number: String): Boolean {
+//        return when {
+//            number.isEmpty() -> {
+//                binding.etMobile.showSnackBar(getString(R.string.validation_number))
+//                false
+//            }
+//            number.length < 6 -> {
+//                binding.etMobile.showSnackBar(getString(R.string.validation_number_lenght))
+//                false
+//            }
+//
+//            else -> true
+//        }
+//    }
+
+
+//    private fun bindObservers() {
+//        viewModel.getSendOtp.observe(requireActivity(), Observer {
+//            it ?: return@Observer
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    progressDialog.setLoading(false)
+//                    requireContext().showMessage(getString(R.string.otp_send_successful))
+//                    val bundle = Bundle()
+//                    bundle.putSerializable(HASHMAP_KEY, hashMap)
+//                    findNavController().navigate(R.id.otpFragment, bundle)
+//                    viewModel.getSendOtp.value = null
+//                }
+//
+//                Status.ERROR -> {
+//                    progressDialog.setLoading(false)
+//                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+//                }
+//                Status.LOADING -> {
+//                    progressDialog.setLoading(true)
+//                }
+//
+//            }
+//        })
+
+//        viewModel.verifyOTP.observe(requireActivity(), Observer {
+//            it ?: return@Observer
+//            when (it.status) {
+//
+//                Status.SUCCESS -> {
+//
+//                    progressDialog.setLoading(false)
+//
+//                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
+//
+//                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+//
+//
+//                    if (it.data?.phone_no == null) {
+//
+//                        findNavController().navigate(R.id.enterMobileFragment)
+//                    } else {
+//                        val intent = Intent(context, HomeActivity::class.java)
+//                        startActivity(intent)
+//                    }
+//                }
+//
+//                Status.ERROR -> {
+//                    progressDialog.setLoading(false)
+//
+//                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+//                }
+//                Status.LOADING -> {
+//
+//                    progressDialog.setLoading(true)
+//                }
+//
+//            }
+//        })
+//    }
 
 
 }

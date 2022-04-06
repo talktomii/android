@@ -1,12 +1,22 @@
 package com.talktomii.ui.loginSignUp.signup
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.talktomii.R
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
@@ -15,8 +25,8 @@ import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
+import java.net.URL
 import javax.inject.Inject
-
 
 
 class SignUpFragment : DaggerFragment() {
@@ -26,6 +36,8 @@ class SignUpFragment : DaggerFragment() {
     @Inject
     lateinit var viewModel: LoginViewModel
     private lateinit var progressDialog: ProgressDialog
+
+    lateinit var mGoogleSignInClient: GoogleSignInClient
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -47,13 +59,26 @@ class SignUpFragment : DaggerFragment() {
         init()
         setListener()
         setSpannable()
-         bindObservers()
+        bindObservers()
+        initializeGoogle()
 
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_signupFragment_to_createProfileFragment,
-                bundleOf("email" to binding.txtEmailId.text.toString(),"password" to binding.edPassword.text.toString()))
 
-          }
+            val email = binding.txtEmailId.text.toString()
+            val password = binding.edPassword.text.toString()
+
+            if (validation(email, password))
+                if (binding.chckTerms.isChecked)
+                    findNavController().navigate(
+                        R.id.action_signupFragment_to_createProfileFragment,
+                        bundleOf(
+                            "email" to binding.txtEmailId.text.toString(),
+                            "password" to binding.edPassword.text.toString()
+                        )
+                    )
+                else
+                    binding.chckTerms.showSnackBar("Please accept our terms & conditions")
+        }
 
     }
 
@@ -75,29 +100,60 @@ class SignUpFragment : DaggerFragment() {
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_signIn)
         }
+
+        binding.ivGoogle.setOnClickListener {
+            googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
+        }
     }
 
-// private fun validation(number: String, email: String): Boolean {
-// return when {
-// number.isEmpty() -> {
-// binding.etMobile.showSnackBar(getString(R.string.validation_number))
-// false
-// }
-// number.length < 6 -> {
-// binding.etMobile.showSnackBar(getString(R.string.validation_number_lenght))
-// false
-// }
-// email.isEmpty() -> {
-// binding.etEmail.showSnackBar(getString(R.string.validation_email))
-// false
-// }
-// !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-// binding.etEmail.showSnackBar(getString(R.string.validation_email_address))
-// false
-// }
-// else -> true
-// }
-// }
+    private fun validation(email: String, password: String): Boolean {
+        return when {
+            email.isEmpty() -> {
+                binding.txtEmailId.showSnackBar("please enter email id ")
+                false
+            }
+            password.isEmpty() -> {
+                binding.edPassword.showSnackBar("please enter password")
+                false
+            }
+            else -> true
+
+        }
+
+    }
+
+    fun initializeGoogle() {
+
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        mGoogleSignInClient.signOut()
+    }
+
+
+    var googleResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+
+                val task: Task<GoogleSignInAccount> =
+                    GoogleSignIn.getSignedInAccountFromIntent(data)
+                if (task != null) getGoogleAccountInfo(task)
+            }
+        }
+
+
+    private fun getGoogleAccountInfo(completedTask: Task<GoogleSignInAccount>) {
+
+        val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
+        println("Google detail:  $account")
+        var imageUrl = ""
+        if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+
+
+    }
 
 
     private fun bindObservers() {

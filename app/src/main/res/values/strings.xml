@@ -243,5 +243,5 @@
     <string name="agora_app_id" translatable="false">9048bd89642e4679ba79ee4f41ed3e50</string>
     <!-- Please leave it if not enable App Certificate -->
     <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
-    <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAD4jIWPPR6kOv7du3cTZl/Qgtnvl3l5oST1jFpWimkMOQx+f9gAAAAAEADJZeRX/XBNYgEAAQAncU1i</string>
+    <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAD0pQ4M+rQ5ynSY2MXI6Ij75aQIdAzQeCOKQaO0akdwX50aVOIAAAAAEABrDG+dIG9OYgEAAQBLb05i</string>
 </resources>

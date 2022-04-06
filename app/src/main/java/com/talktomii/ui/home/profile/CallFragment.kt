@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 class CallFragment : DaggerFragment() {
 
-    private val LOG_TAG: String ="ahsgd"
+    private val LOG_TAG: String ="abcd"
     private val PERMISSION_REQ_ID_RECORD_AUDIO = 22
 
     private var mRtcEngine // Tutorial Step 1

@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.talktomii.R
@@ -29,6 +30,7 @@ import com.talktomii.utlis.isConnectedToInternet
 import com.talktomii.utlis.showMessage
 import com.talktomii.utlis.showSnackBar
 import dagger.android.support.DaggerFragment
+import java.net.URL
 import javax.inject.Inject
 
 
@@ -197,7 +199,14 @@ class LoginFragment : DaggerFragment() {
             }
         }
 
-    private fun getGoogleAccountInfo(task: Task<GoogleSignInAccount>) {
+    private fun getGoogleAccountInfo(completedTask: Task<GoogleSignInAccount>) {
+        val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
+        println("Google detail:  $account")
+        var imageUrl = ""
+        if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+
+
+
 
     }
 

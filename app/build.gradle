@@ -16,7 +16,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.app.furnifix"
+        applicationId "com.app.talktomii"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

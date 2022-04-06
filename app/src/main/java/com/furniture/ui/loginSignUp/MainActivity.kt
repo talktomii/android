@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,7 +12,6 @@ import com.furniture.R
 import com.furniture.databinding.ActivityMainBinding
 import com.furniture.utlis.LocaleHelper
 import com.furniture.utlis.PrefsManager
-import com.talktomii.R
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -25,7 +25,6 @@ class MainActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var context: WeakReference<Context>
     }
-
 
 
     @Inject
@@ -65,7 +64,6 @@ class MainActivity : DaggerAppCompatActivity() {
                         viewModel.navController.navigate(R.id.appointmentsFragment)
                     }
 
-
                     R.id.nav_notifications -> {
                         viewModel.navController.navigate(R.id.notificationFragment)
                     }
@@ -94,8 +92,9 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.appointmentsFragment ||
                 destination.id == R.id.notificationFragment ||
                 destination.id == R.id.bookmarkFragment ||
-                destination.id == R.id.settingsFragment
-
+                destination.id == R.id.settingsFragment ||
+                destination.id == R.id.helpSupportFragment ||
+                destination.id == R.id.editPersonalInfo
             ) {
 
                 binding.menuBottom.selectedItemId = destination.id
@@ -110,7 +109,6 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
-
         //drawer
         binding.txtBookmarks.setOnClickListener {
             viewModel.navController.navigate(R.id.bookmarkFragment)
@@ -118,6 +116,15 @@ class MainActivity : DaggerAppCompatActivity() {
         }
         binding.txtSettings.setOnClickListener {
             viewModel.navController.navigate(R.id.settingsFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+        binding.txtHelpSupport.setOnClickListener {
+            viewModel.navController.navigate(R.id.helpSupportFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+
+        binding.txtProfile.setOnClickListener {
+            viewModel.navController.navigate(R.id.editPersonalInfo)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 

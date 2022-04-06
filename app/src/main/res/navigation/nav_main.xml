@@ -16,6 +16,7 @@
             app:destination="@id/loginFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.furniture.ui.loginSignUp.login.LoginFragment"
@@ -28,6 +29,7 @@
             android:id="@+id/action_login_to_forgetPassword"
             app:destination="@id/forgetPasswordFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.furniture.ui.loginSignUp.signup.SignUpFragment"
@@ -72,6 +74,12 @@
         <!--        <action-->
         <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
         <!--            app:destination="@id/homeFragment" />-->
+        <action
+            android:id="@+id/action_editPersonalInfo_to_editInterestFragment"
+            app:destination="@id/editInterestFragment" />
+        <action
+            android:id="@+id/action_editPersonalInfo_to_myBudgesFragment"
+            app:destination="@id/myBudgesFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

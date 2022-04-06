@@ -1,6 +1,5 @@
 package com.furniture.data.model.admin1
 
-import androidx.databinding.BaseObservable
 import com.furniture.data.model.admin.*
 import java.io.Serializable
 

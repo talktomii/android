@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.furniture.R
 import com.furniture.data.model.drawer.bookmark.Service
 import com.furniture.databinding.ItemPopularBinding
-import com.furniture.ui.homefrag.AdapterPopular
 
 class AdapterBookmark(
     private var context: Context,

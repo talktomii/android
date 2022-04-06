@@ -15,28 +15,27 @@ class ProfileFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
-
     @Inject
     lateinit var viewModel: HomeViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvInterest.adapter = AdapterInterests()
-        binding.rvAvailability.adapter = AdapterAvailability()
+//        binding.rvInterest.adapter = AdapterInterests(requireContext())
+//        binding.rvAvailability.adapter = AdapterAvailability()
 
         binding.TextEditProfile.setOnClickListener {
             view.findNavController().navigate(R.id.action_profile_to_editPersonalInfo)
+        }
+
+        binding.txtBack.setOnClickListener {
+            requireActivity().onBackPressed()
         }
 
         binding.ivInterest.setOnClickListener {

@@ -26,8 +26,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
-    OnSlotSelectedInterface {
+class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface, OnSlotSelectedInterface {
 
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
@@ -39,11 +38,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -64,13 +59,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     private fun initAdapter() {
         socialMediaAdapter = AdapterMySocialMedias(requireContext())
-        binding.rvSocialMedia.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvSocialMedia.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvSocialMedia.adapter = socialMediaAdapter
 
         adapterInterests = AdapterInterests()
-        binding.rvInterest.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvInterest.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rvInterest.adapter = adapterInterests
     }
 
@@ -83,7 +76,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             val dialog = CallDialog()
             dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
         }
-
 
         binding.txtAboutMe.setOnClickListener {
             val dialog = DeleteAppointmentDialog()

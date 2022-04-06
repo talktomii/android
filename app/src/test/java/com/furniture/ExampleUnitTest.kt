@@ -1,4 +1,4 @@
-package com.talktomii
+package com.furniture
 
 import org.junit.Test
 

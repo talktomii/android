@@ -10,15 +10,10 @@ import com.furniture.R
 import com.furniture.databinding.BottomsheetAddpriceBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class AddPriceBottomSheetFragment(var addpriceinterface: AddPriceInterface) :
-    BottomSheetDialogFragment() {
+class AddPriceBottomSheetFragment(var addpriceinterface: AddPriceInterface) : BottomSheetDialogFragment() {
     private lateinit var binding: BottomsheetAddpriceBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = BottomsheetAddpriceBinding.inflate(LayoutInflater.from(context))
         return binding.rootView
     }

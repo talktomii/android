@@ -28,6 +28,10 @@ class SettingsFragment : DaggerFragment() {
         binding.rlAccount.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_editPersonalInfo)
         }
+
+        binding.rlNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_notificationFragment)
+        }
     }
 
 

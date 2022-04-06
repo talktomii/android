@@ -98,30 +98,25 @@ object ImageUtils {
         }
     }
 
-
     fun displayImagePicker(parentContext: Any?, frggManager: FragmentManager) {
         var context: Context? = null
         if (parentContext is Fragment) {
             context = parentContext.context
         } else if (parentContext is Activity) context = parentContext
         if (context != null) {
-            val pickerItems = arrayOf(
-                context.getString(R.string.camera),
-                context.getString(R.string.gallery),
-                context.getString(android.R.string.cancel)
-            )
+            val pickerItems = arrayOf(context.getString(R.string.camera), context.getString(R.string.gallery), context.getString(android.R.string.cancel))
             val bottomsheet = OpenCameraVideoFragment(object : CameraGalleryCallback {
                 override fun cameraClick() {
                     context.cameraPermission(object : PermissionCallback {
                         override fun permissionGranted() {
-                            openCamera(parentContext);
+                            openCamera(parentContext)
                         }
 
                         override fun permissionRejected() {
+
                         }
 
                     })
-
                 }
 
                 override fun galleryClick() {
@@ -138,8 +133,8 @@ object ImageUtils {
                 }
 
             }, context.getString(R.string.camera), context.getString(R.string.gallery))
-            bottomsheet.show(frggManager, "")
 
+            bottomsheet.show(frggManager, "")
         }
     }
 /*

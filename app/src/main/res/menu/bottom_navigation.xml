@@ -5,8 +5,9 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/selector_home"
         android:title="@string/home"
-        app:showAsAction="always" />
+        app:showAsAction="always"
 
+        />
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/select_booking"

@@ -6,7 +6,7 @@
 
         <variable
             name="data"
-            type="com.talktomii.data.model.MostPopularModel" />
+            type="com.furniture.data.model.MostPopularModel" />
 
     </data>
 

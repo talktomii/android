@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.talktomii.ui.tellusmore.TellUsMoreVM" />
+            type="com.furniture.ui.tellusmore.TellUsMoreVM" />
 
     </data>
 

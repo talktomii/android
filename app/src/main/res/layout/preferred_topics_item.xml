@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.talktomii.ui.tellusmore.ItemsViewModel" />
+            type="com.furniture.ui.tellusmore.ItemsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

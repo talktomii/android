@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="com.talktomii.data.model.admin.Admin" />
+            type="com.furniture.data.model.admin.Admin" />
 
         <variable
             name="viewModel2"
-            type="com.talktomii.ui.home.HomeScreenViewModel" />
+            type="com.furniture.ui.home.HomeScreenViewModel" />
 
     </data>
 

@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.talktomii.data.model.CustomerReviewModel" />
+            type="com.furniture.data.model.CustomerReviewModel" />
 
     </data>
 

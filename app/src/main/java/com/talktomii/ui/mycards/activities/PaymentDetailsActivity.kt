@@ -172,8 +172,6 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
             Handler().postDelayed({
                 openGeneratedPDF(filepath!!)
             },3000)
-
-
         }
     }
 

@@ -1,5 +1,7 @@
 package com.talktomii.di
 
+import com.talktomii.ui.home.profile.InfluencerProfileFragment
+import com.talktomii.ui.search.SearchFragment
 import com.talktomii.VideoActivity
 import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.appointment.AppointmentsFragment
@@ -11,6 +13,9 @@ import com.talktomii.ui.coupon.CouponActivity
 import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
 import com.talktomii.ui.helpsupport.ChatSupportActivity
 import com.talktomii.ui.helpsupport.HelpSupport
+import com.talktomii.ui.drawer.bookmark.BookmarkFragment
+import com.talktomii.ui.drawer.helpsupport.HelpSupportFragment
+import com.talktomii.ui.drawer.settings.SettingsFragment
 import com.talktomii.ui.home.HomeActivity
 import com.talktomii.ui.home.homeFragment.HomeFragment
 import com.talktomii.ui.home.notifications.NotificationFragment
@@ -25,7 +30,6 @@ import com.talktomii.ui.loginSignUp.login.LoginFragment
 import com.talktomii.ui.loginSignUp.signup.CreateProfileFragment
 import com.talktomii.ui.loginSignUp.signup.SignUpFragment
 import com.talktomii.ui.loginSignUp.splash.SplashFragment
-import com.talktomii.ui.search.SearchFragment
 import com.talktomii.ui.mycards.MyCards
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.activities.PaymentDetailsActivity
@@ -187,6 +191,7 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun homeFragment(): HomeFragment
 
+
     @ContributesAndroidInjector
     abstract fun homesFragment(): HomesFragment
 
@@ -205,5 +210,14 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun expenseFragment(): ExpenseFragment
 
+    //drawer
+    @ContributesAndroidInjector
+    abstract fun bookmarkfragment(): BookmarkFragment
+
+    @ContributesAndroidInjector
+    abstract fun settingFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun helpSupportFragment(): HelpSupportFragment
 
 }

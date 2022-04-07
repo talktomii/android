@@ -16,7 +16,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.app.furnifix"
+        applicationId "com.app.talktomii"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
@@ -206,7 +206,7 @@ permission*/
 
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     implementation 'com.google.android:flexbox:0.3.0-alpha3'
-
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
     implementation 'org.json:json:20200518'
 
 //    implementation 'com.itextpdf:itextpdf:5.0.6'

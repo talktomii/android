@@ -24,17 +24,20 @@ import com.talktomii.ui.mycards.data.CardItemsViewModel
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import javax.inject.Inject
 
-class AdapterTodayNotification(val mList: List<NotificationItemModel>, var webService: WebService? = null) :
+class AdapterTodayNotification(
+    val mList: List<NotificationItemModel>,
+    var webService: WebService? = null
+) :
     RecyclerView.Adapter<AdapterTodayNotification.ViewHolder>() {
 
     @Inject
     lateinit var viewModel: MyCardsViewModel
 
-    companion object{
+    companion object {
         @SuppressLint("StaticFieldLeak")
         private var context: Context? = null
-        var data : NotificationItemModel?= null
-        var update_url : String ?= null
+        var data: NotificationItemModel? = null
+        var update_url: String? = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,9 +65,10 @@ class AdapterTodayNotification(val mList: List<NotificationItemModel>, var webSe
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val itemName: TextView = itemView.findViewById(R.id.txtYouAreMissed)
-        val itemUser : TextView = itemView.findViewById(R.id.txtUserName)
-        val itemDuration : TextView = itemView.findViewById(R.id.txtTime)
-        val img : RoundedImageView = itemView.findViewById(R.id.ivCall)
+        val itemUser: TextView = itemView.findViewById(R.id.txtUserName)
+        val itemDuration: TextView = itemView.findViewById(R.id.txtTime)
+        val img: RoundedImageView = itemView.findViewById(R.id.ivCall)
     }
+
 
 }

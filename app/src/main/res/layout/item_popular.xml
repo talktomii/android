@@ -7,7 +7,6 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ivCoverPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_image1"
@@ -15,6 +14,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivCoverPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/ic_image1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/HeaderLayout"
@@ -42,15 +51,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="About me"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:background="@drawable/trans_white_background"
                     android:drawableLeft="@drawable/ic_video"
                     android:drawablePadding="@dimen/dp_10"
-                    android:textSize="@dimen/sp_12"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:padding="@dimen/dp_10"
-                    android:background="@drawable/trans_white_background"
-                    android:layout_marginEnd="@dimen/dp_20"
+                    android:text="About me"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView4" />
@@ -69,12 +78,12 @@
                     android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Leslie Alexander"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="17dp"
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:text="Leslie Alexander"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,8 +113,8 @@
                     android:id="@+id/ivTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic__two"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:src="@drawable/ic__two"
                     app:layout_constraintBottom_toBottomOf="@+id/ivOne"
                     app:layout_constraintStart_toStartOf="@+id/ivOne"
                     app:layout_constraintTop_toTopOf="@+id/ivOne" />

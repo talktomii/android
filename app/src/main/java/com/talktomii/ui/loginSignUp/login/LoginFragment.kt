@@ -140,8 +140,6 @@ class LoginFragment : DaggerFragment() {
         //map["avatar"] = imageUrl
         map["social_type"] = "google"
 
-//        viewModel.socialLogin(map)
-
     }
 
     fun initializeGoogle() {

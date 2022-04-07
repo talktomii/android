@@ -20,8 +20,6 @@ import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.ui.mycards.data.CardItemsViewModel
 
-
-
 class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebService? = null) :
     RecyclerView.Adapter<MyCardAdapter.ViewHolder>() {
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="vm"
+            name="viewModel"
             type="com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM" />
 
     </data>
@@ -32,23 +33,21 @@
                     android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_50"
-                    android:onClick="@{vm::onClick}"
-                    android:src="@drawable/back_arrow1"
+                    android:onClick="@{viewModel::onClick}"
+                    android:src="@drawable/back_arrow"
                     app:layout_constraintBaseline_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::onClick}"
                     android:text="Back"
-                    android:onClick="@{vm::onClick}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivBack"
                     app:layout_constraintTop_toTopOf="@+id/ivBack" />
-
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSave"
@@ -87,11 +86,11 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/dp_20"
-                android:background="@drawable/bg_gradient_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSignIn">
+                app:layout_constraintTop_toBottomOf="@+id/txtSignIn"
+                tools:background="@drawable/bg_gradient_profile">
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -111,11 +110,11 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="@dimen/dp_60"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_user"
                 app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
                 app:layout_constraintStart_toStartOf="@+id/layoutGrandiant"
                 app:layout_constraintTop_toTopOf="@+id/layoutGrandiant"
-                app:riv_corner_radius="@dimen/dp_60">
+                app:riv_corner_radius="@dimen/dp_60"
+                tools:src="@drawable/ic_user">
 
             </com.makeramen.roundedimageview.RoundedImageView>
 
@@ -152,22 +151,26 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
                     android:hint="First Name"
+                    android:text="@{viewModel.userField.name}"
                     android:textColor="@color/gray"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:hintTextColor="@color/hint_color" />
+
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:visibility="gone"
                 app:hintTextColor="@color/hint_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -176,9 +179,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastName"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
                     android:hint="Last Name"
@@ -187,6 +190,7 @@
                     android:textStyle="bold"
                     app:hintTextColor="@color/hint_color" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
@@ -200,78 +204,296 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
                     android:hint=" Username"
+                    android:text="@{viewModel.userField.userName}"
                     android:textColor="@color/gray"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:hintTextColor="@color/hint_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="Price"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
             <TextView
-                android:id="@+id/tvAboutYou"
+                android:id="@+id/txtAddPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:drawableLeft="@drawable/plus"
+                android:drawablePadding="5dp"
+                android:text="Add Price"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtPrice" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPrice"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_price" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Location"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtPrice"
+                app:layout_constraintTop_toBottomOf="@+id/rvPrice" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:drawableRight="@drawable/ic_edit"
+                android:padding="15dp"
+                android:text="@{viewModel.userField.location}"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/location"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Follow me"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSocialMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_social_media" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/rvSocialMedia"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <TextView
+                android:id="@+id/txtInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Interest"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvInterest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInterests"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_interests" />
+
+            <TextView
+                android:id="@+id/txtItemCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:drawableLeft="@drawable/plus"
+                android:drawablePadding="@dimen/dp_2"
+                android:text="3"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/rvInterest"
+                app:layout_constraintStart_toEndOf="@+id/rvInterest"
+                app:layout_constraintTop_toTopOf="@+id/rvInterest" />
+
+            <ImageView
+                android:id="@+id/ivInterest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="@+id/txtItemCount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtItemCount" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/rvInterest"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <TextView
+                android:id="@+id/txtBudges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Badges"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtInterests"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <ImageView
+                android:id="@+id/ivBudge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_badge1"
+                app:layout_constraintStart_toStartOf="@+id/txtBudges"
+                app:layout_constraintTop_toBottomOf="@+id/txtBudges" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_badge2"
+                app:layout_constraintStart_toStartOf="@+id/ivBudge"
+                app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+            <ImageView
+                android:id="@+id/ivBug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_5"
+                android:src="@drawable/ic_badge3"
+                app:layout_constraintStart_toEndOf="@+id/ivBudge"
+                app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+            <TextView
+                android:id="@+id/txtBudgesCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="About you"
-                android:textAlignment="center"
-                android:textColor="@color/gray"
-                android:textSize="18sp"
+                android:drawableLeft="@drawable/plus"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="3"
+                android:textColor="@color/blue"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtUsername" />
+                app:layout_constraintBottom_toBottomOf="@+id/ivBug"
+                app:layout_constraintStart_toEndOf="@+id/ivBug"
+                app:layout_constraintTop_toTopOf="@+id/ivBug" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clAboutYouVoice"
+            <TextView
+                android:id="@+id/txtAvailability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Availability"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtBudges"
+                app:layout_constraintTop_toBottomOf="@+id/ivBudge" />
+
+            <TextView
+                android:id="@+id/txtAddTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:drawableLeft="@drawable/plus"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="Add Time Period"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/txtAvailability"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtAvailability" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAvailability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:background="@drawable/gray_background"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAboutYou">
+                app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_availability" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivPlay"
-                    placeHolder="@{@drawable/apple}"
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="@dimen/dp_50"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:padding="@dimen/dp_10"
-                    app:layout_constraintBaseline_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+            <View
+                android:id="@+id/rgView"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/rvAvailability" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivPlaying"
-                    placeHolder="@{@drawable/apple}"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dp_50"
-                    android:padding="@dimen/dp_10"
-                    app:layout_constraintBaseline_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivOption"
-                    app:layout_constraintHorizontal_bias="0.51"
-                    app:layout_constraintStart_toEndOf="@+id/ivPlay" />
-
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivOption"
-                    placeHolder="@{@drawable/more_vert_24}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_50"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:padding="@dimen/dp_10"
-                    app:layout_constraintBaseline_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Switch to personal account"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtAvailability"
+                app:layout_constraintTop_toBottomOf="@+id/rgView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

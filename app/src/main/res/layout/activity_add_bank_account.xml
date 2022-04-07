@@ -42,7 +42,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
-                    android:src="@drawable/back_arrow1" />
+                    android:src="@drawable/back_arrow" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView

@@ -376,11 +376,11 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         RefillWalletActivity.walletProgress!!.visibility = View.GONE
                         if (RefillWalletActivity.repeatAmount != null) {
                             RefillWalletActivity.finishFunction()
-                            getPayment()
-                        } else {
                             getWallet()
                             getTotalAmount()
                             getCurrentAmount()
+                        } else {
+                            getPayment()
                         }
 
                     } else {

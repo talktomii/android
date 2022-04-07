@@ -25,7 +25,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment) {
         savedInstanceState: Bundle?
     ): View? {
         binding = EditPersonalInfoFragmentBinding.inflate(inflater, container, false)
-        binding.vm = viewModels
+        binding.viewModel = viewModels
         return binding.root
     }
 

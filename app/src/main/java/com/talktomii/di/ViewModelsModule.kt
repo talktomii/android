@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.talktomii.ui.home.HomeViewModel
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-
-
+import com.talktomii.ui.home.HomeScreenViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -38,7 +37,9 @@ abstract class ViewModelsModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MyCardsViewModel::class)
-    abstract fun bindAddCardModel(viewModel: MyCardsViewModel): ViewModel
+    @ViewModelKey(HomeScreenViewModel::class)
+    abstract fun homeScreenViewModel(viewModel: HomeScreenViewModel): ViewModel
 
 }
+
+//run please

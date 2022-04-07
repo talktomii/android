@@ -53,7 +53,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
 
         // save login token
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA1VDEyOjQ5OjQ4LjY4NFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkxNjI5ODh9.lgQopSoxjInqMXQxWRLGrpFOHmTr2QCIW54Iae7dRKs"
+        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA3VDA2OjU3OjA1LjAwMloiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkzMTQ2MjV9.CE48fuL46ZXHKu1NLMO4EA5Ny9ZT5Ujn94ycmRa_bU8"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
@@ -111,8 +111,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
             if (item.itemId != viewModel.navController.currentDestination!!.id) {
                 when (item.itemId) {
-                    R.id.nav_profile -> {
-                        viewModel.navController.navigate(R.id.profileFragment)
+                    R.id.nav_more -> {
+                        binding.drawerLayout.openDrawer(binding.navigationView)
                     }
 
                     R.id.nav_home -> {

@@ -31,6 +31,10 @@ class MyPaymentAdapter(private val mList: List<PaymentItemsViewModel>) :
         holder.itemPrice.text = itemsViewModel.wallet_price
         holder.payItems.setOnClickListener {
             val intent = Intent(context,PaymentDetailsActivity::class.java)
+            intent.putExtra("id",mList[position].wallet_id)
+            intent.putExtra("date",mList[position].wallet_date)
+            intent.putExtra("type",mList[position].wallet_name)
+            intent.putExtra("amount",mList[position].wallet_price)
             context!!.startActivity(intent)
         }
     }

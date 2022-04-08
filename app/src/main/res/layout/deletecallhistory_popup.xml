@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_gravity="center"
+    android:layout_marginEnd="@dimen/dp_20"
+    app:cardBackgroundColor="#F9F8FC"
+    app:cardCornerRadius="@dimen/dp_20">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/block_user"></androidx.appcompat.widget.AppCompatImageView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center"
+            android:text="Are you sure that you want to delete this ?"
+            android:textColor="#323F4B"
+            android:textFontWeight="700"
+            android:textSize="@dimen/dp_16">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"
+            tools:layout_editor_absoluteX="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cancelcall_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textColor="#323F4B"
+                android:textFontWeight="400"
+                android:textSize="@dimen/dp_16">
+
+            </androidx.appcompat.widget.AppCompatTextView>
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/deletecallCardBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:text="Delete"
+                android:textColor="#D82F4E"
+                android:textFontWeight="400"
+                android:textSize="@dimen/dp_16">
+
+            </androidx.appcompat.widget.AppCompatTextView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

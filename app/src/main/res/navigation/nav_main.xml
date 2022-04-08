@@ -69,9 +69,9 @@
             android:id="@+id/action_tellUsMore_to_homeFragment"
             app:destination="@id/homeFragment" />
 
-<!--        <action-->
-<!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
-<!--            app:destination="@id/homeInfluencerFragment" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
+        <!--            app:destination="@id/homeInfluencerFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/editPersonalInfo"
@@ -181,11 +181,11 @@
         android:name="com.talktomii.ui.callhistory.CallHistory"
         android:label="fragment_callhistory"
         tools:layout="@layout/call_history"/>
-<!--    <fragment-->
-<!--        android:id="@+id/searchFragment"-->
-<!--        android:name="com.furniture.ui.search.SearchFragment"-->
-<!--        android:label="fragment_search"-->
-<!--        tools:layout="@layout/search_fragment"/>-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/searchFragment"-->
+    <!--        android:name="com.furniture.ui.search.SearchFragment"-->
+    <!--        android:label="fragment_search"-->
+    <!--        tools:layout="@layout/search_fragment"/>-->
 
     <fragment
         android:id="@+id/forgetFragment"
@@ -227,6 +227,14 @@
         android:name="com.talktomii.ui.home.profile.CallEndFragment"
         android:label="fragment_callEnd"
         tools:layout="@layout/call_end_fragment"/>
-
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.talktomii.ui.drawer.bookmark.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark">
+        <action
+            android:id="@+id/action_bookmarkFragment_to_influencerProfileFragment"
+            app:destination="@id/influencerProfileFragment" />
+    </fragment>
 
 </navigation>

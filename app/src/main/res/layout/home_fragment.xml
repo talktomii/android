@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.talktomii.ui.homefrag.HomeVM" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,11 +92,11 @@
             android:id="@+id/txtSeeAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_20"
             android:text="See all"
             android:textColor="@color/blue"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
-            android:layout_marginEnd="@dimen/dp_20"
             app:layout_constraintBottom_toBottomOf="@+id/txtPopular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtPopular" />

@@ -3,95 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/n_frame"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Notifications"
-            android:textColor="@color/gray"
-            android:textStyle="bold"
-            android:textSize="@dimen/sp_24"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:src="@drawable/ic_options"
-            app:layout_constraintBottom_toBottomOf="@+id/txtNotification"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtNotification" />
-
-        <TextView
-            android:id="@+id/txtMarkAllread"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mark All as Read"
-            android:textSize="@dimen/sp_12"
-            android:textColor="@color/colorAccent"
-            android:layout_marginEnd="@dimen/dp_20"
-            app:layout_constraintBottom_toBottomOf="@+id/txtNotification"
-            app:layout_constraintEnd_toStartOf="@+id/ivMore"
-            app:layout_constraintTop_toTopOf="@+id/txtNotification" />
-
-        <TextView
-            android:id="@+id/txtToday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/gray"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/txtNotification"
-            app:layout_constraintTop_toBottomOf="@+id/txtNotification" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTodayNotifi"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_today_notification"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtToday">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <ProgressBar
+                android:id="@+id/getNotificationProgress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorAccent"
+                android:indeterminateTintMode="src_atop"
+                android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/txtYesterday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yesterday"
-            android:textColor="@color/gray"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/dp_20"
-            app:layout_constraintStart_toStartOf="@+id/rvTodayNotifi"
-            app:layout_constraintTop_toBottomOf="@+id/rvTodayNotifi" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvYesterdayNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_yesterday_notification"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/txtYesterday">
+                <TextView
+                    android:id="@+id/txtNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="Notifications"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/ivMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:src="@drawable/ic_options"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtNotification"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtNotification" />
+
+                <TextView
+                    android:id="@+id/txtMarkAllread"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:text="Mark All as Read"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtNotification"
+                    app:layout_constraintEnd_toStartOf="@+id/ivMore"
+                    app:layout_constraintTop_toTopOf="@+id/txtNotification" />
+
+                <TextView
+                    android:id="@+id/txtToday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Today"
+                    android:textColor="@color/gray"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/txtNotification"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNotification" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTodayNotifi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtToday"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_today_notification">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </FrameLayout>
 </layout>

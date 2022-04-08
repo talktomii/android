@@ -25,6 +25,7 @@ import android.util.Log
 import android.widget.*
 import android.widget.DatePicker.OnDateChangedListener
 import com.google.android.material.snackbar.Snackbar
+import com.talktomii.R
 import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 
 
@@ -63,7 +64,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_my_cards)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_cards)
         getContext(this)
         cardHolderName = binding.etCardHolder
         addCardButton = binding.btnAddCard

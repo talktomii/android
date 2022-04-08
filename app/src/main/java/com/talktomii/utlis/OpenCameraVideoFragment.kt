@@ -9,12 +9,7 @@ import com.talktomii.R
 import com.talktomii.databinding.DialogCameraGalleryBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class OpenCameraVideoFragment(
-    var cameravideo: CameraGalleryCallback,
-    val firstVal: String,
-    val secondval: String,
-    var tittle: String? = ""
-) : BottomSheetDialogFragment() {
+class OpenCameraVideoFragment(var cameravideo: CameraGalleryCallback, val firstVal: String, val secondval: String, var tittle: String? = "") : BottomSheetDialogFragment() {
     private lateinit var binding: DialogCameraGalleryBinding
     /*  @SuppressLint("RestrictedApi")
       override fun setupDialog(dialog: Dialog, style: Int) {
@@ -22,7 +17,6 @@ class OpenCameraVideoFragment(
           super.setupDialog(dialog, R.style.MyBottomSheetDialogTheme)
           val view = LayoutInflater.from(context).inflate(R.layout.dialog_camera_gallery, null)
           dialog.setContentView(view)
-
       }*/
 
     override fun onCreateView(
@@ -30,10 +24,9 @@ class OpenCameraVideoFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         binding = DialogCameraGalleryBinding.inflate(LayoutInflater.from(context))
+        binding = DialogCameraGalleryBinding.inflate(LayoutInflater.from(context))
         return binding.rootView
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

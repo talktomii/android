@@ -5,8 +5,7 @@ data class ApiResponse<out T>(
     val status: Int? = 0,
     /*val data: T? = null*/
     val detail: T? = null,
-    val data: T? = null,
     val payload: T? = null,
-    val card: T? = null
+    val data: T? = null
 )
 

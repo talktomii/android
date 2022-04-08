@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import com.talktomii.R
 import com.talktomii.databinding.ActivityHomeBinding
-import com.talktomii.ui.home.homeFragment.HomeFragment
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.listner.PermissionCallback
 import com.talktomii.utlis.locationPermission
@@ -38,7 +37,7 @@ class HomeActivity : DaggerAppCompatActivity(), PermissionCallback {
         setListener()
 //       Log.e("Key :: ", generateKeyHash())
 
-            openFragment(HomeFragment(), HomeFragment.TAG)
+
     }
 
     private fun setListener() {
@@ -79,7 +78,7 @@ class HomeActivity : DaggerAppCompatActivity(), PermissionCallback {
             // Handle Bottom Navigation view clicks
             when (item.itemId) {
                 R.id.nav_home -> {
-                    openFragment(HomeFragment(), HomeFragment.TAG)
+
 
                     return@OnNavigationItemSelectedListener true
                 }

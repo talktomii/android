@@ -14,6 +14,7 @@ import com.talktomii.ui.mywallet.activities.GetPaidActivity
 import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 import com.talktomii.utlis.PrefsManager
 import com.google.android.material.tabs.TabLayoutMediator
+import com.talktomii.ui.coupon.CouponActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -56,17 +57,20 @@ class MyWallet : DaggerFragment(R.layout.my_wallet){
             tab.text = tabData[position]
         }.attach()
 
-        binding.refillLayout.setOnClickListener {
-            val intent = Intent(context,RefillWalletActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.getPaidLayout.setOnClickListener {
-            val intent = Intent(context,GetPaidActivity::class.java)
-            startActivity(intent)
-        }
-
         dataModel.getCurrentAmount()
+
+        binding.refillWalletLayout.setOnClickListener {
+            val intent  = Intent(context,RefillWalletActivity::class.java)
+            startActivity(intent)
+        }
+        binding.getPaidLayout.setOnClickListener {
+            val intent  = Intent(context,GetPaidActivity::class.java)
+            startActivity(intent)
+        }
+        binding.addCouponLayout.setOnClickListener {
+            val intent  = Intent(context,CouponActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
     companion object{

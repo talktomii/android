@@ -10,6 +10,7 @@ import com.talktomii.ui.helpsupport.models.UserMessageModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.talktomii.R
 import dagger.android.support.DaggerAppCompatActivity
 
 
@@ -22,7 +23,7 @@ class ChatSupportActivity : DaggerAppCompatActivity(){
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_chat_support)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat_support)
         binding.tvchatBack.setOnClickListener {
             finish()
         }

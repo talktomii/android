@@ -97,7 +97,7 @@ class SignUpFragment : DaggerFragment() {
             dialog.show(requireActivity().supportFragmentManager, BackToHomeDialog.TAG)
         }
 
-        binding.tvSignUp.setOnClickListener {
+        binding.txtSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_signIn)
         }
 

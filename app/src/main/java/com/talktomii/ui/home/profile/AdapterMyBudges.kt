@@ -9,7 +9,6 @@ class AdapterMyBudges : RecyclerView.Adapter<AdapterMyBudges.ViewHolder>(){
 
 
     class ViewHolder(val binding: ItemMyBudgesBinding) : RecyclerView.ViewHolder(binding.root){
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterMyBudges.ViewHolder {

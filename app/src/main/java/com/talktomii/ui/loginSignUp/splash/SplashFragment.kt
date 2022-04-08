@@ -7,9 +7,9 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
-import com.talktomii.ui.home.HomeActivity
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
@@ -41,8 +41,7 @@ class SplashFragment : DaggerFragment() {
     private fun openFragments() {
         if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
 
-            findNavController().popBackStack()
-            findNavController().navigate(R.id.homeFragment)
+          view?.findNavController()?.navigate(R.id.homeFragment)
         } else {
 
             findNavController().popBackStack()

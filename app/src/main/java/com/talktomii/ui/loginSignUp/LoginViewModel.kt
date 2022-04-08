@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
                     response: Response<ApiResponse<RegisterModel>>
                 ) {
                     if (response.isSuccessful) {
-                            createProfile.value = Resource.success(response.body()?.payload)
+                        createProfile.value = Resource.success(response.body()?.payload)
 
                     } else {
                         createProfile.value = Resource.error(

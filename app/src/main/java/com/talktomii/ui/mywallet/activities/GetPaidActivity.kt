@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import com.talktomii.R
 import com.talktomii.databinding.ActivityGetPaidBinding
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -17,7 +18,7 @@ class GetPaidActivity : DaggerAppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_get_paid)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_get_paid)
         binding.tvgetpaidBack.setOnClickListener {
             finish()
         }

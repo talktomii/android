@@ -8,7 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/addBankProgress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:translationZ="@dimen/dp_10"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/colorAccent"/>
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/banklayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -27,7 +42,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
-                    android:src="@drawable/back_arrow1" />
+                    android:src="@drawable/back_arrow" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -315,10 +330,11 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/inter_regular"
                 android:hint="Enter routing number"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="@color/gray"
                 android:textFontWeight="400"
                 android:textSize="17sp"
+                android:maxLength="12"
                 app:hintTextColor="#565656"
                 app:layout_constraintTop_toBottomOf="@+id/textRoutingNumber" />
 
@@ -356,11 +372,12 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/inter_regular"
                 android:hint="Enter Account number"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="@color/gray"
                 android:textFontWeight="400"
                 android:textSize="17sp"
                 app:hintTextColor="#565656"
+                android:maxLength="12"
                 app:layout_constraintTop_toBottomOf="@+id/textAccountNumber" />
 
             <View
@@ -384,10 +401,11 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/inter_regular"
                 android:hint="Enter Account number"
-                android:inputType="text"
+                android:inputType="number"
                 android:textColor="@color/gray"
                 android:textFontWeight="400"
                 android:textSize="17sp"
+                android:maxLength="12"
                 app:hintTextColor="#565656"
                 app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -447,7 +465,27 @@
                     android:textSize="@dimen/dp_15"
                     android:textStyle="bold"
                      />
+                <TextView
+                    android:id="@+id/btnUpdateBankAccount"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:background="@drawable/savebtn"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/dp_15"
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
     </ScrollView>
 </layout>

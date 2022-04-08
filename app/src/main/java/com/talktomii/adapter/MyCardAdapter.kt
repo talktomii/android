@@ -3,8 +3,10 @@ package com.talktomii.adapter
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -17,8 +19,6 @@ import android.widget.PopupMenu
 import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.ui.mycards.data.CardItemsViewModel
-
-
 
 class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebService? = null) :
     RecyclerView.Adapter<MyCardAdapter.ViewHolder>() {
@@ -57,6 +57,8 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                         dialog.getWindow()!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                         val close = dialog.findViewById(R.id.cancel_btn) as TextView
                         val delete = dialog.findViewById(R.id.deleteCardBtn) as TextView
+                        val text = dialog.findViewById(R.id.displayCardNumber) as TextView
+                        text.setText(context!!.getString(R.string.delete_card1) + " " + mList[position].last4 + " " + "Card ?")
                         close.setOnClickListener {
                             dialog.dismiss()
                         }
@@ -85,6 +87,7 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                         }
                         dialog.show()
                     }
+
                 }
                 return false
             }
@@ -96,6 +99,9 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                popupMenu.gravity = Gravity.END
+            }
             popupMenu.show()
         })
 

@@ -26,6 +26,7 @@
             android:src="@drawable/info_icon"></androidx.appcompat.widget.AppCompatImageView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/displayCardNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

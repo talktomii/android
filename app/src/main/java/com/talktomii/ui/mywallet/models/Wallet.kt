@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Wallet(
-
     @SerializedName("apid") var apid: String? = null,
     @SerializedName("paymentId") var paymentId: String? = null,
     @SerializedName("_id") var Id: String? = null,

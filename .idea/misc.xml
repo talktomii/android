@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.19739583333333333" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/activity_main.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_home.xml" value="0.32864583333333336" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_home_influencer.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_sign_up.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/help_support.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/home_fragment.xml" value="0.228125" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/bank_popup.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/bottom_navigation.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/profile_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />

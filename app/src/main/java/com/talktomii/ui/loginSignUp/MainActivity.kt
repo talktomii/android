@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.databinding.SettingsBinding
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.ui.settings.Settings
+import com.talktomii.utlis.logoutUser
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -77,6 +78,9 @@ class MainActivity : DaggerAppCompatActivity() {
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
+        binding.btnLogout.setOnClickListener {
+            logoutUser(this,prefsManager)
+        }
         binding.txtMyCards.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             viewModel.navController.navigate(R.id.cardFragment)
@@ -177,12 +181,12 @@ class MainActivity : DaggerAppCompatActivity() {
             if (
                 destination.id == R.id.homeFragment ||
                 destination.id == R.id.profileFragment ||
-                destination.id == R.id.homeFragment ||
                 destination.id == R.id.profileFragment ||
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment
+                destination.id == R.id.notificationFragment||
+                destination.id == R.id.homeInfluencerFragment
 
             ) {
 

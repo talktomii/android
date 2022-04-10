@@ -213,14 +213,11 @@ interface WebService {
     suspend fun getSearchInterest(@Query("search") search: String): Response<AllInterst>
 
     @GET(ALL_INFLUENCE)
-    suspend fun getAllAdmin(
-        @Header("Authorization") authHeader: String
-    ): Response<AdminResponse>
+    suspend fun getAllAdmin(): Response<AdminResponse>
 
     @GET(ALL_INFLUENCE + "?interest={id}")
     suspend fun getAdminByInterest(
-        @Path("id") id: String,
-        @Header("Authorization") authHeader: String
+        @Path("id") id: String
     ): Response<AdminResponse>
 
     @GET(GET_ADMIN + "/{id}")

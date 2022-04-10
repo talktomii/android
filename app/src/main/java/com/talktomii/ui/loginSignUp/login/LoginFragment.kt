@@ -24,11 +24,8 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
-import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.isConnectedToInternet
-import com.talktomii.utlis.showMessage
-import com.talktomii.utlis.showSnackBar
 import dagger.android.support.DaggerFragment
 import java.net.URL
 import javax.inject.Inject
@@ -164,6 +161,18 @@ class LoginFragment : DaggerFragment() {
 
               }
 
+            }
+        }
+
+        binding.tvShowHide.setOnClickListener {
+            if (isShowPass) {
+                binding.tvShowHide.setImageResource(R.drawable.ic_eye)
+                binding.edPassword.transformationMethod = AsteriskPasswordTransformationMethod()
+                isShowPass = false
+            } else {
+                binding.tvShowHide.setImageResource(R.drawable.ic_eyeopen)
+                binding.edPassword.transformationMethod = null
+                isShowPass = true
             }
         }
     }

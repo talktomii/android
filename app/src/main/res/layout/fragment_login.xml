@@ -60,23 +60,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
-        <EditText
-            android:id="@+id/edPassword"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:drawablePadding="@dimen/dp_10"
-            android:gravity="center_vertical"
-            android:drawableRight="@drawable/ic_eye"
-            android:hint="Enter Password"
-            android:padding="15dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:password="true"
-            app:layout_constraintEnd_toEndOf="@+id/txtEmailId"
-            app:layout_constraintStart_toStartOf="@+id/txtEmailId"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmailId" />
+            app:layout_constraintTop_toBottomOf="@+id/txtEmailId">
+
+            <EditText
+                android:id="@+id/edPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:hint="Enter Password"
+                android:layout_marginStart="@dimen/dp_15"
+                android:padding="15dp"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:password="true"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:maxLength="250"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/tvShowHide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_eye"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/edPassword"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/txtForgetPass"
@@ -86,8 +105,9 @@
             android:textSize="13sp"
             android:textColor="@color/colorAccent"
             android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/edPassword"
-            app:layout_constraintTop_toBottomOf="@+id/edPassword" />
+            android:layout_marginEnd="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="@+id/constPass"
+            app:layout_constraintTop_toBottomOf="@+id/constPass" />
 
         <TextView
             android:id="@+id/btnLogin"
@@ -102,8 +122,8 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/edPassword"
-            app:layout_constraintStart_toStartOf="@+id/edPassword"
+            app:layout_constraintEnd_toEndOf="@+id/constPass"
+            app:layout_constraintStart_toStartOf="@+id/constPass"
             app:layout_constraintTop_toBottomOf="@+id/txtForgetPass" />
 
         <TextView

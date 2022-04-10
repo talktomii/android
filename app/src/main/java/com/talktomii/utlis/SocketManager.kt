@@ -52,7 +52,7 @@ class SocketManager {
         options.forceNew = false
         options.reconnection = true
         var user= getUser(prefsManager)
-        socket = IO.socket(URI.create("https://socket.furnifix.com.sa/?access_token=${user!!.id}&user_type=user"),
+        socket = IO.socket(URI.create("https://socket.furnifix.com.sa/?access_token=${user!!.admin._id}&user_type=user"),
             options
         )
         socket?.connect()

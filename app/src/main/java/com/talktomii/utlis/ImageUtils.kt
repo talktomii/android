@@ -27,6 +27,10 @@ import java.util.*
 
 object ImageUtils {
     const val REQ_CODE_CAMERA_PICTURE = 1
+    const val REQ_CODE_CAMERA_PICTURE_PROFILE = 101
+    const val REQ_CODE_CAMERA_PICTURE_COVER = 102
+    const val REQ_CODE_GALLERY_PICTURE_PROFILE = 201
+    const val REQ_CODE_GALLERY_PICTURE_COVER = 202
     const val REQ_CODE_GALLERY_PICTURE = 2
     const val REQ_CODE_GALLERY_VIDEO = 21
     const val REQ_CODE_CAMERA_VIDEO = 212
@@ -66,39 +70,39 @@ object ImageUtils {
 */
 
 
-    fun displayImagePicker(parentContext: Any, listner: () -> Unit) {
-        var context: Context? = null
-        if (parentContext is Fragment) {
-            context = parentContext.context
-        } else if (parentContext is Activity)
-            context = parentContext
+//    fun displayImagePicker(parentContext: Any, listner: () -> Unit) {
+//        var context: Context? = null
+//        if (parentContext is Fragment) {
+//            context = parentContext.context
+//        } else if (parentContext is Activity)
+//            context = parentContext
+//
+//        if (context != null) {
+//            val pickerItems = arrayOf(
+//                context.getString(R.string.camera),
+//                context.getString(R.string.choose_gallery),
+////                context.getString(R.string.gif),
+//                context.getString(android.R.string.cancel)
+//            )
+//
+//            val builder = android.app.AlertDialog.Builder(context)
+//            builder.setTitle(context.getString(R.string.select_your_choice))
+//            builder.setItems(pickerItems) { dialog, which ->
+//                when (which) {
+//                    0 -> openCamera(parentContext)
+//
+//                    1 -> openGallery(parentContext)
+//
+//                    2 -> listner.invoke()
+//                }
+//                dialog.dismiss()
+//            }
+//            val alertDialog = builder.create()
+//            alertDialog.show()
+//        }
+//    }
 
-        if (context != null) {
-            val pickerItems = arrayOf(
-                context.getString(R.string.camera),
-                context.getString(R.string.choose_gallery),
-//                context.getString(R.string.gif),
-                context.getString(android.R.string.cancel)
-            )
-
-            val builder = android.app.AlertDialog.Builder(context)
-            builder.setTitle(context.getString(R.string.select_your_choice))
-            builder.setItems(pickerItems) { dialog, which ->
-                when (which) {
-                    0 -> openCamera(parentContext)
-
-                    1 -> openGallery(parentContext)
-
-                    2 -> listner.invoke()
-                }
-                dialog.dismiss()
-            }
-            val alertDialog = builder.create()
-            alertDialog.show()
-        }
-    }
-
-    fun displayImagePicker(parentContext: Any?, frggManager: FragmentManager) {
+    fun displayImagePicker(parentContext: Any?, frggManager: FragmentManager,isProfile:Boolean=false) {
         var context: Context? = null
         if (parentContext is Fragment) {
             context = parentContext.context
@@ -109,7 +113,7 @@ object ImageUtils {
                 override fun cameraClick() {
                     context.cameraPermission(object : PermissionCallback {
                         override fun permissionGranted() {
-                            openCamera(parentContext)
+                            openCamera(parentContext,isProfile)
                         }
 
                         override fun permissionRejected() {
@@ -122,7 +126,7 @@ object ImageUtils {
                 override fun galleryClick() {
                     context.galleryclick(object : PermissionCallback {
                         override fun permissionGranted() {
-                            openGallery(parentContext);
+                            openGallery(parentContext,isProfile);
                         }
 
                         override fun permissionRejected() {
@@ -175,7 +179,7 @@ object ImageUtils {
      * //     * @param imageFile   Destination image file
      */
 
-    private fun openCamera(uiReference: Any?) {
+    private fun openCamera(uiReference: Any?,isProfile:Boolean=false) {
         var context: Context? = null
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -189,7 +193,7 @@ object ImageUtils {
                 val imageUri = imageFile?.let {
                     FileProvider.getUriForFile(
                         context,
-                        /*BuildConfig.APPLICATION_ID + */"com.furniture.provider",
+                        /*BuildConfig.APPLICATION_ID + */"com.app.talktomii.provider",
                         it
                     )
                 }
@@ -208,11 +212,12 @@ object ImageUtils {
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                 }
+                var reqCode=if(isProfile) REQ_CODE_CAMERA_PICTURE_PROFILE else REQ_CODE_CAMERA_PICTURE_COVER
                 if (uiReference is Fragment)
-                    (uiReference).startActivityForResult(cameraIntent, REQ_CODE_CAMERA_PICTURE)
+                    (uiReference).startActivityForResult(cameraIntent, reqCode)
                 else (uiReference as AppCompatActivity).startActivityForResult(
                     cameraIntent,
-                    REQ_CODE_CAMERA_PICTURE
+                    reqCode
                 )
             }
         } catch (e: NullPointerException) {
@@ -222,17 +227,18 @@ object ImageUtils {
         }
     }
 
-    private fun openGallery(uiReference: Any?) {
+    private fun openGallery(uiReference: Any?,isProfile:Boolean=false) {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        var reqCode=if(isProfile) REQ_CODE_GALLERY_PICTURE_PROFILE else REQ_CODE_GALLERY_PICTURE_COVER
         if (uiReference is Fragment) {
             uiReference.startActivityForResult(
                 galleryIntent,
-                REQ_CODE_GALLERY_PICTURE
+                reqCode
             )
         } else if (uiReference is AppCompatActivity)
             uiReference.startActivityForResult(
                 galleryIntent,
-                REQ_CODE_GALLERY_PICTURE
+                reqCode
             )
     }
 

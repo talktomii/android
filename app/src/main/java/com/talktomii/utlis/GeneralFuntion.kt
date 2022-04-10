@@ -32,6 +32,7 @@ import com.talktomii.data.model.UserData
 import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.listner.PermissionCallback
 import com.google.android.material.snackbar.Snackbar
+import com.talktomii.data.model.RegisterModel
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -354,8 +355,8 @@ fun getAccessToken(prefsManager: PrefsManager): String {
     return prefsManager.getString(PrefsManager.PREF_API_TOKEN, "")
 }
 
-fun getUser(prefsManager: PrefsManager): UserData? {
-    return (prefsManager.getObject(PrefsManager.PREF_PROFILE, UserData::class.java))
+fun getUser(prefsManager: PrefsManager): RegisterModel? {
+    return (prefsManager.getObject(PrefsManager.PREF_PROFILE, RegisterModel::class.java))
 
 }
 fun getFormatFromDateUtc(date: Date, format: String): String? {

@@ -26,9 +26,9 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         Coroutines.main {
             try {
                 val authResponse = if (string.isEmpty()) {
-                    webService.getAllAdmin(AUTHORIZATION)
+                    webService.getAllAdmin()
                 } else {
-                    webService.getAdminByInterest(AUTHORIZATION, string)
+                    webService.getAdminByInterest( string)
                 }
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -32,7 +33,7 @@ import javax.inject.Inject
 class SignUpFragment : DaggerFragment() {
     private lateinit var binding: FragmentSignUpBinding
 
-
+    private var isShowPass = false
     @Inject
     lateinit var viewModel: LoginViewModel
     private lateinit var progressDialog: ProgressDialog
@@ -66,9 +67,8 @@ class SignUpFragment : DaggerFragment() {
 
             val email = binding.txtEmailId.text.toString()
             val password = binding.edPassword.text.toString()
-
             if (validation(email, password))
-                if (binding.chckTerms.isChecked)
+                if (binding.chckTerms.isChecked) {
                     findNavController().navigate(
                         R.id.action_signupFragment_to_createProfileFragment,
                         bundleOf(
@@ -76,8 +76,10 @@ class SignUpFragment : DaggerFragment() {
                             "password" to binding.edPassword.text.toString()
                         )
                     )
-                else
+                }
+                else {
                     binding.chckTerms.showSnackBar("Please accept our terms & conditions")
+                }
         }
 
     }
@@ -98,11 +100,36 @@ class SignUpFragment : DaggerFragment() {
         }
 
         binding.txtSignIn.setOnClickListener {
-            findNavController().navigate(R.id.action_signupFragment_to_signIn)
+//            findNavController().navigate(R.id.action_signupFragment_to_signIn)
+            requireActivity().onBackPressed()
         }
 
         binding.ivGoogle.setOnClickListener {
             googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
+        }
+
+        binding.tvShowHide.setOnClickListener {
+            if (isShowPass) {
+                binding.tvShowHide.setImageResource(R.drawable.ic_eye)
+                binding.edPassword.transformationMethod = AsteriskPasswordTransformationMethod()
+                isShowPass = false
+            } else {
+                binding.tvShowHide.setImageResource(R.drawable.ic_eyeopen)
+                binding.edPassword.transformationMethod = null
+                isShowPass = true
+            }
+        }
+
+        binding.txtShowHide.setOnClickListener {
+            if (isShowPass) {
+                binding.txtShowHide.setImageResource(R.drawable.ic_eye)
+                binding.repPassword.transformationMethod = AsteriskPasswordTransformationMethod()
+                isShowPass = false
+            } else {
+                binding.txtShowHide.setImageResource(R.drawable.ic_eyeopen)
+                binding.repPassword.transformationMethod = null
+                isShowPass = true
+            }
         }
     }
 
@@ -177,7 +204,7 @@ class SignUpFragment : DaggerFragment() {
 //
 //            }
 //        })
-    }
+//    }
 
 
-}
+    }}

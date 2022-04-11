@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.talktomii.data.model.getallslotbydate.PayloadAppoinment
 import com.talktomii.databinding.FragmentHomeInfluencerBinding
-import com.talktomii.ui.home.HomeViewModel
+import com.talktomii.interfaces.CommonInterface
+import com.talktomii.utlis.listner.InfulancerListner
+import com.talktomii.utlis.uid
+import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class InfluencerHomeFragment : DaggerFragment() {
+class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerListner {
 
     private lateinit var binding: FragmentHomeInfluencerBinding
-
+    private var nearestAppointment : AdapterNearestAppointment? = null
 
     @Inject
-    lateinit var viewModel: HomeViewModel
+    lateinit var viewModel: InfluenceHomeViewModel
 
 
     override fun onCreateView(
@@ -34,10 +38,33 @@ class InfluencerHomeFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.rvNearestAppointment.adapter = AdapterNearestAppointment()
+        nearestAppointment = AdapterNearestAppointment()
+        binding.rvNearestAppointment.adapter = nearestAppointment
         binding.rvMyAudience.adapter = AdapterMyAudience()
 
         setListener()
+        init()
+    }
+
+    private fun init() {
+        viewModel.commonInterface = this
+        viewModel.infulancerListner = this
+        viewModel.getCurrentWallet(uid)
+        viewModel.getAllAppoinemnt(uid)
+    }
+
+    override fun onFailure(message: String) {
+
+    }
+
+    override fun onFailureAPI(message: String) {
+    }
+
+    override fun onStarted() {
+
+    }
+
+    override fun infulancerList(payload: PayloadAppoinment) {
+        nearestAppointment!!.setList(payload.interest)
     }
 }

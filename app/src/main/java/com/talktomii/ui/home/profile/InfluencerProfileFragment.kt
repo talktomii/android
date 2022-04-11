@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.talktomii.ui.home.profile.AdapterInterests
-import com.talktomii.ui.home.profile.AdapterTimeSlot
 import com.talktomii.R
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.model.getallslotbydate.TimeStop
@@ -17,7 +15,6 @@ import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.ui.home.profile.AdapterMySocialMedias
 import com.talktomii.utlis.AboutMeDialog
 import com.talktomii.utlis.CallDialog
 import com.talktomii.utlis.DeleteAppointmentDialog
@@ -87,7 +84,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             val dialog = CallDialog()
             dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
         }
-
 
         binding.txtAboutMe.setOnClickListener {
             val dialog = DeleteAppointmentDialog()

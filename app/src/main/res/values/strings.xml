@@ -289,6 +289,19 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="delete_appointment">Are you sure that you want to delete appointment ? </string>
     <string name="appoint_text">Reschedule Appointment</string>
 
+
+
+    <string name="empty_price">Price should not be empty!</string>
+    <string name="empty_end_time">End Time should not be empty!</string>
+    <string name="empty_start_time">Start Time should not be empty!</string>
+    <string name="select_repeat_option">Select at least one repeat option!</string>
+    <string name="select_day">Select at least one day!</string>
+    <string name="you_add_only_one_item">You have to add only one item</string>
+    <string name="add_price_call_duration">Add Price/Call Duration</string>
+    <string name="edit_interests">Edit Interests</string>
+    <string name="view_interests">View Interests</string>
+    <string name="calls">Calls</string>
+    <string name="earnings">Earnings</string>
     <string name="app__name" translatable="false">Talktomii</string>
 
     <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
@@ -300,4 +313,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <!-- Please leave it if not enable App Certificate -->
     <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
     <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAD0pQ4M+rQ5ynSY2MXI6Ij75aQIdAzQeCOKQaO0akdwX50aVOIAAAAAEABrDG+dIG9OYgEAAQBLb05i</string>
+    <string name="book_a_call_capatal">BOOK A CALL</string>
 </resources>

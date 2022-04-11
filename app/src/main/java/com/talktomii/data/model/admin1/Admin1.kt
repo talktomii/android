@@ -1,6 +1,10 @@
 package com.talktomii.data.model.admin1
 
-import com.talktomii.data.model.admin.*
+import com.talktomii.data.model.Interest
+import com.talktomii.data.model.admin.Availaibility
+import com.talktomii.data.model.admin.Price
+import com.talktomii.data.model.admin.SocialNetwork
+import com.talktomii.data.model.admin.Status
 import java.io.Serializable
 
 data class Admin1(
@@ -13,21 +17,22 @@ data class Admin1(
     val coverPhoto: String,
     val customerId: String,
     val email: String,
-    val interest: ArrayList<Interest>,
+    var interest: ArrayList<Interest>,
     val isActive: Boolean,
     var bookmark: Boolean,
     val isSocial: Boolean,
     val latestToken: String,
-    val location: String,
+    var location: String,
     val modificationData: String,
-    val name: String,
-    val price: ArrayList<Price>,
+    var name: String,
+//    var priceList: ArrayList<Int>,
+    var price: ArrayList<Price>,
     val profilePhoto: String,
     val registrationDate: String,
     val role: Role,
     val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
-    val userName: String
+    var userName: String
 ) : Serializable
 
 data class Role(

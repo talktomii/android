@@ -2,6 +2,7 @@ package com.talktomii.ui.home
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.common.api.ApiException
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
@@ -9,7 +10,6 @@ import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
-import com.google.android.gms.common.api.ApiException
 import javax.inject.Inject
 
 
@@ -27,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 val authResponse = if (string.isEmpty()) {
                     webService.getAllAdmin()
                 } else {
-                    webService.getAdminByInterest( string)
+                    webService.getAdminByInterest(string)
                 }
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {

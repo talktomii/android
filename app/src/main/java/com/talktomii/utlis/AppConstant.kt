@@ -41,4 +41,11 @@ object ITEM_VIEW_TYPE {
     const val MOST_POPULAR = 1
     const val ALL_SERVICE = 0
 }
+const val PLACE_FINDER_KEY = "AIzaSyC1v2OWDn7WJ93Qp_XC1Ofl1zlOtiB_zh4"
+
+var monthsarray = arrayOf(
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+)
+
 

@@ -5,6 +5,7 @@ data class AllInterst(
     val payload: Payload,
     val result: Int
 )
+
 data class Interest(
     val __v: Int,
     val _id: String,
@@ -12,8 +13,10 @@ data class Interest(
     val description: String,
     val image: String,
     val name: String,
-    val updatedAt: String
+    val updatedAt: String,
+    var isClicked: Boolean
 )
+
 data class Payload(
     val count: Int,
     val interest: ArrayList<Interest>

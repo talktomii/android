@@ -2,30 +2,28 @@ package com.talktomii.ui.loginSignUp
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.R
 import com.talktomii.databinding.ActivityMainBinding
 import com.talktomii.ui.helpsupport.HelpSupport
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.utlis.LocaleHelper
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.logoutUser
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
-import android.content.SharedPreferences
-import android.util.Log
-import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.databinding.SettingsBinding
 import com.talktomii.ui.FAQ.FaqActivity
-import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.settings.Settings
-import com.talktomii.utlis.logoutUser
 import com.zoho.salesiqembed.ZohoSalesIQ
 
 
@@ -102,7 +100,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         binding.txtProfile.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
-            viewModel.navController.navigate(R.id.profileFragment)
+            viewModel.navController.navigate(R.id.editPersonalInfo)
             binding.menuBottom.isVisible = true
         }
 
@@ -122,6 +120,11 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             val intent = Intent(this, FaqActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.txtBookmarks.setOnClickListener {
+            viewModel.navController.navigate(R.id.bookmarkFragment)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
         binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item ->
@@ -195,7 +198,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment||
+                destination.id == R.id.notificationFragment ||
                 destination.id == R.id.homeInfluencerFragment
 
             ) {

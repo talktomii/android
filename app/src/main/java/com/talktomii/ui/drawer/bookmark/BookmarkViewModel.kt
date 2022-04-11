@@ -19,7 +19,7 @@ class BookmarkViewModel @Inject constructor(private val webService: WebService) 
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getBookmarks(uid)
+                val authResponse = webService.getBookmarks(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         onbookmarkinterface?.onBookmarkAdmins(authResponse.body()!!.payload)

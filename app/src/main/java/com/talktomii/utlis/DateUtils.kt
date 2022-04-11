@@ -3,8 +3,11 @@ package com.talktomii.utlis
 import android.app.Activity
 import android.app.DatePickerDialog
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
+import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
 import com.talktomii.utlis.DateFormate.DAY_MONTH_DATE_YEAR
+import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
+import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,8 +38,8 @@ object DateUtils {
                 var selectedDate = "${monthOfYear.plus(1)}/$dayOfMonth/$year"
                 // var selectedDate = "$dayOfMonth/${monthOfYear.plus(1)}/$year"
                 selectedDate = dateFormatChange(
-                    DateFormate.DATE_FORMAT_MMDDYYYY,
-                    DateFormate.DATE_FORMAT_MMDDYYYY,
+                    DATE_FORMAT_MMDDYYYY,
+                    DATE_FORMAT_MMDDYYYY,
                     selectedDate
                 )
                 listener.onDateSelected(selectedDate)
@@ -51,7 +54,6 @@ object DateUtils {
     }
 
 
-
     fun dateFormatChange(formatFrom: String, formatTo: String, value: String): String {
         if (value.isEmpty())
             return ""
@@ -60,6 +62,46 @@ object DateUtils {
         val date = originalFormat.parse(value)
         val formattedDate = targetFormat.format(date)
         return formattedDate
+    }
+
+    fun setDateToTime(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            val outputFormat = SimpleDateFormat(TIME_FORMAT)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
+            println(formattedDate) // prints 10-04-2018
+
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+
+    }
+
+    fun getDateToShortDate(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            val outputFormat = SimpleDateFormat(DATE_FORMAT_MMDDYYYY)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
+            println(formattedDate) // prints 10-04-2018
+
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+
+    }
+
+    fun getFormatedFullDate(calendar: Calendar): String {
+        try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            return inputFormat.format(calendar.time)
+
+        } catch (e: java.lang.Exception) {
+            return ""
+        }
     }
 
     fun getLocalToUTCDate(ourDate: String?, s: String): String? {
@@ -91,13 +133,17 @@ object DateUtils {
 
 
 }
+
 /*On Date selected listener*/
 interface OnDateSelected {
     fun onDateSelected(date: String)
 }
+
 object DateFormate {
     const val DAY_MONTH_DATE_YEAR = "E,MMM,dd,yyyy"
     const val LOCAL_DATE_FORMATE = "dd/M/yyyy hh:mm:ss"
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
+    const val TIME_FORMAT = "hh:mm aaa"
+    const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }

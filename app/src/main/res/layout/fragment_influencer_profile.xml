@@ -63,8 +63,7 @@
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/bookmark"
-                   />
+                        android:src="@drawable/bookmark" />
                 </RelativeLayout>
 
 
@@ -422,7 +421,7 @@
                 android:background="@drawable/ic_signin"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="BOOK A CALL"
+                android:text="@string/book_a_call_capatal"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"

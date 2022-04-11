@@ -227,8 +227,7 @@ interface WebService {
 
     @GET(GET_ADMIN + "/{id}")
     suspend fun getAdminByID(
-        @Path("id") id: String,
-        @Header("Authorization") authHeader: String
+        @Path("id") id: String
     ): Response<AdminResponse1>
 
     @POST(ADD_BOOKMARK)

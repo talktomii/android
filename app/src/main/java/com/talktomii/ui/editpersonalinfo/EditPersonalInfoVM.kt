@@ -37,7 +37,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAdminByID(string, AUTHORIZATION)
+                val authResponse = webService.getAdminByID(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         userField.set(authResponse.body()!!.payload.admin[0])

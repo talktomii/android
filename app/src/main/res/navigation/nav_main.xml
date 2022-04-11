@@ -89,7 +89,10 @@
         android:id="@+id/homeFragment"
         android:name="com.talktomii.ui.homefrag.HomesFragment"
         android:label="HomeFragment" >
-
+        <argument
+            android:name="ID"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_home_to_influencer_profile"
             app:destination="@id/influencerProfileFragment" />

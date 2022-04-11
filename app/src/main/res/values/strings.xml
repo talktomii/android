@@ -309,4 +309,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <!-- Please leave it if not enable App Certificate -->
     <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
     <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAD0pQ4M+rQ5ynSY2MXI6Ij75aQIdAzQeCOKQaO0akdwX50aVOIAAAAAEABrDG+dIG9OYgEAAQBLb05i</string>
+    <string name="book_a_call_capatal">BOOK A CALL</string>
 </resources>

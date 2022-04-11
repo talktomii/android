@@ -164,6 +164,7 @@
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.14739583333333334" />
         <entry key="app/src/main/res/layout/activity_offered_services.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/activity_payment_details.xml" value="0.14" />
+        <entry key="app/src/main/res/layout/activity_privacy_and_policy.xml" value="0.17" />
         <entry key="app/src/main/res/layout/activity_refill_wallet.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_report_abuse.xml" value="0.12" />
         <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.10260416666666666" />
@@ -234,7 +235,7 @@
         <entry key="app/src/main/res/layout/preferred_topics_item.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/select_address_activity_layout.xml" value="0.1625" />
-        <entry key="app/src/main/res/layout/settings.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/settings.xml" value="0.22" />
         <entry key="app/src/main/res/layout/tell_us_more.xml" value="0.2" />
         <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/test_layout.xml" value="0.5" />

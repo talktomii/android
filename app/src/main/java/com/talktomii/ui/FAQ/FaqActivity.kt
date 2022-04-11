@@ -33,7 +33,7 @@ class FaqActivity : DaggerAppCompatActivity() {
         binding.tvFaqBack.setOnClickListener {
             ZohoSalesIQ.showLauncher(false)
         }
-
+        ZohoSalesIQ.showLauncher(true)
         val dataList = ArrayList<FaqModel>()
         val layoutManager = FlexboxLayoutManager()
         layoutManager.flexWrap = FlexWrap.WRAP

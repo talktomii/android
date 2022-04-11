@@ -6,6 +6,7 @@ import com.talktomii.data.repos.UserRepository
 import com.talktomii.di.DaggerAppComponent
 import com.talktomii.utlis.PrefsManager
 import com.google.android.libraries.places.api.Places
+import com.zoho.salesiqembed.ZohoSalesIQ
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class ApplicationComponent : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         Places.initialize(getApplicationContext(), getString(R.string.google_api_key))
+        ZohoSalesIQ.init(this, "LURMAt6PinEUZWjOJ5lK0oSoQmZYs2i0d4uXNJoKL7igg4ATqcBrZBPCANC9LnQa", "4%2Fd2z2OovwMWRqqZhUbeyNYamBBD%2B2M8bt7CuDdhGSgRAWfmdGWcAbuxeE8XHt9aag9Q%2Fz9IXePIoJqtKLXwAn92kRJrIClz0OuUhO6zLqspOSOHmj0O4zL0fulvLCwtEfusNVLIPqNA41oqlACrwgegABBp2yaK");
+        ZohoSalesIQ.showLauncher(false)
         setsApplication(this)
     }
 

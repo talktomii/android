@@ -13,11 +13,11 @@ object GenderType {
 }
 
 object LoginType {
-    const val LOGIN = "login"
-    const val REGISTER = "register"
-    const val SOCIAL_LOGIN = "social_login"
-    const val FORGOT_PASSWORD = "forgot_password"
+    const val INFLUANCER_ROLE = "61aa0389803e260c3821ad14"
+    const val USER_ROLE = "61aa0369803e260c3821ad0a"
 }
+
+
 
 object LoginRole {
     const val CUSTOMER = "Customer"

@@ -5,16 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.talktomii.R
+import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.ui.appointment.AppointmentViewModel
+import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
@@ -44,7 +49,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     @Inject
     lateinit var prefsManager: PrefsManager
-
+    private var availableTimeSlots: Payload? = null
+    private var selectedTimeSlots: TimeStop? = null
+    private var selectedStartTime: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -137,6 +144,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
+
                 viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(date!!.time))
             }
         }
@@ -174,22 +182,71 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     private fun setTimeSlot() {
 
+        val arrayList: ArrayList<TimeSlotSpinner> = arrayListOf()
+        for (i in 0 until (availableTimeSlots?.timeStops?.size ?: 0)) {
+            arrayList.add(
+                TimeSlotSpinner(
+                    availableTimeSlots!!.timeStops[i].time, i
+                )
+            )
+        }
+
+        val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, arrayList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTimeDuration.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedTimeSlots = availableTimeSlots!!.timeStops[position]
+                    binding.rvTimeSlot.adapter =
+                        AdapterHomeTimeSlot(availableTimeSlots!!.timeStops[position],
+                            object : AdapterHomeTimeSlot.onViewItemClick {
+                                override fun onViewItemTimeSelect(text: String) {
+                                    selectedStartTime = text
+
+                                }
+
+                            })
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        binding.spinnerTimeDuration.adapter = adapter
     }
 
-    private fun addAppoinment() {
+
+    private fun addAppointment() {
         var hashMap: HashMap<String, Any> = hashMapOf()
         hashMap.put("ifid", viewModel.userField.get()!!._id)
         hashMap.put("uid", getUser(prefsManager)!!.admin._id)
 //        hashMap.put("date", userField.get()!!._id)
 //        hashMap.put("startTime", userField.get()!!._id)
 //        hashMap.put("endTime", userField.get()!!._id)
-//        hashMap.put("duration", userField.get()!!._id)
+        hashMap.put("duration", selectedTimeSlots!!.time)
         viewModelAppoinemnt.addAppointment(hashMap)
     }
 
-    override fun onslotselect(timeStop: TimeStop) {
+    override fun onslotselect(list: Payload) {
         progressDialog.dismiss()
-        binding.rvTimeSlot.adapter = AdapterTimeSlot(timeStop)
+        availableTimeSlots = list
+
+        if (availableTimeSlots!!.timeStops.isNotEmpty()) {
+            setTimeSlot()
+            binding.spinnerTimeDuration.visibility = View.VISIBLE
+            binding.rvTimeSlot.visibility = View.VISIBLE
+        } else {
+            binding.spinnerTimeDuration.visibility = View.GONE
+            binding.rvTimeSlot.visibility = View.GONE
+        }
     }
+
 
 }

@@ -1,15 +1,14 @@
 package com.talktomii.ui.loginSignUp.splash
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
+import com.talktomii.utlis.LoginType
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
@@ -40,11 +39,12 @@ class SplashFragment : DaggerFragment() {
 
     private fun openFragments() {
         if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
-            var user= getUser(prefsManager)
-            if (user?.admin?.role?.roleName == "user")
-                view?.findNavController()?.navigate(R.id.homeFragment)
+            var user = getUser(prefsManager)
+            if (user!!.admin.role._id == LoginType.USER_ROLE)
+                findNavController().navigate(R.id.homeFragment)
             else
-                view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
+                findNavController().navigate(R.id.homeInfluencerFragment)
+
 //          view?.findNavController()?.navigate(R.id.homeFragment)
         } else {
 

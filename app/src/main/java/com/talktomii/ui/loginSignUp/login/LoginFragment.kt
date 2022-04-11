@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.facebook.*
+import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,6 +26,7 @@ import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
+import com.talktomii.utlis.LoginType.USER_ROLE
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import java.net.URL
@@ -87,9 +87,9 @@ class LoginFragment : DaggerFragment() {
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
                     prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
-                    Log.d("user is ----",it.data!!.token.toString())
+                    Log.d("user is ----", it.data.token.toString())
                     requireContext().showMessage("Login Successfully")
-                    if (it.data?.admin?.role?.roleName == "user")
+                    if (it.data.admin.role._id == USER_ROLE)
                         findNavController().navigate(R.id.homeFragment)
                     else
                         findNavController().navigate(R.id.homeInfluencerFragment)
@@ -155,16 +155,16 @@ class LoginFragment : DaggerFragment() {
             var email = binding.txtEmailId.text.toString()
             var password = binding.edPassword.text.toString()
 
-            if (validation(email,password)){
+            if (validation(email, password)) {
 
-           if (isConnectedToInternet(requireContext(), true)) {
-            var map = HashMap<String, String>()
-            map["email"] = email
-            map["password"] = password
+                if (isConnectedToInternet(requireContext(), true)) {
+                    var map = HashMap<String, String>()
+                    map["email"] = email
+                    map["password"] = password
 
-            viewModel.loginApi(map)
+                    viewModel.loginApi(map)
 
-              }
+                }
 
             }
         }
@@ -182,9 +182,9 @@ class LoginFragment : DaggerFragment() {
         }
     }
 
-    private fun validation(email: String,password:String): Boolean {
-        return when{
-            email.isEmpty() ->{
+    private fun validation(email: String, password: String): Boolean {
+        return when {
+            email.isEmpty() -> {
                 binding.txtEmailId.showSnackBar("Please enter your email id")
                 false
             }
@@ -192,7 +192,7 @@ class LoginFragment : DaggerFragment() {
 //                binding.txtEmailId.showSnackBar("Please enter a valid email address")
 //                false
 //            }
-            password.isEmpty() ->{
+            password.isEmpty() -> {
                 binding.edPassword.showSnackBar("Please enter password")
                 false
             }
@@ -218,10 +218,6 @@ class LoginFragment : DaggerFragment() {
         println("Google detail:  $account")
         var imageUrl = ""
         if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
-
-
-
-
     }
 
 

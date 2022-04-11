@@ -6,21 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.talktomii.R
-import com.talktomii.data.model.getallslotbydate.TimeStop
+import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.databinding.FragmentAppointmentsBinding
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.ui.home.HomeViewModel
 import com.talktomii.ui.home.profile.AdapterTimeSlot
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
-import devs.mulham.horizontalcalendar.HorizontalCalendarView
-import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class AppointmentsFragment : DaggerFragment() , OnSlotSelectedInterface {
@@ -64,7 +57,7 @@ class AppointmentsFragment : DaggerFragment() , OnSlotSelectedInterface {
         var horizontalCalendar: HorizontalCalendar? = null
         lateinit var acct : Activity
     }
-    override fun onslotselect(timeStop: TimeStop) {
-        recycleView.adapter = AdapterTimeSlot(timeStop)
+    override fun onslotselect(timeStop: Payload) {
+//        recycleView.adapter = AdapterTimeSlot(timeStop)
     }
 }

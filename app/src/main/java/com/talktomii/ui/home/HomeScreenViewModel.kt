@@ -69,8 +69,8 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 
     fun addBookmark() {
 
-        var hashMap: HashMap<String, Any> = hashMapOf()
-        hashMap.put("ifid", userField.get()!!._id)
+        var hashMap: HashMap<String, String> = hashMapOf()
+        hashMap.put("ifid", userField.get()?._id?:"")
 
 //        commonInterface!!.onStarted()
         Coroutines.main {

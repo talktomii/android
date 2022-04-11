@@ -111,6 +111,12 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.menuBottom.isVisible = true
         }
 
+        binding.txtBookmarks.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+            viewModel.navController.navigate(R.id.bookmarkFragment)
+            binding.menuBottom.isVisible = true
+        }
+
         binding.txtHelpSupport.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
             val intent = Intent(this, HelpSupport::class.java)

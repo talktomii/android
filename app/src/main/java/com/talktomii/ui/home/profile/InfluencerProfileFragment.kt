@@ -89,16 +89,16 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
 
-        binding.txtAboutMe.setOnClickListener {
-            val dialog = DeleteAppointmentDialog()
-            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-        }
+//        binding.txtAboutMe.setOnClickListener {
+//            val dialog = DeleteAppointmentDialog()
+//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
+//        }
 
 
-        binding.txtBookACall.setOnClickListener {
-            view?.findNavController()
-                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
-        }
+//        binding.txtBookACall.setOnClickListener {
+//            view?.findNavController()
+//                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
+//        }
 
         binding.ivBookMark.setOnClickListener {
             viewModel.checkAndSetBookMark()
@@ -141,6 +141,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         init()
+
     }
 
     override fun onFailure(message: String) {

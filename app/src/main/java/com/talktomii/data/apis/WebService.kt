@@ -228,7 +228,7 @@ interface WebService {
 
     @POST(ADD_BOOKMARK)
     suspend fun addFavourite(
-        @Body id: HashMap<String, Any>,
+        @Body id: HashMap<String, String>,
         @Header("Authorization") authHeader: String
     ): Response<AddBookMarkResponse>
 

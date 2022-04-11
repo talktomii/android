@@ -9,7 +9,6 @@ import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
-import com.talktomii.utlis.AUTHORIZATION
 import com.google.android.gms.common.api.ApiException
 import javax.inject.Inject
 
@@ -49,7 +48,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAdminByID(string, AUTHORIZATION)
+                val authResponse = webService.getAdminByID(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
@@ -75,7 +74,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.addFavourite(hashMap, AUTHORIZATION)
+                val authResponse = webService.addFavourite(hashMap)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -97,7 +96,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.removeBookmark(userField.get()!!._id, AUTHORIZATION)
+                val authResponse = webService.removeBookmark(userField.get()!!._id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

@@ -17,12 +17,16 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.TextView
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.databinding.SettingsBinding
+import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.ui.settings.Settings
 import com.talktomii.utlis.logoutUser
+import com.zoho.salesiqembed.ZohoSalesIQ
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -34,8 +38,10 @@ class MainActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
+        var user_id: String = ""
         var totalSideBarAmount : TextView ?= null
         lateinit var bottombar : BottomNavigationView
+        lateinit var drawer : DrawerLayout
     }
 
 
@@ -50,15 +56,12 @@ class MainActivity : DaggerAppCompatActivity() {
 
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        drawer = binding.drawerLayout
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         bottombar = binding.menuBottom
 
-
-        // save login token
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA3VDA2OjU3OjA1LjAwMloiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkzMTQ2MjV9.CE48fuL46ZXHKu1NLMO4EA5Ny9ZT5Ujn94ycmRa_bU8"
-        val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
-        preferences.edit().putString("TOKEN", token).apply()
-//        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-        retrivedToken = preferences.getString("TOKEN", null)!!.trim()
+        retrivedToken = prefsManager.getString(PrefsManager.PREF_API_TOKEN,"")
+        user_id =  prefsManager.getString(PrefsManager.PREF_API_ID,"")
 
         totalSideBarAmount = binding.textView9
 
@@ -71,6 +74,9 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.btnMenu.isVisible = false
         }
 
+        binding.ivCancel.setOnClickListener {
+            binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
         binding.viewModel = viewModel
         viewModel.navController = findNavController(R.id.nav_host_fragment)
 
@@ -79,6 +85,7 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         binding.btnLogout.setOnClickListener {
+            ZohoSalesIQ.unregisterVisitor(this)
             logoutUser(this,prefsManager)
         }
         binding.txtMyCards.setOnClickListener {
@@ -113,7 +120,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         binding.txtHelpSupport.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
-            val intent = Intent(this, HelpSupport::class.java)
+            val intent = Intent(this, FaqActivity::class.java)
             startActivity(intent)
         }
 
@@ -142,6 +149,9 @@ class MainActivity : DaggerAppCompatActivity() {
                         viewModel.navController.navigate(R.id.notificationFragment)
                     }
 
+//                    R.id.nav_logout -> {
+//                        ZohoSalesIQ.unregisterVisitor(this)
+//                    }
 //                    R.id.nav_home -> {
 //                        viewModel.navController.navigate(R.id.homeFragment)
 //                    }

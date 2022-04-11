@@ -13,7 +13,6 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.UpdatePhotoInterface
-import com.talktomii.utlis.AUTHORIZATION
 import com.talktomii.utlis.uid
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
@@ -36,7 +35,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAdminByID(string, AUTHORIZATION)
+                val authResponse = webService.getAdminByID(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
@@ -57,7 +56,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updateProfile(uid, data, AUTHORIZATION)
+                val authResponse = webService.updateProfile(uid, data)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -81,7 +80,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updatePhoto(uid, profilePhoto, AUTHORIZATION)
+                val authResponse = webService.updatePhoto(uid, profilePhoto)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

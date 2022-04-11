@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
@@ -24,6 +25,7 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
@@ -58,6 +60,7 @@ class LoginFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         return binding.root
     }
 
@@ -83,6 +86,8 @@ class LoginFragment : DaggerFragment() {
                     progressDialog.setLoading(false)
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
+                    Log.d("user is ----",it.data!!.token.toString())
                     requireContext().showMessage("Login Successfully")
                     if (it.data?.admin?.role?.roleName == "user")
                         findNavController().navigate(R.id.homeFragment)

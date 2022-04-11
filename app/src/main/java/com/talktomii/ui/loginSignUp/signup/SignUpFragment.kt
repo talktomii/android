@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,7 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentSignUpBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
@@ -51,6 +53,7 @@ class SignUpFragment : DaggerFragment() {
     ): View {
 // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         return binding.root
     }
 

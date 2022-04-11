@@ -35,9 +35,6 @@ const val USER_DATA = "user data"
 const val USER_LANGUAGE = "user language"
 const val PUSH_DATA = "PUSH_DATA"
 const val SUCESS = "200"
-const val AUTHORIZATION =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTFhMzhhYWFiZDBlYTJhYjllYzM2ZiIsImRhdGUiOiIyMDIyLTA0LTExVDEwOjA3OjEyLjcwMFoiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJiaW5hbDJAZ21haWwuY29tIiwic2NvcGUiOiJsb2dpbiIsInR5cGUiOiJ1c2VyIiwiaWF0IjoxNjQ5NjcxNjMyfQ.BjIIUrReMBJkmzF7-p3j6VlrPLzZLWbcDGhPCYktZAk"
-
 const val uid = "6239a38713ac0523946f5872"
 
 object ITEM_VIEW_TYPE {

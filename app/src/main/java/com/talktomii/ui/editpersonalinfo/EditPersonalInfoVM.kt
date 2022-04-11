@@ -14,7 +14,6 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.UpdatePhotoInterface
-import com.talktomii.utlis.AUTHORIZATION
 import com.talktomii.utlis.uid
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
@@ -54,11 +53,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         }
     }
 
-    fun updateProfile(data: String) {
+    fun updateProfile(data: String, _id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updateProfile(uid, data, AUTHORIZATION)
+                val authResponse = webService.updateProfile(_id, data)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -78,11 +77,12 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
 
     fun updatePhoto(
         profilePhoto: HashMap<String, RequestBody>,
+        _id: String,
     ) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updatePhoto(uid, profilePhoto, AUTHORIZATION)
+                val authResponse = webService.updatePhoto(_id, profilePhoto)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

@@ -10,7 +10,6 @@ import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
-import com.talktomii.utlis.AUTHORIZATION
 import javax.inject.Inject
 
 
@@ -67,7 +66,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
-    fun addBookmark() {
+    private fun addBookmark() {
 
         var hashMap: HashMap<String, Any> = hashMapOf()
         hashMap.put("ifid", userField.get()!!._id)
@@ -75,7 +74,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.addFavourite(hashMap, AUTHORIZATION)
+                val authResponse = webService.addFavourite(hashMap)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -97,7 +96,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.removeBookmark(userField.get()!!._id, AUTHORIZATION)
+                val authResponse = webService.removeBookmark(userField.get()!!._id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

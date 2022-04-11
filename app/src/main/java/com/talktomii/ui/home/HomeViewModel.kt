@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
     fun addCard(hashMap: HashMap<String, String>) {
         addCard.value = Resource.loading()
-        webService.addCard("Bearer " + MainActivity.retrivedToken,hashMap)
+        webService.addCard(hashMap)
             .enqueue(object : Callback<ApiResponse<addCardData>> {
                 override fun onResponse(
                     call: Call<ApiResponse<addCardData>>,

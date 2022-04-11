@@ -34,8 +34,9 @@ import com.talktomii.ui.home.profile.AdapterAvailability
 import com.talktomii.ui.home.profile.AdapterMySocialMedias
 import com.talktomii.ui.home.profile.AdapterPrice
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
+import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.uid
+import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -63,6 +64,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private var fileCoverPhoto: File? = null
     private var isChangeProfile = false
     private var isChangeUserData = false
+    @Inject
+    lateinit var prefsManager: PrefsManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -158,7 +161,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     val body = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     map["coverPhoto\"; filename=\"imageCover.png\" "] = body
                 }
-                viewModel.updatePhoto(map)
+                viewModel.updatePhoto(map,getUser(prefsManager)!!.admin._id)
             }
             viewModel.userField.get()!!.apply {
                 name = binding.etFirstName.text.toString()
@@ -171,6 +174,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             updateInfluence.userName = userData.userName
             updateInfluence.availaibility = userData.availaibility
 
+
             updateInfluence.location = if (userData.location != null) userData.location else ""
             updateInfluence.price =
                 if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
@@ -178,7 +182,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
             updateInfluence.interest =
                 if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
-            viewModel.updateProfile(Gson().toJson(updateInfluence))
+            viewModel.updateProfile(Gson().toJson(updateInfluence),getUser(prefsManager)!!.admin._id)
         }
 
         binding.ivInterest.setOnClickListener {
@@ -253,7 +257,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         setListeners()
         initAdapters()
         if (admin1 == null) {
-            viewModel.getAdminById(uid)
+            viewModel.getAdminById(getUser(prefsManager)!!.admin._id)
         } else {
             updateInterestAdapter()
         }

@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import com.talktomii.data.model.getallslotbydate.PayloadAppoinment
 import com.talktomii.databinding.FragmentHomeInfluencerBinding
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.getUser
 import com.talktomii.utlis.listner.InfulancerListner
 import com.talktomii.utlis.uid
 import com.talktomii.viewmodel.InfluenceHomeViewModel
@@ -20,6 +22,8 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerLis
 
     @Inject
     lateinit var viewModel: InfluenceHomeViewModel
+    @Inject
+    lateinit var prefsManager: PrefsManager
 
 
     override fun onCreateView(
@@ -49,8 +53,8 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerLis
     private fun init() {
         viewModel.commonInterface = this
         viewModel.infulancerListner = this
-        viewModel.getCurrentWallet(uid)
-        viewModel.getAllAppoinemnt(uid)
+        viewModel.getCurrentWallet(getUser(prefsManager)!!.admin._id)
+        viewModel.getAllAppoinemnt(getUser(prefsManager)!!.admin._id)
     }
 
     override fun onFailure(message: String) {

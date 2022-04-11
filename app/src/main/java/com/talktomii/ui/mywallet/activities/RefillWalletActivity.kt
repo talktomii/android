@@ -79,7 +79,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         }
 
 
-        if(repeatAmount != null){
+        if(repeatAmount != "null"){
             binding.addselectedAmount.setText(repeatAmount.toString())
         }else{
             binding.addselectedAmount.setText("")

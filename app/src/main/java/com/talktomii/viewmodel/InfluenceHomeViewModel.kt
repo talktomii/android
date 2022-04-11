@@ -7,7 +7,6 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.currentwallet.WalletData
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
-import com.talktomii.utlis.AUTHORIZATION
 import com.talktomii.utlis.listner.InfulancerListner
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         Coroutines.main {
             try {
                 val authResponse =
-                    webService.getCurrentAmountFromWallet(id, AUTHORIZATION)
+                    webService.getCurrentAmountFromWallet(id)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         walletData.set(authResponse.body()!!.payload.walletData)
@@ -44,7 +43,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         Coroutines.main {
             try {
                 val authResponse =
-                    webService.getAllAppointment(id, AUTHORIZATION)
+                    webService.getAllAppointment(id)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)

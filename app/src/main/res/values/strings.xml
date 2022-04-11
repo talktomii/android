@@ -286,6 +286,10 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="privacy_and_safety">Privacy and safety</string>
     <string name="more">More</string>
     <string name="delete">Delete</string>
+    <string name="delete_appointment">Are you sure that you want to delete appointment ? </string>
+    <string name="appoint_text">Reschedule Appointment</string>
+
+
 
     <string name="empty_price">Price should not be empty!</string>
     <string name="empty_end_time">End Time should not be empty!</string>

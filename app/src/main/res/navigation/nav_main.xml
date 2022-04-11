@@ -77,6 +77,12 @@
         <!--        <action-->
         <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
         <!--            app:destination="@id/homeFragment" />-->
+        <action
+            android:id="@+id/action_editPersonalInfo_to_editInterestFragment"
+            app:destination="@id/editInterestFragment" />
+        <action
+            android:id="@+id/action_editPersonalInfo_to_myBudgesFragment"
+            app:destination="@id/myBudgesFragment" />
     </fragment>
 
     <fragment
@@ -126,7 +132,11 @@
         android:id="@+id/searchFragment"
         android:name="com.talktomii.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/search_fragment"/>
+        tools:layout="@layout/search_fragment">
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/appointmentsFragment"
@@ -180,7 +190,7 @@
         tools:layout="@layout/call_history"/>
     <!--    <fragment-->
     <!--        android:id="@+id/searchFragment"-->
-    <!--        android:name="com.furniture.ui.search.SearchFragment"-->
+    <!--        android:name="com.talktomii.ui.search.SearchFragment"-->
     <!--        android:label="fragment_search"-->
     <!--        tools:layout="@layout/search_fragment"/>-->
 

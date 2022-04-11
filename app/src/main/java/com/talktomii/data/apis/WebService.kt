@@ -1,7 +1,18 @@
 package com.talktomii.data.apis
 
 import com.example.example.PayloadCards
+import com.talktomii.data.model.AllInterst
+import com.talktomii.data.model.RegisterModel
+import com.talktomii.data.model.RolesModel
+import com.talktomii.data.model.addbookmark.AddBookMarkResponse
+import com.talktomii.data.model.admin.AdminResponse
+import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.currentwallet.CurrentWallet
+import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
+import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
+import com.talktomii.data.model.getallslotbydate.GetAllSlotByDateResponse
 import com.talktomii.data.network.responseUtil.ApiResponse
+import com.talktomii.data.photo.UpdatePhoto
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
 import com.talktomii.ui.callhistory.models.CallHistoryData
@@ -14,17 +25,8 @@ import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
-import retrofit2.Call
-import com.talktomii.data.model.AllInterst
-import com.talktomii.data.model.RegisterModel
-import com.talktomii.data.model.RolesModel
-import com.talktomii.data.model.addbookmark.AddBookMarkResponse
-import com.talktomii.data.model.admin.AdminResponse
-import com.talktomii.data.model.admin1.AdminResponse1
-import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
-import com.talktomii.data.model.getallslotbydate.GetAllSlotByDateResponse
-import com.talktomii.data.photo.UpdatePhoto
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -60,6 +62,9 @@ interface WebService {
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
+        private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
+        private const val GET_ALL_AMOUNT = "appointment/getAllAppointment"
+
     }
 
     @GET("card/getCardByuid/{id}")
@@ -158,9 +163,9 @@ interface WebService {
 
     @GET(GET_CALL_HISTORY)
     fun getCallHistory(
-        @Query("id") id : String,
+        @Query("id") id: String,
         @Header("Authorization") auth: String,
-    ):Call<CallHistoryData>
+    ): Call<CallHistoryData>
 
     @PUT("appointment/deleteCallHistory/{id}")
     fun deleteCallHistory(
@@ -173,7 +178,7 @@ interface WebService {
     fun blockUser(
         @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
-    ):Call<ApiResponse<Any>>
+    ): Call<ApiResponse<Any>>
 
     @GET("notification/getNotification/{id}")
     fun getNotifications(
@@ -273,8 +278,20 @@ interface WebService {
     @PUT(UPDATE_ADMIN + "/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
-        @Body data: HashMap<String, Any>,
+        @Body data: String,
         @Header("Authorization") authHeader: String
     ): Response<AdminResponse1>
 
+    @GET(GET_CURRENT_AMOUNT + "/{id}")
+    suspend fun getCurrentAmountFromWallet(
+        @Query("id") id: String,
+        @Header("Authorization") authHeader: String
+    ): Response<CurrentWallet>
+
+
+    @GET(GET_ALL_AMOUNT)
+    suspend fun getAllAppointment(
+        @Query("ifid") id: String,
+        @Header("Authorization") authHeader: String
+    ): Response<GetAllAppoinments>
 }

@@ -2,27 +2,25 @@ package com.talktomii.ui.loginSignUp
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.R
 import com.talktomii.databinding.ActivityMainBinding
 import com.talktomii.ui.helpsupport.HelpSupport
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.utlis.LocaleHelper
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.logoutUser
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
-import android.content.SharedPreferences
-import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.talktomii.databinding.SettingsBinding
-import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.settings.Settings
-import com.talktomii.utlis.logoutUser
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -34,8 +32,8 @@ class MainActivity : DaggerAppCompatActivity() {
     companion object {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
-        var totalSideBarAmount : TextView ?= null
-        lateinit var bottombar : BottomNavigationView
+        var totalSideBarAmount: TextView? = null
+        lateinit var bottombar: BottomNavigationView
     }
 
 
@@ -54,7 +52,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
 
         // save login token
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA3VDA2OjU3OjA1LjAwMloiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkzMTQ2MjV9.CE48fuL46ZXHKu1NLMO4EA5Ny9ZT5Ujn94ycmRa_bU8"
+        val token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA3VDA2OjU3OjA1LjAwMloiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkzMTQ2MjV9.CE48fuL46ZXHKu1NLMO4EA5Ny9ZT5Ujn94ycmRa_bU8"
         val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         preferences.edit().putString("TOKEN", token).apply()
 //        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
@@ -79,7 +78,7 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         binding.btnLogout.setOnClickListener {
-            logoutUser(this,prefsManager)
+            logoutUser(this, prefsManager)
         }
         binding.txtMyCards.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -95,7 +94,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         binding.txtProfile.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
-            viewModel.navController.navigate(R.id.profileFragment)
+            viewModel.navController.navigate(R.id.editPersonalInfo)
             binding.menuBottom.isVisible = true
         }
 
@@ -185,7 +184,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.searchFragment ||
                 destination.id == R.id.influencerProfileFragment ||
                 destination.id == R.id.appointmentsFragment ||
-                destination.id == R.id.notificationFragment||
+                destination.id == R.id.notificationFragment ||
                 destination.id == R.id.homeInfluencerFragment
 
             ) {

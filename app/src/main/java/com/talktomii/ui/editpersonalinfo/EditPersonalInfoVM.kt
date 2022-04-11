@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.talktomii.R
 import com.talktomii.data.apis.WebService
+import com.talktomii.data.model.Interest
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.AdminDetailInterface
@@ -23,8 +24,8 @@ import javax.inject.Inject
 class EditPersonalInfoVM @Inject constructor(private val webService: WebService) : ViewModel() {
     var commonInterface: CommonInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
-    var updatePhotoInterface: UpdatePhotoInterface? = null
     var userField = ObservableField<Admin1>()
+    var updatePhotoInterface: UpdatePhotoInterface? = null
 
     fun onClick(view: View) {
         when (view.id) {
@@ -39,8 +40,8 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                 val authResponse = webService.getAdminByID(string, AUTHORIZATION)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
-                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                         userField.set(authResponse.body()!!.payload.admin[0])
+                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
                     commonInterface!!.onFailureAPI(authResponse.message())
@@ -53,7 +54,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         }
     }
 
-    fun updateProfile(data: HashMap<String, Any>) {
+    fun updateProfile(data: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
@@ -85,7 +86,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-//                            updatePhotoInterface?.onUpdatePhoto(authResponse.body()!!.payload.admin)
+                            updatePhotoInterface?.onUpdatePhoto(authResponse.body()!!.payload.admin)
                         }
                     }
                 } else {
@@ -99,10 +100,20 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         }
     }
 
+    fun updateInterestList(arrayList: ArrayList<Interest>) {
+        userField.get()!!.interest.clear()
+        val admin1 = userField.get()
+        admin1?.interest?.addAll(arrayList.filter { interest -> interest.isClicked })
+
+        userField.set(admin1)
+
+    }
+
     @BindingAdapter("imageUrl")
     fun loadImage(view: RoundedImageView, url: Admin1?) {
         if (url != null) {
             Glide.with(view.context).load(url.profilePhoto).into(view)
         }
     }
+
 }

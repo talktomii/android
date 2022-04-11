@@ -3,7 +3,7 @@ package com.talktomii.ui.home.profile
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.talktomii.data.model.admin.Interest
+import com.talktomii.data.model.Interest
 import com.talktomii.databinding.ItemInterestsBinding
 
 class AdapterInterests() : RecyclerView.Adapter<AdapterInterests.ViewHolder>() {
@@ -27,7 +27,11 @@ class AdapterInterests() : RecyclerView.Adapter<AdapterInterests.ViewHolder>() {
     }
 
     fun setItemList(interest: ArrayList<Interest>) {
+        if (arrayList.isNotEmpty()) {
+            arrayList.clear()
+        }
         arrayList.addAll(interest)
         notifyDataSetChanged()
     }
+
 }

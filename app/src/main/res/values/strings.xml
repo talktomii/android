@@ -287,7 +287,17 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="more">More</string>
     <string name="delete">Delete</string>
 
-
+    <string name="empty_price">Price should not be empty!</string>
+    <string name="empty_end_time">End Time should not be empty!</string>
+    <string name="empty_start_time">Start Time should not be empty!</string>
+    <string name="select_repeat_option">Select at least one repeat option!</string>
+    <string name="select_day">Select at least one day!</string>
+    <string name="you_add_only_one_item">You have to add only one item</string>
+    <string name="add_price_call_duration">Add Price/Call Duration</string>
+    <string name="edit_interests">Edit Interests</string>
+    <string name="view_interests">View Interests</string>
+    <string name="calls">Calls</string>
+    <string name="earnings">Earnings</string>
     <string name="app__name" translatable="false">Talktomii</string>
 
     <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->

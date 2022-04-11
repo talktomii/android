@@ -14,10 +14,9 @@ import com.talktomii.databinding.FragmentInfluencerProfileBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
+import com.talktomii.ui.appointment.AppointmentViewModel
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.utlis.AboutMeDialog
-import com.talktomii.utlis.CallDialog
-import com.talktomii.utlis.DeleteAppointmentDialog
+import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -37,8 +36,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     @Inject
     lateinit var viewModel: HomeScreenViewModel
 
+    @Inject
+    lateinit var viewModelAppoinemnt: AppointmentViewModel
+
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
+
+    @Inject
+    lateinit var prefsManager: PrefsManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -165,6 +170,21 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             binding.txtInterests.visibility = View.GONE
             binding.txtItemCount.visibility = View.GONE
         }
+    }
+
+    private fun setTimeSlot() {
+
+    }
+
+    private fun addAppoinment() {
+        var hashMap: HashMap<String, Any> = hashMapOf()
+        hashMap.put("ifid", viewModel.userField.get()!!._id)
+        hashMap.put("uid", getUser(prefsManager)!!.admin._id)
+//        hashMap.put("date", userField.get()!!._id)
+//        hashMap.put("startTime", userField.get()!!._id)
+//        hashMap.put("endTime", userField.get()!!._id)
+//        hashMap.put("duration", userField.get()!!._id)
+        viewModelAppoinemnt.addAppointment(hashMap)
     }
 
     override fun onslotselect(timeStop: TimeStop) {

@@ -41,11 +41,12 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
             }
         }
     }
+
     fun getAllSlotByDate(date: String, _id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAllSlotByDate(date,_id)
+                val authResponse = webService.getAllSlotByDate(date, _id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -62,6 +63,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
             }
         }
     }
+
     fun getAllAppoinemnt(id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
@@ -92,6 +94,27 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
                         infulancerCalenderListner?.infulancerCalenderList(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun updateAppointment(id: String, status: String, isDelete: Boolean, endTime: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.updateAppointment(id, status, isDelete, endTime)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+//                        walletData.set(authResponse.body()!!.payload.walletData)
+//                        infulancerCalenderListner?.infulancerCalenderList(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

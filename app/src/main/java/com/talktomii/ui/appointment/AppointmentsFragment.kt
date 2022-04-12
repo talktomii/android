@@ -120,6 +120,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
         spinnerTimeDuration =
             view.findViewById<Spinner>(R.id.spinnerTimeDuration)
+
+        var tvRescheduleAppointment =
+            view.findViewById<TextView>(R.id.tvRescheduleAppointment)
+
+
         var rvTimeSlotAppointment =
             view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
 
@@ -141,11 +146,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
-                selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
-                viewModel.getAllSlotByDate(
-                    selectedDate.toString(),
-                    selectedItemForReschedule!!.ifid._id
-                )
+                getTimeSlots(date)
             }
         }
         rvTimeSlotAppointment.layoutManager = LinearLayoutManager(
@@ -153,16 +154,26 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             LinearLayoutManager.HORIZONTAL,
             true
         )
-        val adapter = AdapterRescheduleTimeSlot()
-        rvTimeSlotAppointment.adapter = adapter
 
+        tvRescheduleAppointment.setOnClickListener {
+            viewModel.updateAppointment(selectedItemForReschedule)
+        }
         btnClose.setOnClickListener {
             dialog.dismiss()
         }
+        getTimeSlots(Calendar.getInstance())
         dialog.setCancelable(false)
         dialog.setContentView(view)
         dialog.show()
+    }
 
+    private fun getTimeSlots(date: Calendar?) {
+        selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
+        if (selectedItemForReschedule != null || selectedItemForReschedule!!.ifid != null || selectedItemForReschedule!!.ifid._id != null)
+            viewModel.getAllSlotByDate(
+                selectedDate.toString(),
+                selectedItemForReschedule!!.ifid._id
+            )
     }
 
     override fun onViewDeleteAppointment(interest: AppointmentInterestItem, position: Int) {

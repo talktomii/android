@@ -236,11 +236,6 @@ interface WebService {
 
         ): Response<BookMarkResponse>
 
-    @POST(UPDATE_APPOINMENT + "/{id}")
-    suspend fun updateAppoinment(
-        @Path("id") id: String,
-
-        ): Response<BookMarkResponse>
 
     @GET(GET_ALL_SLOT_BY_DATE)
     suspend fun getAllSlotByDate(
@@ -281,6 +276,9 @@ interface WebService {
 
     @PUT(UPDATE_APPOINTMENT + "/{id}")
     suspend fun updateAppointment(
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Query("status") status: String,
+        @Query("isDelete") isDelete: Boolean,
+        @Query("endTime") endTime: String
     ): Response<UpdateAppointment>
 }

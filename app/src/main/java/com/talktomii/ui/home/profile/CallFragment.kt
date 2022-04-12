@@ -91,10 +91,6 @@ class CallFragment : DaggerFragment() {
     }
     private fun setListener() {
 
-        binding.ivSpeaker.setOnClickListener {
-            val dialog = ExtendTimeDialog()
-            dialog.show(requireActivity().supportFragmentManager, ExtendTimeDialog.TAG)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,10 +107,12 @@ class CallFragment : DaggerFragment() {
 
 
     }
+
     fun initAgoraEngineAndJoinChannel() {
         initializeAgoraEngine() // Tutorial Step 1
         joinChannel() // Tutorial Step 2
     }
+
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
         Log.i(LOG_TAG,
             "checkSelfPermission $permission $requestCode"
@@ -133,6 +131,7 @@ class CallFragment : DaggerFragment() {
         }
         return true
     }
+
     fun showLongToast(msg: String?) {
         requireActivity().runOnUiThread(Runnable {
             Toast.makeText(
@@ -142,6 +141,15 @@ class CallFragment : DaggerFragment() {
             ).show()
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        leaveChannel()
+        RtcEngine.destroy()
+        mRtcEngine = null
+    }
+
+
 
     // Tutorial Step 7
     fun onLocalAudioMuteClicked(view: View) {
@@ -157,6 +165,8 @@ class CallFragment : DaggerFragment() {
         // Stops/Resumes sending the local audio stream.
         mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
     }
+
+
 
     // Tutorial Step 5
     fun onSwitchSpeakerphoneClicked(view: View) {
@@ -175,10 +185,14 @@ class CallFragment : DaggerFragment() {
         mRtcEngine!!.setEnableSpeakerphone(view.isSelected())
     }
 
+
+
     // Tutorial Step 3
     fun onEncCallClicked(view: View?) {
         requireActivity().onBackPressed()
     }
+
+
 
     // Tutorial Step 1
     private fun initializeAgoraEngine() {
@@ -196,6 +210,8 @@ class CallFragment : DaggerFragment() {
             )
         }
     }
+
+
 
     // Tutorial Step 2
     private fun joinChannel() {
@@ -222,10 +238,15 @@ class CallFragment : DaggerFragment() {
         ) // if you do not specify the uid, we will generate the uid for you
     }
 
+
+
     // Tutorial Step 3
-    private fun leaveChannel() {
-        mRtcEngine!!.leaveChannel()
+    private fun leaveChannel()
+    {
+        mRtcEngine?.leaveChannel()
     }
+
+
 
     // Tutorial Step 4
     private fun onRemoteUserLeft(uid: Int, reason: Int) {
@@ -238,6 +259,8 @@ class CallFragment : DaggerFragment() {
 //        val tipMsg: View = findViewById(R.id.quick_tips_when_use_agora_sdk) // optional UI
 //        tipMsg.visibility = View.VISIBLE
     }
+
+
 
     // Tutorial Step 6
     private fun onRemoteUserVoiceMuted(uid: Int, muted: Boolean) {

@@ -1,6 +1,9 @@
 package com.talktomii.ui.home.profile
 
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import com.talktomii.ui.home.profile.AdapterTimeSlot
 import com.talktomii.R
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.model.getallslotbydate.TimeStop
+import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
@@ -78,6 +82,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.rvInterest.adapter = adapterInterests
     }
 
+
     private fun setListener() {
         binding.txtBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -85,7 +90,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         binding.txtCallNow.setOnClickListener {
             val dialog = CallDialog()
-            dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
+//            dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
+            showPopup()
         }
 
 
@@ -109,6 +115,29 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             val dialog = AboutMeDialog()
             dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
         }
+    }
+
+    private fun showPopup() {
+        var customDialog: AlertDialog? = null
+        val customDialogBuilder =
+            AlertDialog.Builder(requireContext())
+        val customView = CallDialogBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            null,
+            false
+        )
+        customView.txtCall.setOnClickListener {
+            customDialog?.cancel()
+            view?.findNavController()?.navigate(R.id.callFragment)
+        }
+        customView.ivCancel.setOnClickListener {
+            customDialog?.dismiss()
+        }
+        customDialogBuilder.setView(customView.root)
+        customDialog = customDialogBuilder.create()
+        customDialog?.setCancelable(true)
+        customDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        customDialog.show()
     }
 
     //    try

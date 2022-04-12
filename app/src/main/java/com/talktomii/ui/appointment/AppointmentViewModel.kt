@@ -1,40 +1,53 @@
 package com.talktomii.ui.appointment
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.api.ApiException
+import com.google.gson.GsonBuilder
 import com.talktomii.data.apis.WebService
+import com.talktomii.data.model.ErrorModelClass
 import com.talktomii.data.network.Coroutines
+import com.talktomii.interfaces.AddAppointmentInterface
 import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.HomeInterface
-import java.util.HashMap
+import com.talktomii.interfaces.FailureAPI400
+import java.io.IOException
 import javax.inject.Inject
 
 
 class AppointmentViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
-    var homeInterface: HomeInterface? = null
+    var addAppointment: AddAppointmentInterface? = null
     var commonInterface: CommonInterface? = null
-    var bookMark = ObservableField<Boolean>()
+    var apiFailure: FailureAPI400? = null
 
     fun addAppointment(hashMap: HashMap<String, Any>) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-//                hashMap.put("ifid", userField.get()!!._id)
-//                hashMap.put("uid", userField.get()!!._id)
-//                hashMap.put("date", userField.get()!!._id)
-//                hashMap.put("startTime", userField.get()!!._id)
-//                hashMap.put("endTime", userField.get()!!._id)
-//                hashMap.put("duration", userField.get()!!._id)
                 val authResponse =
                     webService.addAppoinment(hashMap)
 
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
-//                        homeInterface?.onHomeAdmins(authResponse.body()!!.payload)
+                        addAppointment?.onAddAppointment(authResponse.body())
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    if (authResponse.code() === 400) {
+                        val gson = GsonBuilder().create()
+                        var mError = ErrorModelClass()
+                        try {
+                            mError = gson.fromJson(
+                                authResponse.errorBody()!!.string(),
+                                ErrorModelClass::class.java
+                            )
+                            apiFailure!!.onFailureAPI400(mError.message)
+
+                        } catch (e: IOException) {
+                            // handle failure to read error
+                        }
+                    } else {
+                        commonInterface!!.onFailureAPI(authResponse.message())
+
+                    }
+
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

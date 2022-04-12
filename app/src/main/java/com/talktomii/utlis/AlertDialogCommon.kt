@@ -1,8 +1,14 @@
 package com.talktomii.utlis
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.talktomii.R
@@ -15,9 +21,11 @@ import com.talktomii.R
  */
 class AlertDialogCommon {
 
-    fun createOkCancelDialog(context: Context, @StringRes titleResourceId: Int, @StringRes messageResourceId: Int,
-                             @StringRes positiveResourceId: Int, @StringRes negativeResourceId: Int, cancelable: Boolean,
-                             listener: OnOkCancelDialogListener?): AlertDialog {
+    fun createOkCancelDialog(
+        context: Context, @StringRes titleResourceId: Int, @StringRes messageResourceId: Int,
+        @StringRes positiveResourceId: Int, @StringRes negativeResourceId: Int, cancelable: Boolean,
+        listener: OnOkCancelDialogListener?
+    ): AlertDialog {
         val alertDialog = AlertDialog.Builder(context)
         if (titleResourceId != 0) {
             alertDialog.setTitle(titleResourceId)
@@ -26,7 +34,8 @@ class AlertDialogCommon {
             alertDialog.setMessage(messageResourceId)
         }
         alertDialog.setCancelable(cancelable)
-        alertDialog.setPositiveButton(positiveResourceId
+        alertDialog.setPositiveButton(
+            positiveResourceId
         ) { dialog, which ->
             listener?.onOkButtonClicked()
             dialog.dismiss()
@@ -39,12 +48,54 @@ class AlertDialogCommon {
         }
         val dialog = alertDialog.create()
         dialog.setOnShowListener {
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat
-                    .getColor(context, R.color.white))
-            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat
-                    .getColor(context, R.color.white))
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(
+                ContextCompat
+                    .getColor(context, R.color.white)
+            )
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(
+                ContextCompat
+                    .getColor(context, R.color.white)
+            )
         }
         return dialog
+    }
+
+
+    fun createOkCancelDialogWithLayout(
+        context: Context, titleResourceId: String,
+        positiveResourceId: String, negativeResourceId: String, cancelable: Boolean,
+        listener: OnOkCancelDialogListener?
+    ) {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+
+        val inflater: LayoutInflater = (context as Activity).layoutInflater
+
+        val dialogView: View = inflater.inflate(R.layout.alert_label_editor, null)
+        alertDialogBuilder.setView(dialogView)
+
+        val tvAlertMessage = dialogView.findViewById<TextView>(R.id.tvAlertMessgae)
+        val txtAlertCancel = dialogView.findViewById<TextView>(R.id.txtAlertCancel)
+        val txtAlertDelete = dialogView.findViewById<TextView>(R.id.txtAlertDelete)
+        tvAlertMessage.text = titleResourceId
+        txtAlertCancel.text = positiveResourceId
+        txtAlertDelete.text = titleResourceId
+
+
+
+        alertDialogBuilder.setCancelable(cancelable)
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        txtAlertCancel.setOnClickListener {
+            listener?.onCancelButtonClicked()
+            alertDialog.dismiss()
+        }
+
+        txtAlertDelete.setOnClickListener {
+            listener?.onOkButtonClicked()
+            alertDialog.dismiss()
+        }
     }
 
 

@@ -112,6 +112,9 @@
         <action
             android:id="@+id/action_influencer_profile_to_call_fragmnet"
             app:destination="@id/callFragment" />
+        <action
+            android:id="@+id/action_influencerProfileFragment_to_myWalletFragment"
+            app:destination="@id/myWalletFragment" />
     </fragment>
 
     <fragment

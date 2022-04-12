@@ -1,12 +1,12 @@
 package com.talktomii.interfaces
 
-import com.talktomii.data.model.admin.Payload
 import com.talktomii.data.model.admin1.Admin1
-import com.talktomii.data.model.getallslotbydate.TimeStop
+import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
+import com.talktomii.data.model.drawer.bookmark.Payload
 import com.talktomii.data.photo.Admin
 
 interface HomeInterface {
-    fun onHomeAdmins(payload: Payload)
+    fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload)
 }
 
 interface AdminDetailInterface {
@@ -19,5 +19,10 @@ interface OnSlotSelectedInterface {
 
 interface UpdatePhotoInterface {
     fun onUpdatePhoto(admin: Admin)
+
+}
+
+interface AddAppointmentInterface {
+    fun onAddAppointment(admin: BookMarkResponse?)
 
 }

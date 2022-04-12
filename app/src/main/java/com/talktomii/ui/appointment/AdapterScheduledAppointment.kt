@@ -19,11 +19,11 @@ import com.talktomii.data.model.appointment.AppointmentInterestItem
 import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
+import com.talktomii.utlis.DateUtils.setDateToWeekDate
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.HorizontalCalendarView
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 class AdapterScheduledAppointment(var webService: WebService? = null) :
@@ -55,8 +55,10 @@ class AdapterScheduledAppointment(var webService: WebService? = null) :
         var interest = interestArrayList[position]
         holder.binding.txtName.text = interest.ifid.fname + " " + interest.ifid.lname
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
-        holder.binding.txtTime.text =
-            setDateToTime(interest.startTime) + "-" + setDateToTime(interest.endTime)
+        holder.binding.txtTime.text = setDateToTime(interest.startTime) + "-" + setDateToTime(interest.endTime)
+        holder.binding.tvDayAndDate.text =
+            setDateToWeekDate(interest.date)
+
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {

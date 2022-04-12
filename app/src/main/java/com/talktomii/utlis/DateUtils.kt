@@ -9,6 +9,7 @@ import com.talktomii.utlis.DateFormate.DAY_MONTH_DATE_YEAR
 import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
+import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -72,6 +73,19 @@ object DateUtils {
             val formattedDate = outputFormat.format(date)
             println(formattedDate) // prints 10-04-2018
 
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+
+    }
+
+    fun setDateToWeekDate(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            val outputFormat = SimpleDateFormat(WEEK_TIME_FORMAT)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
             formattedDate
         } catch (e: java.lang.Exception) {
             ""
@@ -170,5 +184,6 @@ object DateFormate {
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
     const val TIME_FORMAT = "hh:mm aaa"
+    const val WEEK_TIME_FORMAT = "EEE dd"
     const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }

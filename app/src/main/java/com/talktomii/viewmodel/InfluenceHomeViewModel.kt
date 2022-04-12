@@ -7,12 +7,14 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.currentwallet.WalletData
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.utlis.listner.InfulancerCalenderListner
 import com.talktomii.utlis.listner.InfulancerListner
 import javax.inject.Inject
 
 class InfluenceHomeViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
     var commonInterface: CommonInterface? = null
     var infulancerListner: InfulancerListner? = null
+    var infulancerCalenderListner: InfulancerCalenderListner? = null
     var walletData = ObservableField<WalletData>()
 
 
@@ -42,8 +44,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse =
-                    webService.getAllAppointment(id)
+                val authResponse = webService.getAllAppointment(id)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
@@ -60,6 +61,26 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         }
     }
 
+    fun getAllAppointmentByCalender(id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getCalenderAllAppointment(id)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+//                        walletData.set(authResponse.body()!!.payload.walletData)
+                        infulancerCalenderListner?.infulancerCalenderList(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
 }
 
 //object Converter {

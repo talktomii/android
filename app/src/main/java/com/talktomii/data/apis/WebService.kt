@@ -7,6 +7,7 @@ import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
 import com.talktomii.data.model.currentwallet.CurrentWallet
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
@@ -257,16 +258,22 @@ interface WebService {
     suspend fun updateProfile(
         @Path("id") id: String,
         @Body data: String,
-        ): Response<AdminResponse1>
+    ): Response<AdminResponse1>
 
 
     @GET(GET_CURRENT_AMOUNT + "/{id}")
     suspend fun getCurrentAmountFromWallet(
-        @Query("id") id: String): Response<CurrentWallet>
+        @Query("id") id: String
+    ): Response<CurrentWallet>
 
 
     @GET(GET_ALL_AMOUNT)
     suspend fun getAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllAppoinments>
+
+    @GET(GET_ALL_AMOUNT)
+    suspend fun getCalenderAllAppointment(
+        @Query("ifid") id: String
+    ): Response<GetAllCalenderAppoinment>
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
@@ -286,23 +287,22 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
     override fun onAddAppointment(response: BookMarkResponse?) {
-        if (response?.result ?: -1 == 0) {
-
-        } else {
-
-        }
+        progressDialog.dismiss()
+        response?.let { showToastMessage(requireContext(), it.message) }
+        findNavController().popBackStack()
     }
 
     override fun onFailureAPI400(message: String) {
         progressDialog.dismiss()
         AlertDialogCommon.instance.createOkCancelDialogWithLayout(requireContext(),
-           message,
+            message,
             getString(R.string.yes),
             getString(R.string.no),
             true,
             object : AlertDialogCommon.OnOkCancelDialogListener {
 
                 override fun onOkButtonClicked() {
+                    findNavController().navigate(R.id.action_influencerProfileFragment_to_myWalletFragment)
 
                 }
 

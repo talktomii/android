@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.talktomii.ui.tellusmore.ItemsViewModel" />
+            type="com.talktomii.data.model.Interest" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:textColor="@{model.isClicked?@color/white:@color/black}"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
-            android:text="@{model.item}"
+            android:text="@{model.name}"
             tools:text ="Religion"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"

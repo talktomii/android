@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.talktomii.R
 import com.talktomii.adapter.TopicsAdapter
@@ -20,6 +22,14 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.talktomii.data.model.Payload
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.Status
+import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.SearchInterface
+import com.talktomii.ui.loginSignUp.signup.CreateProfileFragmentDirections
+import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -29,9 +39,11 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
     private val args by navArgs<TellUsMoreArgs>()
     private lateinit var binding: TellUsMoreBinding
     private val viewModels by viewModels<TellUsMoreVM>()
-
+    @Inject
+    lateinit var interestVM: SearchViewModel
     @Inject
     lateinit var prefsManager: PrefsManager
+    lateinit var progressDialog: ProgressDialog
 
     val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
 
@@ -55,6 +67,9 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        progressDialog= ProgressDialog(requireActivity())
+        interestVM.getAllInterests("")
+
 
         val recyclerview = binding.rvTopics
         viewModels.isUser.set(args.isUser)
@@ -65,7 +80,28 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
 
 
         setListener()
+        bindObservers()
 
+    }
+
+    private fun bindObservers() {
+        interestVM.interests.observe(requireActivity(), Observer {
+            it ?: return@Observer
+
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.setLoading(false)
+                    binding.vm?.topicsAdapter?.addItems(it.data?.interest?: arrayListOf())
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
     }
 
     private fun setListener() {
@@ -120,33 +156,35 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
         layoutManager.flexDirection = FlexDirection.ROW
         recyclerview.layoutManager = layoutManager
 
+//
+//        val dataList = ArrayList<ItemsViewModel>()
+//
+//        dataList.add(ItemsViewModel("Religion"))
+//        dataList.add(ItemsViewModel("Technology"))
+//        dataList.add(ItemsViewModel("Philosophy"))
+//        dataList.add(ItemsViewModel("Cryptocurrency"))
+//        dataList.add(ItemsViewModel("Music"))
+//        dataList.add(ItemsViewModel("Movie"))
+//        dataList.add(ItemsViewModel("Entrepreneurship"))
+//        dataList.add(ItemsViewModel("Psychology"))
+//        dataList.add(ItemsViewModel("Sociology"))
+//
+//        dataList.add(ItemsViewModel("Religion"))
+//        dataList.add(ItemsViewModel("Technology"))
+//        dataList.add(ItemsViewModel("Philosophy"))
+//        dataList.add(ItemsViewModel("Cryptocurrency"))
+//        dataList.add(ItemsViewModel("Music"))
+//        dataList.add(ItemsViewModel("Movie"))
+//        dataList.add(ItemsViewModel("Entrepreneurship"))
+//        dataList.add(ItemsViewModel("Psychology"))
+//        dataList.add(ItemsViewModel("Sociology"))
+//
+//        val adapter = TopicsAdapter(dataList)
 
-        val dataList = ArrayList<ItemsViewModel>()
-
-        dataList.add(ItemsViewModel("Religion"))
-        dataList.add(ItemsViewModel("Technology"))
-        dataList.add(ItemsViewModel("Philosophy"))
-        dataList.add(ItemsViewModel("Cryptocurrency"))
-        dataList.add(ItemsViewModel("Music"))
-        dataList.add(ItemsViewModel("Movie"))
-        dataList.add(ItemsViewModel("Entrepreneurship"))
-        dataList.add(ItemsViewModel("Psychology"))
-        dataList.add(ItemsViewModel("Sociology"))
-
-        dataList.add(ItemsViewModel("Religion"))
-        dataList.add(ItemsViewModel("Technology"))
-        dataList.add(ItemsViewModel("Philosophy"))
-        dataList.add(ItemsViewModel("Cryptocurrency"))
-        dataList.add(ItemsViewModel("Music"))
-        dataList.add(ItemsViewModel("Movie"))
-        dataList.add(ItemsViewModel("Entrepreneurship"))
-        dataList.add(ItemsViewModel("Psychology"))
-        dataList.add(ItemsViewModel("Sociology"))
-
-        val adapter = TopicsAdapter(dataList)
-
-        recyclerview.adapter = adapter
+//        recyclerview.adapter = adapter
     }
+
+
 
 
 }

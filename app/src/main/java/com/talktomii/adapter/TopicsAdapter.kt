@@ -22,7 +22,7 @@ class TopicsAdapter(private val mList: List<ItemsViewModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val itemsViewModel = mList[position]
-        holder.itemName.text = itemsViewModel.item
+        holder.itemName.text = itemsViewModel.name
 
     }
 

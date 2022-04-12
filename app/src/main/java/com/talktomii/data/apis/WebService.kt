@@ -16,6 +16,7 @@ import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import retrofit2.Call
 import com.talktomii.data.model.AllInterst
+import com.talktomii.data.model.InterestResponse
 import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
@@ -208,6 +209,9 @@ interface WebService {
 
     @GET(ALL_INTERST)
     suspend fun getAllInterest(): Response<AllInterst>
+
+    @GET(ALL_INTERST)
+    fun getInterests():Call<ApiResponse<InterestResponse>>
 
     @GET(ALL_INTERST)
     suspend fun getSearchInterest(@Query("search") search: String): Response<AllInterst>

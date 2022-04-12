@@ -201,7 +201,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_how_we_work.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_influencer_profile.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.14739583333333334" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_o_t_p.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.12" />

@@ -2,6 +2,7 @@ package com.talktomii.ui.loginSignUp.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -61,11 +62,28 @@ class LoginFragment : DaggerFragment() {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         init()
         initializeGoogle()
 
@@ -132,6 +150,7 @@ class LoginFragment : DaggerFragment() {
         binding.txtForgetPass.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgetPassword)
         }
+
         binding.ivGoogle.setOnClickListener {
             googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
         }

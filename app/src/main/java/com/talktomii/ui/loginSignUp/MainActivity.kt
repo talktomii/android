@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -51,7 +52,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         drawer = binding.drawerLayout
@@ -83,6 +84,7 @@ class MainActivity : DaggerAppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         binding.btnLogout.setOnClickListener {
+            ZohoSalesIQ.showLauncher(false)
             ZohoSalesIQ.unregisterVisitor(this)
             logoutUser(this,prefsManager)
         }
@@ -126,7 +128,34 @@ class MainActivity : DaggerAppCompatActivity() {
             viewModel.navController.navigate(R.id.bookmarkFragment)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
-
+        val sharedPreferences = getSharedPreferences(
+            "sharedPrefs", MODE_PRIVATE
+        )
+        val editor = sharedPreferences.edit()
+        val isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false)
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            binding.txtDarkTheme.setText("Light Theme");
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            binding.txtDarkTheme.setText("Dark Theme");
+        }
+        binding.txtDarkTheme.setOnClickListener {
+            if (isDarkModeOn) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                editor.putBoolean("isDarkModeOn", false);
+                editor.apply();
+                binding.txtDarkTheme.setText("Dark Theme");
+                binding.menuBottom.isVisible = true
+            }else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                editor.putBoolean("isDarkModeOn", true);
+                editor.apply();
+                binding.txtDarkTheme.setText("Light Theme");
+                binding.menuBottom.isVisible = true
+            }
+        }
         binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item ->
 
             if (item.itemId != viewModel.navController.currentDestination!!.id) {

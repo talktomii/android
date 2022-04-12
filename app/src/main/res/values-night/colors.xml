@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent" >#2F80ED</color>
+    <color name="textHintColor" >#878D9C</color>
+    <color name="backgroundColor">#000000</color>
+    <color name="doHaveAccountcolor">#566180</color>
+    <color name="alreadyAccountcolor">#566180</color>
+    <color name="signInColor">#ffffff</color>
+    <color name="textColor">#ffffff</color>
+    <color name="settingText">#ffffff</color>
+</resources>

@@ -81,6 +81,7 @@ data class AppointmentIfid(
     val couponIsUsed: Boolean = false,
     val location: String = "",
     val Id: String = "",
+    val _id: String = "",
     val socialNetwork: List<SocialNetworkItem>?,
     val modificationData: String = "",
     val status: AppointmentStatus

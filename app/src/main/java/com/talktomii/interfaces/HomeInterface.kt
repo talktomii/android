@@ -14,7 +14,7 @@ interface AdminDetailInterface {
 }
 
 interface OnSlotSelectedInterface {
-    fun onslotselect(list: com.talktomii.data.model.getallslotbydate.Payload)
+    fun onSlotTimesList(list: com.talktomii.data.model.getallslotbydate.Payload)
 }
 
 interface UpdatePhotoInterface {

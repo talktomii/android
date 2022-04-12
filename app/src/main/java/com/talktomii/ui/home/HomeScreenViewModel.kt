@@ -130,7 +130,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-                            onSlotSelectedInterface!!.onslotselect(authResponse.body()!!.payload)
+                            onSlotSelectedInterface!!.onSlotTimesList(authResponse.body()!!.payload)
                         }
                     }
                 } else {

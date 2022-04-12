@@ -7,6 +7,7 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.currentwallet.WalletData
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.utlis.listner.InfulancerCalenderListner
 import com.talktomii.utlis.listner.InfulancerListner
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
     var infulancerListner: InfulancerListner? = null
     var infulancerCalenderListner: InfulancerCalenderListner? = null
     var walletData = ObservableField<WalletData>()
+    var onSlotSelectedInterface: OnSlotSelectedInterface? = null
 
 
     fun getCurrentWallet(id: String) {
@@ -39,7 +41,27 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
             }
         }
     }
-
+    fun getAllSlotByDate(date: String, _id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getAllSlotByDate(date,_id)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            onSlotSelectedInterface!!.onSlotTimesList(authResponse.body()!!.payload)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
     fun getAllAppoinemnt(id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {

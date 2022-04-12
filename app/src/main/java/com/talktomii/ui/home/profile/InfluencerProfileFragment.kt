@@ -54,6 +54,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
+    private val startDate: Calendar = Calendar.getInstance()
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -67,7 +68,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -133,8 +133,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
     }
 
-    //    try
-    val startDate: Calendar = Calendar.getInstance()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -272,7 +270,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         return true
     }
 
-    override fun onslotselect(list: Payload) {
+    override fun onSlotTimesList(list: Payload) {
         progressDialog.dismiss()
         availableTimeSlots = list
 

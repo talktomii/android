@@ -8,6 +8,7 @@ import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
 import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
+import com.talktomii.data.model.appointment.UpdateAppointment
 import com.talktomii.data.model.currentwallet.CurrentWallet
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
@@ -65,6 +66,7 @@ interface WebService {
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
         private const val GET_ALL_AMOUNT = "appointment/getAllAppointment"
+        private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
 
     }
 
@@ -276,4 +278,9 @@ interface WebService {
     suspend fun getCalenderAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllCalenderAppoinment>
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun updateAppointment(
+        @Path("id") id: String
+    ): Response<UpdateAppointment>
 }

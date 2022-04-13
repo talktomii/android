@@ -84,6 +84,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         viewModel.infulancerCalenderListner = this
         viewModel.onSlotSelectedInterface = this
         viewModel.deleteAppointmentListener = this
+        viewModel.influncerItem = this
 
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)

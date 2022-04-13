@@ -116,7 +116,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
 
-        binding.txtBookACall.setOnClickListener {
+        binding.tvBookAppointment.setOnClickListener {
             addAppointment()
 //            view?.findNavController()
 //                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)

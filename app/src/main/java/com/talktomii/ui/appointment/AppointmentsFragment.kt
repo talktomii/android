@@ -152,11 +152,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         rvTimeSlotAppointment.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
-            true
+            false
         )
 
         tvRescheduleAppointment.setOnClickListener {
-            viewModel.updateAppointment(selectedItemForReschedule)
+//            viewModel.updateAppointment(selectedItemForReschedule)
         }
         btnClose.setOnClickListener {
             dialog.dismiss()

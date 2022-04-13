@@ -41,4 +41,14 @@
     <color name="signInColor">#565656</color>
     <color name="textColor">#565656</color>
     <color name="settingText">#455154</color>
+    <color name="myCards">#585B68</color>
+    <color name="cardItemColorText">#000000</color>
+    <color name="addCardColor">#585B68</color>
+    <color name="scancardtext">#000000</color>
+    <color name="scanCardBackground">#F9F8FC</color>
+    <color name="cardNumber">#7B8794</color>
+    <color name="addCardHintColor">#565656</color>
+    <color name="walletText">#455154</color>
+    <color name="searchText">#000000</color>
+    <color name="paymentDetailTitle">#455154</color>
 </resources>

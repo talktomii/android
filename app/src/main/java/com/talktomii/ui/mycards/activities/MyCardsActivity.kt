@@ -21,6 +21,7 @@ import android.os.Build
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import android.widget.*
 import android.widget.DatePicker.OnDateChangedListener
@@ -65,6 +66,15 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_cards)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.textscanCreditCard.setBackgroundResource(R.drawable.bg_scan_card_rounder_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.textscanCreditCard.setBackgroundResource(R.drawable.bg_scan_card_rounder)
+            }
+        }
+
         getContext(this)
         cardHolderName = binding.etCardHolder
         addCardButton = binding.btnAddCard
@@ -75,15 +85,14 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         cardCVV = binding.etCVV
         progress = binding.addCardProgress
 
-
         val materialDateBuilder = MaterialDatePicker.Builder.datePicker()
         materialDateBuilder.setTitleText("Select a Expire Date");
         val materialDatePicker = materialDateBuilder.build();
+
         materialDatePicker.addOnPositiveButtonClickListener(
             MaterialPickerOnPositiveButtonClickListener<Any?> {
                 cardExpireDate.setText(materialDatePicker.headerText)
-                yYear =
-                    materialDatePicker.headerText.substring(materialDatePicker.headerText.length - 4)
+                yYear = materialDatePicker.headerText.substring(materialDatePicker.headerText.length - 4)
                 mMonth = materialDatePicker.headerText.substring(0, 2)
                 cardExpireDate.setSelection(cardExpireDate.text!!.length)
                 Log.d("dates is --- ", yYear + mMonth)

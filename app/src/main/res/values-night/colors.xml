@@ -8,4 +8,15 @@
     <color name="signInColor">#ffffff</color>
     <color name="textColor">#ffffff</color>
     <color name="settingText">#ffffff</color>
+    <color name="myCards">#ffffff</color>
+    <color name="mycard_bgcolor">#2B2B2B</color>
+    <color name="cardItemColorText">#ffffff</color>
+    <color name="addCardColor">#ffffff</color>
+    <color name="scancardtext">#C4CACC</color>
+    <color name="scanCardBackground">#F9F8FC</color>
+    <color name="cardNumber">#878D9C</color>
+    <color name="addCardHintColor">#878D9C</color>
+    <color name="walletText">#ffffff</color>
+    <color name="searchText">#ffffff</color>
+    <color name="paymentDetailTitle">#ffffff</color>
 </resources>

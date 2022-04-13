@@ -42,6 +42,7 @@ import android.content.Context
 import io.github.lucasfsc.html2pdf.Html2Pdf
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build.VERSION.SDK_INT
 import android.provider.Settings
 import androidx.core.content.ContextCompat
@@ -79,7 +80,16 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment_details)
-
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_paymentdetail_dark)
+                binding.backPaymentDetailsImg.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_payment_detail)
+                binding.backPaymentDetailsImg.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.headerLayout.setOnClickListener {
             finish()
         }
@@ -100,15 +110,50 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
             startActivity(intent)
         }
         binding.refundPaymentLayout.setOnClickListener {
-            val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogTheme)
-            val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
-            val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
-            btnClose.setOnClickListener {
-                dialog.dismiss()
+
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogThemeDark)
+                    val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
+                    val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
+                    val bg = view.findViewById<LinearLayout>(R.id.bottomsheetView)
+                    val toCredit = view.findViewById<LinearLayout>(R.id.toCreditCardLayout)
+                    val toBank = view.findViewById<LinearLayout>(R.id.toBankAccountLayout)
+                    val toWallet = view.findViewById<LinearLayout>(R.id.toWalletLayout)
+                    bg.setBackgroundResource(R.drawable.bg_bottomsheet_card_dark)
+                    toCredit.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    toBank.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    toWallet.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    btnClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+                    btnClose.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setCancelable(false)
+                    dialog.setContentView(view)
+                    dialog.show()
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogTheme)
+                    val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
+                    val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
+                    val bg = view.findViewById<LinearLayout>(R.id.bottomsheetView)
+                    val toCredit = view.findViewById<LinearLayout>(R.id.toCreditCardLayout)
+                    val toBank = view.findViewById<LinearLayout>(R.id.toBankAccountLayout)
+                    val toWallet = view.findViewById<LinearLayout>(R.id.toWalletLayout)
+                    bg.setBackgroundResource(R.drawable.bg_bottomsheet_card)
+                    toCredit.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    toBank.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    toWallet.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    btnClose.setBackgroundResource(R.drawable.close_sheet_icon)
+                    btnClose.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setCancelable(false)
+                    dialog.setContentView(view)
+                    dialog.show()
+                }
             }
-            dialog.setCancelable(false)
-            dialog.setContentView(view)
-            dialog.show()
+
         }
 
 

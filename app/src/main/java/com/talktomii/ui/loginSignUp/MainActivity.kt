@@ -1,13 +1,16 @@
 package com.talktomii.ui.loginSignUp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -52,9 +55,22 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.navigationView.setBackgroundResource(R.color.black)
+                binding.constWallet.setBackgroundResource(R.drawable.rectangle_dark)
+                binding.constWallet.setPadding(20)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.navigationView.setBackgroundResource(R.drawable.ic_drawar_background)
+                binding.constWallet.setBackgroundResource(R.drawable.rectangle_light)
+                binding.constWallet.setPadding(20)
+            }
+        }
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         bottombar = binding.menuBottom
@@ -245,6 +261,7 @@ class MainActivity : DaggerAppCompatActivity() {
         }
 
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

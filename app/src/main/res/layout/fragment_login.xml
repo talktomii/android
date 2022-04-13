@@ -5,9 +5,9 @@
     tools:context=".ui.loginSignUp.login.LoginFragment">
 
     <RelativeLayout
-        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_30"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Sign in"
                     android:textAlignment="center"
                     android:textColor="@color/signInColor"
@@ -48,9 +49,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_30"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Email"
-                    android:textSize="12sp"
                     android:textColor="@color/gray"
+                    android:textFontWeight="400"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtSignIn" />
 
@@ -61,17 +64,19 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="15dp"
+                    android:background="@null"
                     android:drawablePadding="10dp"
+                    android:fontFamily="@font/inter_regular"
                     android:gravity="center_vertical"
                     android:hint="yourusername@domain"
                     android:padding="15dp"
+                    android:textColor="@color/textColor"
                     android:textColorHint="@color/textHintColor"
                     android:textSize="16sp"
-                    android:background="@null"
-                    android:textColor="@color/textColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
@@ -81,11 +86,12 @@
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@id/txtEmailId"
                     tools:layout_editor_absoluteX="10dp" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constPass"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
                     app:layout_constraintTop_toBottomOf="@+id/txtEmailId">
 
                     <EditText
@@ -94,13 +100,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_15"
                         android:layout_marginEnd="@dimen/dp_15"
+                        android:background="@null"
                         android:drawablePadding="@dimen/dp_10"
+                        android:fontFamily="@font/inter_regular"
                         android:gravity="center_vertical"
                         android:hint="Enter Password"
                         android:maxLength="250"
                         android:padding="15dp"
                         android:password="true"
-                        android:background="@null"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/textHintColor"
@@ -138,6 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Forgot your password"
                     android:textColor="@color/colorAccent"
                     android:textSize="13sp"
@@ -169,6 +177,7 @@
                     android:drawableLeft="@drawable/line"
                     android:drawableRight="@drawable/line"
                     android:drawablePadding="@dimen/dp_10"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Or"
                     android:textColor="@color/doHaveAccountcolor"
                     android:textSize="16sp"
@@ -212,6 +221,7 @@
                 android:id="@+id/txtDontHave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:text="Don't Have An Account?"
                 android:textColor="@color/doHaveAccountcolor"
                 android:textSize="14sp"
@@ -223,6 +233,7 @@
                 android:id="@+id/txtSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:text="Sign Up"
                 android:textColor="@color/blue"
                 android:textSize="14sp"

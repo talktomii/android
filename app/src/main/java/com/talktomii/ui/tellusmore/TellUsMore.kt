@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.talktomii.R
 import com.talktomii.adapter.TopicsAdapter
@@ -22,25 +21,30 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.talktomii.data.model.Payload
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.SearchInterface
-import com.talktomii.ui.loginSignUp.signup.CreateProfileFragmentDirections
+import com.talktomii.utlis.LinkAccountDialog
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
+class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.LinkListener {
 
+    private var fbLink: SocialNetwork = SocialNetwork(name = "facebook",link = "")
+    private var twLink: SocialNetwork = SocialNetwork(name = "twitter",link = "")
+    private var insLink: SocialNetwork = SocialNetwork(name = "instagram",link = "")
+    private var tikLink: SocialNetwork = SocialNetwork(name = "tiktok",link = "")
+    private var interests= arrayListOf<String>()
     private val args by navArgs<TellUsMoreArgs>()
     private lateinit var binding: TellUsMoreBinding
     private val viewModels by viewModels<TellUsMoreVM>()
+
     @Inject
     lateinit var interestVM: SearchViewModel
+
     @Inject
     lateinit var prefsManager: PrefsManager
     lateinit var progressDialog: ProgressDialog
@@ -61,14 +65,16 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
         savedInstanceState: Bundle?
     ): View? {
         binding = TellUsMoreBinding.inflate(inflater, container, false)
-        binding.vm = viewModels
+//        binding.vm = viewModels
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog= ProgressDialog(requireActivity())
+        progressDialog = ProgressDialog(requireActivity())
         interestVM.getAllInterests("")
+
+//        binding.rvTopics.adapter = topicsAdapter
 
 
         val recyclerview = binding.rvTopics
@@ -91,7 +97,27 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.setLoading(false)
-                    binding.vm?.topicsAdapter?.addItems(it.data?.interest?: arrayListOf())
+//                    binding.vm?.topicsAdapter?.addItems(it.data?.interest?: arrayListOf())
+                    binding.rvTopics.adapter = TopicsAdapter(it.data?.interest ?: arrayListOf(),this)
+
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
+        interestVM.updateData.observe(requireActivity(), Observer {
+            it ?: return@Observer
+
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.setLoading(false)
+
+
                 }
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
@@ -106,13 +132,36 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
 
     private fun setListener() {
 
-    binding.tvSetlocation.setOnClickListener {
-        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-            .build(requireContext())
-        placeApiLauncher.launch(intent)
+        binding.tvSetlocation.setOnClickListener {
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                .build(requireContext())
+            placeApiLauncher.launch(intent)
 
+        }
+        binding.rlFacebook.setOnClickListener {
+            val dialog = LinkAccountDialog("Facebook", this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
 
-       }
+        binding.rlTwitter.setOnClickListener {
+            val dialog = LinkAccountDialog("Twitter", this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+
+        binding.rlInstagram.setOnClickListener {
+            val dialog = LinkAccountDialog("Instagram", this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+
+        binding.rlTikTok.setOnClickListener {
+            val dialog = LinkAccountDialog("Tiktok", this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+
+        binding.btnNext.setOnClickListener {
+            var request=RequestAdminModel(interest=interests,location = binding.tvSetlocation.text.toString(),socialNetwork = arrayListOf(fbLink,twLink,insLink,tikLink))
+            interestVM.updateData(getUser(prefsManager)?.admin?._id?:"",request)
+        }
 
     }
 
@@ -144,7 +193,6 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
                 }
             }
         }
-
 
 
     private fun addItemsOnRecycler() {
@@ -184,7 +232,34 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more) {
 //        recyclerview.adapter = adapter
     }
 
+    override fun onLinkClicked(type: String, value: String) {
+        when (type) {
+            "Facebook" -> {
+                fbLink.link = value
+            }
+            "Twitter" -> {
+                twLink.link = value
+            }
+            "Instagram" -> {
+                insLink.link = value
+            }
+            "Tiktok" -> {
+                tikLink.link = value
+            }
+        }
+    }
 
+    fun dataChanged(itemsViewModel: TopicsAdapter.ItemsViewModel) {
+        if(!interests.contains(itemsViewModel._id)){
+            interests.add(itemsViewModel._id)
+        }
+    }
+
+    fun dataRemoved(itemsViewModel: TopicsAdapter.ItemsViewModel) {
+        if(interests.contains(itemsViewModel._id)){
+            interests.remove(itemsViewModel._id)
+        }
+    }
 
 
 }

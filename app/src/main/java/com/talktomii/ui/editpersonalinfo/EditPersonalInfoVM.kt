@@ -57,7 +57,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updateProfile(uid, data, AUTHORIZATION)
+                val authResponse = webService.updateProfile(uid, data)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

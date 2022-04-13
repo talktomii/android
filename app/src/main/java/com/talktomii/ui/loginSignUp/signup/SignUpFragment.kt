@@ -67,7 +67,8 @@ class SignUpFragment : DaggerFragment() {
 
             val email = binding.txtEmailId.text.toString()
             val password = binding.edPassword.text.toString()
-            if (validation(email, password))
+            val repeatPassword = binding.repPassword.text.toString()
+            if (validation(email, password, repeatPassword,))
                 if (binding.chckTerms.isChecked) {
                     findNavController().navigate(
                         R.id.action_signupFragment_to_createProfileFragment,
@@ -133,7 +134,7 @@ class SignUpFragment : DaggerFragment() {
         }
     }
 
-    private fun validation(email: String, password: String): Boolean {
+    private fun validation(email: String, password: String, repeatPassword: String): Boolean {
         return when {
             email.isEmpty() -> {
                 binding.txtEmailId.showSnackBar("please enter email id ")
@@ -143,6 +144,11 @@ class SignUpFragment : DaggerFragment() {
                 binding.edPassword.showSnackBar("please enter password")
                 false
             }
+            repeatPassword.isEmpty() -> {
+                binding.repPassword.showSnackBar("please retype your password")
+                false
+            }
+
             else -> true
 
         }

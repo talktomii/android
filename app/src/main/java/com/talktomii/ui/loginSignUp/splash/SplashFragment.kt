@@ -39,19 +39,20 @@ class SplashFragment : DaggerFragment() {
     }
 
     private fun openFragments() {
-        if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
-            var user= getUser(prefsManager)
-            if (user?.admin?.role?.roleName == "user")
-                view?.findNavController()?.navigate(R.id.homeFragment)
-            else
-                view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
-//          view?.findNavController()?.navigate(R.id.homeFragment)
-        } else {
-
-            findNavController().popBackStack()
-            findNavController().navigate(R.id.loginFragment)
-
-        }
+        view?.findNavController()?.navigate(R.id.tellUsMore)
+//        if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
+//            var user= getUser(prefsManager)
+//            if (user?.admin?.role?.roleName == "user")
+//                view?.findNavController()?.navigate(R.id.homeFragment)
+//            else
+//                view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
+////          view?.findNavController()?.navigate(R.id.homeFragment)
+//        } else {
+//
+//            findNavController().popBackStack()
+//            findNavController().navigate(R.id.loginFragment)
+//
+//        }
 
 
     }

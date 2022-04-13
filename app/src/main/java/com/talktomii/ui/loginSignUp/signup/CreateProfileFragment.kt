@@ -80,7 +80,8 @@ class CreateProfileFragment : DaggerFragment() {
 //                        binding.radioInfluencer.isChecked -> false
 //                        else -> null
 //                    }
-
+                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
+                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
                     var userOrInfluencer = selectedRole.roleName == "user"
                     view?.findNavController()?.navigate(
                         CreateProfileFragmentDirections.actionCreateProfileFragmentToTellUsMore(

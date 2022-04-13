@@ -1,6 +1,7 @@
 package com.talktomii.interfaces
 
 import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.appointment.UpdateAppointmentPayload
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.drawer.bookmark.Payload
 import com.talktomii.data.photo.Admin
@@ -24,5 +25,11 @@ interface UpdatePhotoInterface {
 
 interface AddAppointmentInterface {
     fun onAddAppointment(admin: BookMarkResponse?)
+
+}
+
+
+interface DeleteAppointmentListener {
+    fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int)
 
 }

@@ -60,12 +60,11 @@ interface WebService {
         private const val REMOVE_BOOKMARK = "favoriteService/deleteService"
         private const val GET_BOOKMARKS = "favoriteService/getService"
         private const val ADD_APPOINMENT = "appointment/addAppointment"
-        private const val UPDATE_APPOINMENT = "appointment/updateAppointment/"
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
-        private const val GET_ALL_AMOUNT = "appointment/getAllAppointment"
+        private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
         private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
 
     }
@@ -264,12 +263,12 @@ interface WebService {
     ): Response<CurrentWallet>
 
 
-    @GET(GET_ALL_AMOUNT)
+    @GET(GET_ALL_APPOINTMENT)
     suspend fun getAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllAppoinments>
 
-    @GET(GET_ALL_AMOUNT)
+    @GET(GET_ALL_APPOINTMENT)
     suspend fun getCalenderAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllCalenderAppoinment>
@@ -280,5 +279,13 @@ interface WebService {
         @Query("status") status: String,
         @Query("isDelete") isDelete: Boolean,
         @Query("endTime") endTime: String
+    ): Response<UpdateAppointment>
+
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun deleteAppointment(
+        @Path("id") id: String,
+        @Query("status") status: String,
+        @Query("isDelete") isDelete: Boolean
     ): Response<UpdateAppointment>
 }

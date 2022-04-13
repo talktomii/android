@@ -16,17 +16,19 @@ import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.appointment.AppointmentInterestItem
 import com.talktomii.data.model.appointment.AppointmentPayload
+import com.talktomii.data.model.appointment.UpdateAppointmentPayload
 import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.databinding.FragmentAppointmentsBinding
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.getUser
-import com.talktomii.utlis.listner.InfulancerCalenderListner
+import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -37,7 +39,8 @@ import java.util.*
 import javax.inject.Inject
 
 class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonInterface,
-    InfulancerCalenderListner, AdapterScheduledAppointment.onScheduleAppointment {
+    InfluenceCalenderListener, AdapterScheduledAppointment.onScheduleAppointment,
+    DeleteAppointmentListener {
 
     private lateinit var binding: FragmentAppointmentsBinding
 
@@ -70,6 +73,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         viewModel.commonInterface = this
         viewModel.infulancerCalenderListner = this
         viewModel.onSlotSelectedInterface = this
+        viewModel.deleteAppointmentListener = this
 
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
@@ -103,7 +107,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     override fun onStarted() {
     }
 
-    override fun infulancerCalenderList(payload: AppointmentPayload) {
+    override fun influenceCalenderList(payload: AppointmentPayload) {
         appointmentAdapter!!.setList(payload.interest)
     }
 
@@ -177,6 +181,8 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onViewDeleteAppointment(interest: AppointmentInterestItem, position: Int) {
+        selectedItemForReschedule = interest
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -194,6 +200,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             dialog.dismiss()
         }
         delete.setOnClickListener {
+            viewModel.deleteAppointment(selectedItemForReschedule!!._id, true, position)
             dialog.dismiss()
         }
         dialog.show()
@@ -252,6 +259,10 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         spinnerTimeDuration!!.adapter = adapter
+    }
+
+    override fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int) {
+        appointmentAdapter?.removeItemList(position)
     }
 
 }

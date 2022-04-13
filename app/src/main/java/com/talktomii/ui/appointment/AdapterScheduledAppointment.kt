@@ -82,6 +82,11 @@ class AdapterScheduledAppointment(
         notifyDataSetChanged()
     }
 
+    fun removeItemList(position: Int){
+        interestArrayList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     class ViewHolder(val binding: ItemScheduledAppointmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val moreOptions: ImageView = itemView.findViewById(R.id.ivMore)

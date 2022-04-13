@@ -9,13 +9,13 @@ import com.talktomii.databinding.FragmentHomeInfluencerBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.getUser
-import com.talktomii.utlis.listner.InfulancerListner
-import com.talktomii.utlis.uid
+import com.talktomii.utlis.isUser
+import com.talktomii.utlis.listner.InfluenceListener
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerListner {
+class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfluenceListener {
 
     private lateinit var binding: FragmentHomeInfluencerBinding
     private var nearestAppointment : AdapterNearestAppointment? = null
@@ -54,6 +54,7 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerLis
         viewModel.commonInterface = this
         viewModel.infulancerListner = this
         viewModel.getCurrentWallet(getUser(prefsManager)!!.admin._id)
+
         viewModel.getAllAppoinemnt(getUser(prefsManager)!!.admin._id)
     }
 
@@ -68,7 +69,7 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface , InfulancerLis
 
     }
 
-    override fun infulancerList(payload: PayloadAppoinment) {
+    override fun influenceList(payload: PayloadAppoinment) {
         nearestAppointment!!.setList(payload.interest)
     }
 }

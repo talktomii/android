@@ -111,7 +111,7 @@ data class AppointmentInterestItem(
     val price: Int = 0,
     val V: Int = 0,
     val startTime: String = "",
-    val Id: String = "",
+    val _id: String = "",
     val endTime: String = "",
     val status: String = "",
     val updatedAt: String = ""

@@ -88,8 +88,9 @@ class AdapterScheduledAppointment(
         notifyItemRemoved(position)
     }
 
-    fun addItem(item: Item) {
-        TODO("Not yet implemented")
+    fun addItem(item: AppointmentInterestItem) {
+       interestArrayList.add(item)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val binding: ItemScheduledAppointmentBinding) :

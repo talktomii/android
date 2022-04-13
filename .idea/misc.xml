@@ -11,14 +11,30 @@
         <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_sign_up.xml" value="0.22447916666666667" />
         <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/item_role.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/MobileProgramming/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/drawable/bg_dray_background.xml" value="0.1615" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/drawable/bg_tab_layout.xml" value="0.1615" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/drawable/tab_color_selector.xml" value="0.1615" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/drawable/tab_color_selector_wallet.xml" value="0.1615" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/activity_add_bank_account.xml" value="0.264" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/alert_label_editor.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/bottomsheet_addprice.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/bottomsheet_location.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/bottomsheet_reschedule_appointment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/dialog_delete_appointment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/edit_interest_fragment.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/edit_personal_info_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/fragment_appointments.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/fragment_home_influencer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/fragment_influencer_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_availability.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_popular.xml" value="0.4281298299845441" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_price.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_scheduled_appointment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_time_slot.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/item_time_slot2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/my_cards.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/app/src/main/res/layout/my_wallet.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/MobileProgramming/Documents/TalkToMii_11042022/placefinder/src/main/res/layout/autocomplete_list_item.xml" value="0.11302083333333333" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />

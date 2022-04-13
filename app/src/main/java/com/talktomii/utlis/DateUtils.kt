@@ -171,6 +171,14 @@ object DateUtils {
 //        }
         return df.format(cal.time)
     }
+
+    fun convertStringToCalender(time : String): Calendar {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(time)
+        val cal = Calendar.getInstance()
+        cal.time = d
+        return cal;
+    }
 }
 
 /*On Date selected listener*/

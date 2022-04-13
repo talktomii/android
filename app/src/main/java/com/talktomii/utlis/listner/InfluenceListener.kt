@@ -10,3 +10,7 @@ interface InfluenceListener {
 interface InfluenceCalenderListener {
     fun influenceCalenderList(payload: AppointmentPayload)
 }
+
+interface InfluncerItem {
+    fun influenceItem(payload: AppointmentPayload)
+}

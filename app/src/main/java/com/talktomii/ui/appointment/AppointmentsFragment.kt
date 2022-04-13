@@ -12,6 +12,9 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.appointment.AppointmentInterestItem
@@ -27,12 +30,15 @@ import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
+import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.Constants
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.STATUS
 import com.talktomii.utlis.getUser
 import com.talktomii.utlis.listner.InfluenceCalenderListener
+import com.talktomii.utlis.listner.InfluncerItem
+import com.talktomii.utlis.view.EventDecorator
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -41,11 +47,10 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonInterface,
     InfluenceCalenderListener, AdapterScheduledAppointment.onScheduleAppointment,
-    DeleteAppointmentListener , RescheduleAppointmentListener {
+    DeleteAppointmentListener, RescheduleAppointmentListener, InfluncerItem {
 
     private lateinit var binding: FragmentAppointmentsBinding
 
@@ -82,6 +87,17 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
+        binding.calendarViewAppointment.setOnDateChangedListener(object : OnDateSelectedListener {
+            override fun onDateSelected(
+                widget: MaterialCalendarView,
+                date: CalendarDay,
+                selected: Boolean
+            ) {
+                var selectedDate = "" + date.year + "-" + date.month + "-" + date.day
+                viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
+            }
+
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,6 +130,25 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     override fun influenceCalenderList(payload: AppointmentPayload) {
         appointmentAdapter!!.setList(payload.interest)
+        val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
+        for (i in payload.interest!!) {
+            val calender = convertStringToCalender(i.date)
+            calenderArrayList.add(
+                CalendarDay.from(
+                    calender.get(Calendar.YEAR),
+                    calender.get(Calendar.MONTH),
+                    calender.get(Calendar.DAY_OF_MONTH)
+                )
+            )
+        }
+
+        binding.calendarViewAppointment.addDecorator(
+            EventDecorator(
+                R.color.siq_color_primary_dark,
+                calenderArrayList
+            )
+        )
+
     }
 
     override fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int) {
@@ -166,7 +201,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             hashMap[Constants.END_TIME] = selectedEndTime!!
             hashMap[Constants.DURATON] = selectedTimeSlots!!.time
 
-            viewModel.updateAppointment(selectedItemForReschedule!!._id,hashMap)
+            viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
         }
         btnClose.setOnClickListener {
             dialog.dismiss()
@@ -274,8 +309,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onRescheduleAppointment(admin: UpdateAppointmentPayload) {
-        appointmentAdapter?.addItem(admin.item)
+        viewModel.getAppointmentById(admin.item._id)
+    }
 
+    override fun influenceItem(payload: AppointmentPayload) {
+        appointmentAdapter?.addItem(payload.interest!![0])
     }
 
 }

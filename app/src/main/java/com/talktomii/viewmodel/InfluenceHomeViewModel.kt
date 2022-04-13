@@ -12,12 +12,14 @@ import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.utlis.listner.InfluenceListener
+import com.talktomii.utlis.listner.InfluncerItem
 import javax.inject.Inject
 
 class InfluenceHomeViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
     var commonInterface: CommonInterface? = null
     var infulancerListner: InfluenceListener? = null
     var infulancerCalenderListner: InfluenceCalenderListener? = null
+    var influncerItem: InfluncerItem? = null
     var walletData = ObservableField<WalletData>()
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
     var deleteAppointmentListener: DeleteAppointmentListener? = null
@@ -98,6 +100,48 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
                         infulancerCalenderListner?.influenceCalenderList(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun getAppointmentById(id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getAppointmentById(id)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+//                        walletData.set(authResponse.body()!!.payload.walletData)
+                        infulancerCalenderListner?.influenceCalenderList(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun getAllAppointmentByDate(date: String, _id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getAppointmentByDate(date, _id)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+//                        walletData.set(authResponse.body()!!.payload.walletData)
+                        influncerItem?.influenceItem(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

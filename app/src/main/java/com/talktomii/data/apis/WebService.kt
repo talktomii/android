@@ -66,6 +66,8 @@ interface WebService {
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
         private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
         private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
+        private const val GET_APPOINTMENT_BY_DATE = "appointment/getAppointmentByDate"
+        private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
 
     }
 
@@ -232,7 +234,7 @@ interface WebService {
     @POST(ADD_APPOINMENT)
     suspend fun addAppoinment(
         @Body id: HashMap<String, Any>,
-        ): Response<BookMarkResponse>
+    ): Response<BookMarkResponse>
 
 
     @GET(GET_ALL_SLOT_BY_DATE)
@@ -270,6 +272,18 @@ interface WebService {
     @GET(GET_ALL_APPOINTMENT)
     suspend fun getCalenderAllAppointment(
         @Query("ifid") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+    @GET(GET_ALL_APPOINTMENT + "/{id}")
+    suspend fun getAppointmentById(
+        @Path("id") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+
+    @GET(GET_APPOINTMENT_BY_DATE)
+    suspend fun getAppointmentByDate(
+        @Query("date") date: String,
+        @Query("id") id: String
     ): Response<GetAllCalenderAppoinment>
 
     @PUT(UPDATE_APPOINTMENT + "/{id}")

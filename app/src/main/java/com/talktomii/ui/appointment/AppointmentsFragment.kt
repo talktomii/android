@@ -24,9 +24,13 @@ import com.talktomii.databinding.FragmentAppointmentsBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
+import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.common.Constants
+import com.talktomii.utlis.common.Constants.Companion.DATE
+import com.talktomii.utlis.common.Constants.Companion.STATUS
 import com.talktomii.utlis.getUser
 import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.viewmodel.InfluenceHomeViewModel
@@ -37,10 +41,11 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonInterface,
     InfluenceCalenderListener, AdapterScheduledAppointment.onScheduleAppointment,
-    DeleteAppointmentListener {
+    DeleteAppointmentListener , RescheduleAppointmentListener {
 
     private lateinit var binding: FragmentAppointmentsBinding
 
@@ -120,17 +125,10 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         val view = LayoutInflater.from(context)
             .inflate(R.layout.bottomsheet_reschedule_appointment, null)
         val btnClose = view.findViewById<ImageView>(R.id.btnCloseAppointmentSheet)
-        recycleViewRescheduleSlot =
-            view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
-        spinnerTimeDuration =
-            view.findViewById<Spinner>(R.id.spinnerTimeDuration)
-
-        var tvRescheduleAppointment =
-            view.findViewById<TextView>(R.id.tvRescheduleAppointment)
-
-
-        var rvTimeSlotAppointment =
-            view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
+        recycleViewRescheduleSlot = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
+        spinnerTimeDuration = view.findViewById<Spinner>(R.id.spinnerTimeDuration)
+        val tvRescheduleAppointment = view.findViewById<TextView>(R.id.tvRescheduleAppointment)
+//        val rvTimeSlotAppointment = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
 
 
         val date_view =
@@ -153,14 +151,22 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 getTimeSlots(date)
             }
         }
-        rvTimeSlotAppointment.layoutManager = LinearLayoutManager(
+        recycleViewRescheduleSlot!!.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
 
         tvRescheduleAppointment.setOnClickListener {
-//            viewModel.updateAppointment(selectedItemForReschedule)
+            val hashMap: java.util.HashMap<String, Any> = hashMapOf()
+//            hashMap[Constants.IF_ID] = viewModel.userField.get()!!._id
+//            hashMap[Constants.UID] = getUser(prefsManager)!!.admin._id
+            hashMap[DATE] = selectedDate!!
+            hashMap[Constants.START_TIME] = selectedStartTime!!
+            hashMap[Constants.END_TIME] = selectedEndTime!!
+            hashMap[Constants.DURATON] = selectedTimeSlots!!.time
+
+            viewModel.updateAppointment(selectedItemForReschedule!!._id,hashMap)
         }
         btnClose.setOnClickListener {
             dialog.dismiss()
@@ -200,7 +206,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             dialog.dismiss()
         }
         delete.setOnClickListener {
-            viewModel.deleteAppointment(selectedItemForReschedule!!._id, true, position)
+            val hashMap = HashMap<String, Any>()
+            hashMap[STATUS] = "Cancelled"
+            viewModel.deleteAppointment(selectedItemForReschedule!!._id, hashMap, position)
             dialog.dismiss()
         }
         dialog.show()
@@ -231,7 +239,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                     id: Long
                 ) {
                     selectedTimeSlots = availableTimeSlots!!.timeStops[position]
-                    var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
+                    val arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
                     for (i in availableTimeSlots!!.timeStops[position].slot) {
                         arrayList.add(TimeSlotsWithData(i, false))
 
@@ -263,6 +271,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     override fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int) {
         appointmentAdapter?.removeItemList(position)
+    }
+
+    override fun onRescheduleAppointment(admin: UpdateAppointmentPayload) {
+        appointmentAdapter?.addItem(admin.item)
+
     }
 
 }

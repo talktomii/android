@@ -31,5 +31,8 @@ interface AddAppointmentInterface {
 
 interface DeleteAppointmentListener {
     fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int)
+}
 
+interface RescheduleAppointmentListener {
+    fun onRescheduleAppointment(admin: UpdateAppointmentPayload)
 }

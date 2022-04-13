@@ -9,6 +9,7 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
+import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.utlis.listner.InfluenceListener
 import javax.inject.Inject
@@ -20,6 +21,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
     var walletData = ObservableField<WalletData>()
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
     var deleteAppointmentListener: DeleteAppointmentListener? = null
+    var rescheduleAppointmentListener: RescheduleAppointmentListener? = null
 
 
     fun getCurrentWallet(id: String) {
@@ -108,15 +110,15 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         }
     }
 
-    fun updateAppointment(id: String, status: String, isDelete: Boolean, endTime: String) {
+    fun updateAppointment(id: String, hashMap: java.util.HashMap<String, Any>) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.updateAppointment(id, status, isDelete, endTime)
+                val authResponse = webService.updateAppointment(id, hashMap)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
-//                        infulancerCalenderListner?.infulancerCalenderList(authResponse.body()!!.payload)
+                        rescheduleAppointmentListener?.onRescheduleAppointment(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())
@@ -129,11 +131,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         }
     }
 
-    fun deleteAppointment(id: String, isDelete: Boolean, position: Int) {
+    fun deleteAppointment(id: String, hashMap: HashMap<String, Any>, position: Int) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.deleteAppointment(id,"Cancelled", isDelete)
+                val authResponse = webService.deleteAppointment(id, hashMap)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         authResponse.body()

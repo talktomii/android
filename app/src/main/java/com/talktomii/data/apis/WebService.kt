@@ -232,7 +232,6 @@ interface WebService {
     @POST(ADD_APPOINMENT)
     suspend fun addAppoinment(
         @Body id: HashMap<String, Any>,
-
         ): Response<BookMarkResponse>
 
 
@@ -276,16 +275,13 @@ interface WebService {
     @PUT(UPDATE_APPOINTMENT + "/{id}")
     suspend fun updateAppointment(
         @Path("id") id: String,
-        @Query("status") status: String,
-        @Query("isDelete") isDelete: Boolean,
-        @Query("endTime") endTime: String
+        @Body data: HashMap<String, Any>,
     ): Response<UpdateAppointment>
 
 
     @PUT(UPDATE_APPOINTMENT + "/{id}")
     suspend fun deleteAppointment(
         @Path("id") id: String,
-        @Query("status") status: String,
-        @Query("isDelete") isDelete: Boolean
+        @Body data: HashMap<String, Any>,
     ): Response<UpdateAppointment>
 }

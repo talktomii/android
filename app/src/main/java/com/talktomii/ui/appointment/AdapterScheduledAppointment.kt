@@ -8,6 +8,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.appointment.AppointmentInterestItem
+import com.talktomii.data.model.appointment.Item
 import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
@@ -85,6 +86,10 @@ class AdapterScheduledAppointment(
     fun removeItemList(position: Int){
         interestArrayList.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    fun addItem(item: Item) {
+        TODO("Not yet implemented")
     }
 
     class ViewHolder(val binding: ItemScheduledAppointmentBinding) :

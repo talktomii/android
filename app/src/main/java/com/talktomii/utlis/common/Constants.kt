@@ -8,6 +8,7 @@ class Constants {
         val START_TIME ="startTime"
         val END_TIME ="endTime"
         val DURATON ="duration"
+        val STATUS ="status"
     }
 }
 

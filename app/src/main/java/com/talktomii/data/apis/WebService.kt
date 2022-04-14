@@ -47,6 +47,7 @@ interface WebService {
         private const val GET_NOTIFICATION = "notification/getNotification"
         private const val GET_REPORTABUSE_TYPE = "reportAbuse/getReportAbuse"
         private const val ADD_FEEDBACK = "feedback/addFeedback"
+        private const val WITHDRAW_AMOUNT = "withdraw/addWithdraw"
 
         private const val SEND_OTP = "user/sendOTP"
         private const val ADD_PHONE = "user/add_phone_number"
@@ -180,6 +181,17 @@ interface WebService {
         @FieldMap map: HashMap<String, String>
     ): Call<AddReport>
 
+    @GET(GET_CALL_HISTORY)
+    fun getSearchedCallHistory(
+        @Query("id") id : String,
+        @Query("search") search: String
+    ): Call<CallHistoryData>
+
+    @POST(WITHDRAW_AMOUNT)
+    @FormUrlEncoded
+    fun getPaid(
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
 
 //    @FormUrlEncoded
 //    @POST(SOCIAL_LOGIN)
@@ -269,4 +281,6 @@ interface WebService {
     suspend fun getAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllAppoinments>
+
+
 }

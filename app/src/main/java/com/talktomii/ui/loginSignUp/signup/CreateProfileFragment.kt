@@ -57,7 +57,6 @@ class CreateProfileFragment : DaggerFragment() {
         viewModel.getRoles()
 
         binding.btnNEXT.setOnClickListener {
-
             radioCheck()
         }
 
@@ -65,7 +64,6 @@ class CreateProfileFragment : DaggerFragment() {
 //        var password =requireArguments()["password"].toString()
         setListener()
         addObserver()
-
     }
 
     private fun addObserver() {

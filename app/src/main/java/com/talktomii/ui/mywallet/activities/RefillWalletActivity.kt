@@ -1,6 +1,5 @@
 package com.talktomii.ui.mywallet.activities
 
-import android.R
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -10,14 +9,10 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.databinding.ActivityRefillWalletBinding
-import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.app.Activity
-import android.content.Intent
-import com.talktomii.ui.mycards.data.getAllData
-
 
 class RefillWalletActivity : DaggerAppCompatActivity() {
 
@@ -25,7 +20,6 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var dataModel: MyCardsViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.WHITE;

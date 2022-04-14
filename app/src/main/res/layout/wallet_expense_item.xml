@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.talktomii.ui.mywallet.models.WalletEarningItemModel" />
+            type="com.talktomii.ui.mywallet.models.WalletExpensesItemModel" />
     </data>
 
 

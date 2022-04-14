@@ -30,7 +30,6 @@ import java.lang.Exception
 import javax.inject.Inject
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.ui.mywallet.activities.RefillWalletActivity
-import com.talktomii.ui.mywallet.models.addWalletData
 import org.json.JSONObject
 import android.widget.Toast
 import com.facebook.FacebookSdk.getApplicationContext
@@ -54,9 +53,6 @@ import com.talktomii.ui.home.notifications.models.NotificationData
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.RefillFragment
-import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
-import com.talktomii.ui.mywallet.models.WalletPayload
-import com.talktomii.ui.mywallet.models.WalletRefillItemModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -65,6 +61,12 @@ import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.ui.mycards.PaymentItemsViewModel
 import com.talktomii.ui.mycards.fragments.PaymentFragment
 import com.talktomii.ui.mycards.model.PaymentPayload
+import com.talktomii.ui.mywallet.activities.GetPaidActivity
+import com.talktomii.ui.mywallet.adapters.WalletEarningAdapter
+import com.talktomii.ui.mywallet.adapters.WalletExpensesAdapter
+import com.talktomii.ui.mywallet.fragments.EarningFragment
+import com.talktomii.ui.mywallet.fragments.ExpenseFragment
+import com.talktomii.ui.mywallet.models.*
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
@@ -450,13 +452,15 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 val newDate = sdf2.format(date)
                                 println(newDate)
                                 Log.e("Date", newDate)
-                                dataList.add(
-                                    WalletRefillItemModel(
-                                        wallet_name = i.type!!,
-                                        wallet_date = newDate,
-                                        wallet_price = "-$" + i.amount
+                                if(i.type!! == "Credit") {
+                                    dataList.add(
+                                        WalletRefillItemModel(
+                                            wallet_name = "Wallet " + i.type!!,
+                                            wallet_date = newDate,
+                                            wallet_price = "-$" + i.amount
+                                        )
                                     )
-                                )
+                                }
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }
@@ -483,6 +487,169 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 }
 
                 override fun onFailure(call: Call<WalletPayload>, t: Throwable) {
+                    wallets.value = Resource.error(ApiUtils.failure(t))
+
+                }
+
+            })
+    }
+    fun getEarnings() {
+        wallets.value = Resource.loading()
+        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        val dataList = ArrayList<WalletEarningItemModel>()
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+            .enqueue(object : Callback<WalletPayload> {
+                override fun onResponse(
+                    call: Call<WalletPayload>,
+                    response: Response<WalletPayload>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    if (response.isSuccessful) {
+//                        cards.value = Resource.success(response.body()!!.payload)
+                        val data = response.body()!!.payload
+                        MyWallet.totalWalletAmount!!.text = "$" + data!!.currentAmount
+                        for (i in data.wallet) {
+                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
+                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
+                            var date: Date? = null
+                            try {
+                                date = sdf1.parse(i.createdAt)
+                                val newDate = sdf2.format(date)
+                                println(newDate)
+                                Log.e("Date", newDate)
+                                if(i.type!! == "Credit") {
+                                    dataList.add(
+                                        WalletEarningItemModel(
+                                            wallet_name = "Wallet " + i.type!!,
+                                            wallet_date = newDate,
+                                            wallet_price = "-$" + i.amount
+                                        )
+                                    )
+                                }
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        EarningFragment.recyclerview!!.layoutManager = layoutManager
+                        val adapter = WalletEarningAdapter(dataList)
+                        EarningFragment.recyclerview!!.adapter = adapter
+                        EarningFragment.progress!!.visibility = View.GONE
+                        EarningFragment.recyclerview!!.visibility = View.VISIBLE
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        wallets.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<WalletPayload>, t: Throwable) {
+                    wallets.value = Resource.error(ApiUtils.failure(t))
+
+                }
+
+            })
+    }
+    fun getExpenses() {
+        wallets.value = Resource.loading()
+        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        val dataList = ArrayList<WalletExpensesItemModel>()
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+            .enqueue(object : Callback<WalletPayload> {
+                override fun onResponse(
+                    call: Call<WalletPayload>,
+                    response: Response<WalletPayload>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    if (response.isSuccessful) {
+//                        cards.value = Resource.success(response.body()!!.payload)
+                        val data = response.body()!!.payload
+                        MyWallet.totalWalletAmount!!.text = "$" + data!!.currentAmount
+                        for (i in data.wallet) {
+                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
+                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
+                            var date: Date? = null
+                            try {
+                                date = sdf1.parse(i.createdAt)
+                                val newDate = sdf2.format(date)
+                                println(newDate)
+                                Log.e("Date", newDate)
+                                if(i.type!! == "Debit") {
+                                    dataList.add(
+                                        WalletExpensesItemModel(
+                                            wallet_name = "Wallet " + i.type!!,
+                                            wallet_date = newDate,
+                                            wallet_price = "-$" + i.amount
+                                        )
+                                    )
+                                }
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        ExpenseFragment.recyclerview!!.layoutManager = layoutManager
+                        val adapter = WalletExpensesAdapter(dataList)
+                        ExpenseFragment.recyclerview!!.adapter = adapter
+                        ExpenseFragment.progress!!.visibility = View.GONE
+                        ExpenseFragment.recyclerview!!.visibility = View.VISIBLE
+                    } else {
+                        wallets.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<WalletPayload>, t: Throwable) {
+                    wallets.value = Resource.error(ApiUtils.failure(t))
+
+                }
+
+            })
+    }
+
+    fun getCurrentWallet() {
+        wallets.value = Resource.loading()
+        Log.d("token : ", MainActivity.retrivedToken)
+        val dataList = ArrayList<WalletRefillItemModel>()
+        webService.getCurrentAmount(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+            .enqueue(object : Callback<CurrentWalletPaylod> {
+                override fun onResponse(
+                    call: Call<CurrentWalletPaylod>,
+                    response: Response<CurrentWalletPaylod>
+                ) {
+                    Timber.d("--%s", response.body().toString())
+                    if (response.isSuccessful) {
+//                        cards.value = Resource.success(response.body()!!.payload)
+                        val data = response.body()!!.payload
+                        GetPaidActivity.total!!.text = "$" + data!!.walletData!!.currentAmount
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        wallets.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value?.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<CurrentWalletPaylod>, t: Throwable) {
                     wallets.value = Resource.error(ApiUtils.failure(t))
 
                 }
@@ -929,6 +1096,74 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
+    fun getSearchedCallHistory(text : String) {
+        webService.getSearchedCallHistory(prefsManager.getString(PrefsManager.PREF_API_ID,""),text)
+            .enqueue(object : Callback<CallHistoryData> {
+                override fun onResponse(
+                    call: Call<CallHistoryData>,
+                    response: Response<CallHistoryData>
+                ) {
+                    val dataList = ArrayList<CallHistoryItemModel>()
+                    if (response.isSuccessful) {
+                        val data = response.body()!!.payload
+                        for (i in data!!.callHistory) {
+                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
+                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
+                            var date: Date? = null
+                            try {
+                                date = sdf1.parse(i.date)
+                                val newDate = sdf2.format(date)
+                                println(newDate)
+                                Log.d("profile LLL ", i.uid!!.userName!!)
+                                dataList.add(
+                                    CallHistoryItemModel(
+                                        i.ifid!!.Id!!,
+                                        i.ifid!!.userName!!,
+                                        i.ifid!!.profilePhoto!!,
+                                        i.Id!!,
+                                        i.ifid!!.profilePhoto!!,
+                                        i.ifid!!.userName!!,
+                                        newDate,
+                                        i.price!!,
+                                        i.duration!!
+                                    )
+                                )
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
+                            }
+
+                        }
+
+                        val layoutManager = FlexboxLayoutManager()
+                        layoutManager.flexWrap = FlexWrap.WRAP
+                        layoutManager.flexDirection = FlexDirection.ROW
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager = layoutManager
+                        val adapter = CallHistoryAdapter(dataList, webService)
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.adapter = adapter
+                        com.talktomii.ui.callhistory.CallHistory.progress.visibility = View.GONE
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility = View.VISIBLE
+
+                    } else {
+                        Log.d("card data is : ", " : " + response.body())
+                        cards.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                        Timber.d("00000" + cards.value!!.message)
+                    }
+                }
+
+                override fun onFailure(call: Call<CallHistoryData>, t: Throwable) {
+                    cards.value = Resource.error(ApiUtils.failure(t))
+                    t.message?.let { Log.d("profile LLL ", it) }
+                }
+
+            })
+    }
+
     fun deleteCallHistory(id: String) {
         deleteCallHistory.value = Resource.loading()
         webService.deleteCallHistory(id)
@@ -1157,6 +1392,50 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
                 override fun onFailure(call: Call<AddReport>, t: Throwable) {
                     addFeedback.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+    fun withDrawAmount(hashMap: HashMap<String, String>) {
+        webService.getPaid(hashMap)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        GetPaidActivity.progressBar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            GetPaidActivity.layout!!,
+                            response.body()!!.message!!,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        GetPaidActivity.amount.text.clear()
+                        GetPaidActivity.finishFunction()
+                        getWallet()
+                        getExpenses()
+                    } else {
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            GetPaidActivity.progressBar.visibility = View.GONE
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                GetPaidActivity.layout,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
                 }
 
             })

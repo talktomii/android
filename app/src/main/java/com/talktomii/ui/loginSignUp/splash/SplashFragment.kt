@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
@@ -48,8 +49,11 @@ class SplashFragment : DaggerFragment() {
 //          view?.findNavController()?.navigate(R.id.homeFragment)
         } else {
 
-            findNavController().popBackStack()
-            findNavController().navigate(R.id.loginFragment)
+
+            lifecycleScope.launchWhenResumed {
+                findNavController().popBackStack()
+                findNavController().navigate(R.id.loginFragment)
+            }
 
         }
 

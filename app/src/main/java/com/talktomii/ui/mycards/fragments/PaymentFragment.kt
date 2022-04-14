@@ -2,9 +2,12 @@ package com.talktomii.ui.mycards.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +48,14 @@ class PaymentFragment : DaggerFragment() {
                 binding.saerchPayment.setBackgroundResource(R.drawable.bgscancard_rounder_dark)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                binding.saerchPayment.background = resources.getDrawable(R.drawable.bg_scan_card_rounder)
+                binding.saerchPayment.setBackgroundResource(R.drawable.bg_scan_card_rounder)
+                binding.saerchPayment.queryHint = Html.fromHtml("<font color = #C5C5C5>" + "Search calls" + "</font>")
+                val txtSearch: EditText = binding.saerchPayment.findViewById(androidx.appcompat.R.id.search_src_text)
+                txtSearch.setTextColor(resources.getColor(R.color.gray))
+                val searchIcon = binding.saerchPayment.findViewById(androidx.appcompat.R.id.search_mag_icon) as ImageView
+                searchIcon.setImageResource(R.drawable.ic_search2)
+                val closeIcon = binding.saerchPayment.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
+                closeIcon.setImageResource(R.drawable.quantum_ic_clear_grey600_24)
             }
         }
         recycleview = binding.rvPayments

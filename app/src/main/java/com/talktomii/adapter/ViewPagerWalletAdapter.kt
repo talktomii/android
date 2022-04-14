@@ -9,7 +9,7 @@ import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
 import com.talktomii.ui.mywallet.fragments.RefillFragment
 
-private const val NUM_TABS = 3
+private const val NUM_TABS = 2
 
 class ViewPagerWalletAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
@@ -21,9 +21,27 @@ class ViewPagerWalletAdapter(fragmentManager: FragmentManager, lifecycle: Lifecy
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> return EarningFragment()
-            1 -> return RefillFragment()
-            2 -> return ExpenseFragment()
+            1 -> return ExpenseFragment()
         }
-        return CardFragment()
+        return EarningFragment()
+    }
+}
+
+
+private const val NUM_TABS_USER = 2
+
+class ViewPagerWalletAdapterUser(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
+
+    override fun getItemCount(): Int {
+        return NUM_TABS_USER
+    }
+
+    override fun createFragment(position: Int): Fragment {
+        when (position) {
+            0 -> return RefillFragment()
+            1 -> return ExpenseFragment()
+        }
+        return RefillFragment()
     }
 }

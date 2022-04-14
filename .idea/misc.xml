@@ -147,6 +147,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_expand_less_24.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/drawable/ic_close_24.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/drawable/round_corner_card.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tab_color_selector.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable/tab_color_selector_dark.xml" value="0.17447916666666666" />
@@ -202,7 +203,7 @@
         <entry key="app/src/main/res/layout/fragment_card.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/fragment_choose_products.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_contact_us.xml" value="0.1625" />
-        <entry key="app/src/main/res/layout/fragment_create_profile.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/fragment_create_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_earning.xml" value="0.2013157894736842" />
         <entry key="app/src/main/res/layout/fragment_enter_phone.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_expense.xml" value="0.2013157894736842" />
@@ -211,7 +212,7 @@
         <entry key="app/src/main/res/layout/fragment_how_we_work.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_influencer_profile.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.12" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_o_t_p.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2708333333333333" />
@@ -249,7 +250,8 @@
         <entry key="app/src/main/res/layout/tell_us_more.xml" value="0.2" />
         <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/test_layout.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/wallet_earning_item.xml" value="0.16513157894736843" />
+        <entry key="app/src/main/res/layout/wallet_earning_item.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/wallet_expense_item.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/wallet_refill_item.xml" value="0.1" />
         <entry key="app/src/main/res/menu/appointment_popup.xml" value="0.1265625" />
         <entry key="app/src/main/res/menu/bank_popup.xml" value="0.15729166666666666" />

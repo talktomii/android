@@ -105,6 +105,7 @@ class LoginFragment : DaggerFragment() {
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
                     prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
+                    prefsManager.save(PrefsManager.PREF_ROLE, it.data.admin.role.roleName)
                     Log.d("user is ----",it.data!!.token.toString())
                     requireContext().showMessage("Login Successfully")
                     if (it.data?.admin?.role?.roleName == "user")

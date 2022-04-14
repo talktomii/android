@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.databinding.FragmentEarningBinding
@@ -12,13 +13,16 @@ import com.talktomii.ui.mywallet.models.WalletEarningItemModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
 class EarningFragment : DaggerFragment(R.layout.fragment_earning){
 
     private lateinit var binding: FragmentEarningBinding
 
-    val dataList = ArrayList<WalletEarningItemModel>()
+    @Inject
+    lateinit var dataModel: MyCardsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,45 +30,15 @@ class EarningFragment : DaggerFragment(R.layout.fragment_earning){
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEarningBinding.inflate(inflater, container, false)
-        recycleview = binding.rvEarningWallet
-        val layoutManager = FlexboxLayoutManager()
-        layoutManager.flexWrap = FlexWrap.WRAP
-        layoutManager.flexDirection = FlexDirection.ROW
-        recycleview.layoutManager = layoutManager
-        dataList.add(
-            WalletEarningItemModel(
-                R.drawable.ic_user,
-                "Leslie Alexander",
-                "13.02.2022  2:00 PM",
-                "$200,00",
-                "45min"
-            )
-        )
-
-        dataList.add(
-            WalletEarningItemModel(
-                R.drawable.ic_user,
-                "Leslie abc",
-                "13.02.2022  2:00 PM",
-                "$200,00",
-                "45min"
-            )
-        )
-
-        dataList.add(
-            WalletEarningItemModel(
-                R.drawable.ic_user,
-                "Leslie xyz",
-                "13.02.2022  2:00 PM",
-                "$200,00",
-                "45min"
-            )
-        )
-        val adapter = WalletEarningAdapter(dataList)
-        recycleview.adapter = adapter
+        recyclerview = binding.rvEarningWallet
+        progress = binding.displayEarningsProgress
+        progress!!.visibility  = View.VISIBLE
+        recyclerview!!.visibility = View.GONE
+        dataModel.getEarnings()
         return binding.root
     }
     companion object{
-        lateinit var recycleview: RecyclerView
+        var recyclerview : RecyclerView ?= null
+        var progress : ProgressBar ?= null
     }
 }

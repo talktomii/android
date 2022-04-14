@@ -94,7 +94,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 date: CalendarDay,
                 selected: Boolean
             ) {
-                var selectedDate = "" + date.year + "-" + date.month + "-" + date.day
+                val selectedDate = "" + date.year + "-" + date.month + "-" + date.day
                 viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
             }
 
@@ -130,9 +130,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun influenceCalenderList(payload: AppointmentPayload) {
-        appointmentAdapter!!.setList(payload.interest)
+        appointmentAdapter!!.setList(payload.Appointment)
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
-        for (i in payload.interest!!) {
+        for (i in payload.Appointment!!) {
             val calender = convertStringToCalender(i.date)
             calenderArrayList.add(
                 CalendarDay.from(
@@ -314,7 +314,13 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun influenceItem(payload: AppointmentPayload) {
-        appointmentAdapter?.addItem(payload.interest!![0])
+        if (payload.Appointment?.size ?: 0 > 0) {
+            appointmentAdapter?.addItem(payload.Appointment!![0])
+
+        } else {
+            appointmentAdapter?.clearList()
+
+        }
     }
 
 }

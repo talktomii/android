@@ -12,7 +12,6 @@ data class AppointmentStatus(
     val name: String = ""
 )
 
-
 data class AppointmentUid(
     val isSocial: Boolean = false,
     val role: String = "",
@@ -89,7 +88,7 @@ data class AppointmentIfid(
 
 
 data class AppointmentPayload(
-    val interest: ArrayList<AppointmentInterestItem>?,
+    val Appointment: ArrayList<AppointmentInterestItem>?,
     val count: Int = 0
 )
 

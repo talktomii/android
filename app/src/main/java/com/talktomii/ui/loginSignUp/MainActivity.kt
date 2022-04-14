@@ -2,29 +2,27 @@ package com.talktomii.ui.loginSignUp
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.R
 import com.talktomii.databinding.ActivityMainBinding
-import com.talktomii.ui.helpsupport.HelpSupport
+import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.utlis.LocaleHelper
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.isUser
 import com.talktomii.utlis.logoutUser
+import com.zoho.salesiqembed.ZohoSalesIQ
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
-import androidx.drawerlayout.widget.DrawerLayout
-import com.talktomii.databinding.SettingsBinding
-import com.talktomii.ui.FAQ.FaqActivity
-import com.zoho.salesiqembed.ZohoSalesIQ
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -37,9 +35,9 @@ class MainActivity : DaggerAppCompatActivity() {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
         var user_id: String = ""
-        var totalSideBarAmount : TextView ?= null
-        lateinit var bottombar : BottomNavigationView
-        lateinit var drawer : DrawerLayout
+        var totalSideBarAmount: TextView? = null
+        lateinit var bottombar: BottomNavigationView
+        lateinit var drawer: DrawerLayout
     }
 
 
@@ -55,11 +53,11 @@ class MainActivity : DaggerAppCompatActivity() {
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         drawer = binding.drawerLayout
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         bottombar = binding.menuBottom
 
-        retrivedToken = prefsManager.getString(PrefsManager.PREF_API_TOKEN,"")
-        user_id =  prefsManager.getString(PrefsManager.PREF_API_ID,"")
+        retrivedToken = prefsManager.getString(PrefsManager.PREF_API_TOKEN, "")
+        user_id = prefsManager.getString(PrefsManager.PREF_API_ID, "")
 
         totalSideBarAmount = binding.textView9
 
@@ -84,7 +82,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         binding.btnLogout.setOnClickListener {
             ZohoSalesIQ.unregisterVisitor(this)
-            logoutUser(this,prefsManager)
+            logoutUser(this, prefsManager)
         }
         binding.txtMyCards.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -136,8 +134,11 @@ class MainActivity : DaggerAppCompatActivity() {
                     }
 
                     R.id.nav_home -> {
-
-                        viewModel.navController.navigate(R.id.homeFragment)
+                        if (isUser(prefsManager)) {
+                            viewModel.navController.navigate(R.id.homeFragment)
+                        } else {
+                            viewModel.navController.navigate(R.id.homeInfluencerFragment)
+                        }
                     }
 
                     R.id.nav_search -> {

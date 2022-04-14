@@ -8,7 +8,6 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.appointment.AppointmentInterestItem
-import com.talktomii.data.model.appointment.Item
 import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
@@ -83,13 +82,18 @@ class AdapterScheduledAppointment(
         notifyDataSetChanged()
     }
 
-    fun removeItemList(position: Int){
+    fun removeItemList(position: Int) {
         interestArrayList.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun addItem(item: AppointmentInterestItem) {
-       interestArrayList.add(item)
+        interestArrayList.clear()
+        interestArrayList.add(item)
+        notifyDataSetChanged()
+    }
+    fun clearList(){
+        interestArrayList.clear()
         notifyDataSetChanged()
     }
 

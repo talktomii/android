@@ -37,6 +37,7 @@ import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
+import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -64,6 +65,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private var fileCoverPhoto: File? = null
     private var isChangeProfile = false
     private var isChangeUserData = false
+
     @Inject
     lateinit var prefsManager: PrefsManager
     override fun onCreateView(
@@ -161,28 +163,36 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     val body = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     map["coverPhoto\"; filename=\"imageCover.png\" "] = body
                 }
-                viewModel.updatePhoto(map,getUser(prefsManager)!!.admin._id)
+                viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
-            viewModel.userField.get()!!.apply {
-                name = binding.etFirstName.text.toString()
-                userName = binding.etUsername.text.toString()
-            }
-
-            val userData = viewModel.userField.get()
             val updateInfluence: UpdateInfluence = UpdateInfluence()
-            updateInfluence.name = userData!!.name
-            updateInfluence.userName = userData.userName
-            updateInfluence.availaibility = userData.availaibility
+
+            if (isUser(prefsManager)) {
+                val userData = viewModel.userField.get()
+                updateInfluence.name = binding.etFirstName.text.toString()
+                updateInfluence.userName = binding.etUsername.text.toString()
+
+            } else {
+                val userData = viewModel.userField.get()
+                updateInfluence.name = userData!!.name
+                updateInfluence.userName = userData.userName
+                updateInfluence.availaibility = userData.availaibility
 
 
-            updateInfluence.location = if (userData.location != null) userData.location else ""
-            updateInfluence.price =
-                if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-            updateInfluence.socialNetwork =
-                if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
-            updateInfluence.interest =
-                if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
-            viewModel.updateProfile(Gson().toJson(updateInfluence),getUser(prefsManager)!!.admin._id)
+                updateInfluence.location = if (userData.location != null) userData.location else ""
+                updateInfluence.price =
+                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
+                updateInfluence.socialNetwork =
+                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
+                updateInfluence.interest =
+                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
+            }
+            viewModel.updateProfile(
+                Gson().toJson(updateInfluence),
+                getUser(prefsManager)!!.admin._id
+            )
+
+
         }
 
         binding.ivInterest.setOnClickListener {
@@ -290,19 +300,25 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_gradient_profile)
 //        }
 
-        updatePriceAdapter()
-        updateInterestAdapter()
-        if (viewModel.userField.get()!!.interest.size > 0) {
-            binding.rvPrice.visibility = View.VISIBLE
+        if (isUser(prefsManager)) {
+            binding.constrainInfluancer.visibility = View.GONE
         } else {
-            binding.rvPrice.visibility = View.GONE
+            binding.constrainInfluancer.visibility = View.VISIBLE
+            updatePriceAdapter()
+            updateInterestAdapter()
+            if (viewModel.userField.get()!!.interest.size > 0) {
+                binding.rvPrice.visibility = View.VISIBLE
+            } else {
+                binding.rvPrice.visibility = View.GONE
+            }
+            (binding.rvInterest.adapter as AdapterEditInterest).setItemList(
+                viewModel.userField.get()!!.interest,
+                1
+            )
+            updateAvailabilityAdapter()
+            (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
+
         }
-        (binding.rvInterest.adapter as AdapterEditInterest).setItemList(
-            viewModel.userField.get()!!.interest,
-            1
-        )
-        updateAvailabilityAdapter()
-        (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
 
     }
 

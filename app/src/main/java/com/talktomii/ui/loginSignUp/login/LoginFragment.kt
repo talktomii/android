@@ -71,7 +71,7 @@ class LoginFragment : DaggerFragment() {
         bindObservers()
 
 //        faceBookLogin()
-        getDeviceToken()
+//        getDeviceToken()
     }
 
     private fun bindObservers() {

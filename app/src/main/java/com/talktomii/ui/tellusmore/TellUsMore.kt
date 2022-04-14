@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.talktomii.R
 import com.talktomii.adapter.TopicsAdapter
@@ -117,7 +118,8 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
                 Status.SUCCESS -> {
                     progressDialog.setLoading(false)
 
-
+                    view?.findNavController()
+                        ?.navigate(R.id.action_tellUsMore_to_homeFragment)
                 }
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
@@ -164,7 +166,8 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         }
 
     }
-
+//getUser(prefsManager)?.admin?._id?
+    //6257bc87dd85d624ccb6bb8a
 
     var placeApiLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

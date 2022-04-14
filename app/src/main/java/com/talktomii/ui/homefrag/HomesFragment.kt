@@ -40,6 +40,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        binding.vm = viewModels
+//        binding.txtName.text =
         initAdapter()
         init()
     }

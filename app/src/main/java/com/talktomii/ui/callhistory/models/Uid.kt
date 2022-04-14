@@ -28,6 +28,8 @@ data class Uid(
     @SerializedName("__v") var _v: Int? = null,
     @SerializedName("latestToken") var latestToken: String? = null,
     @SerializedName("aboutYou") var aboutYou: String? = null,
-    @SerializedName("name") var name: String? = null
+    @SerializedName("name") var name: String? = null,
+    @SerializedName("fname") var fname: String? = null,
+    @SerializedName("lname") var lname: String? = null
 
 )

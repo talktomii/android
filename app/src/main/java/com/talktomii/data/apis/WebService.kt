@@ -293,6 +293,10 @@ interface WebService {
         @Body data: HashMap<String, Any>,
     ): Response<UpdateAppointment>
 
+    @GET(GET_CALL_HISTORY)
+    suspend fun getCallUsersCallHistory(
+        @Query("id") id: String
+    ): Response<CallHistoryData>
 
     @PUT(UPDATE_APPOINTMENT + "/{id}")
     suspend fun deleteAppointment(

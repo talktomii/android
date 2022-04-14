@@ -10,15 +10,13 @@ import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
-import com.talktomii.utlis.listner.AddInfluncerItem
-import com.talktomii.utlis.listner.InfluenceCalenderListener
-import com.talktomii.utlis.listner.InfluenceListener
-import com.talktomii.utlis.listner.InfluncerItem
+import com.talktomii.utlis.listner.*
 import javax.inject.Inject
 
 class InfluenceHomeViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
     var commonInterface: CommonInterface? = null
     var infulancerListner: InfluenceListener? = null
+    var callHistoryListener: CallHistory? = null
     var infulancerCalenderListner: InfluenceCalenderListener? = null
     var addInfluncerItem: AddInfluncerItem? = null
     var influncerItem: InfluncerItem? = null
@@ -81,6 +79,26 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
                         infulancerListner?.influenceList(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailure(authResponse.message())
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun getUsersCallHistory(id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getCallUsersCallHistory(id)
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+                        callHistoryListener?.getCallHistory(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

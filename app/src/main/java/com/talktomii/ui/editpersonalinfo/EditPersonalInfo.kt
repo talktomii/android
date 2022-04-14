@@ -153,6 +153,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         }
 
         binding.tvSave.setOnClickListener {
+            val updateInfluence: UpdateInfluence = UpdateInfluence()
+
             if (isChangeProfile) {
                 val map: HashMap<String, RequestBody> = HashMap()
                 if (fileProfile != null) {
@@ -165,20 +167,13 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
-            val updateInfluence: UpdateInfluence = UpdateInfluence()
+            updateInfluence.fname = binding.etFirstName.text.toString()
+            updateInfluence.lname = binding.etLastName.text.toString()
+            updateInfluence.userName = binding.etUsername.text.toString()
 
-            if (isUser(prefsManager)) {
+            if (!isUser(prefsManager)) {
                 val userData = viewModel.userField.get()
-                updateInfluence.name = binding.etFirstName.text.toString()
-                updateInfluence.userName = binding.etUsername.text.toString()
-
-            } else {
-                val userData = viewModel.userField.get()
-                updateInfluence.name = userData!!.name
-                updateInfluence.userName = userData.userName
-                updateInfluence.availaibility = userData.availaibility
-
-
+                updateInfluence.availaibility = userData!!.availaibility
                 updateInfluence.location = if (userData.location != null) userData.location else ""
                 updateInfluence.price =
                     if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
@@ -186,6 +181,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
                 updateInfluence.interest =
                     if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
+
             }
             viewModel.updateProfile(
                 Gson().toJson(updateInfluence),

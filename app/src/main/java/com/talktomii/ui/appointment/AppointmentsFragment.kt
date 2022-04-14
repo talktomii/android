@@ -206,7 +206,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             hashMap[DATE] = selectedDate!!
             hashMap[Constants.START_TIME] = selectedStartTime!!
             hashMap[Constants.END_TIME] = selectedEndTime!!
-            hashMap[Constants.STATUS] = "rescheduled"
+            hashMap[Constants.STATUS] = "Rescheduled"
             hashMap[Constants.DURATON] = selectedTimeSlots!!.time
 
             viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
@@ -313,7 +313,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int) {
-        appointmentAdapter?.removeItemList(position)
+        viewModel.getAppointmentById(admin.Item._id)
     }
 
     override fun onRescheduleAppointment(admin: UpdateAppointmentPayload) {

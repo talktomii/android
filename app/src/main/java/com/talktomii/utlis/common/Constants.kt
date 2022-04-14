@@ -9,6 +9,7 @@ class Constants {
         val END_TIME ="endTime"
         val DURATON ="duration"
         val STATUS ="status"
+        val CANCELLED ="Cancelled"
     }
 }
 

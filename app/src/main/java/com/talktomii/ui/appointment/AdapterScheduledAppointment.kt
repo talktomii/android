@@ -12,6 +12,7 @@ import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
+import com.talktomii.utlis.common.Constants.Companion.CANCELLED
 import javax.inject.Inject
 
 
@@ -48,6 +49,13 @@ class AdapterScheduledAppointment(
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
         holder.binding.txtTime.text =
             setDateToTime(interest.startTime) + "-" + setDateToTime(interest.endTime)
+        if (interest.status == CANCELLED) {
+            holder.binding.ivMore.visibility = View.GONE
+            holder.binding.txtCallNow.visibility = View.GONE
+        } else {
+            holder.binding.ivMore.visibility = View.VISIBLE
+            holder.binding.txtCallNow.visibility = View.VISIBLE
+        }
         holder.binding.tvDayAndDate.text =
             setDateToWeekDate(interest.date)
 
@@ -99,8 +107,13 @@ class AdapterScheduledAppointment(
     }
 
     fun addItem(appointmentInterestItem: AppointmentInterestItem) {
-        interestArrayList.add(appointmentInterestItem)
-        notifyDataSetChanged()
+        for (i in 0 until interestArrayList.size) {
+            if (interestArrayList[i]._id == appointmentInterestItem._id) {
+                interestArrayList[i] = appointmentInterestItem
+                notifyItemChanged(i)
+                break
+            }
+        }
     }
 
     class ViewHolder(val binding: ItemScheduledAppointmentBinding) :

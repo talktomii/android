@@ -141,7 +141,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             calenderArrayList.add(
                 CalendarDay.from(
                     calender.get(Calendar.YEAR),
-                    calender.get(Calendar.MONTH),
+                    calender.get(Calendar.MONTH + 1),
                     calender.get(Calendar.DAY_OF_MONTH)
                 )
             )
@@ -153,7 +153,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 calenderArrayList
             )
         )
-
+        binding.calendarViewAppointment.invalidate()
     }
 
     var reScheduleAppointmentDialog: BottomSheetDialog? = null

@@ -45,7 +45,8 @@ class AdapterScheduledAppointment(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var interest = interestArrayList[position]
-        holder.binding.txtName.text = interest.ifid.fname + " " + interest.ifid.lname
+        holder.binding.txtName.text =
+            if (interest.ifid.fname != null) interest.ifid.fname else "" + " " + if (interest.ifid.lname != null) interest.ifid.lname else ""
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
         holder.binding.txtTime.text =
             setDateToTime(interest.startTime) + "-" + setDateToTime(interest.endTime)

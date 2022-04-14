@@ -10,6 +10,7 @@ import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
+import com.talktomii.utlis.listner.AddInfluncerItem
 import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.utlis.listner.InfluenceListener
 import com.talktomii.utlis.listner.InfluncerItem
@@ -19,6 +20,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
     var commonInterface: CommonInterface? = null
     var infulancerListner: InfluenceListener? = null
     var infulancerCalenderListner: InfluenceCalenderListener? = null
+    var addInfluncerItem: AddInfluncerItem? = null
     var influncerItem: InfluncerItem? = null
     var walletData = ObservableField<WalletData>()
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
@@ -120,7 +122,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
-                        infulancerCalenderListner?.influenceCalenderList(authResponse.body()!!.payload)
+                        addInfluncerItem?.addInfluenceItem(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailure(authResponse.message())

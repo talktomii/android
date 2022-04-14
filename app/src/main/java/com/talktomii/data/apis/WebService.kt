@@ -9,6 +9,7 @@ import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
 import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
 import com.talktomii.data.model.appointment.UpdateAppointment
+import com.talktomii.data.model.appointment.GetAppointmentById
 import com.talktomii.data.model.currentwallet.CurrentWallet
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
@@ -274,10 +275,10 @@ interface WebService {
         @Query("ifid") id: String
     ): Response<GetAllCalenderAppoinment>
 
-    @GET(GET_ALL_APPOINTMENT + "/{id}")
+    @GET(GET_APPOINTMENT_BY_ID + "/{id}")
     suspend fun getAppointmentById(
         @Path("id") id: String
-    ): Response<GetAllCalenderAppoinment>
+    ): Response<GetAppointmentById>
 
 
     @GET(GET_APPOINTMENT_BY_DATE)

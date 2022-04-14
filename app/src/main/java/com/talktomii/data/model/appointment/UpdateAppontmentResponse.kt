@@ -1,8 +1,8 @@
 package com.talktomii.data.model.appointment
 
-data class Item(
+data class ItemUpdate(
     val date: String = "",
-    val isDelete: Boolean = false,
+    val isDelete: Any? = null,
     val ifid: String = "",
     val duration: Int = 0,
     val uid: String = "",
@@ -17,12 +17,12 @@ data class Item(
 )
 
 
-data class UpdateAppointmentPayload(val Item: Item)
+data class PayloadUpdate(val Item: ItemUpdate)
 
 
-data class UpdateAppointment(
+data class UpdateAppontmentResponse(
     val result: Int = 0,
-    val payload: UpdateAppointmentPayload,
+    val payload: PayloadUpdate,
     val message: String = ""
 )
 

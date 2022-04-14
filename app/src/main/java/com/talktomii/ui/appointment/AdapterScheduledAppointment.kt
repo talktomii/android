@@ -87,13 +87,19 @@ class AdapterScheduledAppointment(
         notifyItemRemoved(position)
     }
 
-    fun addItem(item: AppointmentInterestItem) {
+    fun addItemsList(item: ArrayList<AppointmentInterestItem>?) {
         interestArrayList.clear()
-        interestArrayList.add(item)
+        item?.let { interestArrayList.addAll(it) }
         notifyDataSetChanged()
     }
-    fun clearList(){
+
+    fun clearList() {
         interestArrayList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addItem(appointmentInterestItem: AppointmentInterestItem) {
+        interestArrayList.add(appointmentInterestItem)
         notifyDataSetChanged()
     }
 

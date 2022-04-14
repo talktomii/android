@@ -17,6 +17,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
+import com.talktomii.data.model.appointment.AppointmentByIdPayload
 import com.talktomii.data.model.appointment.AppointmentInterestItem
 import com.talktomii.data.model.appointment.AppointmentPayload
 import com.talktomii.data.model.appointment.UpdateAppointmentPayload
@@ -36,6 +37,7 @@ import com.talktomii.utlis.common.Constants
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.STATUS
 import com.talktomii.utlis.getUser
+import com.talktomii.utlis.listner.AddInfluncerItem
 import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.utlis.listner.InfluncerItem
 import com.talktomii.utlis.view.EventDecorator
@@ -50,7 +52,7 @@ import javax.inject.Inject
 
 class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonInterface,
     InfluenceCalenderListener, AdapterScheduledAppointment.onScheduleAppointment,
-    DeleteAppointmentListener, RescheduleAppointmentListener, InfluncerItem {
+    DeleteAppointmentListener, RescheduleAppointmentListener, InfluncerItem, AddInfluncerItem {
 
     private lateinit var binding: FragmentAppointmentsBinding
 
@@ -84,7 +86,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         viewModel.infulancerCalenderListner = this
         viewModel.onSlotSelectedInterface = this
         viewModel.deleteAppointmentListener = this
+        viewModel.rescheduleAppointmentListener = this
         viewModel.influncerItem = this
+        viewModel.addInfluncerItem = this
 
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
@@ -152,9 +156,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     }
 
+    var reScheduleAppointmentDialog: BottomSheetDialog? = null
+    var deleteAppointmentDialog: BottomSheetDialog? = null
     override fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int) {
         selectedItemForReschedule = interest
-        val dialog = BottomSheetDialog(
+        reScheduleAppointmentDialog = BottomSheetDialog(
             requireContext(),
             R.style.MyTransparentBottomSheetDialogTheme
         )
@@ -200,17 +206,18 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             hashMap[DATE] = selectedDate!!
             hashMap[Constants.START_TIME] = selectedStartTime!!
             hashMap[Constants.END_TIME] = selectedEndTime!!
+            hashMap[Constants.STATUS] = "rescheduled"
             hashMap[Constants.DURATON] = selectedTimeSlots!!.time
 
             viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
         }
         btnClose.setOnClickListener {
-            dialog.dismiss()
+            reScheduleAppointmentDialog!!.dismiss()
         }
         getTimeSlots(Calendar.getInstance())
-        dialog.setCancelable(false)
-        dialog.setContentView(view)
-        dialog.show()
+        reScheduleAppointmentDialog!!.setCancelable(false)
+        reScheduleAppointmentDialog!!.setContentView(view)
+        reScheduleAppointmentDialog!!.show()
     }
 
     private fun getTimeSlots(date: Calendar?) {
@@ -310,15 +317,23 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onRescheduleAppointment(admin: UpdateAppointmentPayload) {
-        viewModel.getAppointmentById(admin.item._id)
+        viewModel.getAppointmentById(admin.Item._id)
+        reScheduleAppointmentDialog!!.dismiss()
     }
 
     override fun influenceItem(payload: AppointmentPayload) {
         if (payload.Appointment?.size ?: 0 > 0) {
-            appointmentAdapter?.addItem(payload.Appointment!![0])
+            appointmentAdapter?.addItemsList(payload.Appointment)
 
         } else {
             appointmentAdapter?.clearList()
+
+        }
+    }
+
+    override fun addInfluenceItem(payload: AppointmentByIdPayload) {
+        if (payload.Appointment != null) {
+            appointmentAdapter?.addItem(payload.Appointment)
 
         }
     }

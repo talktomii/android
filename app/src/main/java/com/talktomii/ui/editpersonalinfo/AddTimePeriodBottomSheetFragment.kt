@@ -74,12 +74,17 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
             }
         }
         setUpAllDays()
-        if (availaibility!!.end.equals("Never")) {
+        if (availaibility!!.end != null){
+            if (availaibility!!.end == "Never") {
+                binding.rbNever.isChecked = true
+            } else {
+                binding.rbOn.isChecked = true
+                binding.tvDate.text = availaibility!!.end
+            }
+        }else{
             binding.rbNever.isChecked = true
-        } else {
-            binding.rbOn.isChecked = true
-            binding.tvDate.text = availaibility!!.end
         }
+
         binding.btnAddTimePeriod.text = "Edit Time Period"
     }
 

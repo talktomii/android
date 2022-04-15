@@ -24,6 +24,7 @@ import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.UpdateInfluence
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
+import com.talktomii.data.model.admin.SendAvailaibility
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
@@ -174,22 +175,52 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 
             if (!isUser(prefsManager)) {
                 val updateInfluence: UpdateInfluence = UpdateInfluence()
-                updateInfluence.fname = binding.etFirstName.text.toString()
-                updateInfluence.lname = binding.etLastName.text.toString()
-                updateInfluence.userName = binding.etUsername.text.toString()
+//                updateInfluence.fname = binding.etFirstName.text.toString()
+//                updateInfluence.lname = binding.etLastName.text.toString()
+//                updateInfluence.userName = binding.etUsername.text.toString()
+                val hashMap: HashMap<String, Any> = hashMapOf()
+                hashMap["fname"] = binding.etFirstName.text.toString()
+                hashMap["lname"] = binding.etLastName.text.toString()
+                hashMap["userName"] = binding.etUsername.text.toString()
+
                 val userData = viewModel.userField.get()
-                updateInfluence.availaibility = userData!!.availaibility
-                updateInfluence.location = if (userData.location != null) userData.location else ""
-                updateInfluence.price =
+                var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
+
+                for (i in userData!!.availaibility) {
+                    if (i.end == "Never") {
+                        i.end = ""
+                    }
+                    val availbility = SendAvailaibility()
+                    availbility.day = i.day
+                    availbility.end = i.end
+                    availbility.endTime = i.endTime
+                    availbility.startTime = i.startTime
+                    availaibility.add(availbility)
+                }
+                hashMap["availaibility"] = availaibility
+                hashMap["location"] = userData.location
+                hashMap["price"] =
                     if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-                updateInfluence.socialNetwork =
-                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
-                updateInfluence.interest =
-                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
-//                viewModel.updateProfile(
-//                    Gson().toJson(updateInfluence),
-//                    getUser(prefsManager)!!.admin._id
-//                )
+                hashMap["socialNetwork"] = userData.socialNetwork
+
+                val interstArrayList: ArrayList<String> = arrayListOf()
+                for (i in userData.interest) {
+                    interstArrayList.add(i._id)
+                }
+                hashMap["interest"] = interstArrayList
+
+//                updateInfluence.availaibility = userData!!.availaibility
+//                updateInfluence.location = if (userData.location != null) userData.location else ""
+//                updateInfluence.price =
+//                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
+//                updateInfluence.socialNetwork =
+//                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
+//                updateInfluence.interest =
+//                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
+                viewModel.updateProfile(
+                    hashMap,
+                    getUser(prefsManager)!!.admin._id
+                )
             } else {
 //                val updateUser: UpdateUser = UpdateUser()
 //
@@ -357,10 +388,20 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     }
 
     fun updatePriceAdapter() {
+        if (viewModel.userField.get()!!.price.size > 0) {
+            binding.rvPrice.visibility = View.VISIBLE
+        } else {
+            binding.rvPrice.visibility = View.GONE
+        }
         (binding.rvPrice.adapter as AdapterPrice).setItemList(viewModel.userField.get()!!.price)
     }
 
     fun updateAvailabilityAdapter() {
+        if (viewModel.userField.get()!!.availaibility.size > 0) {
+            binding.rvAvailability.visibility = View.VISIBLE
+        } else {
+            binding.rvAvailability.visibility = View.GONE
+        }
         availableAdapter?.setItemList(viewModel.userField.get()!!.availaibility)
     }
 

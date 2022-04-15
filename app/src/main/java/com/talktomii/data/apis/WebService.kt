@@ -7,6 +7,7 @@ import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.admin1.UpdateAdmin
 import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
 import com.talktomii.data.model.appointment.UpdateAppointment
 import com.talktomii.data.model.appointment.GetAppointmentById
@@ -29,6 +30,7 @@ import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -255,8 +257,8 @@ interface WebService {
     @PUT(UPDATE_ADMIN + "/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
-        @Body data: String,
-    ): Response<AdminResponse1>
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAdmin>
 
 
     @GET(GET_CURRENT_AMOUNT + "/{id}")

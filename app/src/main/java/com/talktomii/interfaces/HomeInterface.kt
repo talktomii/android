@@ -15,6 +15,11 @@ interface AdminDetailInterface {
     fun onAdminDetails(admin1: Admin1)
 }
 
+
+interface UpdateProfileInterface {
+    fun onUpdateProfileDetails(admin1: com.talktomii.data.model.Admin)
+}
+
 interface OnSlotSelectedInterface {
     fun onSlotTimesList(list: com.talktomii.data.model.getallslotbydate.Payload)
 }

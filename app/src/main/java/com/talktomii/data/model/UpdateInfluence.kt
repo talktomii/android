@@ -14,3 +14,9 @@ data class UpdateInfluence(
     var availaibility: ArrayList<Availaibility> = arrayListOf(),
     var interest: ArrayList<Interest> = arrayListOf()
 )
+
+data class UpdateUser(
+    var fname: String ="",
+    var lname: String ="",
+    var userName: String =""
+)

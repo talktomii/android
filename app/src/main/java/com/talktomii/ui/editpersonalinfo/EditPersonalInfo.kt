@@ -18,8 +18,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.gson.Gson
 import com.talktomii.R
+import com.talktomii.data.model.Admin
+import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.UpdateInfluence
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
@@ -27,6 +28,7 @@ import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.UpdateProfileInterface
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
@@ -48,7 +50,7 @@ import javax.inject.Inject
 
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
-    CommonInterface, AdapterPrice.onViewEdiPriceClick {
+    CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -153,9 +155,9 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         }
 
         binding.tvSave.setOnClickListener {
-            val updateInfluence: UpdateInfluence = UpdateInfluence()
 
             if (isChangeProfile) {
+
                 val map: HashMap<String, RequestBody> = HashMap()
                 if (fileProfile != null) {
                     val body = fileProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -167,11 +169,14 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
-            updateInfluence.fname = binding.etFirstName.text.toString()
-            updateInfluence.lname = binding.etLastName.text.toString()
-            updateInfluence.userName = binding.etUsername.text.toString()
+
+
 
             if (!isUser(prefsManager)) {
+                val updateInfluence: UpdateInfluence = UpdateInfluence()
+                updateInfluence.fname = binding.etFirstName.text.toString()
+                updateInfluence.lname = binding.etLastName.text.toString()
+                updateInfluence.userName = binding.etUsername.text.toString()
                 val userData = viewModel.userField.get()
                 updateInfluence.availaibility = userData!!.availaibility
                 updateInfluence.location = if (userData.location != null) userData.location else ""
@@ -181,14 +186,33 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
                 updateInfluence.interest =
                     if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
+//                viewModel.updateProfile(
+//                    Gson().toJson(updateInfluence),
+//                    getUser(prefsManager)!!.admin._id
+//                )
+            } else {
+//                val updateUser: UpdateUser = UpdateUser()
+//
+//
+//                updateUser.lname = binding.etLastName.text.toString()
+//                updateUser.userName = binding.etUsername.text.toString()
+//                binding.etFirstName.text.toString().also { updateUser.fname = it }
+//                val request = JSONObject(Gson().toJson(updateUser).trim())
+
+                try {
+                    val hashMap: HashMap<String, Any> = hashMapOf()
+                    hashMap["fname"] = binding.etFirstName.text.toString()
+                    hashMap["lname"] = binding.etLastName.text.toString()
+                    hashMap["userName"] = binding.etUsername.text.toString()
+                    viewModel.updateProfile(
+                        hashMap,
+                        getUser(prefsManager)!!.admin._id
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
             }
-            viewModel.updateProfile(
-                Gson().toJson(updateInfluence),
-                getUser(prefsManager)!!.admin._id
-            )
-
-
         }
 
         binding.ivInterest.setOnClickListener {
@@ -258,6 +282,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         progressDialog = ProgressDialog(requireActivity())
         viewModel.adminDetailInterface = this
         viewModel.commonInterface = this
+        viewModel.onUpdateProfileInterface = this
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setListeners()
@@ -367,5 +392,15 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             model, position
         )
         bottomsheet.show(childFragmentManager, "addtimeperiod")
+    }
+
+    override fun onUpdateProfileDetails(admin1: Admin) {
+        progressDialog.dismiss()
+        var registerModel: RegisterModel? = getUser(prefsManager)
+        registerModel!!.admin = admin1
+        prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
+        findNavController().popBackStack()
+
+
     }
 }

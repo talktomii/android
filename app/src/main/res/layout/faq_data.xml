@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardBackgroundColor="#F9F8FC"
+        app:cardBackgroundColor="@color/mycard_bgcolor"
         app:cardCornerRadius="@dimen/dp_10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.021">
@@ -48,10 +48,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:fontFamily="@font/inter_regular"
                     android:layout_marginEnd="@dimen/dp_50"
+                    android:fontFamily="@font/inter_regular"
                     android:text="@string/q1"
-                    android:textColor="#585B68"
+                    android:textColor="@color/myCards"
                     android:textFontWeight="400"
                     android:textSize="@dimen/dp_16" />
 

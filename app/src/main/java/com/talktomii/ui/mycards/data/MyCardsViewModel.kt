@@ -183,6 +183,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCardlistWallet() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
+        arrayStrings = ArrayList<String>()
+        arrayStrings!!.add("Select card")
         webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID,""))
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
@@ -194,7 +196,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
-                        arrayStrings = ArrayList<String>()
                         carditemMap = HashMap()
                         for (i in data!!.card!!.data) {
                             val refilldata = "****" + i.card!!.last4!!.toString()
@@ -214,9 +215,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         RefillWalletActivity.filterTypes!!.setAdapter(adapter)
-                        RefillWalletActivity.filterTypes!!.setOnItemClickListener(object :
-                            AdapterView.OnItemClickListener {
-                            override fun onItemClick(
+                        RefillWalletActivity.filterTypes!!.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+                            override fun onItemSelected(
                                 p0: AdapterView<*>?,
                                 p1: View?,
                                 p2: Int,
@@ -235,7 +235,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 }
                             }
 
-                        })
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                            }
+                        }
 
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -878,6 +881,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             )
                         )
                         var jsonObject: JSONObject? = null
+                        AddBankAccountActivity.progress.visibility = View.GONE
                         try {
                             jsonObject = JSONObject(response.errorBody()!!.string())
                             val userMessage = jsonObject.getString("message")

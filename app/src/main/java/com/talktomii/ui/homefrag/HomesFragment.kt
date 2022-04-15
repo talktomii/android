@@ -1,5 +1,6 @@
 package com.talktomii.ui.homefrag
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.talktomii.databinding.HomeFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.ui.home.HomeScreenViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -34,6 +36,17 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         savedInstanceState: Bundle?
     ): View? {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
+        MainActivity.btnMenu.visibility = View.GONE
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+        }
         return binding.root
     }
 

@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_extra_bold"
-                    android:textColor="#455154"
+                    android:textColor="@color/walletText"
                     android:textFontWeight="700"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold">
@@ -73,10 +73,10 @@
                 android:layout_gravity="center"
                 android:gravity="end"
                 android:fontFamily="@font/inter_extra_bold"
-                android:textColor="@color/black"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:textFontWeight="500"
                 android:textSize="@dimen/dp_14"
+                android:textColor="@color/walletText"
                 android:textStyle="bold">
 
             </androidx.appcompat.widget.AppCompatTextView>

@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
         tools:context=".ui.homefrag.HomesFragment">
 
         <ImageView
@@ -46,19 +47,20 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="Hi Cameron"
-                android:textColor="@color/gray"
+                android:textColor="@color/myCards"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
+                android:textFontWeight="700"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ivCross"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_20"
-                android:src="@drawable/ic_cross"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,9 +70,12 @@
                 android:layout_height="wrap_content"
                 android:text="Connect and chat over internet voice calls with \n your favorite creator"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/inter_regular"
+                android:textFontWeight="400"
+                android:textColor="@color/myCards"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
                 app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
@@ -81,9 +86,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Popular"
-            android:textStyle="bold"
+            android:fontFamily="@font/inter_regular"
             android:textSize="28dp"
-            android:textColor="@color/gray"
+            android:textFontWeight="700"
+            android:textColor="@color/addCardColor"
             android:layout_marginTop="@dimen/dp_30"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />

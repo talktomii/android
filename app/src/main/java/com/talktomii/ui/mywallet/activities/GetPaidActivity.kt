@@ -2,6 +2,7 @@ package com.talktomii.ui.mywallet.activities
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -29,21 +30,28 @@ class GetPaidActivity : DaggerAppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_get_paid)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backGetPaid.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backGetPaid.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         getContext(this)
 
         layout = binding.getPaidMainLayout
         amount = binding.getWalletAmount
         progressBar = binding.getPaidProgress
         total = binding.getPaidTotalAmountDetail
-        filterTypes = binding.typesFilterwallet
+        filterTypes = binding.bankSpinner
 
         binding.tvgetpaidBack.setOnClickListener {
             finish()
         }
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayListOf("CITY BANK", "CITY BANK", "CITY BANK"))
-        binding.typesFilterwallet.setAdapter(adapter)
-        binding.typesFilterwallet.setText("CITY BANk")
+        binding.bankSpinner.setAdapter(adapter)
 
         viewModel.getCurrentWallet()
 
@@ -71,7 +79,7 @@ class GetPaidActivity : DaggerAppCompatActivity() {
         lateinit var context: Context
         lateinit var amount : EditText
         lateinit var total : TextView
-        var filterTypes : AutoCompleteTextView?= null
+        var filterTypes : Spinner?= null
         fun getContext(context: Context) {
             this.context = context
         }

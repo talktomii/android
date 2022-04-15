@@ -5,14 +5,14 @@
 
     <FrameLayout
         android:id="@+id/n_frame"
-        android:background="@color/white"
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/backgroundColor">
 
             <ProgressBar
                 android:id="@+id/getNotificationProgress"
@@ -36,7 +36,7 @@
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="Notifications"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/myCards"
                     android:textSize="@dimen/sp_24"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

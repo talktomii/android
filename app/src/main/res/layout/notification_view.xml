@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_red_dot"
         android:layout_marginEnd="@dimen/dp_5"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/ivCall"
         app:layout_constraintEnd_toEndOf="@+id/ivCall" />
 
@@ -39,12 +40,12 @@
         android:id="@+id/txtYouAreMissed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:fontFamily="@font/inter_medium"
         android:textSize="14sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/searchText"
         android:layout_marginStart="@dimen/dp_10"
         android:text="You are missed call from"
+        android:textFontWeight="500"
         app:layout_constraintStart_toEndOf="@+id/ivCall"
         app:layout_constraintTop_toTopOf="@+id/ivCall" />
 
@@ -67,7 +68,7 @@
         android:text="2 min ago"
         android:textSize="@dimen/sp_12"
         android:textColor="@color/gray"
-        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@+id/txtUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txtYouAreMissed" />

@@ -85,7 +85,6 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:textColor="@color/cardNumber"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/inter_regular"
                     android:hint="0000 0000 0000 0000"
@@ -93,8 +92,9 @@
                     android:inputType="number"
                     android:textFontWeight="400"
                     android:textSize="17sp"
-                    android:textColorHint="@color/addCardHintColor"
-                    app:hintTextColor="@color/addCardHintColor"
+                    android:textColor="@color/addCardHintColor"
+                    android:textColorHint="@color/cardNumber"
+                    app:hintTextColor="@color/cardNumber"
                     app:layout_constraintTop_toBottomOf="@+id/textCardNumber" />
 
                 <View
@@ -150,12 +150,12 @@
                             android:background="@android:color/transparent"
                             android:drawableRight="@drawable/calender"
                             android:fontFamily="@font/inter_regular"
-                            android:textColor="@color/cardNumber"
                             android:hint="MM/YY"
                             android:textFontWeight="400"
                             android:textSize="17sp"
-                            android:textColorHint="@color/addCardHintColor"
-                            app:hintTextColor="@color/addCardHintColor"
+                            android:textColor="@color/addCardHintColor"
+                            android:textColorHint="@color/cardNumber"
+                            app:hintTextColor="@color/cardNumber"
                             app:layout_constraintTop_toBottomOf="@+id/textCardExpireDate" />
 
                         <View
@@ -204,13 +204,13 @@
                             android:drawableRight="@drawable/info"
                             android:fontFamily="@font/inter_regular"
                             android:hint="***"
-                            android:textColor="@color/cardNumber"
                             android:inputType="numberPassword"
                             android:maxLength="3"
-                            android:textColorHint="@color/addCardHintColor"
                             android:textFontWeight="400"
                             android:textSize="17sp"
-                            app:hintTextColor="@color/addCardHintColor"
+                            android:textColor="@color/addCardHintColor"
+                            android:textColorHint="@color/cardNumber"
+                            app:hintTextColor="@color/cardNumber"
                             app:layout_constraintTop_toBottomOf="@+id/textCVV" />
 
                         <View
@@ -251,11 +251,11 @@
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/inter_regular"
                     android:hint="e. g.John Doe"
-                    android:textColor="@color/cardNumber"
                     android:textFontWeight="400"
-                    android:textColorHint="@color/addCardHintColor"
                     android:textSize="17sp"
-                    app:hintTextColor="@color/addCardHintColor"
+                    android:textColor="@color/addCardHintColor"
+                    android:textColorHint="@color/cardNumber"
+                    app:hintTextColor="@color/cardNumber"
                     app:layout_constraintTop_toBottomOf="@+id/textCardHolderName" />
 
                 <View

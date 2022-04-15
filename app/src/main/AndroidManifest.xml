@@ -38,9 +38,11 @@
             android:exported="true" />
         <activity
             android:name=".ui.FAQ.FaqActivity"
-            android:exported="true"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="true"/>
         <activity
             android:name=".ui.coupon.CouponActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.reportabuse.ReportAbuseActivity"
@@ -57,12 +59,15 @@
             android:exported="true" />
         <activity
             android:name=".ui.mywallet.activities.GetPaidActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.mywallet.activities.RefillWalletActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.banksettings.activities.AddBankAccountActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.helpsupport.HelpSupport"

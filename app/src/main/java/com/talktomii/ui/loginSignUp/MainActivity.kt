@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
@@ -44,6 +46,7 @@ class MainActivity : DaggerAppCompatActivity() {
         var totalSideBarAmount : TextView ?= null
         lateinit var bottombar : BottomNavigationView
         lateinit var drawer : DrawerLayout
+        lateinit var btnMenu : ImageView
     }
 
 
@@ -71,6 +74,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.constWallet.setPadding(20)
             }
         }
+        btnMenu  =  binding.btnMenu
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         bottombar = binding.menuBottom
@@ -158,22 +162,27 @@ class MainActivity : DaggerAppCompatActivity() {
             binding.txtDarkTheme.setText("Dark Theme");
         }
         binding.txtDarkTheme.setOnClickListener {
+            btnMenu.visibility = View.GONE
+            binding.menuBottom.visibility = View.VISIBLE
             if (isDarkModeOn) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 editor.putBoolean("isDarkModeOn", false);
                 editor.apply();
                 binding.txtDarkTheme.setText("Dark Theme");
                 binding.menuBottom.isVisible = true
+                btnMenu.visibility = View.GONE
+                binding.menuBottom.visibility = View.VISIBLE
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 editor.putBoolean("isDarkModeOn", true);
                 editor.apply();
                 binding.txtDarkTheme.setText("Light Theme");
                 binding.menuBottom.isVisible = true
+                btnMenu.visibility = View.GONE
+                binding.menuBottom.visibility = View.VISIBLE
             }
         }
         binding.menuBottom.setOnItemSelectedListener OnNavigationItemSelectedListener@{ item ->
-
             if (item.itemId != viewModel.navController.currentDestination!!.id) {
                 when (item.itemId) {
                     R.id.nav_more -> {
@@ -181,7 +190,7 @@ class MainActivity : DaggerAppCompatActivity() {
                     }
 
                     R.id.nav_home -> {
-
+                        btnMenu.visibility = View.GONE
                         viewModel.navController.navigate(R.id.homeFragment)
                     }
 
@@ -211,24 +220,19 @@ class MainActivity : DaggerAppCompatActivity() {
             }
 
             true
-
         }
 
         binding.btnMenu.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
-
             } else {
                 binding.drawerLayout.openDrawer(binding.navigationView)
             }
         }
 
-
-
         binding.btnMenu.setOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
-
             } else {
                 binding.drawerLayout.openDrawer(binding.navigationView)
             }
@@ -245,7 +249,6 @@ class MainActivity : DaggerAppCompatActivity() {
                 destination.id == R.id.appointmentsFragment ||
                 destination.id == R.id.notificationFragment ||
                 destination.id == R.id.homeInfluencerFragment
-
             ) {
 
                 binding.menuBottom.selectedItemId = destination.id

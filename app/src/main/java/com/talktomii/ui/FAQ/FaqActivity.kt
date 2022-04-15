@@ -1,5 +1,6 @@
 package com.talktomii.ui.FAQ
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.AutoTransition
@@ -30,6 +31,14 @@ class FaqActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_faq)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backFaq.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backFaq.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.tvFaqBack.setOnClickListener {
             ZohoSalesIQ.showLauncher(false)
             finish()

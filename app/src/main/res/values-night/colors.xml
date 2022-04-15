@@ -19,4 +19,6 @@
     <color name="walletText">#ffffff</color>
     <color name="searchText">#ffffff</color>
     <color name="paymentDetailTitle">#ffffff</color>
+    <color name="bottom_bg">#000000</color>
+    <color name="walletbg">#000000</color>
 </resources>

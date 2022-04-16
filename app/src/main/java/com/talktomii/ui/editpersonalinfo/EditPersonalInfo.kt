@@ -2,6 +2,7 @@ package com.talktomii.ui.editpersonalinfo
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -81,6 +82,14 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             viewModelFactory
         ).get(EditPersonalInfoVM::class.java)
         binding = EditPersonalInfoFragmentBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivBack.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivBack.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.viewModel = viewModel
         return binding.root
     }
@@ -97,8 +106,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 if (resultCode == Activity.RESULT_OK) {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-                    val filePath =
-                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
                     fileProfile = File(filePath)
                     Glide.with(requireContext()).load(fileUri).into(binding.imgDefault)
                 }

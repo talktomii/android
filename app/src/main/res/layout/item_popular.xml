@@ -58,7 +58,7 @@
                     android:drawablePadding="@dimen/dp_10"
                     android:padding="@dimen/dp_10"
                     android:text="About me"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/textView4"
@@ -83,8 +83,9 @@
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Leslie Alexander"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
                     android:textSize="17dp"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -94,10 +95,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="\@Leslie"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/calText"
                     android:textSize="@dimen/sp_14"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
-
                     app:layout_constraintStart_toStartOf="@+id/txtName"
                     app:layout_constraintTop_toBottomOf="@+id/txtName" />
 

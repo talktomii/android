@@ -192,7 +192,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:fontFamily="@font/poppins_regular"
                     android:text="I'm 18 Years Old"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColor"
                     android:buttonTint="@color/gray"
                     android:textSize="@dimen/sp_14"
                     app:layout_constraintStart_toStartOf="@+id/constPass"
@@ -215,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_regular"
                         android:text="I agree with "
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:buttonTint="@color/gray"
                         android:textSize="@dimen/sp_14" />
 

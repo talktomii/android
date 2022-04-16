@@ -42,9 +42,13 @@ class SplashFragment : DaggerFragment() {
         if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
             var user = getUser(prefsManager)
             if (user!!.admin.role._id == LoginType.USER_ROLE)
-                findNavController().navigate(R.id.homeFragment)
+                lifecycleScope.launchWhenResumed {
+                    findNavController().navigate(R.id.homeFragment)
+                }
             else
-                findNavController().navigate(R.id.homeInfluencerFragment)
+                lifecycleScope.launchWhenResumed {
+                    findNavController().navigate(R.id.homeInfluencerFragment)
+                }
 
 //          view?.findNavController()?.navigate(R.id.homeFragment)
         } else {

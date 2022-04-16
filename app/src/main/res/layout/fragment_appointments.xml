@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/backgroundColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dp_20">
-
 
             <TextView
                 android:id="@+id/txtMyAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
                 android:text="My Appointments"
-                android:textColor="@color/gray"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/addCardColor"
                 android:textSize="@dimen/sp_24"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -30,21 +31,16 @@
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendarViewAppointment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
                 app:layout_constraintTop_toBottomOf="@+id/txtMyAppointment"
-                app:mcv_calendarMode="month"
-                app:mcv_dateTextAppearance="@color/black"
-                app:mcv_selectionColor="@color/colorAccent"
-                app:mcv_showOtherDates="decorated_disabled"
                 tools:layout_editor_absoluteX="16dp" />
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_dray_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendarViewAppointment">
@@ -66,8 +62,9 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="Scheduled Appointments"
-                    android:textColor="@color/black"
+                    android:textColor="@color/myCards"
                     android:textSize="20sp"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView3" />

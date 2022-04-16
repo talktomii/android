@@ -13,11 +13,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBackSave"
@@ -34,7 +36,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_50"
                     android:onClick="@{viewModel::onClick}"
-                    android:src="@drawable/back_arrow"
                     app:layout_constraintBaseline_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"></com.google.android.material.imageview.ShapeableImageView>
 
@@ -44,6 +45,8 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{viewModel::onClick}"
                     android:text="Back"
+                    android:textColor="@color/addCardColor"
+                    android:layout_marginStart="@dimen/dp_8"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivBack"
@@ -73,7 +76,7 @@
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="Edit Personal Info"
                 android:textAlignment="center"
-                android:textColor="@color/gray"
+                android:textColor="@color/addCardColor"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,10 +134,12 @@
                 android:id="@+id/txtFirst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
                 android:text="First Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="@dimen/sp_12"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
 
@@ -143,88 +148,144 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgDefault">
+                app:layout_constraintTop_toBottomOf="@+id/txtFirst">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
                     android:hint="@string/first_name"
+                    android:padding="@dimen/dp_10"
                     android:text="@{viewModel.userField.fname}"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:hintTextColor="@color/hint_color" />
+                    app:hintTextColor="@color/textHintColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtLast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="Last Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtFirstName">
+                app:layout_constraintTop_toBottomOf="@+id/txtLast">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
                     android:hint="Last Name"
+                    android:padding="@dimen/dp_10"
                     android:text="@{viewModel.userField.lname}"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:hintTextColor="@color/hint_color" />
+                    app:hintTextColor="@color/textHintColor" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/lview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+               android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="User Name"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lview" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLastName">
+                app:layout_constraintTop_toBottomOf="@+id/txtUser">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
                     android:hint=" Username"
+                    android:padding="@dimen/dp_10"
                     android:text="@{viewModel.userField.userName}"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     app:hintTextColor="@color/hint_color" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/uview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+                tools:layout_editor_absoluteX="10dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrainInfluancer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_30"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/txtUsername">
+                app:layout_constraintTop_toBottomOf="@+id/uview">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintPrice"
@@ -239,7 +300,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/price"
                         android:textSize="12sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/inter_regular"
+                        android:textColor="@color/cardNumber"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:textFontWeight="400"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -262,7 +326,6 @@
                         android:id="@+id/rvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -277,10 +340,14 @@
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     android:text="Location"
+                    android:fontFamily="@font/inter_regular"
                     android:textSize="@dimen/sp_12"
+                    android:textColor="@color/cardNumber"
                     android:textStyle="bold"
+                    android:textFontWeight="400"
                     app:layout_constraintStart_toStartOf="@+id/constraintPrice"
                     app:layout_constraintTop_toBottomOf="@+id/constraintPrice" />
 
@@ -289,6 +356,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/textView7">
 
@@ -302,15 +370,17 @@
                         android:gravity="center_vertical"
                         android:paddingTop="15dp"
                         android:paddingRight="15dp"
+                        android:fontFamily="@font/inter_regular"
                         android:paddingBottom="15dp"
                         android:text="@{viewModel.userField.location}"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/calText"
                         android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/ivEditLocation"
-                        android:layout_width="@dimen/dp_50"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
                         android:src="@drawable/ic_edit" />
 
                 </LinearLayout>
@@ -333,7 +403,9 @@
                     android:layout_marginTop="20dp"
                     android:text="Follow me"
                     android:textSize="@dimen/sp_12"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
                     app:layout_constraintStart_toStartOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
@@ -355,6 +427,7 @@
                     android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/dp_20"
                     android:background="@color/gray"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     app:layout_constraintTop_toBottomOf="@+id/rvSocialMedia"
                     tools:layout_editor_absoluteX="10dp" />
 
@@ -365,7 +438,9 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="Interest"
                     android:textSize="@dimen/sp_12"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -411,6 +486,7 @@
                     android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/dp_20"
                     android:background="@color/gray"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     app:layout_constraintTop_toBottomOf="@+id/rvInterest"
                     tools:layout_editor_absoluteX="10dp" />
 
@@ -420,9 +496,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="Badges"
-                    android:textColor="@color/gray"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
                     android:textSize="@dimen/sp_12"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/txtInterests"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -474,7 +551,9 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:text="Availability"
                     android:textSize="@dimen/sp_12"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
                     app:layout_constraintStart_toStartOf="@+id/txtBudges"
                     app:layout_constraintTop_toBottomOf="@+id/ivBudge" />
 
@@ -489,6 +568,7 @@
                     android:textColor="@color/blue"
                     android:textSize="@dimen/sp_14"
                     android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintBottom_toBottomOf="@+id/txtAvailability"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txtAvailability" />
@@ -525,7 +605,10 @@
                     android:text="Switch to personal account"
                     android:textColor="@color/blue"
                     android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:textFontWeight="400"
+                    android:layout_marginBottom="@dimen/dp_20"
+                  android:paddingVertical="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/txtAvailability"
                     app:layout_constraintTop_toBottomOf="@+id/rgView" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,4 +53,6 @@
     <color name="paymentDetailTitle">#455154</color>
     <color name="bottom_bg">#F9F8FC</color>
     <color name="walletbg">#F9F8FC</color>
+    <color name="calText">#000000</color>
+    <color name="searchTextColor">#939393</color>
 </resources>

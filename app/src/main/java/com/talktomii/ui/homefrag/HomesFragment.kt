@@ -69,12 +69,10 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
-
         viewModel.commonInterface = this
         viewModel.homeInterface = this
         if (arguments?.getString("id") != null) {
             viewModel.getInfluence(arguments?.getString("id")!!)
-
         } else {
             viewModel.getInfluence("")
         }
@@ -91,7 +89,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onStarted() {
         progressDialog.show()
     }
-
 
     override fun onViewPopularClick(admin: Admin) {
         onCoverClicked(admin)

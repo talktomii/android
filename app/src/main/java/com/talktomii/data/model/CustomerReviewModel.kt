@@ -13,6 +13,7 @@ data class CustomerReviewModel(
     val updated_at: String? = null,
     val user: UserModel? = null
 )
+
 @Parcelize
 data class UserModel(
     val id: Int? = null,
@@ -21,4 +22,4 @@ data class UserModel(
     val phone_no: String? = null,
     val full_image: String? = null,
     val image: String? = null
-):Parcelable
+) : Parcelable

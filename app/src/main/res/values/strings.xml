@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Talktomii</string>
     <string name="alert">Alert</string>
+    <string name="map_key" translatable="false">AIzaSyCQ4feMgizeFCAQWSsOJzd5Vq3eFQBtnuo</string>
     <string name="ok">OK</string> 
     <string name="message">Success</string>
     <string name="yes">Yes</string>
@@ -299,4 +300,6 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <!-- Please leave it if not enable App Certificate -->
     <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
     <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAAdYAf+/Bue/flpqH/bsDbn2fYGkZEI7JuJA9GMndhnkgx+f9gAAAAAEAAWnXuozXJWYgEAAQD9clZi</string>
+    <string name="link_your_facebook_account_n_to_talk_to_mii">Link your type account \n to Talk To Mii</string>
+    <string name="to_link_account_paste_your_facebook_n_profile_link_in_below_field">To link account paste your type \n profile link in below field</string>
 </resources>

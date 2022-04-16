@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +68,8 @@ class SignUpFragment : DaggerFragment() {
 
             val email = binding.txtEmailId.text.toString()
             val password = binding.edPassword.text.toString()
-            if (validation(email, password))
+            val repeatPassword = binding.repPassword.text.toString()
+            if (validation(email, password, repeatPassword,))
                 if (binding.chckTerms.isChecked) {
                     findNavController().navigate(
                         R.id.action_signupFragment_to_createProfileFragment,
@@ -133,16 +135,25 @@ class SignUpFragment : DaggerFragment() {
         }
     }
 
-    private fun validation(email: String, password: String): Boolean {
+    private fun validation(email: String, password: String, repeatPassword: String): Boolean {
         return when {
             email.isEmpty() -> {
                 binding.txtEmailId.showSnackBar("please enter email id ")
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.txtEmailId.showSnackBar("Please enter a valid email address")
                 false
             }
             password.isEmpty() -> {
                 binding.edPassword.showSnackBar("please enter password")
                 false
             }
+            repeatPassword.isEmpty() -> {
+                binding.repPassword.showSnackBar("please retype your password")
+                false
+            }
+
             else -> true
 
         }

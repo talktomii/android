@@ -39,6 +39,7 @@ class SplashFragment : DaggerFragment() {
     }
 
     private fun openFragments() {
+//        view?.findNavController()?.navigate(R.id.tellUsMore)
         if (prefsManager.getString(PrefsManager.PREF_API_TOKEN, "").isNotEmpty()) {
             var user= getUser(prefsManager)
             if (user?.admin?.role?.roleName == "user")

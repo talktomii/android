@@ -1,10 +1,9 @@
 package com.talktomii.data.model
 
-import androidx.databinding.ObservableBoolean
-import com.talktomii.recycleradapter.AbstractModel
-import com.talktomii.ui.tellusmore.ItemsViewModel
+import com.talktomii.adapter.TopicsAdapter
+
 
 data class InterestResponse(
     val count: Int,
-    val interest: List<ItemsViewModel>
+    val interest: List<TopicsAdapter.ItemsViewModel>
 )

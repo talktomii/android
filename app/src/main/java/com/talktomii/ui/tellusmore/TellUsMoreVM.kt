@@ -42,9 +42,6 @@ class TellUsMoreVM @Inject constructor() : ViewModel() {
         }
     }
 
-
-
-
     init {
         topicsAdapter.setOnItemClick(topicsAdapterClick)
     }

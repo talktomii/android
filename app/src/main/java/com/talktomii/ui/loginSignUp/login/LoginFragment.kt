@@ -71,7 +71,7 @@ class LoginFragment : DaggerFragment() {
         bindObservers()
 
 //        faceBookLogin()
-        getDeviceToken()
+//        getDeviceToken()
     }
 
     private fun bindObservers() {
@@ -183,10 +183,10 @@ class LoginFragment : DaggerFragment() {
                 binding.txtEmailId.showSnackBar("Please enter your email id")
                 false
             }
-//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                binding.txtEmailId.showSnackBar("Please enter a valid email address")
-//                false
-//            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.txtEmailId.showSnackBar("Please enter a valid email address")
+                false
+            }
             password.isEmpty() ->{
                 binding.edPassword.showSnackBar("Please enter password")
                 false
@@ -213,8 +213,6 @@ class LoginFragment : DaggerFragment() {
         println("Google detail:  $account")
         var imageUrl = ""
         if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
-
-
 
 
     }

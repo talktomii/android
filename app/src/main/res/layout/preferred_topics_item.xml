@@ -3,34 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="model"
-            type="com.talktomii.data.model.Interest" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{(v)->model.onItemClick.onClick(v,model.viewHolder,``)}"
-        android:layout_marginVertical="5dp"
-        android:padding="@dimen/dp_2">
+        android:background="@drawable/curve_background"
+        android:layout_margin="7dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dp_4"
-            android:background="@drawable/curve_background"
-            android:backgroundTint="@{model.isClicked()==true ? @color/blue:@color/white}"
             android:gravity="center_vertical"
-            android:textColor="@{model.isClicked?@color/white:@color/black}"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:text="@{model.name}"
+            android:textColor="@color/grey_text"
             tools:text ="Religion"
-            android:textSize="13sp"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_5"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -25,6 +25,7 @@ import com.talktomii.data.model.admin1.AdminResponse1
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllSlotByDateResponse
 import com.talktomii.data.photo.UpdatePhoto
+import com.talktomii.ui.tellusmore.RequestAdminModel
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -277,8 +278,13 @@ interface WebService {
     @PUT(UPDATE_ADMIN + "/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
-        @Body data: HashMap<String, Any>,
-        @Header("Authorization") authHeader: String
+        @Body data: HashMap<String, Any>
     ): Response<AdminResponse1>
+
+    @PUT(UPDATE_ADMIN + "/{id}")
+    fun updateData(
+        @Path("id") id: String,
+        @Body data: RequestAdminModel
+    ):Call<ApiResponse<Any>>
 
 }

@@ -3,7 +3,7 @@ package com.talktomii.data.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-data class CustomerReviewModel(
+    data class CustomerReviewModel(
     val id: Int? = null,
     val user_id: Int? = null,
     val review: String? = null,

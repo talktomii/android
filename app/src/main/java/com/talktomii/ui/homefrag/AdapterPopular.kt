@@ -16,6 +16,7 @@ class AdapterPopular(
 ) :
     RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
+    private var isShowMore = false
 
     class ViewHolder(val binding: ItemPopularBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -27,7 +28,13 @@ class AdapterPopular(
 
 
     override fun getItemCount(): Int {
-        return popularArrayList.size
+        return if (isShowMore)
+            popularArrayList.size
+        else if (!isShowMore)
+            if (popularArrayList.size > 10)
+                10
+            else popularArrayList.size
+        else popularArrayList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -50,6 +57,11 @@ class AdapterPopular(
     fun setPopularList(admin: ArrayList<Admin>) {
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
+    }
+
+
+    fun showMoreOrLess(showMoreOrLess: Boolean) {
+        isShowMore = showMoreOrLess
     }
 
     interface onViewPopularClick {

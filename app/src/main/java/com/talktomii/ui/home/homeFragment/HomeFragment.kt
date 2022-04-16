@@ -24,7 +24,6 @@ class HomeFragment : DaggerFragment() {
     lateinit var viewModel: HomeViewModel
     lateinit var progressDialog: ProgressDialog
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

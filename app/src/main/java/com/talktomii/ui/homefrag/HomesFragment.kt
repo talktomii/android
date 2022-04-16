@@ -29,6 +29,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     @Inject
     lateinit var viewModel: HomeScreenViewModel
     private lateinit var progressDialog: ProgressDialog
+    private var isShowMore = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +79,19 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         } else {
             viewModel.getInfluence("")
         }
+
+        binding.txtSeeAll.setOnClickListener {
+            if (isShowMore) {
+                adapterPopular!!.showMoreOrLess(isShowMore)
+                isShowMore = false
+                binding.txtSeeAll.text = "See more"
+            } else {
+                adapterPopular!!.showMoreOrLess(isShowMore)
+                isShowMore = true
+                binding.txtSeeAll.text = "See less"
+            }
+        }
+
     }
 
     override fun onFailure(message: String) {

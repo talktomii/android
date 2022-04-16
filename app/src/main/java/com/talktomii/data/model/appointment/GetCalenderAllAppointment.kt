@@ -1,62 +1,52 @@
-package com.talktomii.data.model.getallslotbydate
-
-data class Status(
-    val modificationDate: String = "",
-    val name: String = ""
-)
-
+package com.talktomii.data.model.appointment
 
 data class SocialNetworkItem(
     val name: String = "",
-    val link: String = "",
+    val link: String? = null,
     val Id: String = ""
 )
 
 
-data class Uid(
+data class AppointmentStatus(
+    val modificationDate: String = "",
+    val name: String = ""
+)
+
+data class AppointmentUid(
     val isSocial: Boolean = false,
     val role: String = "",
     val isOnline: Boolean = false,
     val isActive: Boolean = false,
     val password: String = "",
+    val lname: String = "",
     val profilePhoto: String = "",
-    val blocked: List<String>?,
-    val interest: List<InterestItem>?,
-    val price: List<PriceItem>?,
+    val interest: List<AppointmentInterestItem>?,
     val V: Int = 0,
-    val aboutYou: String = "",
+    val aboutYou: String? = null,
     val registrationDate: String = "",
     val customerId: String = "",
     val email: String = "",
+    val fname: String = "",
     val coverPhoto: String = "",
     val latestToken: String = "",
     val userName: String = "",
-    val token: String = "",
+    val token: String? = null,
     val couponIsUsed: Boolean = false,
-    val name: String = "",
     val location: String = "",
     val Id: String = "",
-    val socialNetwork: List<SocialNetworkItem>?,
     val modificationData: String = "",
-    val status: Status
+    val status: AppointmentStatus
 )
 
 
-data class GetAllAppoinments(
-    val result: Int = 0,
-    val payload: PayloadAppoinment,
-    val message: String = ""
-)
-
-
-data class PriceItem(
+data class AppointmentPriceItem(
     val price: Int = 0,
     val time: String = "",
     val Id: String = ""
 )
 
 
-data class AvailaibilityItem(
+data class AppointmentAvailaibilityItem(
     val startTime: String = "",
     val end: String = "",
     val isBooked: Boolean = false,
@@ -66,53 +56,61 @@ data class AvailaibilityItem(
 )
 
 
-data class Ifid(
+data class AppointmentIfid(
     val isSocial: Boolean = false,
     val role: String = "",
-    val availaibility: List<AvailaibilityItem>?,
+    val availaibility: List<AppointmentAvailaibilityItem>?,
     val isOnline: Boolean = false,
     val isActive: Boolean = false,
     val password: String = "",
+    val lname: String = "",
     val profilePhoto: String = "",
-    val interest: List<InterestItem>?,
-    val price: List<Integer>?,
+//    val interest: List<AppointmentInterestItem>?,
+    val price: List<AppointmentPriceItem>?,
     val V: Int = 0,
     val aboutYou: String = "",
     val registrationDate: String = "",
     val customerId: String = "",
     val email: String = "",
-    val coverPhoto: String = "",
+    val fname: String = "",
+    val coverPhoto: String? = null,
     val latestToken: String = "",
     val userName: String = "",
-    val token: String = "",
+    val token: String? = null,
     val couponIsUsed: Boolean = false,
-    val name: String = "",
-    val fname: String = "",
-    val lname: String = "",
     val location: String = "",
     val Id: String = "",
+    val _id: String = "",
+    val socialNetwork: List<SocialNetworkItem>?,
     val modificationData: String = "",
-    val status: Status
+    val status: AppointmentStatus
 )
 
 
-data class PayloadAppoinment(
-    val interest: ArrayList<InterestItem>?,
+data class AppointmentPayload(
+    val Appointment: ArrayList<AppointmentInterestItem>?,
     val count: Int = 0
 )
 
 
-data class InterestItem(
+data class GetAllCalenderAppoinment(
+    val result: Int = 0,
+    val payload: AppointmentPayload,
+    val message: String = ""
+)
+
+
+data class AppointmentInterestItem(
     val date: String = "",
     val isDelete: Boolean = false,
-    val ifid: Ifid,
+    val ifid: AppointmentIfid,
     val duration: Int = 0,
-    val uid: Uid,
+    val uid: AppointmentUid,
     val createdAt: String = "",
     val price: Int = 0,
     val V: Int = 0,
     val startTime: String = "",
-    val Id: String = "",
+    val _id: String = "",
     val endTime: String = "",
     val status: String = "",
     val updatedAt: String = ""

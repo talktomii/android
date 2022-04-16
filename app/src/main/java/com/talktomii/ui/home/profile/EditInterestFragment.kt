@@ -101,6 +101,8 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
             for (item2 in editPersonalInfoVM.userField.get()!!.interest) {
                 if (item._id == item2._id) {
                     item.isClicked = true
+                }else{
+                    item.isClicked = false
                 }
             }
         }

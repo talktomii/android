@@ -66,7 +66,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
-    fun addBookmark() {
+    private fun addBookmark() {
 
         var hashMap: HashMap<String, Any> = hashMapOf()
         hashMap.put("ifid", userField.get()!!._id)
@@ -130,7 +130,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-                            onSlotSelectedInterface!!.onslotselect(authResponse.body()!!.payload.timeStops[0])
+                            onSlotSelectedInterface!!.onSlotTimesList(authResponse.body()!!.payload)
                         }
                     }
                 } else {

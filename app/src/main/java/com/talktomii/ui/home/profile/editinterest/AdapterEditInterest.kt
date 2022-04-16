@@ -10,7 +10,8 @@ import com.talktomii.R
 import com.talktomii.data.model.Interest
 import com.talktomii.databinding.ItemEditInterestBinding
 
-class AdapterEditInterest(context: Context) : RecyclerView.Adapter<AdapterEditInterest.ViewHolder>() {
+class AdapterEditInterest(context: Context) :
+    RecyclerView.Adapter<AdapterEditInterest.ViewHolder>() {
 
     var context: Context
     var isWhich = 1
@@ -37,6 +38,7 @@ class AdapterEditInterest(context: Context) : RecyclerView.Adapter<AdapterEditIn
     }
 
     fun setItemList(list: ArrayList<Interest>, which: Int) {
+        isWhich = which
         if (arraylist.isNotEmpty()) {
             arraylist.clear()
         }
@@ -54,18 +56,21 @@ class AdapterEditInterest(context: Context) : RecyclerView.Adapter<AdapterEditIn
 
         if (isWhich == 1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
+                holder.binding.tvItemName.backgroundTintList =
+                    ColorStateList.valueOf(context.getColor(R.color.blue))
                 holder.binding.tvItemName.setTextColor(context.getColor(R.color.white))
             }
         } else {
             if (model.isClicked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
+                    holder.binding.tvItemName.backgroundTintList =
+                        ColorStateList.valueOf(context.getColor(R.color.blue))
                     holder.binding.tvItemName.setTextColor(context.getColor(R.color.white))
                 }
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.white))
+                    holder.binding.tvItemName.backgroundTintList =
+                        ColorStateList.valueOf(context.getColor(R.color.white))
                     holder.binding.tvItemName.setTextColor(context.getColor(R.color.black))
                 }
             }
@@ -77,13 +82,15 @@ class AdapterEditInterest(context: Context) : RecyclerView.Adapter<AdapterEditIn
                 if (model.isClicked) {
                     model.isClicked = false
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.white))
+                        holder.binding.tvItemName.backgroundTintList =
+                            ColorStateList.valueOf(context.getColor(R.color.white))
                         holder.binding.tvItemName.setTextColor(context.getColor(R.color.black))
                     }
                 } else {
                     model.isClicked = true
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
+                        holder.binding.tvItemName.backgroundTintList =
+                            ColorStateList.valueOf(context.getColor(R.color.blue))
                         holder.binding.tvItemName.setTextColor(context.getColor(R.color.white))
                     }
                 }

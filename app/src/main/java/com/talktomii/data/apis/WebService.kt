@@ -7,6 +7,10 @@ import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.admin1.UpdateAdmin
+import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
+import com.talktomii.data.model.appointment.UpdateAppointment
+import com.talktomii.data.model.appointment.GetAppointmentById
 import com.talktomii.data.model.currentwallet.CurrentWallet
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
@@ -26,6 +30,7 @@ import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -59,12 +64,14 @@ interface WebService {
         private const val REMOVE_BOOKMARK = "favoriteService/deleteService"
         private const val GET_BOOKMARKS = "favoriteService/getService"
         private const val ADD_APPOINMENT = "appointment/addAppointment"
-        private const val UPDATE_APPOINMENT = "appointment/updateAppointment/"
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
-        private const val GET_ALL_AMOUNT = "appointment/getAllAppointment"
+        private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
+        private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
+        private const val GET_APPOINTMENT_BY_DATE = "appointment/getAppointmentByDate"
+        private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
 
     }
 
@@ -242,14 +249,8 @@ interface WebService {
     @POST(ADD_APPOINMENT)
     suspend fun addAppoinment(
         @Body id: HashMap<String, Any>,
+    ): Response<BookMarkResponse>
 
-        ): Response<BookMarkResponse>
-
-    @POST(UPDATE_APPOINMENT + "/{id}")
-    suspend fun updateAppoinment(
-        @Path("id") id: String,
-
-        ): Response<BookMarkResponse>
 
     @GET(GET_ALL_SLOT_BY_DATE)
     suspend fun getAllSlotByDate(
@@ -268,19 +269,52 @@ interface WebService {
     @PUT(UPDATE_ADMIN + "/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
-        @Body data: String,
-        ): Response<AdminResponse1>
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAdmin>
 
 
     @GET(GET_CURRENT_AMOUNT + "/{id}")
     suspend fun getCurrentAmountFromWallet(
-        @Query("id") id: String): Response<CurrentWallet>
+        @Query("id") id: String
+    ): Response<CurrentWallet>
 
 
-    @GET(GET_ALL_AMOUNT)
+    @GET(GET_ALL_APPOINTMENT)
     suspend fun getAllAppointment(
         @Query("ifid") id: String
     ): Response<GetAllAppoinments>
 
+    @GET(GET_ALL_APPOINTMENT)
+    suspend fun getCalenderAllAppointment(
+        @Query("ifid") id: String
+    ): Response<GetAllCalenderAppoinment>
 
+    @GET(GET_APPOINTMENT_BY_ID + "/{id}")
+    suspend fun getAppointmentById(
+        @Path("id") id: String
+    ): Response<GetAppointmentById>
+
+
+    @GET(GET_APPOINTMENT_BY_DATE)
+    suspend fun getAppointmentByDate(
+        @Query("date") date: String,
+        @Query("id") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun updateAppointment(
+        @Path("id") id: String,
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAppointment>
+
+    @GET(GET_CALL_HISTORY)
+    suspend fun getCallUsersCallHistory(
+        @Query("id") id: String
+    ): Response<CallHistoryData>
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun deleteAppointment(
+        @Path("id") id: String,
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAppointment>
 }

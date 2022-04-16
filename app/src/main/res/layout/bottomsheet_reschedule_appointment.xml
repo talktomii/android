@@ -50,6 +50,17 @@
             app:selectorColor="@android:color/transparent"
             app:textColorNormal="@color/black"
             app:textColorSelected="@color/white" />
+        <Spinner
+            android:id="@+id/spinnerTimeDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTimeSlotAppointment"
             android:layout_width="match_parent"
@@ -68,7 +79,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
-            android:id="@+id/txtBookACall"
+            android:id="@+id/tvRescheduleAppointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"

@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.admin.Admin
-import com.talktomii.data.model.admin.Payload
 import com.talktomii.databinding.HomeFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
@@ -98,7 +97,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         onCoverClicked(admin)
     }
 
-    override fun onHomeAdmins(payload: Payload) {
+    override fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload) {
         progressDialog.dismiss()
         adapterPopular!!.setPopularList(payload.admin)
 

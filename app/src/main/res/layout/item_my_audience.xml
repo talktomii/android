@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="170dp"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:background="@drawable/gray_audience_background"
-        android:layout_height="wrap_content">
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivImage"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_image_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="@dimen/dp_60">
+            app:riv_corner_radius="@dimen/dp_60"
+            tools:src="@drawable/ic_image_back">
 
-        </ImageView>
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivOnline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_online"
             android:layout_marginEnd="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_10"
+            android:src="@drawable/ic_online"
             app:layout_constraintBottom_toBottomOf="@+id/ivImage"
             app:layout_constraintEnd_toEndOf="@+id/ivImage" />
 
@@ -37,25 +38,25 @@
             android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dianne R."
+            android:layout_marginTop="@dimen/dp_10"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="@+id/ivImage"
             app:layout_constraintStart_toStartOf="@+id/ivImage"
-            app:layout_constraintTop_toBottomOf="@+id/ivImage" />
+            app:layout_constraintTop_toBottomOf="@+id/ivImage"
+            tools:text="Dianne R." />
 
         <TextView
             android:id="@+id/txtUserNAme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\@Diannnnne"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/txtName"
             app:layout_constraintStart_toStartOf="@+id/txtName"
-            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+            app:layout_constraintTop_toBottomOf="@+id/txtName"
+            tools:text="\@Diannnnne" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

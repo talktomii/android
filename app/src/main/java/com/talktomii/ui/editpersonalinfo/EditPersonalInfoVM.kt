@@ -14,15 +14,16 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.UpdatePhotoInterface
-import com.talktomii.utlis.uid
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
+import com.talktomii.interfaces.UpdateProfileInterface
 import okhttp3.RequestBody
 import javax.inject.Inject
 
 class EditPersonalInfoVM @Inject constructor(private val webService: WebService) : ViewModel() {
     var commonInterface: CommonInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
+    var onUpdateProfileInterface: UpdateProfileInterface? = null
     var userField = ObservableField<Admin1>()
     var updatePhotoInterface: UpdatePhotoInterface? = null
 
@@ -53,7 +54,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         }
     }
 
-    fun updateProfile(data: String, _id: String) {
+    fun updateProfile(data: HashMap<String, Any>, _id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
@@ -61,7 +62,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-                            adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
+                            onUpdateProfileInterface?.onUpdateProfileDetails(authResponse.body()!!.payload.admin)
                         }
                     }
                 } else {

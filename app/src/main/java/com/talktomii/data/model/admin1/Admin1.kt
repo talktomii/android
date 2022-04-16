@@ -25,6 +25,8 @@ data class Admin1(
     var location: String,
     val modificationData: String,
     var name: String,
+    var fname: String,
+    var lname: String,
 //    var priceList: ArrayList<Int>,
     var price: ArrayList<Price>,
     val profilePhoto: String,

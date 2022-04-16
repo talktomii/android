@@ -18,15 +18,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.gson.Gson
 import com.talktomii.R
+import com.talktomii.data.model.Admin
+import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.UpdateInfluence
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
+import com.talktomii.data.model.admin.SendAvailaibility
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.UpdateProfileInterface
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
@@ -37,6 +40,7 @@ import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
+import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -47,7 +51,7 @@ import javax.inject.Inject
 
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
-    CommonInterface, AdapterPrice.onViewEdiPriceClick {
+    CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -64,6 +68,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private var fileCoverPhoto: File? = null
     private var isChangeProfile = false
     private var isChangeUserData = false
+
     @Inject
     lateinit var prefsManager: PrefsManager
     override fun onCreateView(
@@ -151,7 +156,9 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         }
 
         binding.tvSave.setOnClickListener {
+
             if (isChangeProfile) {
+
                 val map: HashMap<String, RequestBody> = HashMap()
                 if (fileProfile != null) {
                     val body = fileProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -161,28 +168,82 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     val body = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     map["coverPhoto\"; filename=\"imageCover.png\" "] = body
                 }
-                viewModel.updatePhoto(map,getUser(prefsManager)!!.admin._id)
-            }
-            viewModel.userField.get()!!.apply {
-                name = binding.etFirstName.text.toString()
-                userName = binding.etUsername.text.toString()
+                viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
 
-            val userData = viewModel.userField.get()
-            val updateInfluence: UpdateInfluence = UpdateInfluence()
-            updateInfluence.name = userData!!.name
-            updateInfluence.userName = userData.userName
-            updateInfluence.availaibility = userData.availaibility
 
 
-            updateInfluence.location = if (userData.location != null) userData.location else ""
-            updateInfluence.price =
-                if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-            updateInfluence.socialNetwork =
-                if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
-            updateInfluence.interest =
-                if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
-            viewModel.updateProfile(Gson().toJson(updateInfluence),getUser(prefsManager)!!.admin._id)
+            if (!isUser(prefsManager)) {
+                val updateInfluence: UpdateInfluence = UpdateInfluence()
+//                updateInfluence.fname = binding.etFirstName.text.toString()
+//                updateInfluence.lname = binding.etLastName.text.toString()
+//                updateInfluence.userName = binding.etUsername.text.toString()
+                val hashMap: HashMap<String, Any> = hashMapOf()
+                hashMap["fname"] = binding.etFirstName.text.toString()
+                hashMap["lname"] = binding.etLastName.text.toString()
+                hashMap["userName"] = binding.etUsername.text.toString()
+
+                val userData = viewModel.userField.get()
+                var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
+
+                for (i in userData!!.availaibility) {
+                    if (i.end == "Never") {
+                        i.end = ""
+                    }
+                    val availbility = SendAvailaibility()
+                    availbility.day = i.day
+                    availbility.end = i.end
+                    availbility.endTime = i.endTime
+                    availbility.startTime = i.startTime
+                    availaibility.add(availbility)
+                }
+                hashMap["availaibility"] = availaibility
+                hashMap["location"] = userData.location
+                hashMap["price"] =
+                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
+                hashMap["socialNetwork"] = userData.socialNetwork
+
+                val interstArrayList: ArrayList<String> = arrayListOf()
+                for (i in userData.interest) {
+                    interstArrayList.add(i._id)
+                }
+                hashMap["interest"] = interstArrayList
+
+//                updateInfluence.availaibility = userData!!.availaibility
+//                updateInfluence.location = if (userData.location != null) userData.location else ""
+//                updateInfluence.price =
+//                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
+//                updateInfluence.socialNetwork =
+//                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
+//                updateInfluence.interest =
+//                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
+                viewModel.updateProfile(
+                    hashMap,
+                    getUser(prefsManager)!!.admin._id
+                )
+            } else {
+//                val updateUser: UpdateUser = UpdateUser()
+//
+//
+//                updateUser.lname = binding.etLastName.text.toString()
+//                updateUser.userName = binding.etUsername.text.toString()
+//                binding.etFirstName.text.toString().also { updateUser.fname = it }
+//                val request = JSONObject(Gson().toJson(updateUser).trim())
+
+                try {
+                    val hashMap: HashMap<String, Any> = hashMapOf()
+                    hashMap["fname"] = binding.etFirstName.text.toString()
+                    hashMap["lname"] = binding.etLastName.text.toString()
+                    hashMap["userName"] = binding.etUsername.text.toString()
+                    viewModel.updateProfile(
+                        hashMap,
+                        getUser(prefsManager)!!.admin._id
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
         }
 
         binding.ivInterest.setOnClickListener {
@@ -252,6 +313,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         progressDialog = ProgressDialog(requireActivity())
         viewModel.adminDetailInterface = this
         viewModel.commonInterface = this
+        viewModel.onUpdateProfileInterface = this
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setListeners()
@@ -290,19 +352,25 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             ContextCompat.getDrawable(requireContext(), R.drawable.bg_gradient_profile)
 //        }
 
-        updatePriceAdapter()
-        updateInterestAdapter()
-        if (viewModel.userField.get()!!.interest.size > 0) {
-            binding.rvPrice.visibility = View.VISIBLE
+        if (isUser(prefsManager)) {
+            binding.constrainInfluancer.visibility = View.GONE
         } else {
-            binding.rvPrice.visibility = View.GONE
+            binding.constrainInfluancer.visibility = View.VISIBLE
+            updatePriceAdapter()
+            updateInterestAdapter()
+            if (viewModel.userField.get()!!.interest.size > 0) {
+                binding.rvPrice.visibility = View.VISIBLE
+            } else {
+                binding.rvPrice.visibility = View.GONE
+            }
+            (binding.rvInterest.adapter as AdapterEditInterest).setItemList(
+                viewModel.userField.get()!!.interest,
+                1
+            )
+            updateAvailabilityAdapter()
+            (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
+
         }
-        (binding.rvInterest.adapter as AdapterEditInterest).setItemList(
-            viewModel.userField.get()!!.interest,
-            1
-        )
-        updateAvailabilityAdapter()
-        (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
 
     }
 
@@ -320,10 +388,20 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     }
 
     fun updatePriceAdapter() {
+        if (viewModel.userField.get()!!.price.size > 0) {
+            binding.rvPrice.visibility = View.VISIBLE
+        } else {
+            binding.rvPrice.visibility = View.GONE
+        }
         (binding.rvPrice.adapter as AdapterPrice).setItemList(viewModel.userField.get()!!.price)
     }
 
     fun updateAvailabilityAdapter() {
+        if (viewModel.userField.get()!!.availaibility.size > 0) {
+            binding.rvAvailability.visibility = View.VISIBLE
+        } else {
+            binding.rvAvailability.visibility = View.GONE
+        }
         availableAdapter?.setItemList(viewModel.userField.get()!!.availaibility)
     }
 
@@ -355,5 +433,15 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             model, position
         )
         bottomsheet.show(childFragmentManager, "addtimeperiod")
+    }
+
+    override fun onUpdateProfileDetails(admin1: Admin) {
+        progressDialog.dismiss()
+        var registerModel: RegisterModel? = getUser(prefsManager)
+        registerModel!!.admin = admin1
+        prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
+        findNavController().popBackStack()
+
+
     }
 }

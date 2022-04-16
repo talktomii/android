@@ -2,13 +2,14 @@ package com.talktomii.utlis
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
 import com.talktomii.utlis.DateFormate.DAY_MONTH_DATE_YEAR
 import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
-import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -79,6 +80,19 @@ object DateUtils {
 
     }
 
+    fun setDateToWeekDate(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            val outputFormat = SimpleDateFormat(WEEK_TIME_FORMAT)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+
+    }
+
     fun getDateToShortDate(startTime: String): String {
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
@@ -131,7 +145,40 @@ object DateUtils {
         return dateFormatChange(CALENDER_DATE, DAY_MONTH_DATE_YEAR, date)
     }
 
+    fun DateAndTimeMerge(date: Date?, time: Date?): Date? {
+        val aDate = Calendar.getInstance()
+        aDate.time = date
+        val aTime = Calendar.getInstance()
+        aTime.time = time
+        val aDateTime = Calendar.getInstance()
+        aDateTime[Calendar.DAY_OF_MONTH] = aDate[Calendar.DAY_OF_MONTH]
+        aDateTime[Calendar.MONTH] = aDate[Calendar.MONTH]
+        aDateTime[Calendar.YEAR] = aDate[Calendar.YEAR]
+        aDateTime[Calendar.HOUR] = aTime[Calendar.HOUR]
+        aDateTime[Calendar.MINUTE] = aTime[Calendar.MINUTE]
+        aDateTime[Calendar.SECOND] = aTime[Calendar.SECOND]
+        return aDateTime.time
+    }
 
+    fun addMinutes(selectedStartTime: String, time: String): String {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(selectedStartTime)
+        val cal = Calendar.getInstance()
+        cal.time = d
+//        if (time.contains("min")) {
+        val number: String = time.replace("[^0-9]", "")
+        cal.add(Calendar.MINUTE, number.toInt())
+//        }
+        return df.format(cal.time)
+    }
+
+    fun convertStringToCalender(time : String): Calendar {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(time)
+        val cal = Calendar.getInstance()
+        cal.time = d
+        return cal;
+    }
 }
 
 /*On Date selected listener*/
@@ -145,5 +192,6 @@ object DateFormate {
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
     const val TIME_FORMAT = "hh:mm aaa"
+    const val WEEK_TIME_FORMAT = "EEE dd"
     const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }

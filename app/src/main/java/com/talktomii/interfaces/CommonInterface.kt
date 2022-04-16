@@ -5,3 +5,7 @@ interface CommonInterface {
     fun onFailureAPI(message: String)
     fun onStarted()
 }
+interface FailureAPI400{
+    fun onFailureAPI400(message: String)
+
+}

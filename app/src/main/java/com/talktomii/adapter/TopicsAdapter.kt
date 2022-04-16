@@ -23,7 +23,6 @@ class TopicsAdapter(private val mList: List<ItemsViewModel>) :
 
         val itemsViewModel = mList[position]
         holder.itemName.text = itemsViewModel.name
-
     }
 
     fun setOnItemClick(onItemClick: OnItemClick?) {

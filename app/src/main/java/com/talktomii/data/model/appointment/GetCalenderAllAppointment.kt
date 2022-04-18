@@ -20,7 +20,7 @@ data class AppointmentUid(
     val password: String = "",
     val lname: String = "",
     val profilePhoto: String = "",
-    val interest: List<AppointmentInterestItem>?,
+//    val interest: List<AppointmentInterestItem>?,
     val V: Int = 0,
     val aboutYou: String? = null,
     val registrationDate: String = "",

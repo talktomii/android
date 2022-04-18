@@ -3,7 +3,9 @@ package com.talktomii.viewmodel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.api.ApiException
+import com.google.gson.GsonBuilder
 import com.talktomii.data.apis.WebService
+import com.talktomii.data.model.ErrorModelClass
 import com.talktomii.data.model.currentwallet.WalletData
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
@@ -11,6 +13,7 @@ import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.utlis.listner.*
+import java.io.IOException
 import javax.inject.Inject
 
 class InfluenceHomeViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
@@ -185,7 +188,22 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         rescheduleAppointmentListener?.onRescheduleAppointment(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    if (authResponse.code() === 400) {
+                        val gson = GsonBuilder().create()
+                        var mError = ErrorModelClass()
+                        try {
+                            mError = gson.fromJson(
+                                authResponse.errorBody()!!.string(),
+                                ErrorModelClass::class.java
+                            )
+                            commonInterface!!.onFailureAPI(mError.message)
+
+                        } catch (e: IOException) {
+                            // handle failure to read error
+                        }
+                    } else {
+                        commonInterface!!.onFailureAPI(authResponse.message())
+                    }
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -212,7 +230,22 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
 //                        infulancerCalenderListner?.infulancerCalenderList(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    if (authResponse.code() === 400) {
+                        val gson = GsonBuilder().create()
+                        var mError = ErrorModelClass()
+                        try {
+                            mError = gson.fromJson(
+                                authResponse.errorBody()!!.string(),
+                                ErrorModelClass::class.java
+                            )
+                            commonInterface!!.onFailureAPI(mError.message)
+
+                        } catch (e: IOException) {
+                            // handle failure to read error
+                        }
+                    } else {
+                        commonInterface!!.onFailureAPI(authResponse.message())
+                    }
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

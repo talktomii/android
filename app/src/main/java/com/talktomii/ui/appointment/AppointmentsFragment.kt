@@ -33,9 +33,11 @@ import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.STATUS
+import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
 import com.talktomii.utlis.listner.AddInfluncerItem
 import com.talktomii.utlis.listner.InfluenceCalenderListener
@@ -71,6 +73,8 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     var recycleViewRescheduleSlot: RecyclerView? = null
     var spinnerTimeDuration: Spinner? = null
     private var selectedItemForReschedule: AppointmentInterestItem? = null
+    private lateinit var progressDialog: ProgressDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,7 +93,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         viewModel.rescheduleAppointmentListener = this
         viewModel.influncerItem = this
         viewModel.addInfluncerItem = this
-
+        progressDialog = ProgressDialog(requireActivity())
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
         binding.calendarViewAppointment.setOnDateChangedListener(object : OnDateSelectedListener {
@@ -108,7 +112,6 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
     }
 
     private fun initAdapter() {
@@ -118,22 +121,26 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
 
     override fun onSlotTimesList(timeStop: Payload) {
-
+        progressDialog.dismiss()
         availableTimeSlots = timeStop
         setTimeSlot()
     }
 
     override fun onFailure(message: String) {
-
+        progressDialog.dismiss()
     }
 
     override fun onFailureAPI(message: String) {
+        progressDialog.dismiss()
+        showToastMessage(requireContext(), message)
     }
 
     override fun onStarted() {
+        progressDialog.show()
     }
 
     override fun influenceCalenderList(payload: AppointmentPayload) {
+        progressDialog.dismiss()
         appointmentAdapter!!.setList(payload.Appointment)
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
         for (i in payload.Appointment!!) {
@@ -159,6 +166,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     var reScheduleAppointmentDialog: BottomSheetDialog? = null
     var deleteAppointmentDialog: BottomSheetDialog? = null
     override fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int) {
+        progressDialog.dismiss()
         selectedItemForReschedule = interest
         reScheduleAppointmentDialog = BottomSheetDialog(
             requireContext(),
@@ -230,6 +238,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onViewDeleteAppointment(interest: AppointmentInterestItem, position: Int) {
+        progressDialog.dismiss()
         selectedItemForReschedule = interest
 
         val dialog = Dialog(requireContext())
@@ -313,15 +322,18 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun onDeleteAppointment(admin: UpdateAppointmentPayload, position: Int) {
+        progressDialog.dismiss()
         viewModel.getAppointmentById(admin.Item._id)
     }
 
     override fun onRescheduleAppointment(admin: UpdateAppointmentPayload) {
+        progressDialog.dismiss()
         viewModel.getAppointmentById(admin.Item._id)
         reScheduleAppointmentDialog!!.dismiss()
     }
 
     override fun influenceItem(payload: AppointmentPayload) {
+        progressDialog.dismiss()
         if (payload.Appointment?.size ?: 0 > 0) {
             appointmentAdapter?.addItemsList(payload.Appointment)
 
@@ -332,6 +344,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     }
 
     override fun addInfluenceItem(payload: AppointmentByIdPayload) {
+        progressDialog.dismiss()
         if (payload.Appointment != null) {
             appointmentAdapter?.addItem(payload.Appointment)
 

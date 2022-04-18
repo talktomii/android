@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_sign_up.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />
@@ -147,9 +146,12 @@
         <entry key="app/src/main/res/drawable/blue_drak_background.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/drawable/bottom_nav_color.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/drawable/bottom_navigation_background.xml" value="0.1390625" />
+        <entry key="app/src/main/res/drawable/bottomsheet_round_bg.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/drawable/button_selector_squar.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/drawable/curve_background.xml" value="0.17604166666666668" />
         <entry key="app/src/main/res/drawable/g_scan_card_rounder.xml" value="0.16354166666666667" />
+        <entry key="app/src/main/res/drawable/gray_audience_background.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable/gray_home_background.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_expand_less_24.xml" value="0.21614583333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.21614583333333334" />
@@ -192,6 +194,8 @@
         <entry key="app/src/main/res/layout/add_bank_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/back_to_home_dialog.xml" value="0.10729166666666666" />
         <entry key="app/src/main/res/layout/block_user_popup.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bottomsheet_addprice.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/bottomsheet_location.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/layout/bottomsheet_refund_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottomsheet_reschedule_appointment.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/call_history.xml" value="0.16" />
@@ -199,6 +203,7 @@
         <entry key="app/src/main/res/layout/chat_support_shape.xml" value="0.18" />
         <entry key="app/src/main/res/layout/chatuser_shape.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/confirm_block_user_popup.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/confirmdelete_callhistory.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/confirmdelete_callhstory.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/deletecallhistory_popup.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/edit_interest_fragment.xml" value="0.22192028985507245" />
@@ -215,9 +220,10 @@
         <entry key="app/src/main/res/layout/fragment_earning.xml" value="0.2013157894736842" />
         <entry key="app/src/main/res/layout/fragment_enter_phone.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_expense.xml" value="0.2013157894736842" />
-        <entry key="app/src/main/res/layout/fragment_forget_password.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_forget.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_forget_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.23802083333333332" />
-        <entry key="app/src/main/res/layout/fragment_home_influencer.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home_influencer.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_how_we_work.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/fragment_influencer_profile.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5" />
@@ -226,6 +232,7 @@
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/fragment_refill.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/fragment_reset_password.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/fragment_start.xml" value="0.1625" />
@@ -237,6 +244,7 @@
         <entry key="app/src/main/res/layout/item_edit_interest.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_interests.xml" value="0.15989583333333332" />
         <entry key="app/src/main/res/layout/item_my_audience.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_nearest_appointments.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_notification.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/item_payment_method.xml" value="0.23802083333333332" />
         <entry key="app/src/main/res/layout/item_popular.xml" value="0.13697916666666668" />
@@ -266,7 +274,7 @@
         <entry key="app/src/main/res/layout/select_address_activity_layout.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/settings.xml" value="0.22" />
         <entry key="app/src/main/res/layout/tell_us_more.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.22" />
         <entry key="app/src/main/res/layout/test_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/wallet_earning_item.xml" value="0.18" />
         <entry key="app/src/main/res/layout/wallet_expense_item.xml" value="0.184375" />

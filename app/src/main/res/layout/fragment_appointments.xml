@@ -34,7 +34,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
+                app:mcv_selectionColor="@color/blue"
                 android:layout_marginEnd="@dimen/dp_16"
+                android:switchTextAppearance="@color/calText"
+                app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_weekDayTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_headerTextAppearance="@style/CalenderViewDateCustomText"
                 app:layout_constraintTop_toBottomOf="@+id/txtMyAppointment"
                 tools:layout_editor_absoluteX="16dp" />
 

@@ -78,18 +78,15 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentAppointmentsBinding.inflate(inflater, container, false)
-        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
-            }
-        }
+//        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
+//                binding.calendarViewAppointment.swi
+//            }
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
+//            }
+//        }
         return binding.root
     }
 
@@ -102,7 +99,6 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         viewModel.rescheduleAppointmentListener = this
         viewModel.influncerItem = this
         viewModel.addInfluncerItem = this
-
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
         binding.calendarViewAppointment.setOnDateChangedListener(object : OnDateSelectedListener {
@@ -114,14 +110,12 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 val selectedDate = "" + date.year + "-" + date.month + "-" + date.day
                 viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
             }
-
         })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
     }
 
     private fun initAdapter() {

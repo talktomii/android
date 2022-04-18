@@ -114,6 +114,9 @@ abstract class BindingsModule {
     abstract fun editInterestFragment(): EditInterestFragment
 
     @ContributesAndroidInjector
+    abstract fun viewInterestFragment(): ViewInterestFragment
+
+    @ContributesAndroidInjector
     abstract fun homeFrag(): MyCards
 
     @ContributesAndroidInjector

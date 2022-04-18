@@ -74,16 +74,14 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
         viewModel.commonInterface = this
         viewModel.homeInterface = this
-        if (arguments?.getString("id") != null) {
-            viewModel.getInfluence(arguments?.getString("id")!!)
-
+        if (arguments?.getString("ID") != null) {
+            viewModel.getInfluence(arguments?.getString("ID")!!)
         } else {
             if (adapterPopular!!.getList().size > 0) {
                 adapterPopular!!.setPopularList(adapterPopular!!.getList())
             } else {
                 viewModel.getInfluence("")
             }
-
         }
 
         binding.txtSeeAll.setOnClickListener {

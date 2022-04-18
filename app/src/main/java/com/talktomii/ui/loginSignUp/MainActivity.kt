@@ -73,6 +73,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 binding.constWallet.setPadding(20)
             }
         }
+
         btnMenu  =  binding.btnMenu
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)

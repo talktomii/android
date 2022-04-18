@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.talktomii.R
+import com.talktomii.data.model.Admin
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
@@ -64,6 +66,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private var selectedStartTime: String? = null
     private var selectedEndTime: String? = null
     private var selectedDate: String? = null
+    private var selectedAdmin  : Admin1? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -87,6 +91,13 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
         }
         initAdapter()
+
+        binding.txtItemCount.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable("interest" , selectedAdmin!!.interest)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_viewInterestFragment,bundle)
+
+        }
     }
 
     private fun initAdapter() {
@@ -140,7 +151,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.viewModel2 = viewModel
 
         setListener()
-
+        init()
         val endDate: Calendar = Calendar.getInstance()
         endDate.add(Calendar.DAY_OF_MONTH, +7)
 //        val startDate: Calendar = Calendar.getInstance()
@@ -162,7 +173,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             }
         }
 
-        init()
+        selectedDate = SimpleDateFormat("yyyy-MM-dd").format(startDate.time)
+        viewModel.getAllSlotByDate(selectedDate.toString())
     }
 
     override fun onFailure(message: String) {
@@ -179,6 +191,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
 
     override fun onAdminDetails(admin1: Admin1) {
+        selectedAdmin = admin1
         viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
         context?.let {
             Glide.with(it).load(admin1.coverPhoto)
@@ -194,9 +207,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         progressDialog.dismiss()
         socialMediaAdapter?.setItemList(admin1.socialNetwork)
         if (admin1.interest.size > 0) {
+            if (admin1.interest.size > 3) {
+                binding.txtItemCount.visibility = View.VISIBLE
+                binding.txtItemCount.text = "+" + viewModel.userField.get()!!.interest.size.minus(3)
+            } else {
+                binding.txtItemCount.visibility = View.GONE
+            }
             binding.txtInterests.visibility = View.VISIBLE
             adapterInterests?.setItemList(admin1.interest)
-            binding.txtItemCount.visibility = View.VISIBLE
         } else {
             binding.txtInterests.visibility = View.GONE
             binding.txtItemCount.visibility = View.GONE
@@ -276,6 +294,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private fun isValidateAppointment(): Boolean {
         if (selectedStartTime == null) {
             showToastMessage(requireContext(), getString(R.string.select_time_slot))
+            return false
+        } else if (selectedDate == null) {
+            showToastMessage(requireContext(), getString(R.string.select_appointment_date))
             return false
         }
         return true

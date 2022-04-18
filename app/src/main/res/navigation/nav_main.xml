@@ -115,6 +115,11 @@
         <action
             android:id="@+id/action_influencerProfileFragment_to_myWalletFragment"
             app:destination="@id/myWalletFragment" />
+        <action
+            android:id="@+id/action_influencerProfileFragment_to_viewInterestFragment"
+            app:destination="@id/viewInterestFragment" >
+
+        </action>
     </fragment>
 
     <fragment
@@ -254,6 +259,11 @@
         <action
             android:id="@+id/action_bookmarkFragment_to_influencerProfileFragment"
             app:destination="@id/influencerProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewInterestFragment"
+        android:name="com.talktomii.ui.home.profile.ViewInterestFragment"
+        android:label="ViewInterestFragment" >
     </fragment>
 
 </navigation>

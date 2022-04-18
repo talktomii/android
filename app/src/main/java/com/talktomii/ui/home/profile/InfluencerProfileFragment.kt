@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
@@ -179,7 +180,17 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     override fun onAdminDetails(admin1: Admin1) {
         viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
+        context?.let {
+            Glide.with(it).load(admin1.coverPhoto)
+                .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
+                .into(binding.ivCoverPhoto)
+        }
 
+        context?.let {
+            Glide.with(it).load(admin1.profilePhoto)
+                .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
+                .into(binding.imgDefault)
+        }
         progressDialog.dismiss()
         socialMediaAdapter?.setItemList(admin1.socialNetwork)
         if (admin1.interest.size > 0) {

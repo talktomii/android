@@ -53,7 +53,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        binding.vm = viewModels
-        initAdapter()
         init()
     }
 
@@ -69,6 +68,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun init() {
+        initAdapter()
+
         progressDialog = ProgressDialog(requireActivity())
 
         viewModel.commonInterface = this
@@ -77,7 +78,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             viewModel.getInfluence(arguments?.getString("id")!!)
 
         } else {
-            viewModel.getInfluence("")
+            if (adapterPopular!!.getList().size > 0){
+                adapterPopular!!.setPopularList(adapterPopular!!.getList())
+            }else{
+                viewModel.getInfluence("")
+            }
+
         }
 
         binding.txtSeeAll.setOnClickListener {

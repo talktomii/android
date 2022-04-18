@@ -46,10 +46,7 @@ import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.ui.settings.PrivacyAndPolicyActivity
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
-import com.talktomii.utlis.BackToHomeDialog
-import com.talktomii.utlis.CallDialog
-import com.talktomii.utlis.DeleteAppointmentDialog
-import com.talktomii.utlis.ExtendTimeDialog
+import com.talktomii.utlis.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -186,6 +183,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun profileInfluencerFragment(): InfluencerProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun aboutMeDialog(): AboutMeDialog
 
 
     @ContributesAndroidInjector

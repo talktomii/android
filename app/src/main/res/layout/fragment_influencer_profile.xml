@@ -29,11 +29,21 @@
                 android:id="@+id/coverPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_120"
-                android:background="@drawable/ic_bg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivCoverPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_120"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ic_bg"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/txtBack"
@@ -108,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="@{viewModel2.userField.name}"
+                android:text="@{viewModel2.userField.fname +' '+viewModel2.userField.lname}"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold"

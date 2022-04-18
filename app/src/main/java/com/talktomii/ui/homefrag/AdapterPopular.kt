@@ -38,7 +38,8 @@ class AdapterPopular(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.txtName.text = popularArrayList[position].name
+        holder.binding.txtName.text =
+            popularArrayList[position].fname  + " " + popularArrayList[position].lname
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -57,6 +58,10 @@ class AdapterPopular(
     fun setPopularList(admin: ArrayList<Admin>) {
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
+    }
+
+    fun getList(): ArrayList<Admin> {
+        return popularArrayList;
     }
 
 

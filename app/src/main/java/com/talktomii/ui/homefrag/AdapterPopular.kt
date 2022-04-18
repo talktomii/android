@@ -28,6 +28,7 @@ class AdapterPopular(
 
 
     override fun getItemCount(): Int {
+        //isShowMore -> False -> Show All Items
         return if (isShowMore)
             popularArrayList.size
         else if (!isShowMore)

@@ -78,26 +78,30 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             viewModel.getInfluence(arguments?.getString("id")!!)
 
         } else {
-            if (adapterPopular!!.getList().size > 0){
+            if (adapterPopular!!.getList().size > 0) {
                 adapterPopular!!.setPopularList(adapterPopular!!.getList())
-            }else{
+            } else {
                 viewModel.getInfluence("")
             }
 
         }
 
         binding.txtSeeAll.setOnClickListener {
-            if (isShowMore) {
-                adapterPopular!!.showMoreOrLess(isShowMore)
-                isShowMore = false
-                binding.txtSeeAll.text = "See more"
-            } else {
-                adapterPopular!!.showMoreOrLess(isShowMore)
-                isShowMore = true
-                binding.txtSeeAll.text = "See less"
-            }
+            handleShowMore()
         }
+        handleShowMore()
+    }
 
+    private fun handleShowMore() {
+        if (isShowMore) {
+            adapterPopular!!.showMoreOrLess(isShowMore)
+            isShowMore = false
+            binding.txtSeeAll.text = "See more"
+        } else {
+            adapterPopular!!.showMoreOrLess(isShowMore)
+            isShowMore = true
+            binding.txtSeeAll.text = "See less"
+        }
     }
 
     override fun onFailure(message: String) {

@@ -116,9 +116,9 @@ class LoginFragment : DaggerFragment() {
     }
 
     private fun setSpannable() {
-        binding.ivFacebook.setOnClickListener {
-
-        }
+//        binding.ivFacebook.setOnClickListener {
+//            binding.fb_login_button.performClick()
+//        }
 
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signup)
@@ -213,7 +213,14 @@ class LoginFragment : DaggerFragment() {
         println("Google detail:  $account")
         var imageUrl = ""
         if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+        if (isConnectedToInternet(requireContext(), true)) {
+            var map = HashMap<String, String>()
+            map["email"] = account.email
+            map["isSocial"] = "true"
 
+            viewModel.loginApi(map)
+
+        }
 
     }
 

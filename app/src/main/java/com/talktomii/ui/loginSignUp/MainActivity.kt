@@ -22,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.talktomii.databinding.SettingsBinding
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.ui.settings.Settings
+import com.talktomii.utlis.SocketManager
 import com.talktomii.utlis.logoutUser
 
 
@@ -29,6 +30,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var navHostFragment: NavHostFragment? = null
+    public var socketManager: SocketManager= SocketManager.getInstance()
     private val viewModel: MainVM by viewModels()
 
     companion object {
@@ -47,18 +49,10 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        socketManager.connect(this,prefsManager)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         bottombar = binding.menuBottom
-
-
-        // save login token
-        val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyM2Q5MDQzNTk1OWE2MGYwOGRiMTEwYSIsImRhdGUiOiIyMDIyLTA0LTA3VDA2OjU3OjA1LjAwMloiLCJlbnZpcm9ubWVudCI6ImRldmVsb3BtZW50IiwiZW1haWwiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJzY29wZSI6ImxvZ2luIiwidHlwZSI6InVzZXIiLCJpYXQiOjE2NDkzMTQ2MjV9.CE48fuL46ZXHKu1NLMO4EA5Ny9ZT5Ujn94ycmRa_bU8"
-        val preferences: SharedPreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
-        preferences.edit().putString("TOKEN", token).apply()
-//        val preferences = context!!.getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-        retrivedToken = preferences.getString("TOKEN", null)!!.trim()
 
         totalSideBarAmount = binding.textView9
 

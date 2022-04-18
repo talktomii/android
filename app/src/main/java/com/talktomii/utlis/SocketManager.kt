@@ -21,7 +21,8 @@ class SocketManager {
 
         // Listen Events
         const val LISTEN_LOCATION = "sendLocationResp"
-        const val CONNECT = "connection"
+        const val JOIN = "join"
+        const val connectCall = "connectCall"
 
         //Emit Events
         const val SEND_LOCATION = "send-location"
@@ -52,7 +53,7 @@ class SocketManager {
         options.forceNew = false
         options.reconnection = true
         var user= getUser(prefsManager)
-        socket = IO.socket(URI.create("https://socket.furnifix.com.sa/?access_token=${user!!.admin._id}&user_type=user"),
+        socket = IO.socket(URI.create("https://api.talktomii.com"),
             options
         )
         socket?.connect()
@@ -106,12 +107,42 @@ class SocketManager {
                 )
             })
     }
+    fun joinApp(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            JOIN, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    JOIN
+                )
+            })
+    }
+    fun connectCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            connectCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    connectCall
+                )
+            })
+    }
     // Listen Events
     fun onLocation(msgAck: OnMessageReceiver) {
         socket?.on(LISTEN_LOCATION) { args ->
             msgAck.onMessageReceive(
                 args[0].toString(),
                 LISTEN_LOCATION
+            )
+        }
+    }
+    fun onCallConnect(msgAck: OnMessageReceiver) {
+        socket?.on(connectCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                connectCall
             )
         }
     }

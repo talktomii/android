@@ -253,6 +253,17 @@
                    app:layout_constraintStart_toEndOf="@+id/ivGoogle"
                    app:layout_constraintTop_toTopOf="@+id/ivGoogle" />
 
+               <com.facebook.login.widget.LoginButton
+                   android:id="@+id/fb_login_button"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerInParent="true"
+                   android:layout_gravity="center_horizontal"
+                   android:visibility="gone"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
            </androidx.constraintlayout.widget.ConstraintLayout>
 
 

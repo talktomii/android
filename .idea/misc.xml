@@ -3,17 +3,40 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/drawable/bg_tab_login.xml" value="0.123" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/activity_call_invoice.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/activity_main.xml" value="0.18518518518518517" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_create_profile.xml" value="0.20885416666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_forget.xml" value="0.20833333333333334" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_login.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/fragment_sign_up.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/item_popular.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/item_role.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/preferred_topics_item.xml" value="0.22447916666666667" />
-        <entry key="..\:/Codebrew/android/talktomii/app/src/main/res/layout/tell_us_more.xml" value="0.20833333333333334" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/drawable-xhdpi/curve_background_blue.xml" value="0.37083333333333335" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/drawable/bg_botton_blue.xml" value="0.37083333333333335" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/drawable/curve_background.xml" value="0.37083333333333335" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/drawable/gray_background.xml" value="0.37083333333333335" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/activity_coupon.xml" value="0.34923076923076923" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.19739583333333333" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/activity_main.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/call_dialog.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/dialog_about_me.xml" value="0.17135416666666667" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/dialog_delete_appointment.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/dialog_link_account.xml" value="0.34923076923076923" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/edit_personal_info_fragment.xml" value="0.3390625" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_bookmark.xml" value="0.34923076923076923" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_call.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_create_profile.xml" value="0.34923076923076923" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_forget.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_forget_password.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_home.xml" value="0.32864583333333336" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_home_influencer.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_influencer_profile.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_login.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_profile.xml" value="0.3390625" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_reset_password.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/fragment_sign_up.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/help_support.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/home_fragment.xml" value="0.228125" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/item_interests.xml" value="0.33" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/item_popular.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/item_social_media.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/preferred_topics_item.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/layout/tell_us_more.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/bank_popup.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/bottom_navigation.xml" value="0.3546875" />
+        <entry key="..\:/cbl_android/talktomii_android/app/src/main/res/menu/profile_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable-xhdpi/custom_rating_bar_small.xml" value="0.30572916666666666" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_back_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/bg_blue_button.xml" value="0.36512820512820515" />
@@ -47,10 +70,11 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/selector_secure.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/drawable/trans_white_background.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_add_address.xml" value="0.22447916666666667" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_add_bank_account.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_add_card.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_cart.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_checkout.xml" value="0.3546875" />
-        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_map.xml" value="0.22447916666666667" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/activity_notification.xml" value="0.3546875" />
@@ -68,6 +92,7 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/feagment_appointments.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_appointments.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_call.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_card.xml" value="0.3296296296296296" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_create_profile.xml" value="0.34923076923076923" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_enter_phone.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/fragment_forget.xml" value="0.3546875" />
@@ -98,11 +123,13 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_notification.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_payment_method.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_popular.xml" value="0.33" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_role.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_scheduled_appointment.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_service_type.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_time_slot.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_today_notification.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/item_yesterday_notification.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/my_cards.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/order_confirmed_layout.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/preferred_topics_item.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/sapmle_fragment.xml" value="0.3546875" />
@@ -112,6 +139,9 @@
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/tell_us_more.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/layout/terms_and_conditions_dialog.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/bottom_navigation.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/call_history_popup.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/clear_history_popup.xml" value="0.3546875" />
+        <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/pop_up_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/menu/profile_menu.xml" value="0.3546875" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.36512820512820515" />
         <entry key="..\:/codebrew/talktomii_android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.36512820512820515" />

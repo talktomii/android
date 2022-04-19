@@ -24,6 +24,8 @@ import com.talktomii.data.model.appointment.UpdateAppointmentPayload
 import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentAppointmentsBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
@@ -48,6 +50,7 @@ import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.HorizontalCalendarView
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import okhttp3.ResponseBody
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -130,9 +133,14 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
         showToastMessage(requireContext(), message)
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+            code,
+            errorBody!!.string()
+        ), requireActivity(), prefsManager)
     }
 
     override fun onStarted() {

@@ -16,6 +16,7 @@ import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.UpdatePhotoInterface
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.interfaces.UpdateProfileInterface
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -44,7 +45,15 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
+                    ApiUtils.getError(
+                        authResponse.code(),
+                        authResponse.errorBody()!!.string()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

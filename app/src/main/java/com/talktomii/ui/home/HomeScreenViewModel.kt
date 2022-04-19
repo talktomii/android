@@ -32,7 +32,10 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         homeInterface?.onHomeAdmins(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),authResponse.code() ,authResponse.errorBody()
+                    )
+
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -54,7 +57,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         userField.set(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -81,7 +88,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         }
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -104,7 +115,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         }
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -134,7 +149,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

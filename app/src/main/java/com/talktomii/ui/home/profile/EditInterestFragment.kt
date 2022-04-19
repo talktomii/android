@@ -11,13 +11,17 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.talktomii.R
 import com.talktomii.data.model.Interest
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditInterestFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.ui.home.profile.editinterest.EditInterestVM
 import com.talktomii.ui.home.profile.editinterest.GetItemsInterface
+import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest_fragment),
@@ -31,6 +35,8 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var editPersonalInfoVM: EditPersonalInfoVM
 
+    @Inject
+    lateinit var prefsManager: PrefsManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,7 +96,13 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     override fun onFailure(message: String) {
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
     }
 
     override fun onStarted() {
@@ -101,7 +113,7 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
             for (item2 in editPersonalInfoVM.userField.get()!!.interest) {
                 if (item._id == item2._id) {
                     item.isClicked = true
-                }else{
+                } else {
                     item.isClicked = false
                 }
             }

@@ -28,9 +28,9 @@ object ApisRespHandler {
                 if (alertDialog == null)
                     errorMessage(activity, error.message)
             }
-            is AppError.ApiAlertPremium->{
+            is AppError.ApiAlertPremium -> {
                 if (alertDialog == null)
-                    errorMessage(activity,error.message)
+                    errorMessage(activity, error.message)
             }
 
             is AppError.ApiUnauthorized -> {
@@ -72,7 +72,7 @@ object ApisRespHandler {
 
     private fun sessionExpired(activity: Activity, message: String?, prefsManager: PrefsManager) {
         try {
-            alertDialog = AlertDialog.Builder(activity,R.style.AlertDialogTheme)
+            alertDialog = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
 
             alertDialog?.setCancelable(false)
 
@@ -90,7 +90,7 @@ object ApisRespHandler {
 
     private fun errorMessage(activity: Activity, message: String?) {
         try {
-            alertDialog = AlertDialog.Builder(activity,R.style.AlertDialogTheme)
+            alertDialog = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
 
             alertDialog?.setCancelable(false)
             alertDialog?.setTitle(activity.getString(R.string.alert))
@@ -108,7 +108,7 @@ object ApisRespHandler {
 
     fun successMessage(activity: Activity, message: String?) {
         try {
-            alertDialog = AlertDialog.Builder(activity,R.style.AlertDialogTheme)
+            alertDialog = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
             alertDialog?.setCancelable(false)
             alertDialog?.setTitle(activity.getString(R.string.message))
             alertDialog?.setMessage(message)

@@ -26,6 +26,8 @@ import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
 import com.talktomii.data.model.admin.SendAvailaibility
 import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
@@ -45,6 +47,7 @@ import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.ResponseBody
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
@@ -329,8 +332,13 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+            code,
+            errorBody!!.string()
+        ), requireActivity(), prefsManager)
     }
 
     override fun onStarted() {

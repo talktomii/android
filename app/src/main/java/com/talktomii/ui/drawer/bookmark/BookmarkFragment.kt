@@ -8,6 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.drawer.bookmark.Payload
 import com.talktomii.data.model.drawer.bookmark.Service
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentBookmarkBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.drawer.BookMarkInterface
@@ -16,6 +18,7 @@ import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
 import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, CommonInterface,
@@ -62,8 +65,13 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+            code,
+            errorBody!!.string()
+        ), requireActivity(), prefsManager)
     }
 
     override fun onStarted() {

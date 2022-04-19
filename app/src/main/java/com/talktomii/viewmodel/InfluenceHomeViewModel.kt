@@ -196,13 +196,21 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                                 authResponse.errorBody()!!.string(),
                                 ErrorModelClass::class.java
                             )
-                            commonInterface!!.onFailureAPI(mError.message)
+                            commonInterface!!.onFailureAPI(
+                                mError.message,
+                                authResponse.code(),
+                                authResponse.errorBody()
+                            )
 
                         } catch (e: IOException) {
                             // handle failure to read error
                         }
                     } else {
-                        commonInterface!!.onFailureAPI(authResponse.message())
+                        commonInterface!!.onFailureAPI(
+                            authResponse.message(),
+                            authResponse.code(),
+                            authResponse.errorBody()
+                        )
                     }
                 }
             } catch (e: ApiException) {
@@ -238,13 +246,21 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                                 authResponse.errorBody()!!.string(),
                                 ErrorModelClass::class.java
                             )
-                            commonInterface!!.onFailureAPI(mError.message)
+                            commonInterface!!.onFailureAPI(
+                                mError.message,
+                                authResponse.code(),
+                                authResponse.errorBody()
+                            )
 
                         } catch (e: IOException) {
                             // handle failure to read error
                         }
                     } else {
-                        commonInterface!!.onFailureAPI(authResponse.message())
+                        commonInterface!!.onFailureAPI(
+                            authResponse.message(),
+                            authResponse.code(),
+                            authResponse.errorBody()
+                        )
                     }
                 }
             } catch (e: ApiException) {

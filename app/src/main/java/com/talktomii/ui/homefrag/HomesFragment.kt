@@ -9,13 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.admin.Admin
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
+import com.talktomii.data.network.responseUtil.AppError
 import com.talktomii.databinding.HomeFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
+import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, CommonInterface,
@@ -26,6 +31,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     private var adapterPopular: AdapterPopular? = null
     private var popularArrayList: ArrayList<Admin> = arrayListOf()
 
+    @Inject
+    lateinit var prefsManager: PrefsManager
     @Inject
     lateinit var viewModel: HomeScreenViewModel
     private lateinit var progressDialog: ProgressDialog
@@ -106,8 +113,13 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        val apiError: AppError = ApiUtils.getError(
+            code,
+            errorBody!!.string()
+        )
+        ApisRespHandler.handleError(apiError, requireActivity(), prefsManager)
     }
 
     override fun onStarted() {

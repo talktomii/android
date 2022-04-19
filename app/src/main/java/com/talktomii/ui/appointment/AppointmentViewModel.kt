@@ -44,7 +44,11 @@ class AppointmentViewModel @Inject constructor(private val webService: WebServic
                             // handle failure to read error
                         }
                     } else {
-                        commonInterface!!.onFailureAPI(authResponse.message())
+                        commonInterface!!.onFailureAPI(
+                            authResponse.message(),
+                            authResponse.code(),
+                            authResponse.errorBody()
+                        )
 
                     }
 

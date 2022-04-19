@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.talktomii.R
-import com.talktomii.data.model.Admin
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
@@ -37,13 +35,14 @@ import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import okhttp3.ResponseBody
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
-    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400 ,onStopProgress{
+    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400, onStopProgress {
 
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
@@ -66,7 +65,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private var selectedStartTime: String? = null
     private var selectedEndTime: String? = null
     private var selectedDate: String? = null
-    private var selectedAdmin  : Admin1? = null
+    private var selectedAdmin: Admin1? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,8 +94,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         binding.txtItemCount.setOnClickListener {
             val bundle = Bundle()
-            bundle.putSerializable("interest" , selectedAdmin!!.interest)
-            findNavController().navigate(R.id.action_influencerProfileFragment_to_viewInterestFragment,bundle)
+            bundle.putSerializable("interest", selectedAdmin!!.interest)
+            findNavController().navigate(
+                R.id.action_influencerProfileFragment_to_viewInterestFragment,
+                bundle
+            )
 
         }
     }
@@ -180,8 +182,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+
     }
 
     override fun onStarted() {

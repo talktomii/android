@@ -14,6 +14,7 @@ import com.talktomii.interfaces.drawer.BookMarkInterface
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
+import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -45,7 +46,7 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     }
 
     private fun initAdapter() {
-        adapter = AdapterBookmark(requireContext(), arrayList, this)
+        adapter = AdapterBookmark(requireContext(), arrayList, this , isUser(prefsManager))
         binding.rvPopular.adapter = adapter
     }
 

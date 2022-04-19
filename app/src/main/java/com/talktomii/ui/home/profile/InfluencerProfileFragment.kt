@@ -43,7 +43,7 @@ import javax.inject.Inject
 
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
-    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400 {
+    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400 ,onStopProgress{
 
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
@@ -86,6 +86,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         viewModelAppoinemnt.commonInterface = this
         viewModelAppoinemnt.apiFailure = this
         viewModel.onSlotSelectedInterface = this
+        viewModel.onStopProgress = this
         binding.lifecycleOwner = this
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
@@ -136,8 +137,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         binding.ivBookMark.setOnClickListener {
             viewModel.checkAndSetBookMark()
-
-
         }
         binding.txtAboutMe.setOnClickListener {
             val dialog = AboutMeDialog()
@@ -191,6 +190,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
 
     override fun onAdminDetails(admin1: Admin1) {
+        progressDialog.dismiss()
         selectedAdmin = admin1
         viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
         context?.let {
@@ -204,7 +204,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(binding.imgDefault)
         }
-        progressDialog.dismiss()
         socialMediaAdapter?.setItemList(admin1.socialNetwork)
         if (admin1.interest.size > 0) {
             if (admin1.interest.size > 3) {
@@ -340,6 +339,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     //do nothing
                 }
             })
+    }
+
+    override fun onStopProgress() {
+        progressDialog.dismiss()
     }
 
 

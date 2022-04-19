@@ -7,5 +7,8 @@ interface CommonInterface {
 }
 interface FailureAPI400{
     fun onFailureAPI400(message: String)
+}
 
+interface onStopProgress{
+    fun  onStopProgress()
 }

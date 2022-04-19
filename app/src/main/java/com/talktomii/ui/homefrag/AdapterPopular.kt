@@ -40,7 +40,7 @@ class AdapterPopular(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.txtName.text =
-            popularArrayList[position].fname  + " " + popularArrayList[position].lname
+            popularArrayList[position].fname + " " + popularArrayList[position].lname
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -51,6 +51,10 @@ class AdapterPopular(
             .into(holder.binding.imgDefault)
 
         holder.binding.ivCall.setOnClickListener {
+            listener.onViewPopularClick(popularArrayList[position])
+        }
+
+        holder.binding.tvAboutMee.setOnClickListener {
             listener.onViewPopularClick(popularArrayList[position])
         }
 

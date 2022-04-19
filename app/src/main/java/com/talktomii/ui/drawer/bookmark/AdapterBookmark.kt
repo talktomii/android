@@ -30,7 +30,8 @@ class AdapterBookmark(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.txtName.text = popularArrayList[position].uid.name
+        holder.binding.txtName.text =
+            popularArrayList[position].uid.fname + " " + popularArrayList[position].uid.lname
         holder.binding.textView6.text = popularArrayList[position].uid.userName
         Glide.with(context).load(popularArrayList[position].uid.coverPhoto)
             .into(holder.binding.ivCoverPhoto)
@@ -43,9 +44,14 @@ class AdapterBookmark(
             listener.onClick(popularArrayList[position])
         }
 
+        holder.binding.tvAboutMee.setOnClickListener {
+            listener.onClick(popularArrayList[position])
+        }
+
     }
 
     fun setPopularList(admin: List<Service>) {
+        popularArrayList.clear()
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
     }

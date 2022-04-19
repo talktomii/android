@@ -16,6 +16,8 @@ data class Uid(
     val location: Any,
     val modificationData: String,
     val name: String,
+    val fname: String,
+    val lname: String,
     val price: Any,
     val profilePhoto: String,
     val registrationDate: String,

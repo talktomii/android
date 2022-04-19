@@ -6,10 +6,7 @@ import com.google.android.gms.common.api.ApiException
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
-import com.talktomii.interfaces.AdminDetailInterface
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.HomeInterface
-import com.talktomii.interfaces.OnSlotSelectedInterface
+import com.talktomii.interfaces.*
 import javax.inject.Inject
 
 
@@ -17,6 +14,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var homeInterface: HomeInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
     var commonInterface: CommonInterface? = null
+    var onStopProgress: onStopProgress? = null
     var userField = ObservableField<Admin1>()
     var bookMark = ObservableField<Boolean>()
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
@@ -69,9 +67,9 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     private fun addBookmark() {
 
         var hashMap: HashMap<String, Any> = hashMapOf()
-        hashMap.put("ifid", userField.get()!!._id)
+        hashMap["ifid"] = userField.get()!!._id
 
-//        commonInterface!!.onStarted()
+        commonInterface!!.onStarted()
         Coroutines.main {
             try {
                 val authResponse = webService.addFavourite(hashMap)
@@ -79,10 +77,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
                             bookMark.set(true)
+                            onStopProgress!!.onStopProgress()
                         }
                     }
                 } else {
-//                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(authResponse.message())
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -93,13 +92,14 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     }
 
     fun removeBookmark() {
-//        commonInterface!!.onStarted()
+        commonInterface!!.onStarted()
         Coroutines.main {
             try {
                 val authResponse = webService.removeBookmark(userField.get()!!._id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
+                            onStopProgress!!.onStopProgress()
                             bookMark.set(false)
                         }
                     }

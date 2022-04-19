@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/transparent"
-    app:cardElevation="0dp"
-    android:layout_height="wrap_content">
+    app:cardElevation="0dp">
 
     <LinearLayout
-        android:background="@drawable/bg_bottomsheet_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg_bottomsheet_card"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -21,26 +21,24 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extra_bold"
+                android:fontFamily="@font/inter_regular"
                 android:text="@string/appoint_text"
-                android:textColor="#565656"
+                android:textColor="@color/calText"
                 android:textFontWeight="700"
-                android:textSize="@dimen/dp_18"
-                android:textStyle="bold">
+                android:textSize="@dimen/dp_18">
 
             </androidx.appcompat.widget.AppCompatTextView>
 
             <ImageView
                 android:id="@+id/btnCloseAppointmentSheet"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="@dimen/dp_20"
                 android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:padding="5dp"
-                android:src="@drawable/close_sheet_icon">
+                android:layout_centerInParent="true">
 
             </ImageView>
         </RelativeLayout>
+
         <devs.mulham.horizontalcalendar.HorizontalCalendarView
             android:id="@+id/calendarViewa"
             android:layout_width="match_parent"
@@ -48,15 +46,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textBookCall"
             app:selectedDateBackground="@color/colorAccent"
             app:selectorColor="@android:color/transparent"
-            app:textColorNormal="@color/black"
+            app:textColorNormal="@color/calText"
             app:textColorSelected="@color/white" />
+
         <Spinner
             android:id="@+id/spinnerTimeDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginHorizontal="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarView" />
@@ -65,11 +63,11 @@
             android:id="@+id/rvTimeSlotAppointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_10"
-            android:orientation="horizontal"
             android:layout_marginBottom="@dimen/dp_20"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarView"

@@ -16,20 +16,38 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        >
 
-        <TextView
-            android:id="@+id/txtBack"
+        <LinearLayout
+            android:id="@+id/headerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginHorizontal="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_20"
-            android:drawableLeft="@drawable/back_arrow"
-            android:text="Back"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/dp_16"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back_arrow"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBackIncomeDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/addCardColor"
+                android:text="@string/back"
+                android:textFontWeight="400"
+                android:textSize="@dimen/dp_16" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtSave"
@@ -50,11 +68,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
             android:text="@string/edit_interests"
-            android:textColor="@color/black"
+            android:textColor="@color/myCards"
+            android:fontFamily="@font/inter_regular"
             android:textSize="@dimen/sp_24"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/txtBack"
-            app:layout_constraintTop_toBottomOf="@+id/txtBack" />
+            android:textFontWeight="700"
+            app:layout_constraintStart_toStartOf="@+id/headerLayout"
+            app:layout_constraintTop_toBottomOf="@+id/headerLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTopics"

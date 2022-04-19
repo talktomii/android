@@ -17,11 +17,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:background="@color/backgroundColor"
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
             android:paddingBottom="@dimen/dp_20">
 
 
@@ -35,47 +37,73 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+<!--                <TextView-->
+<!--                    android:id="@+id/txtBack"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/dp_20"-->
+<!--                    android:layout_marginTop="@dimen/dp_10"-->
+<!--                    android:background="@drawable/bg_back_background"-->
+<!--                    android:drawableLeft="@drawable/back_arrow"-->
+<!--                    android:padding="@dimen/dp_10"-->
+<!--                    android:textColor="@color/myCards"-->
+<!--                    android:text="Back"-->
+<!--                    android:textSize="14sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                <LinearLayout
                     android:id="@+id/txtBack"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:background="@drawable/bg_back_background"
-                    android:drawableLeft="@drawable/back_arrow"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/dp_20"
                     android:padding="@dimen/dp_10"
-                    android:text="Back"
-                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <RelativeLayout
-                    android:id="@+id/ivBookMark"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/gray_round"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/backprofile"
                         android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/bookmark" />
-                </RelativeLayout>
+                        android:layout_gravity="center"
+                        android:layout_height="@dimen/dp_20" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:textColor="@color/addCardColor"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/back"
+                        android:textFontWeight="400"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/dp_16" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iivBookmark"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
 
                 <ImageView
                     android:id="@+id/ivShare"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
                     android:layout_marginEnd="15dp"
-                    android:src="@drawable/ic_share"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivBookMark"
-                    app:layout_constraintEnd_toStartOf="@+id/ivBookMark"
-                    app:layout_constraintTop_toTopOf="@+id/ivBookMark" />
+                    app:layout_constraintBottom_toBottomOf="@+id/iivBookmark"
+                    app:layout_constraintEnd_toStartOf="@+id/iivBookmark"
+                    app:layout_constraintTop_toTopOf="@+id/iivBookmark" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,9 +137,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
                 android:text="@{viewModel2.userField.name}"
-                android:textColor="@color/gray"
+                android:textColor="@color/myCards"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
                 app:layout_constraintStart_toEndOf="@+id/imgDefault"
                 app:layout_constraintTop_toTopOf="@+id/imgDefault"
@@ -125,6 +154,8 @@
                 android:text="@{viewModel2.userField.userName}"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/myCards"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
                 app:layout_constraintTop_toBottomOf="@+id/txtName"
                 tools:text="\@Leslie" />
@@ -138,6 +169,7 @@
                 android:textColor="@color/green"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
@@ -163,7 +195,8 @@
                     android:paddingEnd="@dimen/dp_40"
                     android:paddingBottom="10dp"
                     android:text="About Me"
-                    android:textColor="@color/black"
+                    android:textColor="@color/myCards"
+                    android:fontFamily="@font/inter_regular"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -183,6 +216,7 @@
                     android:paddingBottom="10dp"
                     android:text="call now"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/inter_regular"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/txtAboutMe"
@@ -209,6 +243,8 @@
                     android:layout_marginStart="@dimen/dp_20"
                     android:text="Location"
                     android:textSize="@dimen/sp_12"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/addCardHintColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -218,9 +254,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:text="@{viewModel2.userField.location}"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/myCards"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/textView10"
                     app:layout_constraintTop_toBottomOf="@+id/textView10"
                     tools:text="New York, USA" />
@@ -233,6 +270,8 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:text="Follow me"
                     android:textSize="@dimen/sp_12"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/addCardHintColor"
                     app:layout_constraintStart_toStartOf="@+id/txtLocation"
                     app:layout_constraintTop_toBottomOf="@+id/txtLocation" />
 
@@ -265,6 +304,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:text="Price"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/addCardHintColor"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -275,7 +316,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:text="$ 15/15min"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/myCards"
+                    android:fontFamily="@font/inter_regular"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/txtPr"
@@ -287,6 +329,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:text="Badges"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/addCardHintColor"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="@+id/txtPrice"
                     app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
@@ -342,6 +386,8 @@
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="Interests"
                 android:textSize="12sp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/addCardHintColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
@@ -379,7 +425,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_30"
                 android:text="Book a Call"
-                android:textColor="@color/black"
+                android:textColor="@color/addCardColor"
                 android:textSize="@dimen/sp_24"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -393,7 +439,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textBookCall"
                 app:selectedDateBackground="@color/colorAccent"
                 app:selectorColor="@android:color/transparent"
-                app:textColorNormal="@color/black"
+                app:textColorNormal="@color/calText"
                 app:textColorSelected="@color/white" />
 
             <Spinner

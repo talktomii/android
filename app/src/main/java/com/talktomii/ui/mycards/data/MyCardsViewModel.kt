@@ -205,8 +205,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 arrayStrings!!.add(refilldata)
                                 carditemMap!!.put(i.id.toString(), refilldata)
                             }
-
-
                         }
                         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             RefillWalletActivity.context,

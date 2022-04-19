@@ -2,6 +2,7 @@ package com.talktomii.ui.editpersonalinfo.location
 
 
 import `in`.madapps.placesautocomplete.PlaceAPI
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +17,22 @@ class AddEditLocationBottomSheet(var addLocationInterface: AddLocationInterface)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = BottomsheetLocationBinding.inflate(LayoutInflater.from(context))
-        return binding.rootView
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+                binding.ivRemoveSearch.setBackgroundResource(R.drawable.ic_cross_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivRemoveSearch.setBackgroundResource(R.drawable.locationclose)
+                binding.ivClose.setBackgroundResource(R.drawable.close_sheet_icon)
+            }
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         binding.ivClose.setOnClickListener {
             dismiss()
         }

@@ -55,4 +55,10 @@
     <color name="walletbg">#F9F8FC</color>
     <color name="calText">#000000</color>
     <color name="searchTextColor">#939393</color>
+    <color name="locationcardbg">#ffffff</color>
+    <color name="locationbg">#F9F8FC</color>
+    <color name="bottomsheetbg">#F9F8FC</color>
+    <color name="searchlocation">#ffffff</color>
+    <color name="slot_bg">#ffffff</color>
+    <color name="backbg">#E5E5E5</color>
 </resources>

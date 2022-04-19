@@ -194,6 +194,14 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         val view = LayoutInflater.from(context)
             .inflate(R.layout.bottomsheet_reschedule_appointment, null)
         val btnClose = view.findViewById<ImageView>(R.id.btnCloseAppointmentSheet)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                btnClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                btnClose.setBackgroundResource(R.drawable.close_sheet_icon)
+            }
+        }
         recycleViewRescheduleSlot = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
         spinnerTimeDuration = view.findViewById<Spinner>(R.id.spinnerTimeDuration)
         val tvRescheduleAppointment = view.findViewById<TextView>(R.id.tvRescheduleAppointment)
@@ -299,7 +307,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             requireContext(),
             android.R.layout.simple_spinner_item, arrayList
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.spinner_list)
         spinnerTimeDuration!!.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -309,10 +317,10 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                     id: Long
                 ) {
                     selectedTimeSlots = availableTimeSlots!!.timeStops[position]
+                    (view as TextView).setTextColor(resources.getColor(R.color.calText))
                     val arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
                     for (i in availableTimeSlots!!.timeStops[position].slot) {
                         arrayList.add(TimeSlotsWithData(i, false))
-
                     }
                     recycleViewRescheduleSlot!!.adapter =
                         AdapterHomeTimeSlot(requireContext(), arrayList,
@@ -331,7 +339,6 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                                 }
 
                             })
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

@@ -25,4 +25,10 @@
     <color name="white_dray">#2B2B2B</color>
     <color name="searchTextColor">#939393</color>
     <color name="trans_white">#D0000000</color>
+    <color name="locationcardbg">#F4F6F6</color>
+    <color name="locationbg">#000000</color>
+    <color name="bottomsheetbg">#000000</color>
+    <color name="searchlocation">#2B2B2B</color>
+    <color name="slot_bg">#2B2B2B</color>
+    <color name="backbg">#585B68</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.talktomii.ui.editpersonalinfo
 
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,14 @@ class AddPriceBottomSheetFragment(
         savedInstanceState: Bundle?
     ): View? {
         binding = BottomsheetAddpriceBinding.inflate(LayoutInflater.from(context))
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivClose.setBackgroundResource(R.drawable.close_sheet_icon)
+            }
+        }
         return binding.rootView
     }
 

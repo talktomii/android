@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/rootView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottomsheet_round_bg"
-        android:clickable="true"
-        android:fitsSystemWindows="true"
-        android:focusable="true">
+<layout>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_30">
+    <LinearLayout
+        android:id="@+id/bottomsheetView"
+        android:background="@drawable/bg_bottomsheet_card"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -29,22 +28,22 @@
                     android:text="Location"
                     android:fontFamily="@font/inter_regular"
                     android:textFontWeight="700"
-                    android:textColor="@color/myCards"
+                    android:textColor="@color/calText"
                     android:textSize="@dimen/dp_18" />
 
                 <ImageView
                     android:id="@+id/ivClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_close_24" />
+                    />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginHorizontal="@dimen/dp_20"
                 android:background="@drawable/white_bg_round_curve"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -55,22 +54,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/calText"
                     android:textColorHint="@color/textHintColor"
                     android:background="@drawable/transparent"
                     android:hint="Enter location" />
 
-                <!--                <EditText-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_weight="1"-->
-                <!--                    android:background="@drawable/transparent"-->
-                <!--                    android:hint="Enter location"></EditText>-->
 
                 <ImageView
                     android:id="@+id/ivRemoveSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/locationclose" />
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    />
 
             </LinearLayout>
 
@@ -79,9 +73,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
-
-    </RelativeLayout>
+</androidx.cardview.widget.CardView>
 </layout>

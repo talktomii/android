@@ -4,6 +4,7 @@ package com.talktomii.ui.editpersonalinfo.time
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,6 +38,14 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
     var calenderDate: String? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = BottomsheetAddtimeperiodBinding.inflate(LayoutInflater.from(context))
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivClose.setBackgroundResource(R.drawable.close_sheet_icon)
+            }
+        }
         return binding.rootView
     }
 

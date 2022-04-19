@@ -1,5 +1,6 @@
 package com.talktomii.ui.home.profile
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,12 +42,20 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
             viewModelFactory
         ).get(EditPersonalInfoVM::class.java)
         binding = EditInterestFragmentBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backArrow.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backArrow.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.vm = viewModel
         return binding.root
     }
 
     private fun setListener() {
-        binding.txtBack.setOnClickListener {
+        binding.headerLayout.setOnClickListener {
             requireActivity().onBackPressed()
         }
 

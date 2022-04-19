@@ -1,6 +1,7 @@
 package com.talktomii.ui.home.profile
 
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +70,18 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivShare.setBackgroundResource(R.drawable.share)
+                binding.iivBookmark.setBackgroundResource(R.drawable.bookmarkprofile)
+                binding.backprofile.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivShare.setBackgroundResource(R.drawable.ic_share)
+                binding.iivBookmark.setBackgroundResource(R.drawable.bookmark_light)
+                binding.backprofile.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         return binding.root
     }
 
@@ -122,7 +135,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 //                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
         }
 
-        binding.ivBookMark.setOnClickListener {
+        binding.iivBookmark.setOnClickListener {
             viewModel.checkAndSetBookMark()
 
 
@@ -207,7 +220,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             requireContext(),
             android.R.layout.simple_spinner_item, arrayList
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.spinner_list)
         binding.spinnerTimeDuration.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -220,7 +233,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
                     for (i in availableTimeSlots!!.timeStops[position].slot) {
                         arrayList.add(TimeSlotsWithData(i, false))
-
                     }
                     binding.rvTimeSlot.adapter =
                         AdapterHomeTimeSlot(requireContext(), arrayList,
@@ -235,11 +247,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                                     } catch (e: Exception) {
 
                                     }
-
                                 }
-
                             })
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

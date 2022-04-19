@@ -27,10 +27,10 @@
                 android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_12"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/searchText"
                 android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
-                tools:background="@drawable/bg_dray_background"
+                tools:background="@drawable/slot_bg"
                 tools:text="9:00 AM" />
 
 

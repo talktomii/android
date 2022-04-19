@@ -25,10 +25,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add Price/Call Duration"
+                    android:text="@string/add_price_call_duration"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dp_18"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/ivClose"
@@ -53,13 +53,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price"></TextView>
+                    android:text="Price" />
 
                 <EditText
+                    android:id="@+id/etPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/transparent"
-                    android:hint="$0"></EditText>
+                    android:hint="$0" />
 
             </LinearLayout>
 
@@ -73,13 +74,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="15"></TextView>
+                    android:text="15" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="90"></TextView>
+                    android:text="90" />
 
             </RelativeLayout>
 
@@ -91,7 +92,7 @@
                 android:min="15"
                 android:progressBackgroundTint="@color/blue_check"
                 android:progressTint="@color/blue_check"
-                android:thumb="@drawable/seekbar"></SeekBar>
+                android:thumb="@drawable/seekbar" />
 
             <TextView
                 android:id="@+id/tvMin"
@@ -100,10 +101,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:text="15 min"
-                android:textSize="18dp"></TextView>
+                android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnAddprice"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/dp_24"

@@ -86,8 +86,8 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     }
 
     override fun onViewSearchClick(interest: Interest) {
-//        view?.findNavController()
-//            ?.navigate(SearchFragmentDirections.actionSearchFragmentToHomeFragment(interest._id))
+        view?.findNavController()
+            ?.navigate(SearchFragmentDirections.actionSearchFragmentToHomeFragment(interest._id))
 
     }
 }

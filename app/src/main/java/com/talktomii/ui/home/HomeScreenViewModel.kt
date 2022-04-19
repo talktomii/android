@@ -2,6 +2,7 @@ package com.talktomii.ui.home
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.common.api.ApiException
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
@@ -9,8 +10,6 @@ import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.interfaces.OnSlotSelectedInterface
-import com.talktomii.utlis.AUTHORIZATION
-import com.google.android.gms.common.api.ApiException
 import javax.inject.Inject
 
 
@@ -28,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 val authResponse = if (string.isEmpty()) {
                     webService.getAllAdmin()
                 } else {
-                    webService.getAdminByInterest( string)
+                    webService.getAdminByInterest(string)
                 }
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
@@ -49,7 +48,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAdminByID(string, AUTHORIZATION)
+                val authResponse = webService.getAdminByID(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
@@ -67,15 +66,15 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         }
     }
 
-    fun addBookmark() {
+    private fun addBookmark() {
 
-        var hashMap: HashMap<String, String> = hashMapOf()
+        var hashMap: HashMap<String, Any> = hashMapOf()
         hashMap.put("ifid", userField.get()?._id?:"")
 
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.addFavourite(hashMap, AUTHORIZATION)
+                val authResponse = webService.addFavourite(hashMap)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -97,7 +96,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.removeBookmark(userField.get()!!._id?:"", AUTHORIZATION)
+                val authResponse = webService.removeBookmark(userField.get()!!._id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -127,11 +126,11 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAllSlotByDate(date, userField.get()!!._id?:"")
+                val authResponse = webService.getAllSlotByDate(date, userField.get()!!._id)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-                            onSlotSelectedInterface!!.onslotselect(authResponse.body()!!.payload.timeStops[0])
+                            onSlotSelectedInterface!!.onSlotTimesList(authResponse.body()!!.payload)
                         }
                     }
                 } else {

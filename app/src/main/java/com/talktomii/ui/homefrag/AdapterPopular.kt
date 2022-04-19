@@ -34,6 +34,7 @@ class AdapterPopular(
         holder.binding.txtName.text = popularArrayList[position].name
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
+            .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
             .into(holder.binding.ivCoverPhoto)
 
         Glide.with(context).load(popularArrayList[position].profilePhoto)

@@ -2,6 +2,7 @@ package com.talktomii.ui.banksettings.activities
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import com.talktomii.R
 import com.talktomii.databinding.ActivityAddBankAccountBinding
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
@@ -33,9 +35,18 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =
-            DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_add_bank_account)
+        binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_add_bank_account)
         getContext(this)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backAddBankAccount.setImageResource(R.drawable.back_arrow)
+                binding.bankGroup.setImageResource(R.drawable.bank_group_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backAddBankAccount.setImageResource(R.drawable.back_arrow_light)
+                binding.bankGroup.setImageResource(R.drawable.bank_group_light)
+            }
+        }
         layout = binding.banklayout
         binding.tvBankBack.setOnClickListener {
             finish()
@@ -53,31 +64,33 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
         )
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.typesFilter.setAdapter(adapter)
-        binding.typesFilter.setOnItemClickListener { p0, p1, p2, p3 ->
-            selectedAccountType = adapter.getItem(p2)!!
-            if (intent.getStringExtra("bank") == "update") {
-                Log.d("spinner_data ::: ", intent.getStringExtra("type")!!)
-                if (arrayStrings.contains(intent.getStringExtra("type"))) {
-                    Log.d("spinner_data ::: ", intent.getStringExtra("type")!!)
-                    val spinnerPosition = adapter.getPosition(intent.getStringExtra("type"))
-                    binding.typesFilter.setSelection(spinnerPosition)
-                }
+        binding.bankspinner.setAdapter(adapter)
+        binding.bankspinner.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                selectedAccountType = adapter.getItem(p2)!!
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
         }
+//        binding.bankspinner.onItemSelectedListener { p0, p1, p2, p3 ->
+//            selectedAccountType = adapter.getItem(p2)!!
+//            if (intent.getStringExtra("bank") == "update") {
+//                Log.d("spinner_data ::: ", intent.getStringExtra("type")!!)
+//                if (arrayStrings.contains(intent.getStringExtra("type"))) {
+//                    Log.d("spinner_data ::: ", intent.getStringExtra("type")!!)
+//                    val spinnerPosition = adapter.getPosition(intent.getStringExtra("type"))
+//                    binding.bankspinner.setSelection(spinnerPosition)
+//                }
+//            }
+//        }
 
         binding.btnSaveBankAccount.setOnClickListener {
             if (binding.etaccountHolderName.text.toString() == "") {
                 val snackbar = Snackbar.make(
                     layout,
                     "Enter Account Holder Name",
-                    Snackbar.LENGTH_SHORT
-                )
-                snackbar.show()
-            } else if (selectedAccountType == "") {
-                val snackbar = Snackbar.make(
-                    layout,
-                    "Select Account Type",
                     Snackbar.LENGTH_SHORT
                 )
                 snackbar.show()
@@ -154,7 +167,7 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
             while (i < adapter.count) {
                 if (intent.getStringExtra("type")!!.trim() == adapter.getItem(i)) {
                     selectedAccountType = adapter.getItem(i)!!
-                    binding.typesFilter.setText(adapter.getItem(i), false);
+//                    binding.bankspinner.setText(adapter.getItem(i), false);
                     break
                 }
                 i++

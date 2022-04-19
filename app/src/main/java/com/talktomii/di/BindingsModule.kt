@@ -43,6 +43,7 @@ import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
 import com.talktomii.ui.mywallet.fragments.RefillFragment
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
+import com.talktomii.ui.settings.PrivacyAndPolicyActivity
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
 import com.talktomii.utlis.*
@@ -78,6 +79,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun reportAbuseActivity(): ReportAbuseActivity
+
+    @ContributesAndroidInjector
+    abstract fun privacyActivity(): PrivacyAndPolicyActivity
 
     @ContributesAndroidInjector
     abstract fun helpsupportActivity(): HelpSupport

@@ -11,7 +11,9 @@ import com.talktomii.data.model.drawer.bookmark.Service
 import com.talktomii.databinding.FragmentBookmarkBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.drawer.BookMarkInterface
+import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -25,7 +27,8 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     private var adapter: AdapterBookmark? = null
     private var arrayList: ArrayList<Service> = arrayListOf()
     private lateinit var progressDialog: ProgressDialog
-
+    @Inject
+    lateinit var prefsManager: PrefsManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,7 +54,7 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
 
         viewModel.commonInterface = this
         viewModel.onbookmarkinterface = this
-        viewModel.getBookmarks("")
+        viewModel.getBookmarks(getUser(prefsManager)!!.admin._id)
     }
 
     override fun onFailure(message: String) {

@@ -1,5 +1,6 @@
 package com.talktomii.ui.homefrag
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.admin.Admin
-import com.talktomii.data.model.admin.Payload
 import com.talktomii.databinding.HomeFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
@@ -41,6 +41,17 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         savedInstanceState: Bundle?
     ): View? {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
+        MainActivity.btnMenu.visibility = View.GONE
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+        }
         return binding.root
     }
 
@@ -65,12 +76,10 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
-
         viewModel.commonInterface = this
         viewModel.homeInterface = this
         if (arguments?.getString("id") != null) {
             viewModel.getInfluence(arguments?.getString("id")!!)
-
         } else {
             viewModel.getInfluence("")
         }
@@ -89,12 +98,11 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         progressDialog.show()
     }
 
-
     override fun onViewPopularClick(admin: Admin) {
         onCoverClicked(admin)
     }
 
-    override fun onHomeAdmins(payload: Payload) {
+    override fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload) {
         progressDialog.dismiss()
         adapterPopular!!.setPopularList(payload.admin)
         var jsonObject = JSONObject()

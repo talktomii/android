@@ -2,6 +2,7 @@ package com.talktomii.ui.loginSignUp.signup
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -27,6 +29,7 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentSignUpBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
@@ -59,12 +62,29 @@ class SignUpFragment : DaggerFragment() {
     ): View {
 // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         init()
         setListener()
         setSpannable()

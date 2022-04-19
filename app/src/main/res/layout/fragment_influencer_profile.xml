@@ -74,8 +74,7 @@
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/bookmark"
-                   />
+                        android:src="@drawable/bookmark" />
                 </RelativeLayout>
 
 
@@ -408,6 +407,17 @@
                 app:textColorNormal="@color/black"
                 app:textColorSelected="@color/white" />
 
+            <Spinner
+                android:id="@+id/spinnerTimeDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTimeSlot"
                 android:layout_width="match_parent"
@@ -417,14 +427,14 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerTimeDuration"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_time_slot">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/txtBookACall"
+                android:id="@+id/tvBookAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
@@ -433,7 +443,7 @@
                 android:background="@drawable/ic_signin"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="BOOK A CALL"
+                android:text="@string/book_a_call_capatal"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"

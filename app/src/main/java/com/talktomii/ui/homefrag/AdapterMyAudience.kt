@@ -1,30 +1,51 @@
 package com.talktomii.ui.homefrag
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.talktomii.R
 import com.talktomii.databinding.ItemMyAudienceBinding
+import com.talktomii.ui.callhistory.models.CallHistory
 
-class AdapterMyAudience  : RecyclerView.Adapter<AdapterMyAudience.ViewHolder>(){
+class AdapterMyAudience(private var context: Context) :
+    RecyclerView.Adapter<AdapterMyAudience.ViewHolder>() {
 
+    private var callHistoryArrayList: ArrayList<CallHistory> = arrayListOf()
 
-    class ViewHolder(val binding: ItemMyAudienceBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(val binding: ItemMyAudienceBinding) : RecyclerView.ViewHolder(binding.root)
 
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterMyAudience.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AdapterMyAudience.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemMyAudienceBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
 
-
     override fun getItemCount(): Int {
-        return 5
+        return callHistoryArrayList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var callData = callHistoryArrayList[position]
+        Glide.with(context).load(callData.uid!!.coverPhoto).error(R.drawable.ic_user)
+            .placeholder(R.drawable.ic_user).into(holder.binding.ivImage)
 
+        if (callData.uid!!.name.isNullOrBlank()) {
+            holder.binding.txtName.text = callData.uid!!.name
+        } else {
+            holder.binding.txtName.text = callData.uid!!.fname + " " + callData.uid!!.lname
+        }
+
+        holder.binding.txtUserNAme.text = callData.uid!!.userName
+    }
+
+    fun setList(callHistory: ArrayList<CallHistory>) {
+        this.callHistoryArrayList = callHistory
+        notifyDataSetChanged()
     }
 }

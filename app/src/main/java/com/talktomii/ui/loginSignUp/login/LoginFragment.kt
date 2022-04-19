@@ -2,16 +2,17 @@ package com.talktomii.ui.loginSignUp.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.facebook.*
+import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -24,7 +25,9 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
+import com.talktomii.utlis.LoginType.USER_ROLE
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import java.net.URL
@@ -58,11 +61,29 @@ class LoginFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         init()
         initializeGoogle()
 
@@ -83,8 +104,11 @@ class LoginFragment : DaggerFragment() {
                     progressDialog.setLoading(false)
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
+                    prefsManager.save(PrefsManager.PREF_ROLE, it.data.admin.role.roleName)
+                    Log.d("user is ----", it.data.token.toString())
                     requireContext().showMessage("Login Successfully")
-                    if (it.data?.admin?.role?.roleName == "user")
+                    if (it.data.admin.role._id == USER_ROLE)
                         findNavController().navigate(R.id.homeFragment)
                     else
                         findNavController().navigate(R.id.homeInfluencerFragment)
@@ -127,6 +151,7 @@ class LoginFragment : DaggerFragment() {
         binding.txtForgetPass.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgetPassword)
         }
+
         binding.ivGoogle.setOnClickListener {
             googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
         }
@@ -183,10 +208,10 @@ class LoginFragment : DaggerFragment() {
                 binding.txtEmailId.showSnackBar("Please enter your email id")
                 false
             }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                binding.txtEmailId.showSnackBar("Please enter a valid email address")
-                false
-            }
+//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+//                binding.txtEmailId.showSnackBar("Please enter a valid email address")
+//                false
+//            }
             password.isEmpty() ->{
                 binding.edPassword.showSnackBar("Please enter password")
                 false

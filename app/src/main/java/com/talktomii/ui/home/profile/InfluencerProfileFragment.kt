@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,18 +18,27 @@ import com.google.gson.Gson
 import com.talktomii.ui.home.profile.AdapterInterests
 import com.talktomii.ui.home.profile.AdapterTimeSlot
 import com.talktomii.R
+import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
+import com.talktomii.data.model.getallslotbydate.Payload
+import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
-import com.talktomii.interfaces.AdminDetailInterface
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.OnSlotSelectedInterface
+import com.talktomii.interfaces.*
+import com.talktomii.ui.appointment.AppointmentViewModel
+import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.ui.home.profile.AdapterMySocialMedias
-import com.talktomii.utlis.AboutMeDialog
-import com.talktomii.utlis.CallDialog
-import com.talktomii.utlis.DeleteAppointmentDialog
+import com.talktomii.utlis.*
+import com.talktomii.utlis.DateUtils.addMinutes
+import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
+import com.talktomii.utlis.common.Constants.Companion.DATE
+import com.talktomii.utlis.common.Constants.Companion.DURATON
+import com.talktomii.utlis.common.Constants.Companion.END_TIME
+import com.talktomii.utlis.common.Constants.Companion.IF_ID
+import com.talktomii.utlis.common.Constants.Companion.START_TIME
+import com.talktomii.utlis.common.Constants.Companion.UID
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -37,7 +49,7 @@ import javax.inject.Inject
 
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
-    OnSlotSelectedInterface {
+    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400 {
 
     private lateinit var userData: Admin1
     private lateinit var binding: FragmentInfluencerProfileBinding
@@ -47,15 +59,25 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     @Inject
     lateinit var viewModel: HomeScreenViewModel
 
+    @Inject
+    lateinit var viewModelAppoinemnt: AppointmentViewModel
+
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
+    private val startDate: Calendar = Calendar.getInstance()
 
+    @Inject
+    lateinit var prefsManager: PrefsManager
+    private var availableTimeSlots: Payload? = null
+    private var selectedTimeSlots: TimeStop? = null
+    private var selectedStartTime: String? = null
+    private var selectedEndTime: String? = null
+    private var selectedDate: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,6 +87,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         viewModel.commonInterface = this
         viewModel.adminDetailInterface = this
+        viewModelAppoinemnt.addAppointment = this
+        viewModelAppoinemnt.commonInterface = this
+        viewModelAppoinemnt.apiFailure = this
         viewModel.onSlotSelectedInterface = this
         binding.lifecycleOwner = this
         if (arguments != null) {
@@ -85,7 +110,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.rvInterest.adapter = adapterInterests
     }
 
-
     private fun setListener() {
         binding.txtBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -97,6 +121,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             showPopup()
         }
 
+        binding.txtAboutMe.setOnClickListener {
+            val dialog = DeleteAppointmentDialog()
+            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
+        }
 
 //        binding.txtAboutMe.setOnClickListener {
 //            val dialog = DeleteAppointmentDialog()
@@ -104,6 +132,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 //        }
 
 
+        binding.tvBookAppointment.setOnClickListener {
+            addAppointment()
+//            view?.findNavController()
+//                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
+        }
 //        binding.txtBookACall.setOnClickListener {
 //            view?.findNavController()
 //                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
@@ -145,7 +178,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
     //    try
-    val startDate: Calendar = Calendar.getInstance()
+//    val startDate: Calendar = Calendar.getInstance()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -169,7 +202,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
-                viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(date!!.time))
+                selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
+                viewModel.getAllSlotByDate(selectedDate.toString())
             }
         }
 
@@ -205,9 +239,123 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
     }
 
-    override fun onslotselect(timeStop: TimeStop) {
-        progressDialog.dismiss()
-        binding.rvTimeSlot.adapter = AdapterTimeSlot(timeStop)
+    private fun setTimeSlot() {
+
+        val arrayList: ArrayList<TimeSlotSpinner> = arrayListOf()
+        for (i in 0 until (availableTimeSlots?.timeStops?.size ?: 0)) {
+            arrayList.add(
+                TimeSlotSpinner(
+                    availableTimeSlots!!.timeStops[i].time, i
+                )
+            )
+        }
+
+        val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, arrayList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTimeDuration.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedTimeSlots = availableTimeSlots!!.timeStops[position]
+                    var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
+                    for (i in availableTimeSlots!!.timeStops[position].slot) {
+                        arrayList.add(TimeSlotsWithData(i, false))
+
+                    }
+                    binding.rvTimeSlot.adapter =
+                        AdapterHomeTimeSlot(requireContext(), arrayList,
+                            object : AdapterHomeTimeSlot.onViewItemClick {
+                                override fun onViewItemTimeSelect(text: String) {
+                                    selectedStartTime = text
+                                    try {
+                                        selectedEndTime = addMinutes(
+                                            selectedStartTime!!,
+                                            selectedTimeSlots!!.time
+                                        )
+                                    } catch (e: Exception) {
+
+                                    }
+
+                                }
+
+                            })
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        binding.spinnerTimeDuration.adapter = adapter
     }
+
+
+    private fun addAppointment() {
+        if (isValidateAppointment()) {
+            val hashMap: HashMap<String, Any> = hashMapOf()
+            hashMap[IF_ID] = viewModel.userField.get()!!._id
+            hashMap[UID] = getUser(prefsManager)!!.admin._id
+            hashMap[DATE] = selectedDate!!
+            hashMap[START_TIME] = selectedStartTime!!
+            hashMap[END_TIME] = selectedEndTime!!
+            hashMap[DURATON] = selectedTimeSlots!!.time
+            viewModelAppoinemnt.addAppointment(hashMap)
+        }
+
+    }
+
+    private fun isValidateAppointment(): Boolean {
+        if (selectedStartTime == null) {
+            showToastMessage(requireContext(), getString(R.string.select_time_slot))
+            return false
+        }
+        return true
+    }
+
+    override fun onSlotTimesList(list: Payload) {
+        progressDialog.dismiss()
+        availableTimeSlots = list
+
+        if (availableTimeSlots!!.timeStops.isNotEmpty()) {
+            setTimeSlot()
+            binding.spinnerTimeDuration.visibility = View.VISIBLE
+            binding.rvTimeSlot.visibility = View.VISIBLE
+        } else {
+            binding.spinnerTimeDuration.visibility = View.GONE
+            binding.rvTimeSlot.visibility = View.GONE
+        }
+    }
+
+    override fun onAddAppointment(response: BookMarkResponse?) {
+        progressDialog.dismiss()
+        response?.let { showToastMessage(requireContext(), it.message) }
+        findNavController().popBackStack()
+    }
+
+    override fun onFailureAPI400(message: String) {
+        progressDialog.dismiss()
+        AlertDialogCommon.instance.createOkCancelDialogWithLayout(requireContext(),
+            message,
+            getString(R.string.yes),
+            getString(R.string.no),
+            true,
+            object : AlertDialogCommon.OnOkCancelDialogListener {
+
+                override fun onOkButtonClicked() {
+                    findNavController().navigate(R.id.action_influencerProfileFragment_to_myWalletFragment)
+
+                }
+
+                override fun onCancelButtonClicked() {
+                    //do nothing
+                }
+            })
+    }
+
 
 }

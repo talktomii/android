@@ -287,8 +287,21 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="privacy_and_safety">Privacy and safety</string>
     <string name="more">More</string>
     <string name="delete">Delete</string>
+    <string name="delete_appointment">Are you sure that you want to delete appointment ? </string>
+    <string name="appoint_text">Reschedule Appointment</string>
 
 
+    <string name="empty_price">Price should not be empty!</string>
+    <string name="empty_end_time">End Time should not be empty!</string>
+    <string name="empty_start_time">Start Time should not be empty!</string>
+    <string name="select_repeat_option">Select at least one repeat option!</string>
+    <string name="select_day">Select at least one day!</string>
+    <string name="you_add_only_one_item">You have to add only one item</string>
+    <string name="add_price_call_duration">Add Price/Call Duration</string>
+    <string name="edit_interests">Edit Interests</string>
+    <string name="view_interests">View Interests</string>
+    <string name="calls">Calls</string>
+    <string name="earnings">Earnings</string>
     <string name="app__name" translatable="false">Talktomii</string>
 
     <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
@@ -302,4 +315,9 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAAfmm/QdLl4HBdYhqHxV4Ee+P2pwYtl360jfJaT4+1T2ruiVPAAAAAAEABTv2OXo3leYgEAAQDReV5i</string>
     <string name="link_your_facebook_account_n_to_talk_to_mii">Link your type account \n to Talk To Mii</string>
     <string name="to_link_account_paste_your_facebook_n_profile_link_in_below_field">To link account paste your type \n profile link in below field</string>
+    <string name="book_a_call_capatal">BOOK A CALL</string>
+    <string name="select_time_slot">Select Time Slot</string>
+    <string name="first_name">First Name</string>
+    <string name="price">Price</string>
+    <string name="add_price">Add Price</string>
 </resources>

@@ -33,4 +33,27 @@
 
     <color name="mycard_bgcolor">#F9F8FC</color>
     <color name="card_color">#2F80ED</color>
+
+
+    <color name="textHintColor" >#C5C5C5</color>
+    <color name="backgroundColor">#ffffff</color>
+    <color name="doHaveAccountcolor">#565656</color>
+    <color name="alreadyAccountcolor">#565656</color>
+    <color name="signInColor">#565656</color>
+    <color name="textColor">#565656</color>
+    <color name="settingText">#455154</color>
+    <color name="myCards">#585B68</color>
+    <color name="cardItemColorText">#000000</color>
+    <color name="addCardColor">#585B68</color>
+    <color name="scancardtext">#000000</color>
+    <color name="scanCardBackground">#F9F8FC</color>
+    <color name="cardNumber">#7B8794</color>
+    <color name="addCardHintColor">#565656</color>
+    <color name="walletText">#455154</color>
+    <color name="searchText">#000000</color>
+    <color name="paymentDetailTitle">#455154</color>
+    <color name="bottom_bg">#F9F8FC</color>
+    <color name="walletbg">#F9F8FC</color>
+    <color name="calText">#000000</color>
+    <color name="searchTextColor">#939393</color>
 </resources>

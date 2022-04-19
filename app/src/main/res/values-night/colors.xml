@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent" >#2F80ED</color>
+    <color name="textHintColor" >#878D9C</color>
+    <color name="backgroundColor">#000000</color>
+    <color name="doHaveAccountcolor">#566180</color>
+    <color name="alreadyAccountcolor">#566180</color>
+    <color name="signInColor">#ffffff</color>
+    <color name="textColor">#ffffff</color>
+    <color name="settingText">#ffffff</color>
+    <color name="myCards">#ffffff</color>
+    <color name="mycard_bgcolor">#2B2B2B</color>
+    <color name="cardItemColorText">#ffffff</color>
+    <color name="addCardColor">#ffffff</color>
+    <color name="scancardtext">#C4CACC</color>
+    <color name="scanCardBackground">#F9F8FC</color>
+    <color name="cardNumber">#878D9C</color>
+    <color name="addCardHintColor">#878D9C</color>
+    <color name="walletText">#ffffff</color>
+    <color name="searchText">#ffffff</color>
+    <color name="paymentDetailTitle">#ffffff</color>
+    <color name="bottom_bg">#000000</color>
+    <color name="walletbg">#000000</color>
+    <color name="calText">#ffffff</color>
+    <color name="white_dray">#2B2B2B</color>
+    <color name="searchTextColor">#939393</color>
+    <color name="trans_white">#D0000000</color>
+</resources>

@@ -223,6 +223,16 @@ permission*/
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
+
+    // zoho sdk
+    implementation 'com.zoho.salesiq:mobilisten:4.2.5'
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation project(':placefinder')
+    implementation 'com.thefinestartist:finestwebview:1.2.7'
+
+
 }
 
 static def getDateTime() {

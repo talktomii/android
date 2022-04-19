@@ -76,4 +76,12 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:colorBackground">#7F000000</item>
     </style>
+    <style name="MyTransparentBottomSheetDialogThemeDark" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">#4Fffffff</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/calText</item>
+    </style>
 </resources>

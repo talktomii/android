@@ -21,6 +21,8 @@ class PrefsManager @Inject constructor(
         const val PREF_USER_IMAGE: String = "PREF_USER_IMAGE"
         const val PREF_PROFILE = "PREF_PROFILE"
         const val PREF_API_TOKEN = "PREF_API_TOKEN"
+        const val PREF_API_ID =  "PREF_API_ID"
+        const val PREF_ROLE = "PREF_ROLE"
         const val GUEST = "GUEST"
         const val PREF_STEPS = "STEPS"
         const val PREF_VERIFYRESPONSE = "VERIFYRESPONSE"

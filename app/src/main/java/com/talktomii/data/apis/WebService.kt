@@ -1,7 +1,23 @@
 package com.talktomii.data.apis
 
 import com.example.example.PayloadCards
+import com.talktomii.data.model.AllInterst
+import com.talktomii.data.model.InterestResponse
+import com.talktomii.data.model.RegisterModel
+import com.talktomii.data.model.RolesModel
+import com.talktomii.data.model.addbookmark.AddBookMarkResponse
+import com.talktomii.data.model.admin.AdminResponse
+import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.admin1.UpdateAdmin
+import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
+import com.talktomii.data.model.appointment.UpdateAppointment
+import com.talktomii.data.model.appointment.GetAppointmentById
+import com.talktomii.data.model.currentwallet.CurrentWallet
+import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
+import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
+import com.talktomii.data.model.getallslotbydate.GetAllSlotByDateResponse
 import com.talktomii.data.network.responseUtil.ApiResponse
+import com.talktomii.data.photo.UpdatePhoto
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
 import com.talktomii.ui.callhistory.models.CallHistoryData
@@ -15,16 +31,6 @@ import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
 import retrofit2.Call
-import com.talktomii.data.model.AllInterst
-import com.talktomii.data.model.InterestResponse
-import com.talktomii.data.model.RegisterModel
-import com.talktomii.data.model.RolesModel
-import com.talktomii.data.model.addbookmark.AddBookMarkResponse
-import com.talktomii.data.model.admin.AdminResponse
-import com.talktomii.data.model.admin1.AdminResponse1
-import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
-import com.talktomii.data.model.getallslotbydate.GetAllSlotByDateResponse
-import com.talktomii.data.photo.UpdatePhoto
 import com.talktomii.ui.tellusmore.RequestAdminModel
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -47,6 +53,7 @@ interface WebService {
         private const val GET_NOTIFICATION = "notification/getNotification"
         private const val GET_REPORTABUSE_TYPE = "reportAbuse/getReportAbuse"
         private const val ADD_FEEDBACK = "feedback/addFeedback"
+        private const val WITHDRAW_AMOUNT = "withdraw/addWithdraw"
 
         private const val SEND_OTP = "user/sendOTP"
         private const val ADD_PHONE = "user/add_phone_number"
@@ -63,12 +70,17 @@ interface WebService {
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val VERIFY_EMAIL = "admin/verify-email"
+        private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
+        private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
+        private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
+        private const val GET_APPOINTMENT_BY_DATE = "appointment/getAppointmentByDate"
+        private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
+
     }
 
     @GET("card/getCardByuid/{id}")
     fun getCards(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<PayloadCards>
 
     @GET("admin/agora")
@@ -79,27 +91,23 @@ interface WebService {
     @POST(ADD_CARD)
     @FormUrlEncoded
     fun addCard(
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<addCardData>>
 
     @DELETE("card/deleteCard/{id}")
     fun deleteCard(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<ApiResponse<Any>>
 
     @POST(ADD_WALLET)
     @FormUrlEncoded
     fun addWallet(
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<addWalletData>>
 
     @GET("walletHistory/getWalletHistoryByuid/{id}")
     fun getWallet(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<WalletPayload>
 
     @Multipart
@@ -121,86 +129,84 @@ interface WebService {
 
     @GET("walletHistory/getCurrentAmount/{id}")
     fun getCurrentAmount(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<CurrentWalletPaylod>
 
     @GET("walletHistory/getWalletHistoryByuid/{id}")
     fun getPayment(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<PaymentPayload>
 
     @POST(ADD_BANK)
     @FormUrlEncoded
     fun addBank(
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<addBankData>>
 
     @GET("bank/getBankByuid/{id}")
     fun getBank(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String,
+        @Path("id") id: String?
     ): Call<BankData>
 
     @PUT("bank/updateBank/{id}")
     @FormUrlEncoded
     fun updateBank(
         @Path("id") id: String?,
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<Any>>
 
     @DELETE("bank/deleteBank/{id}")
     fun deleteBank(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<ApiResponse<Any>>
 
     @PUT("coupon/applyCoupon/{code}")
     fun addCoupon(
         @Path("code") code: String?,
-        @Header("Authorization") auth: String,
     ): Call<CouponData>
 
     @GET(GET_CALL_HISTORY)
     fun getCallHistory(
-        @Query("id") id: String,
-        @Header("Authorization") auth: String,
+        @Query("id") id: String
     ): Call<CallHistoryData>
 
     @PUT("appointment/deleteCallHistory/{id}")
     fun deleteCallHistory(
         @Path("id") id: String?,
-        @Header("Authorization") auth: String
     ): Call<ApiResponse<Any>>
 
     @PUT(BLOCK_USER)
     @FormUrlEncoded
     fun blockUser(
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<ApiResponse<Any>>
 
     @GET("notification/getNotification/{id}")
     fun getNotifications(
-        @Path("id") id: String?,
-        @Header("Authorization") auth: String
+        @Path("id") id: String?
     ): Call<NotificationData>
 
     @GET(GET_REPORTABUSE_TYPE)
     fun getType(
-        @Header("Authorization") auth: String,
     ): Call<ReportAbuseData>
 
     @POST(ADD_FEEDBACK)
     @FormUrlEncoded
     fun addFeedback(
-        @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
     ): Call<AddReport>
 
+    @GET(GET_CALL_HISTORY)
+    fun getSearchedCallHistory(
+        @Query("id") id : String,
+        @Query("search") search: String
+    ): Call<CallHistoryData>
+
+    @POST(WITHDRAW_AMOUNT)
+    @FormUrlEncoded
+    fun getPaid(
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
 
 //    @FormUrlEncoded
 //    @POST(SOCIAL_LOGIN)
@@ -234,38 +240,28 @@ interface WebService {
     @GET(GET_ADMIN + "/{id}")
     suspend fun getAdminByID(
         @Path("id") id: String,
-        @Header("Authorization") authHeader: String
     ): Response<AdminResponse1>
 
     @POST(ADD_BOOKMARK)
     suspend fun addFavourite(
-        @Body id: HashMap<String, String>,
-        @Header("Authorization") authHeader: String
+        @Body id: HashMap<String, Any>,
     ): Response<AddBookMarkResponse>
 
     @DELETE(REMOVE_BOOKMARK + "/{id}")
     suspend fun removeBookmark(
-        @Path("id") id: String,
-        @Header("Authorization") authHeader: String
+        @Path("id") id: String
     ): Response<AddBookMarkResponse>
 
     @GET(GET_BOOKMARKS)
     suspend fun getBookmarks(
         @Query("uid") id: String,
-        @Header("Authorization") authHeader: String
     ): Response<BookMarkResponse>
 
     @POST(ADD_APPOINMENT)
     suspend fun addAppoinment(
         @Body id: HashMap<String, Any>,
-        @Header("Authorization") authHeader: String
     ): Response<BookMarkResponse>
 
-    @POST(UPDATE_APPOINMENT + "/{id}")
-    suspend fun updateAppoinment(
-        @Path("id") id: String,
-        @Header("Authorization") authHeader: String
-    ): Response<BookMarkResponse>
 
     @GET(GET_ALL_SLOT_BY_DATE)
     suspend fun getAllSlotByDate(
@@ -278,14 +274,38 @@ interface WebService {
     suspend fun updatePhoto(
         @Path("id") id: String,
         @PartMap map: HashMap<String, RequestBody>,
-        @Header("Authorization") authHeader: String
-    ): Response<UpdatePhoto>
+
+        ): Response<UpdatePhoto>
 
     @PUT(UPDATE_ADMIN + "/{id}")
     suspend fun updateProfile(
         @Path("id") id: String,
-        @Body data: HashMap<String, Any>
-    ): Response<AdminResponse1>
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAdmin>
+
+
+    @GET(GET_CURRENT_AMOUNT + "/{id}")
+    suspend fun getCurrentAmountFromWallet(
+        @Query("id") id: String
+    ): Response<CurrentWallet>
+
+
+    @GET(GET_ALL_APPOINTMENT)
+    suspend fun getAllAppointment(
+        @Query("ifid") id: String
+    ): Response<GetAllAppoinments>
+
+    @GET(GET_ALL_APPOINTMENT)
+    suspend fun getCalenderAllAppointment(
+        @Query("ifid") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+    @GET(GET_APPOINTMENT_BY_ID + "/{id}")
+    suspend fun getAppointmentById(
+        @Path("id") id: String
+    ): Response<GetAppointmentById>
+//        @Body data: HashMap<String, Any>
+//    ): Response<AdminResponse1>
 
     @PUT(VERIFY_EMAIL)
     fun verifyEmail(
@@ -298,4 +318,27 @@ interface WebService {
         @Body data: RequestAdminModel
     ): Call<ApiResponse<Any>>
 
+
+    @GET(GET_APPOINTMENT_BY_DATE)
+    suspend fun getAppointmentByDate(
+        @Query("date") date: String,
+        @Query("id") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun updateAppointment(
+        @Path("id") id: String,
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAppointment>
+
+    @GET(GET_CALL_HISTORY)
+    suspend fun getCallUsersCallHistory(
+        @Query("id") id: String
+    ): Response<CallHistoryData>
+
+    @PUT(UPDATE_APPOINTMENT + "/{id}")
+    suspend fun deleteAppointment(
+        @Path("id") id: String,
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAppointment>
 }

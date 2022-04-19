@@ -8,6 +8,7 @@ data class AllInterst(
     val payload: Payload,
     val result: Int
 )
+
 data class Interest(
     val __v: Int,
     val _id: String,
@@ -15,10 +16,11 @@ data class Interest(
     val description: String,
     val image: String,
     val name: String,
-    var isClicked: ObservableBoolean = ObservableBoolean(false),
+//    var isClicked: ObservableBoolean = ObservableBoolean(false),
+    var isClicked: Boolean,
     val updatedAt: String
 ): AbstractModel()
 data class Payload(
     val count: Int,
-    val interest: List<Interest>
+    val interest: ArrayList<Interest>
 )

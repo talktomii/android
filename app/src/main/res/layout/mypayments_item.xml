@@ -26,14 +26,12 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/walletImage"
-                android:layout_weight="0.2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="start"
-                android:adjustViewBounds="true"
-                android:src="@drawable/walleticon" />
+                android:layout_marginStart="@dimen/dp_10"
+                 />
 
             <LinearLayout
                 android:layout_weight="1"
@@ -47,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_extra_bold"
-                    android:textColor="#455154"
+                    android:textColor="@color/walletText"
                     android:textFontWeight="700"
                     android:textSize="@dimen/dp_16"
                     android:textStyle="bold">
@@ -73,7 +71,7 @@
                 android:layout_gravity="center"
                 android:gravity="end"
                 android:fontFamily="@font/inter_extra_bold"
-                android:textColor="@color/black"
+                android:textColor="@color/walletText"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:textFontWeight="500"
                 android:textSize="@dimen/dp_14"
@@ -84,5 +82,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    >
+
 </layout>

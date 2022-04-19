@@ -13,6 +13,7 @@
             android:layout_centerHorizontal="true"
             android:buttonTint="@color/blue"
             android:checked="true"
+            android:textColor="@color/textColor"
             android:paddingStart="@dimen/dp_20"
             android:text="User"
             app:layout_constraintStart_toStartOf="parent"

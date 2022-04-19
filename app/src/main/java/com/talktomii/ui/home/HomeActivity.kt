@@ -18,6 +18,8 @@ import android.util.Base64
 
 
 import android.util.Log
+import androidx.drawerlayout.widget.DrawerLayout
+import com.talktomii.ui.loginSignUp.MainActivity
 import java.security.MessageDigest
 
 class HomeActivity : DaggerAppCompatActivity(), PermissionCallback {
@@ -33,6 +35,7 @@ class HomeActivity : DaggerAppCompatActivity(), PermissionCallback {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 //        locationPermission(this)
         setListener()
 //       Log.e("Key :: ", generateKeyHash())

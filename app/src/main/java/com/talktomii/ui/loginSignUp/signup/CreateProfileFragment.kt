@@ -2,12 +2,14 @@ package com.talktomii.ui.loginSignUp.signup
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.talktomii.R
 import com.talktomii.data.model.Role
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
@@ -45,6 +47,14 @@ class CreateProfileFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateProfileBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.imgDefault.setImageResource(R.drawable.ic_user_dark_profile)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.imgDefault.setImageResource(R.drawable.ic_user)
+            }
+        }
         return binding.root
     }
 
@@ -54,7 +64,6 @@ class CreateProfileFragment : DaggerFragment() {
         viewModel.getRoles()
 
         binding.btnNEXT.setOnClickListener {
-
             radioCheck()
         }
 
@@ -62,7 +71,6 @@ class CreateProfileFragment : DaggerFragment() {
 //        var password =requireArguments()["password"].toString()
         setListener()
         addObserver()
-
     }
 
     private fun addObserver() {

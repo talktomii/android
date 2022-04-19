@@ -33,29 +33,29 @@ class FragmentResetPassword : DaggerFragment() {
 
     private fun setListener() {
 
-        binding.tvShowHide.setOnClickListener {
-            if (isShowPass) {
-                binding.tvShowHide.setImageResource(R.drawable.ic_eye)
-                binding.edPassword.transformationMethod = AsteriskPasswordTransformationMethod()
-                isShowPass = false
-            } else {
-                binding.tvShowHide.setImageResource(R.drawable.ic_eyeopen)
-                binding.edPassword.transformationMethod = null
-                isShowPass = true
-            }
-        }
-
-        binding.txtShowHide.setOnClickListener {
-            if (isShowPass) {
-                binding.txtShowHide.setImageResource(R.drawable.ic_eye)
-                binding.confirmPassword.transformationMethod = AsteriskPasswordTransformationMethod()
-                isShowPass = false
-            } else {
-                binding.txtShowHide.setImageResource(R.drawable.ic_eyeopen)
-                binding.confirmPassword.transformationMethod = null
-                isShowPass = true
-            }
-        }
+//        binding.tvShowHide.setOnClickListener {
+//            if (isShowPass) {
+//                binding.tvShowHide.setImageResource(R.drawable.ic_eye)
+//                binding.edPassword.transformationMethod = AsteriskPasswordTransformationMethod()
+//                isShowPass = false
+//            } else {
+//                binding.tvShowHide.setImageResource(R.drawable.ic_eyeopen)
+//                binding.edPassword.transformationMethod = null
+//                isShowPass = true
+//            }
+//        }
+//
+//        binding.txtShowHide.setOnClickListener {
+//            if (isShowPass) {
+//                binding.txtShowHide.setImageResource(R.drawable.ic_eye)
+//                binding.confirmPassword.transformationMethod = AsteriskPasswordTransformationMethod()
+//                isShowPass = false
+//            } else {
+//                binding.txtShowHide.setImageResource(R.drawable.ic_eyeopen)
+//                binding.confirmPassword.transformationMethod = null
+//                isShowPass = true
+//            }
+//        }
 
 
     }

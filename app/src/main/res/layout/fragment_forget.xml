@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,11 +22,12 @@
             android:id="@+id/txtSentEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/calText"
             android:textSize="18sp"
-            android:textStyle="bold"
+            android:textFontWeight="700"
+            android:fontFamily="@font/inter_regular"
             android:textAlignment="center"
-            android:text="We’ve sent you email for verification \n Enter code and verify"
+            android:text="We've sent you email for verification \n Enter code and verify"
             android:layout_marginTop="@dimen/dp_40"
             app:layout_constraintEnd_toEndOf="@+id/imageView4"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
@@ -36,14 +38,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Verify Code"
-            android:textStyle="bold"
+            android:fontFamily="@font/inter_regular"
             android:textSize="16sp"
             android:layout_marginStart="20dp"
+            android:textFontWeight="400"
+            android:textColorHint="@color/textHintColor"
             android:layout_marginEnd="@dimen/dp_20"
-            android:textColor="@color/gray"
+            android:textColor="@color/calText"
             android:layout_marginTop="@dimen/dp_30"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@+id/txtSentEmail" />
-
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/txtVerifyCode"
+            tools:layout_editor_absoluteX="10dp" />
         <TextView
             android:id="@+id/txtSubmit"
             android:layout_width="match_parent"
@@ -66,8 +79,10 @@
             android:layout_height="wrap_content"
             android:text="Return to"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/gray"
             android:layout_marginBottom="20dp"
+            android:textFontWeight="700"
+            android:textColor="@color/myCards"
+            android:fontFamily="@font/inter_regular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -81,6 +96,8 @@
             android:textSize="@dimen/sp_14"
             android:layout_marginStart="@dimen/dp_5"
             android:textColor="@color/colorAccent"
+            android:fontFamily="@font/inter_regular"
+            android:textFontWeight="700"
             app:layout_constraintBottom_toBottomOf="@+id/txtReturn"
             app:layout_constraintStart_toEndOf="@+id/txtReturn"
             app:layout_constraintTop_toTopOf="@+id/txtReturn" />

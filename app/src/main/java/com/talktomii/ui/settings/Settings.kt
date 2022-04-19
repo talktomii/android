@@ -1,5 +1,6 @@
 package com.talktomii.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,10 @@ class Settings : DaggerFragment(R.layout.settings){
             val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
             ft.replace(binding.frame.id, NotificationFragment(), "NewFragmentTag")
             ft.commit()
+        }
+        binding.privacyPolicyLayout.setOnClickListener {
+            val intent =  Intent(context,PrivacyAndPolicyActivity::class.java)
+            startActivity(intent)
         }
         return binding.root
     }

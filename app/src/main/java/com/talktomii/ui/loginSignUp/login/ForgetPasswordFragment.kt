@@ -1,5 +1,6 @@
 package com.talktomii.ui.loginSignUp.login
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,14 @@ class ForgetPasswordFragment : DaggerFragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentForgetPasswordBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backPass.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backPass.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         return binding.root
 
     }

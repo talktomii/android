@@ -62,6 +62,7 @@ interface WebService {
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
+        private const val VERIFY_EMAIL = "admin/verify-email"
     }
 
     @GET("card/getCardByuid/{id}")
@@ -69,6 +70,11 @@ interface WebService {
         @Path("id") id: String?,
         @Header("Authorization") auth: String
     ): Call<PayloadCards>
+
+    @GET("admin/agora")
+    fun initCall(
+        @Query("channelName") channelName: String?
+    ): Call<ApiResponse<RegisterModel>>
 
     @POST(ADD_CARD)
     @FormUrlEncoded
@@ -160,9 +166,9 @@ interface WebService {
 
     @GET(GET_CALL_HISTORY)
     fun getCallHistory(
-        @Query("id") id : String,
+        @Query("id") id: String,
         @Header("Authorization") auth: String,
-    ):Call<CallHistoryData>
+    ): Call<CallHistoryData>
 
     @PUT("appointment/deleteCallHistory/{id}")
     fun deleteCallHistory(
@@ -175,7 +181,7 @@ interface WebService {
     fun blockUser(
         @Header("Authorization") auth: String,
         @FieldMap map: HashMap<String, String>
-    ):Call<ApiResponse<Any>>
+    ): Call<ApiResponse<Any>>
 
     @GET("notification/getNotification/{id}")
     fun getNotifications(
@@ -212,7 +218,7 @@ interface WebService {
     suspend fun getAllInterest(): Response<AllInterst>
 
     @GET(ALL_INTERST)
-    fun getInterests():Call<ApiResponse<InterestResponse>>
+    fun getInterests(): Call<ApiResponse<InterestResponse>>
 
     @GET(ALL_INTERST)
     suspend fun getSearchInterest(@Query("search") search: String): Response<AllInterst>
@@ -281,10 +287,15 @@ interface WebService {
         @Body data: HashMap<String, Any>
     ): Response<AdminResponse1>
 
+    @PUT(VERIFY_EMAIL)
+    fun verifyEmail(
+        @Body data: HashMap<String, Any>
+    ): Response<Any>
+
     @PUT(UPDATE_ADMIN + "/{id}")
     fun updateData(
         @Path("id") id: String,
         @Body data: RequestAdminModel
-    ):Call<ApiResponse<Any>>
+    ): Call<ApiResponse<Any>>
 
 }

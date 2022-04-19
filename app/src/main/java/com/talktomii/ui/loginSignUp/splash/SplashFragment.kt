@@ -41,7 +41,9 @@ class SplashFragment : DaggerFragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             openFragments()
         }, 4000)
-//        getHashkey()
+
+
+        getHashkey()
     }
 
     private fun openFragments() {
@@ -62,22 +64,22 @@ class SplashFragment : DaggerFragment() {
 
 
     }
-//
-//    fun getHashkey() {
-//        try {
-//            val info: PackageInfo = requireActivity().packageManager.getPackageInfo(
-//                requireActivity().applicationContext.packageName,
-//                PackageManager.GET_SIGNATURES
-//            )
-//            for (signature in info.signatures) {
-//                val md: MessageDigest = MessageDigest.getInstance("SHA")
-//                md.update(signature.toByteArray())
-//                Log.e("Base64:: ", Base64.encodeToString(md.digest(), Base64.NO_WRAP))
-//            }
-//        } catch (e: PackageManager.NameNotFoundException) {
-//            //  Log.d("Name not found", e.getMessage(), e)
-//        } catch (e: NoSuchAlgorithmException) {
-//            // Log.d("Error", e.getMessage(), e)
-//        }
-//    }
+
+    fun getHashkey() {
+        try {
+            val info: PackageInfo = requireActivity().packageManager.getPackageInfo(
+                requireActivity().packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            for (signature in info.signatures) {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.e("Base64:: ", Base64.encodeToString(md.digest(), Base64.NO_WRAP))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+        // Log.d("Name not found", e.getMessage(), e)
+        } catch (e: NoSuchAlgorithmException) {
+        // Log.d("Error", e.getMessage(), e)
+        }
+}
 }

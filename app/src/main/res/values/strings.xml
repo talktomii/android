@@ -17,7 +17,7 @@
     <string name="or_sign_up_with">Or sign up with</string>
     <string name="by_continue_you_agree">By continue, you agree to our</string>
     <string name="next">Next</string>
-    <string name="facebook_app_id">361581698760005</string>
+    <string name="facebook_app_id">501682688214266</string>
     <string name="signup_to_furniture_market">Signup to Furniture Market</string>
     <string name="email">Email</string>
     <string name="sign_up">Sign Up</string>
@@ -299,7 +299,7 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="agora_app_id" translatable="false">9048bd89642e4679ba79ee4f41ed3e50</string>
     <!-- Please leave it if not enable App Certificate -->
     <!-- You can generate a temporary token at https://dashboard.agora.io/projects -->
-    <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAAdYAf+/Bue/flpqH/bsDbn2fYGkZEI7JuJA9GMndhnkgx+f9gAAAAAEAAWnXuozXJWYgEAAQD9clZi</string>
+    <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAAfmm/QdLl4HBdYhqHxV4Ee+P2pwYtl360jfJaT4+1T2ruiVPAAAAAAEABTv2OXo3leYgEAAQDReV5i</string>
     <string name="link_your_facebook_account_n_to_talk_to_mii">Link your type account \n to Talk To Mii</string>
     <string name="to_link_account_paste_your_facebook_n_profile_link_in_below_field">To link account paste your type \n profile link in below field</string>
 </resources>

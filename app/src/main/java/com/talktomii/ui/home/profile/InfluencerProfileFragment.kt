@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.talktomii.ui.home.profile.AdapterInterests
 import com.talktomii.ui.home.profile.AdapterTimeSlot
 import com.talktomii.R
@@ -37,6 +39,7 @@ import javax.inject.Inject
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
     OnSlotSelectedInterface {
 
+    private lateinit var userData: Admin1
     private lateinit var binding: FragmentInfluencerProfileBinding
     private var socialMediaAdapter: AdapterMySocialMedias? = null
     private var adapterInterests: AdapterInterests? = null
@@ -128,7 +131,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         )
         customView.txtCall.setOnClickListener {
             customDialog?.cancel()
-            view?.findNavController()?.navigate(R.id.callFragment)
+//            userData=Admin1(_id = "625e09d929499b944fc9e6a5")
+            view?.findNavController()?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(userData)))
         }
         customView.ivCancel.setOnClickListener {
             customDialog?.dismiss()
@@ -188,12 +192,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     override fun onAdminDetails(admin1: Admin1) {
         viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
-
+        userData=admin1
         progressDialog.dismiss()
-        socialMediaAdapter?.setItemList(admin1.socialNetwork)
-        if (admin1.interest.size > 0) {
+        socialMediaAdapter?.setItemList(admin1.socialNetwork!!)
+        if (admin1.interest?.size!! > 0) {
             binding.txtInterests.visibility = View.VISIBLE
-            adapterInterests?.setItemList(admin1.interest)
+            adapterInterests?.setItemList(admin1.interest!!)
             binding.txtItemCount.visibility = View.VISIBLE
         } else {
             binding.txtInterests.visibility = View.GONE

@@ -97,6 +97,10 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
+
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
+
+
     // agora sdk
     implementation 'io.agora.rtc:voice-sdk:3.6.2'
     /*
@@ -216,6 +220,9 @@ permission*/
     implementation 'com.github.kapilmhr:DesignToPDF:1.0'
     implementation 'com.github.LucasFsc:Html2Pdf:0.2-beta'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
 }
 
 static def getDateTime() {

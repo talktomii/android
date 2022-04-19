@@ -97,7 +97,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
 //        commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.removeBookmark(userField.get()!!._id, AUTHORIZATION)
+                val authResponse = webService.removeBookmark(userField.get()!!._id?:"", AUTHORIZATION)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -127,7 +127,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAllSlotByDate(date, userField.get()!!._id)
+                val authResponse = webService.getAllSlotByDate(date, userField.get()!!._id?:"")
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {

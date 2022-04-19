@@ -168,6 +168,15 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
             interestVM.updateData(getUser(prefsManager)?.admin?._id?:"",request)
         }
 
+        binding.tvSkip.setOnClickListener {
+
+            var user= getUser(prefsManager)
+            if (user?.admin?.role?.roleName == "user")
+                view?.findNavController()?.navigate(R.id.homeFragment)
+            else
+                view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
+        }
+
     }
 //getUser(prefsManager)?.admin?._id?
     //6257bc87dd85d624ccb6bb8a

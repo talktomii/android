@@ -336,9 +336,10 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         progressDialog.dismiss()
         ApisRespHandler.handleError(
             ApiUtils.handleError(
-            code,
-            errorBody!!.string()
-        ), requireActivity(), prefsManager)
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
     }
 
     override fun onStarted() {

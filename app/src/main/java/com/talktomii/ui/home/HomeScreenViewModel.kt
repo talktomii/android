@@ -33,7 +33,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                     }
                 } else {
                     commonInterface!!.onFailureAPI(
-                        authResponse.message(),authResponse.code() ,authResponse.errorBody()
+                        authResponse.message(), authResponse.code(), authResponse.errorBody()
                     )
 
                 }

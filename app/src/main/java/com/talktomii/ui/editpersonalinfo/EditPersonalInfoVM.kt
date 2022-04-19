@@ -50,10 +50,6 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         authResponse.code(),
                         authResponse.errorBody()
                     )
-                    ApiUtils.getError(
-                        authResponse.code(),
-                        authResponse.errorBody()!!.string()
-                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -75,7 +71,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -100,7 +100,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

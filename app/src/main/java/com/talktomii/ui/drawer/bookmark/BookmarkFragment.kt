@@ -26,13 +26,15 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     lateinit var binding: FragmentBookmarkBinding
 
     @Inject
+    lateinit var prefsManager: PrefsManager
+
+    @Inject
     lateinit var viewModel: BookmarkViewModel
 
     private var adapter: AdapterBookmark? = null
     private var arrayList: ArrayList<Service> = arrayListOf()
     private lateinit var progressDialog: ProgressDialog
-    @Inject
-    lateinit var prefsManager: PrefsManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +51,7 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     }
 
     private fun initAdapter() {
-        adapter = AdapterBookmark(requireContext(), arrayList, this , isUser(prefsManager))
+        adapter = AdapterBookmark(requireContext(), arrayList, this, isUser(prefsManager))
         binding.rvPopular.adapter = adapter
     }
 
@@ -69,9 +71,10 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
         progressDialog.dismiss()
         ApisRespHandler.handleError(
             ApiUtils.handleError(
-            code,
-            errorBody!!.string()
-        ), requireActivity(), prefsManager)
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
     }
 
     override fun onStarted() {

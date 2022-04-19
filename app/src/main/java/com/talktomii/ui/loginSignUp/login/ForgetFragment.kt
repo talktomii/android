@@ -34,7 +34,7 @@ class ForgetFragment : DaggerFragment() {
 
     private fun setListener() {
 
-            binding.txtCheckInbox.setOnClickListener {
+            binding.txtSubmit.setOnClickListener {
                 findNavController().navigate(R.id.action_forget_to_resetPassword)
             }
     }

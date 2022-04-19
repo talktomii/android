@@ -1,9 +1,7 @@
 package com.talktomii.ui.loginSignUp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -26,16 +24,20 @@ import com.talktomii.utlis.LocaleHelper
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.isUser
 import com.talktomii.utlis.logoutUser
-import com.zoho.salesiqembed.ZohoSalesIQ
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+import android.util.Log
+import android.widget.Toast
+import com.talktomii.utlis.SocketManager
+import com.zoho.salesiqembed.ZohoSalesIQ
 
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver {
     private lateinit var binding: ActivityMainBinding
 
     var navHostFragment: NavHostFragment? = null
+    public var socketManager: SocketManager= SocketManager.getInstance()
     private val viewModel: MainVM by viewModels()
 
     companion object {
@@ -57,6 +59,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        socketManager.connect(this,prefsManager)
 
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
@@ -275,5 +278,16 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
         fragment?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onMessageReceive(message: String, event: String) {
+        Log.e(event,message)
+        runOnUiThread {
+            Toast.makeText(this,event,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun socketConnected() {
+        socketManager.onCallRequest(this)
     }
 }

@@ -92,7 +92,7 @@ class LoginFragment : DaggerFragment() {
         bindObservers()
 
 //        faceBookLogin()
-        getDeviceToken()
+//        getDeviceToken()
     }
 
     private fun bindObservers() {
@@ -140,9 +140,9 @@ class LoginFragment : DaggerFragment() {
     }
 
     private fun setSpannable() {
-        binding.ivFacebook.setOnClickListener {
-
-        }
+//        binding.ivFacebook.setOnClickListener {
+//            binding.fb_login_button.performClick()
+//        }
 
         binding.txtSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signup)
@@ -175,16 +175,16 @@ class LoginFragment : DaggerFragment() {
             var email = binding.txtEmailId.text.toString()
             var password = binding.edPassword.text.toString()
 
-            if (validation(email, password)) {
+            if (validation(email,password)){
 
-                if (isConnectedToInternet(requireContext(), true)) {
-                    var map = HashMap<String, String>()
-                    map["email"] = email
-                    map["password"] = password
+           if (isConnectedToInternet(requireContext(), true)) {
+            var map = HashMap<String, String>()
+            map["email"] = email
+            map["password"] = password
 
-                    viewModel.loginApi(map)
+            viewModel.loginApi(map)
 
-                }
+              }
 
             }
         }
@@ -202,9 +202,9 @@ class LoginFragment : DaggerFragment() {
         }
     }
 
-    private fun validation(email: String, password: String): Boolean {
-        return when {
-            email.isEmpty() -> {
+    private fun validation(email: String,password:String): Boolean {
+        return when{
+            email.isEmpty() ->{
                 binding.txtEmailId.showSnackBar("Please enter your email id")
                 false
             }
@@ -212,7 +212,7 @@ class LoginFragment : DaggerFragment() {
 //                binding.txtEmailId.showSnackBar("Please enter a valid email address")
 //                false
 //            }
-            password.isEmpty() -> {
+            password.isEmpty() ->{
                 binding.edPassword.showSnackBar("Please enter password")
                 false
             }
@@ -238,6 +238,15 @@ class LoginFragment : DaggerFragment() {
         println("Google detail:  $account")
         var imageUrl = ""
         if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+        if (isConnectedToInternet(requireContext(), true)) {
+            var map = HashMap<String, String>()
+            map["email"] = account.email
+            map["isSocial"] = "true"
+
+            viewModel.loginApi(map)
+
+        }
+
     }
 
 

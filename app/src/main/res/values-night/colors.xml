@@ -21,4 +21,8 @@
     <color name="paymentDetailTitle">#ffffff</color>
     <color name="bottom_bg">#000000</color>
     <color name="walletbg">#000000</color>
+    <color name="calText">#ffffff</color>
+    <color name="white_dray">#2B2B2B</color>
+    <color name="searchTextColor">#939393</color>
+    <color name="trans_white">#D0000000</color>
 </resources>

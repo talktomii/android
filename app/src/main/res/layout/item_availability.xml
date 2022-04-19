@@ -24,8 +24,9 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="15dp"
                 android:text="9am-2pm"
-                android:textColor="@color/black"
+                android:textColor="@color/calText"
                 android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Mon-Fri"
-                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/calText"
                     android:textStyle="bold" />
 
                 <TextView
@@ -50,7 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="  End "
-                    android:textColor="@color/gray" />
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/myCards" />
 
                 <TextView
                     android:id="@+id/end"
@@ -58,17 +61,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Never"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/ivEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:src="@drawable/ic_edit"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/ic_options"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -81,4 +81,7 @@
         <item name="android:colorBackground">#4Fffffff</item>
     </style>
 
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/calText</item>
+    </style>
 </resources>

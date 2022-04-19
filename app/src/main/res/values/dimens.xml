@@ -46,5 +46,6 @@
     <dimen name="sp_24">24sp</dimen>
     <dimen name="dp_140">140dp</dimen>
     <dimen name="dp_130">130dp</dimen>
+    <dimen name="sp_55">55</dimen>
 
 </resources>

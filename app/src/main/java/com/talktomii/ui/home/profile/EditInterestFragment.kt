@@ -111,11 +111,7 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     override fun onItems(list: ArrayList<Interest>) {
         for (item in list) {
             for (item2 in editPersonalInfoVM.userField.get()!!.interest) {
-                if (item._id == item2._id) {
-                    item.isClicked = true
-                } else {
-                    item.isClicked = false
-                }
+                item.isClicked = item._id == item2._id
             }
         }
         (binding.rvTopics.adapter as AdapterEditInterest).setItemList(list, 2)

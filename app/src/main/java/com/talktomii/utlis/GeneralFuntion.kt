@@ -191,12 +191,12 @@ fun logoutUser(activity: Activity?, prefsManager: PrefsManager) {
 
     activity.startActivity(
         Intent(activity, MainActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
     )
+    activity.finishAffinity()
 
-    activity.setResult(Activity.RESULT_CANCELED)
-    ActivityCompat.finishAffinity(activity)
-    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//    activity.setResult(Activity.RESULT_CANCELED)
+//    ActivityCompat.finishAffinity(activity)
+//    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 }
 
 fun FragmentManager.openFragmentWithAnimation(

@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
         <TextView
-            android:id="@+id/txtTime"
+            android:id="@+id/txtCallDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0:00:00"
@@ -67,72 +67,108 @@
             app:layout_constraintStart_toStartOf="@+id/txtName"
             app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
 
-        <TextView
-            android:id="@+id/txSpeaker"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speaker"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginStart="60dp"
-            android:layout_marginBottom="@dimen/dp_50"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/ivSpeaker"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txSpeaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:text="Speaker"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivSpeaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:src="@drawable/ic_speaker"
+                app:layout_constraintBottom_toTopOf="@+id/txSpeaker"
+                app:layout_constraintEnd_toEndOf="@+id/txSpeaker"
+                app:layout_constraintStart_toStartOf="@+id/txSpeaker" />
+
+            <TextView
+                android:id="@+id/txtMute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_80"
+                android:text="Mute"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/txSpeaker"
+                app:layout_constraintStart_toEndOf="@+id/txSpeaker"
+                app:layout_constraintTop_toTopOf="@+id/txSpeaker" />
+
+            <ImageView
+                android:id="@+id/ivMute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:src="@drawable/ic_mic"
+                app:layout_constraintBottom_toTopOf="@+id/txtMute"
+                app:layout_constraintEnd_toEndOf="@+id/txtMute"
+                app:layout_constraintStart_toStartOf="@+id/txtMute" />
+
+            <TextView
+                android:id="@+id/txtEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:text="End"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtMute"
+                app:layout_constraintStart_toEndOf="@+id/txtMute"
+                app:layout_constraintTop_toTopOf="@+id/txtMute" />
+
+            <ImageView
+                android:id="@+id/ivEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:src="@drawable/ic_end"
+                app:layout_constraintBottom_toTopOf="@+id/txtEnd"
+                app:layout_constraintEnd_toEndOf="@+id/txtEnd"
+                app:layout_constraintStart_toStartOf="@+id/txtEnd" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAcceptReject"
+            android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_speaker"
-            android:layout_marginBottom="@dimen/dp_10"
-            app:layout_constraintBottom_toTopOf="@+id/txSpeaker"
-            app:layout_constraintEnd_toEndOf="@+id/txSpeaker"
-            app:layout_constraintStart_toStartOf="@+id/txSpeaker" />
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout6">
 
-        <TextView
-            android:id="@+id/txtMute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mute"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/dp_80"
-            app:layout_constraintBottom_toBottomOf="@+id/txSpeaker"
-            app:layout_constraintStart_toEndOf="@+id/txSpeaker"
-            app:layout_constraintTop_toTopOf="@+id/txSpeaker" />
+            <ImageView
+                android:id="@+id/ivCallAccept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_accept"
+                android:layout_marginStart="@dimen/dp_30"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivMute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mic"
-            android:layout_marginBottom="@dimen/dp_10"
-            app:layout_constraintBottom_toTopOf="@+id/txtMute"
-            app:layout_constraintEnd_toEndOf="@+id/txtMute"
-            app:layout_constraintStart_toStartOf="@+id/txtMute" />
+            <ImageView
+                android:id="@+id/ivCallEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_end"
+                android:layout_marginEnd="@dimen/dp_30"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginStart="90dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txtMute"
-            app:layout_constraintStart_toEndOf="@+id/txtMute"
-            app:layout_constraintTop_toTopOf="@+id/txtMute" />
-
-        <ImageView
-            android:id="@+id/ivEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_end"
-            android:layout_marginBottom="@dimen/dp_10"
-            app:layout_constraintBottom_toTopOf="@+id/txtEnd"
-            app:layout_constraintEnd_toEndOf="@+id/txtEnd"
-            app:layout_constraintStart_toStartOf="@+id/txtEnd" />
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

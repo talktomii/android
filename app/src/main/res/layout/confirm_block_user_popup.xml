@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="@dimen/dp_20"
-    android:layout_marginEnd="@dimen/dp_20"
-    app:cardBackgroundColor="#F9F8FC"
-    app:cardCornerRadius="@dimen/dp_20">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:cardBackgroundColor="#F9F8FC"
+        app:cardCornerRadius="@dimen/dp_20">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:orientation="vertical">
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="wrap_content"
-          android:layout_gravity="center"
-          android:layout_height="wrap_content"
-          >
 
-          <com.makeramen.roundedimageview.RoundedImageView
-              android:id="@+id/imgDefault"
-              android:layout_width="48dp"
-              android:layout_height="48dp"
-              android:src="@drawable/ic_user"
-              android:layout_marginTop="100dp"
-              app:riv_corner_radius="@dimen/dp_60"
-              android:layout_marginStart="@dimen/dp_30"
-              android:scaleType="centerCrop"
-              tools:ignore="MissingConstraints">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-          </com.makeramen.roundedimageview.RoundedImageView>
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgDefault"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/dp_30"
+                android:layout_marginTop="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user"
+                app:riv_corner_radius="@dimen/dp_60"
+                tools:ignore="MissingConstraints">
 
-          <androidx.appcompat.widget.AppCompatImageView
-              android:id="@+id/ivCamera"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/blockuser2"
-              android:layout_marginTop="@dimen/dp_50"
-              app:layout_constraintEnd_toEndOf="@+id/imgDefault"
-              app:layout_constraintBottom_toBottomOf="@+id/imgDefault" />
-      </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.makeramen.roundedimageview.RoundedImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_50"
+                android:src="@drawable/blockuser2"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
+                app:layout_constraintEnd_toEndOf="@+id/imgDefault" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/blocked_user_text"
             android:layout_width="wrap_content"
@@ -70,8 +73,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/closeCardPopup"
@@ -80,9 +82,9 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_15"
                 android:layout_marginBottom="@dimen/dp_15"
+                android:layout_weight="1"
                 android:fontFamily="@font/inter_regular"
                 android:gravity="center"
-                android:layout_weight="1"
                 android:text="Close"
                 android:textColor="#323F4B"
                 android:textFontWeight="400"
@@ -91,4 +93,5 @@
             </androidx.appcompat.widget.AppCompatTextView>
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

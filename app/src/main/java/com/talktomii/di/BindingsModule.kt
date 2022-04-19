@@ -175,8 +175,12 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun callDialog(): CallDialog
 
+
     @ContributesAndroidInjector
     abstract fun extendTimeDialog(): ExtendTimeDialog
+
+    @ContributesAndroidInjector
+    abstract fun linkAccountDialog(): LinkAccountDialog
 
     @ContributesAndroidInjector
     abstract fun deleteAppointmentDialog(): DeleteAppointmentDialog

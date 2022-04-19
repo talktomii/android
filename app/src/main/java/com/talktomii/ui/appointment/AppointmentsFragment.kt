@@ -1,6 +1,7 @@
 package com.talktomii.ui.appointment
 
 import android.app.Dialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -84,6 +85,15 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentAppointmentsBinding.inflate(inflater, container, false)
+//        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
+//                binding.calendarViewAppointment.swi
+//            }
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
+//            }
+//        }
         return binding.root
     }
 
@@ -108,7 +118,6 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 val selectedDate = "" + date.year + "-" + date.month + "-" + date.day
                 viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
             }
-
         })
     }
 
@@ -138,9 +147,10 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         showToastMessage(requireContext(), message)
         ApisRespHandler.handleError(
             ApiUtils.handleError(
-            code,
-            errorBody!!.string()
-        ), requireActivity(), prefsManager)
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
     }
 
     override fun onStarted() {
@@ -161,14 +171,34 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 )
             )
         }
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
 
-        binding.calendarViewAppointment.addDecorator(
-            EventDecorator(
-                R.color.siq_color_primary_dark,
-                calenderArrayList
-            )
-        )
-        binding.calendarViewAppointment.invalidate()
+                binding.calendarViewAppointment.addDecorator(
+                    EventDecorator(
+                        R.color.siq_divider_color_light,
+                        calenderArrayList
+                    )
+                )
+                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
+                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
+                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
+                binding.calendarViewAppointment.invalidate()
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.calendarViewAppointment.addDecorator(
+                    EventDecorator(
+                        R.color.siq_color_primary_dark,
+                        calenderArrayList
+                    )
+                )
+                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
+                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
+                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
+                binding.calendarViewAppointment.invalidate()
+            }
+        }
+
     }
 
     var reScheduleAppointmentDialog: BottomSheetDialog? = null

@@ -18,13 +18,16 @@ import com.talktomii.interfaces.HomeInterface
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.SocketManager
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import javax.inject.Inject
 
 class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, CommonInterface,
-    AdapterPopular.onViewPopularClick {
+    AdapterPopular.onViewPopularClick, SocketManager.OnMessageReceiver {
 
     private lateinit var binding: HomeFragmentBinding
     private val viewModels by viewModels<HomeScreenViewModel>()
@@ -33,6 +36,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     @Inject
     lateinit var prefsManager: PrefsManager
+
     @Inject
     lateinit var viewModel: HomeScreenViewModel
     private lateinit var progressDialog: ProgressDialog
@@ -59,7 +63,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.vm = viewModels
+        initAdapter()
         init()
     }
 
@@ -78,7 +82,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         initAdapter()
 
         progressDialog = ProgressDialog(requireActivity())
-
         viewModel.commonInterface = this
         viewModel.homeInterface = this
         if (arguments?.getString("ID") != null) {
@@ -126,7 +129,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         progressDialog.show()
     }
 
-
     override fun onViewPopularClick(admin: Admin) {
         onCoverClicked(admin)
     }
@@ -134,6 +136,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload) {
         progressDialog.dismiss()
         adapterPopular!!.setPopularList(payload.admin)
+        var jsonObject = JSONObject()
+        jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
+        (requireActivity() as MainActivity).socketManager.joinApp(jsonObject, this)
+    }
+
+    override fun onMessageReceive(message: String, event: String) {
 
     }
 

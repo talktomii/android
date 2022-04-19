@@ -150,7 +150,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 )
                             )
                         }
-
                         val layoutManager = FlexboxLayoutManager()
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW

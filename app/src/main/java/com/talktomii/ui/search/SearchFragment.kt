@@ -83,7 +83,7 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
 
     override fun onSearchAllInstruction(data: Payload) {
         adapterCategories?.interestArrayList = arrayListOf()
-        adapterCategories!!.setImagesList(data.interest)
+        adapterCategories!!.setImagesList(data.interest as ArrayList<Interest>)
     }
 
     override fun onViewSearchClick(interest: Interest) {

@@ -5,12 +5,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
         android:paddingBottom="@dimen/dp_20">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -31,8 +33,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Hi Cameron"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/myCards"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -40,11 +43,10 @@
 
                 <ImageView
                     android:id="@+id/ivCross"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
-                    android:src="@drawable/ic_cross"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,10 +55,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_10"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Offer your services and find your audience on Talktomii!"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="400"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/txtName"
                     app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
@@ -69,9 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="My Stats"
-                android:textColor="@color/gray"
+                android:textColor="@color/addCardColor"
                 android:textSize="@dimen/sp_24"
-                android:textStyle="bold"
+                android:textFontWeight="700"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
@@ -94,6 +102,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_home_background"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:paddingStart="@dimen/dp_8"
                 android:paddingTop="@dimen/dp_8"
                 android:paddingEnd="50dp"
@@ -108,7 +118,8 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Earnings"
-                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/calText"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -119,9 +130,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$1,4K"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/txtEarnings"
                     app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
 
@@ -133,6 +145,7 @@
                     android:textColor="@color/color_green"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintBottom_toBottomOf="@+id/txtEarn"
                     app:layout_constraintStart_toEndOf="@+id/txtEarn"
                     app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
@@ -160,7 +173,8 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Earnings"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
+                    android:fontFamily="@font/inter_regular"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -171,9 +185,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="35h 15m"
-                    android:textColor="@color/black"
+                    android:textColor="@color/calText"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/txtCalls"
                     app:layout_constraintTop_toBottomOf="@+id/txtCalls" />
 
@@ -184,6 +199,7 @@
                     android:text="+5%"
                     android:textColor="@color/color_green"
                     android:textSize="12sp"
+                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/txtCallsEarn"
                     app:layout_constraintStart_toEndOf="@+id/txtCallsEarn"
@@ -198,9 +214,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="Nearest Appointments"
-                android:textColor="@color/gray"
+                android:textColor="@color/addCardColor"
                 android:textSize="24dp"
-                android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
+                android:textFontWeight="700"
                 app:layout_constraintStart_toStartOf="@+id/layoutEarning"
                 app:layout_constraintTop_toBottomOf="@+id/layoutEarning" />
 
@@ -218,7 +235,6 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_nearest_appointments">
 
-
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
@@ -227,7 +243,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="My Audience"
-                android:textColor="@color/gray"
+                android:textColor="@color/addCardColor"
+                android:textFontWeight="700"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtNearestAppoint"
@@ -261,11 +279,9 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/item_my_audience">
 
-
             </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 

@@ -2,6 +2,7 @@ package com.talktomii.data.apis
 
 import com.example.example.PayloadCards
 import com.talktomii.data.model.AllInterst
+import com.talktomii.data.model.InterestResponse
 import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
@@ -29,9 +30,9 @@ import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
-import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
+import com.talktomii.ui.tellusmore.RequestAdminModel
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -64,9 +65,11 @@ interface WebService {
         private const val REMOVE_BOOKMARK = "favoriteService/deleteService"
         private const val GET_BOOKMARKS = "favoriteService/getService"
         private const val ADD_APPOINMENT = "appointment/addAppointment"
+        private const val UPDATE_APPOINMENT = "appointment/updateAppointment/"
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
+        private const val VERIFY_EMAIL = "admin/verify-email"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
         private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
         private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
@@ -79,6 +82,11 @@ interface WebService {
     fun getCards(
         @Path("id") id: String?
     ): Call<PayloadCards>
+
+    @GET("admin/agora")
+    fun initCall(
+        @Query("channelName") channelName: String?
+    ): Call<ApiResponse<RegisterModel>>
 
     @POST(ADD_CARD)
     @FormUrlEncoded
@@ -216,6 +224,9 @@ interface WebService {
     suspend fun getAllInterest(): Response<AllInterst>
 
     @GET(ALL_INTERST)
+    fun getInterests(): Call<ApiResponse<InterestResponse>>
+
+    @GET(ALL_INTERST)
     suspend fun getSearchInterest(@Query("search") search: String): Response<AllInterst>
 
     @GET(ALL_INFLUENCE)
@@ -293,6 +304,19 @@ interface WebService {
     suspend fun getAppointmentById(
         @Path("id") id: String
     ): Response<GetAppointmentById>
+//        @Body data: HashMap<String, Any>
+//    ): Response<AdminResponse1>
+
+    @PUT(VERIFY_EMAIL)
+    fun verifyEmail(
+        @Body data: HashMap<String, Any>
+    ): Response<Any>
+
+    @PUT(UPDATE_ADMIN + "/{id}")
+    fun updateData(
+        @Path("id") id: String,
+        @Body data: RequestAdminModel
+    ): Call<ApiResponse<Any>>
 
 
     @GET(GET_APPOINTMENT_BY_DATE)

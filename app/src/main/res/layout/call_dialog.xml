@@ -86,7 +86,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtAreYouSure" />
 
                 <TextView
-                    android:id="@+id/TxtCall"
+                    android:id="@+id/txtCall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_agree_background"

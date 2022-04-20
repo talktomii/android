@@ -386,11 +386,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
     }
 
-    override fun onAddAppointment(response: BookMarkResponse?) {
-        progressDialog.dismiss()
-        response?.let { showToastMessage(requireContext(), it.message) }
-        findNavController().popBackStack()
-    }
 
     override fun onFailureAPI400(message: String) {
         progressDialog.dismiss()
@@ -410,6 +405,13 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     //do nothing
                 }
             })
+    }
+
+
+    override fun onAddAppointment(response: BookMarkResponse?) {
+        progressDialog.dismiss()
+        response?.let { showToastMessage(requireContext(), it.message) }
+        findNavController().popBackStack()
     }
 
     override fun onStopProgress() {

@@ -159,7 +159,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     override fun influenceCalenderList(payload: AppointmentPayload) {
         progressDialog.dismiss()
+        payload.Appointment!!.sortByDescending { SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(it.date)) }
         appointmentAdapter!!.setList(payload.Appointment)
+
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
         for (i in payload.Appointment!!) {
             val calender = convertStringToCalender(i.date)

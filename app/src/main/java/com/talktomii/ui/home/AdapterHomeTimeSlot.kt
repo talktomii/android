@@ -3,6 +3,7 @@ package com.talktomii.ui.home
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
@@ -44,11 +45,15 @@ class AdapterHomeTimeSlot(
                 ContextCompat.getDrawable(context, R.drawable.back_tabs)
         }
         holder.binding.tvTime.setOnClickListener {
-            listener.onViewItemTimeSelect(text)
-            timeSlotsWithData.isSelected = true
-            notifyDataSetChanged()
-            lastPosition = position
-            arrayList[lastPosition].isSelected = false
+//            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).time > System.currentTimeMillis()) {
+                listener.onViewItemTimeSelect(text)
+                timeSlotsWithData.isSelected = true
+                notifyDataSetChanged()
+                lastPosition = position
+                arrayList[lastPosition].isSelected = false
+//            } else {
+//                Toast.makeText(context, "Invalid Time!", Toast.LENGTH_LONG).show()
+//            }
         }
     }
 

@@ -104,11 +104,11 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         if (isShowMore) {
             adapterPopular!!.showMoreOrLess(isShowMore)
             isShowMore = false
-            binding.txtSeeAll.text = "See more"
+            binding.txtSeeAll.text = "See less"
         } else {
             adapterPopular!!.showMoreOrLess(isShowMore)
             isShowMore = true
-            binding.txtSeeAll.text = "See less"
+            binding.txtSeeAll.text = "See more"
         }
     }
 

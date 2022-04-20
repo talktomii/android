@@ -1,7 +1,9 @@
 package com.talktomii.ui.editpersonalinfo
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -14,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -155,14 +158,22 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private fun setListeners() {
 
         binding.ivCamera.setOnClickListener {
-            ImagePicker.with(this).createIntent { intent ->
-                profileImg_launcher.launch(intent)
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 99)
+            } else {
+                ImagePicker.with(this).createIntent { intent ->
+                    profileImg_launcher.launch(intent)
+                }
             }
         }
 
         binding.imgCam.setOnClickListener {
-            ImagePicker.with(this).createIntent { intent ->
-                coverImg_launcher.launch(intent)
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 99)
+            } else {
+                ImagePicker.with(this).createIntent { intent ->
+                    coverImg_launcher.launch(intent)
+                }
             }
         }
 

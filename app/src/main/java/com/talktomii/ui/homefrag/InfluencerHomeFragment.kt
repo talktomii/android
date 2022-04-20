@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.talktomii.R
 import com.talktomii.data.model.getallslotbydate.PayloadAppoinment
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentHomeInfluencerBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.ui.callhistory.models.CallHistoryPayoad
@@ -85,6 +87,12 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluenceListe
 
     override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
 
     }
 

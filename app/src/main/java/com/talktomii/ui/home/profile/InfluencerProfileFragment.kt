@@ -23,6 +23,8 @@ import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
 import com.talktomii.interfaces.*
@@ -230,6 +232,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
 
     }
 
@@ -269,130 +277,130 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
     }
 
-        private fun setTimeSlot() {
-
-            val arrayList: ArrayList<TimeSlotSpinner> = arrayListOf()
-            for (i in 0 until (availableTimeSlots?.timeStops?.size ?: 0)) {
-                arrayList.add(
-                    TimeSlotSpinner(
-                        availableTimeSlots!!.timeStops[i].time, i
-                    )
+    private fun setTimeSlot() {
+        progressDialog.dismiss()
+        val arrayList: ArrayList<TimeSlotSpinner> = arrayListOf()
+        for (i in 0 until (availableTimeSlots?.timeStops?.size ?: 0)) {
+            arrayList.add(
+                TimeSlotSpinner(
+                    availableTimeSlots!!.timeStops[i].time, i
                 )
-            }
-
-            val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
-                requireContext(),
-                android.R.layout.simple_spinner_item, arrayList
             )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerTimeDuration.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        id: Long
-                    ) {
-                        selectedTimeSlots = availableTimeSlots!!.timeStops[position]
-                        var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
-                        for (i in availableTimeSlots!!.timeStops[position].slot) {
-                            arrayList.add(TimeSlotsWithData(i, false))
+        }
 
-                        }
-                        binding.rvTimeSlot.adapter =
-                            AdapterHomeTimeSlot(requireContext(), arrayList,
-                                object : AdapterHomeTimeSlot.onViewItemClick {
-                                    override fun onViewItemTimeSelect(text: String) {
-                                        selectedStartTime = text
-                                        try {
-                                            selectedEndTime = addMinutes(
-                                                selectedStartTime!!,
-                                                selectedTimeSlots!!.time
-                                            )
-                                        } catch (e: Exception) {
+        val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
+            requireContext(),
+            android.R.layout.simple_spinner_item, arrayList
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerTimeDuration.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedTimeSlots = availableTimeSlots!!.timeStops[position]
+                    var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
+                    for (i in availableTimeSlots!!.timeStops[position].slot) {
+                        arrayList.add(TimeSlotsWithData(i, false))
 
-                                        }
+                    }
+                    binding.rvTimeSlot.adapter =
+                        AdapterHomeTimeSlot(requireContext(), arrayList,
+                            object : AdapterHomeTimeSlot.onViewItemClick {
+                                override fun onViewItemTimeSelect(text: String) {
+                                    selectedStartTime = text
+                                    try {
+                                        selectedEndTime = addMinutes(
+                                            selectedStartTime!!,
+                                            selectedTimeSlots!!.time
+                                        )
+                                    } catch (e: Exception) {
 
                                     }
 
-                                })
+                                }
 
-                    }
+                            })
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
-            binding.spinnerTimeDuration.adapter = adapter
-        }
 
-
-        private fun addAppointment() {
-            if (isValidateAppointment()) {
-                val hashMap: HashMap<String, Any> = hashMapOf()
-                hashMap[IF_ID] = viewModel.userField.get()!!._id
-                hashMap[UID] = getUser(prefsManager)!!.admin._id
-                hashMap[DATE] = selectedDate!!
-                hashMap[START_TIME] = selectedStartTime!!
-                hashMap[END_TIME] = selectedEndTime!!
-                hashMap[DURATON] = selectedTimeSlots!!.time
-                viewModelAppoinemnt.addAppointment(hashMap)
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        binding.spinnerTimeDuration.adapter = adapter
+    }
 
+
+    private fun addAppointment() {
+        if (isValidateAppointment()) {
+            val hashMap: HashMap<String, Any> = hashMapOf()
+            hashMap[IF_ID] = viewModel.userField.get()!!._id
+            hashMap[UID] = getUser(prefsManager)!!.admin._id
+            hashMap[DATE] = selectedDate!!
+            hashMap[START_TIME] = selectedStartTime!!
+            hashMap[END_TIME] = selectedEndTime!!
+            hashMap[DURATON] = selectedTimeSlots!!.time
+            viewModelAppoinemnt.addAppointment(hashMap)
         }
-
-        private fun isValidateAppointment(): Boolean {
-            if (selectedStartTime == null) {
-                showToastMessage(requireContext(), getString(R.string.select_time_slot))
-                return false
-            } else if (selectedDate == null) {
-                showToastMessage(requireContext(), getString(R.string.select_appointment_date))
-                return false
-            }
-            return true
-        }
-
-        override fun onSlotTimesList(list: Payload) {
-            progressDialog.dismiss()
-            availableTimeSlots = list
-
-            if (availableTimeSlots!!.timeStops.isNotEmpty()) {
-                setTimeSlot()
-                binding.spinnerTimeDuration.visibility = View.VISIBLE
-                binding.rvTimeSlot.visibility = View.VISIBLE
-            } else {
-                binding.spinnerTimeDuration.visibility = View.GONE
-                binding.rvTimeSlot.visibility = View.GONE
-            }
-        }
-
-        override fun onAddAppointment(response: BookMarkResponse?) {
-            progressDialog.dismiss()
-            response?.let { showToastMessage(requireContext(), it.message) }
-            findNavController().popBackStack()
-        }
-
-        override fun onFailureAPI400(message: String) {
-            progressDialog.dismiss()
-            AlertDialogCommon.instance.createOkCancelDialogWithLayout(requireContext(),
-                message,
-                getString(R.string.yes),
-                getString(R.string.no),
-                true,
-                object : AlertDialogCommon.OnOkCancelDialogListener {
-
-                    override fun onOkButtonClicked() {
-                        findNavController().navigate(R.id.action_influencerProfileFragment_to_myWalletFragment)
-
-                    }
-
-                    override fun onCancelButtonClicked() {
-                        //do nothing
-                    }
-                })
-        }
-
-        override fun onStopProgress() {
-            progressDialog.dismiss()
-        }
-
 
     }
+
+    private fun isValidateAppointment(): Boolean {
+        if (selectedStartTime == null) {
+            showToastMessage(requireContext(), getString(R.string.select_time_slot))
+            return false
+        } else if (selectedDate == null) {
+            showToastMessage(requireContext(), getString(R.string.select_appointment_date))
+            return false
+        }
+        return true
+    }
+
+    override fun onSlotTimesList(list: Payload) {
+        progressDialog.dismiss()
+        availableTimeSlots = list
+
+        if (availableTimeSlots!!.timeStops.isNotEmpty()) {
+            setTimeSlot()
+            binding.spinnerTimeDuration.visibility = View.VISIBLE
+            binding.rvTimeSlot.visibility = View.VISIBLE
+        } else {
+            binding.spinnerTimeDuration.visibility = View.GONE
+            binding.rvTimeSlot.visibility = View.GONE
+        }
+    }
+
+    override fun onAddAppointment(response: BookMarkResponse?) {
+        progressDialog.dismiss()
+        response?.let { showToastMessage(requireContext(), it.message) }
+        findNavController().popBackStack()
+    }
+
+    override fun onFailureAPI400(message: String) {
+        progressDialog.dismiss()
+        AlertDialogCommon.instance.createOkCancelDialogWithLayout(requireContext(),
+            message,
+            getString(R.string.yes),
+            getString(R.string.no),
+            true,
+            object : AlertDialogCommon.OnOkCancelDialogListener {
+
+                override fun onOkButtonClicked() {
+                    findNavController().navigate(R.id.action_influencerProfileFragment_to_myWalletFragment)
+
+                }
+
+                override fun onCancelButtonClicked() {
+                    //do nothing
+                }
+            })
+    }
+
+    override fun onStopProgress() {
+        progressDialog.dismiss()
+    }
+
+
+}

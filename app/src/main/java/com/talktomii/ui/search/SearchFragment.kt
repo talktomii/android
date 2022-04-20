@@ -15,6 +15,7 @@ import com.talktomii.interfaces.SearchInterface
 import com.talktomii.interfaces.SearchItemClick
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, SearchItemClick {
@@ -76,7 +77,7 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     override fun onFailure(message: String) {
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
 
     }
 

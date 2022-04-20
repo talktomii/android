@@ -1,6 +1,5 @@
 package com.talktomii.ui.home.profile
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +11,16 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.talktomii.R
 import com.talktomii.data.model.Interest
-import com.talktomii.data.network.ApisRespHandler
-import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditInterestFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.ui.home.profile.editinterest.EditInterestVM
 import com.talktomii.ui.home.profile.editinterest.GetItemsInterface
-import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerFragment
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
-class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest_fragment),
-    CommonInterface, GetItemsInterface {
+class ViewInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest_fragment) {
     private lateinit var binding: EditInterestFragmentBinding
 
     @Inject
@@ -35,9 +29,7 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var editPersonalInfoVM: EditPersonalInfoVM
-
-    @Inject
-    lateinit var prefsManager: PrefsManager
+    private var interestArrayList: ArrayList<Interest> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,20 +40,12 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
             viewModelFactory
         ).get(EditPersonalInfoVM::class.java)
         binding = EditInterestFragmentBinding.inflate(inflater, container, false)
-        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                binding.backArrow.setImageResource(R.drawable.back_arrow)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                binding.backArrow.setImageResource(R.drawable.back_arrow_light)
-            }
-        }
         binding.vm = viewModel
         return binding.root
     }
 
     private fun setListener() {
-        binding.headerLayout.setOnClickListener {
+        binding.tvBackIncomeDetail.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
@@ -77,10 +61,9 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
         super.onViewCreated(view, savedInstanceState)
         init()
         setListener()
-        initadapters()
     }
 
-    private fun initadapters() {
+    private fun initAdapters() {
         val layoutManager = FlexboxLayoutManager()
         layoutManager.flexWrap = FlexWrap.WRAP
         layoutManager.flexDirection = FlexDirection.ROW
@@ -90,41 +73,15 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
 
 
     private fun init() {
-        viewModel.commonInterface = this
-        viewModel.onGetItems = this
-        viewModel.getAllInterest()
+        initAdapters()
+
         if (arguments != null) {
-            if (requireArguments().getInt("Which") == 1) {
-                binding.txtEditInterest.text = getString(R.string.edit_interests)
-            } else {
-                binding.txtEditInterest.text = getString(R.string.view_interests)
-            }
+
+            interestArrayList.addAll( requireArguments().getSerializable("interest") as  ArrayList<Interest>)
+            (binding.rvTopics.adapter as AdapterEditInterest).setItemList(interestArrayList, 2)
         }
     }
 
-    override fun onFailure(message: String) {
-    }
-
-    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
-        ApisRespHandler.handleError(
-            ApiUtils.handleError(
-                code,
-                errorBody!!.string()
-            ), requireActivity(), prefsManager
-        )
-    }
-
-    override fun onStarted() {
-    }
-
-    override fun onItems(list: ArrayList<Interest>) {
-        for (item in list) {
-            for (item2 in editPersonalInfoVM.userField.get()!!.interest) {
-                item.isClicked = item._id == item2._id
-            }
-        }
-        (binding.rvTopics.adapter as AdapterEditInterest).setItemList(list, 2)
-    }
 
 }
 

@@ -1,7 +1,7 @@
 package com.talktomii.data.model
 
-import androidx.databinding.ObservableBoolean
-import com.talktomii.recycleradapter.AbstractModel
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 data class AllInterst(
     val message: String,
@@ -9,6 +9,7 @@ data class AllInterst(
     val result: Int
 )
 
+@Parcelize
 data class Interest(
     val __v: Int,
     val _id: String,
@@ -16,10 +17,10 @@ data class Interest(
     val description: String,
     val image: String,
     val name: String,
-//    var isClicked: ObservableBoolean = ObservableBoolean(false),
-    var isClicked: Boolean,
-    val updatedAt: String
-): AbstractModel()
+    val updatedAt: String,
+    var isClicked: Boolean
+) : Parcelable
+
 data class Payload(
     val count: Int,
     val interest: ArrayList<Interest>

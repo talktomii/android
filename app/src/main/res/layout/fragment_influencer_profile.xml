@@ -31,7 +31,6 @@
                 android:id="@+id/coverPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_120"
-                android:background="@drawable/ic_bg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +50,17 @@
 <!--                    android:textSize="14sp"-->
 <!--                    app:layout_constraintStart_toStartOf="parent"-->
 <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                <ImageView
+                    android:id="@+id/ivCoverPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ic_image1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <LinearLayout
                     android:id="@+id/txtBack"
                     android:layout_width="wrap_content"
@@ -84,17 +94,23 @@
                         android:textSize="@dimen/dp_16" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iivBookmark"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_centerInParent="true"
+                <RelativeLayout
+                    android:id="@+id/ivBookMark"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/gray_round"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <ImageView
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/bookmark"
+                        android:tint="@{viewModel2.bookMark ? @color/color_green : @color/gray}" />
+                </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/ivShare"
@@ -111,8 +127,8 @@
                 android:id="@+id/imgDefault"
                 android:layout_width="85dp"
                 android:layout_height="85dp"
-                android:layout_marginStart="@dimen/dp_30"
-                android:layout_marginTop="100dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="104dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_user"
                 app:layout_constraintStart_toStartOf="@+id/coverPhoto"
@@ -136,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:text="@{viewModel2.userField.name}"
                 android:textColor="@color/myCards"
+                android:text="@{viewModel2.userField.fname +' '+viewModel2.userField.lname}"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/inter_regular"

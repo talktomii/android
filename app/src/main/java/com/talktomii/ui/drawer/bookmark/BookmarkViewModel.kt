@@ -25,7 +25,11 @@ class BookmarkViewModel @Inject constructor(private val webService: WebService) 
                         onbookmarkinterface?.onBookmarkAdmins(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

@@ -114,6 +114,9 @@ abstract class BindingsModule {
     abstract fun editInterestFragment(): EditInterestFragment
 
     @ContributesAndroidInjector
+    abstract fun viewInterestFragment(): ViewInterestFragment
+
+    @ContributesAndroidInjector
     abstract fun homeFrag(): MyCards
 
     @ContributesAndroidInjector
@@ -172,8 +175,6 @@ abstract class BindingsModule {
     @ContributesAndroidInjector
     abstract fun callDialog(): CallDialog
 
-    @ContributesAndroidInjector
-    abstract fun aboutMeDialog(): AboutMeDialog
 
     @ContributesAndroidInjector
     abstract fun extendTimeDialog(): ExtendTimeDialog
@@ -189,6 +190,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun profileInfluencerFragment(): InfluencerProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun aboutMeDialog(): AboutMeDialog
 
 
     @ContributesAndroidInjector

@@ -20,6 +20,8 @@ data class Admin(
     val location: String,
     val modificationData: String,
     val name: String,
+    val fname: String = "",
+    val lname: String = "",
     val price: List<Price>,
     val profilePhoto: String,
     val registrationDate: String,
@@ -27,4 +29,4 @@ data class Admin(
     val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
     val userName: String
-):Serializable , BaseObservable()
+) : Serializable, BaseObservable()

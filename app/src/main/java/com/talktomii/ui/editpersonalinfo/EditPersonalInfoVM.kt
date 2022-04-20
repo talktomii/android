@@ -16,6 +16,7 @@ import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.UpdatePhotoInterface
 import com.google.android.gms.common.api.ApiException
 import com.makeramen.roundedimageview.RoundedImageView
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.interfaces.UpdateProfileInterface
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -44,7 +45,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
-                    commonInterface!!.onFailureAPI(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -66,7 +71,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -91,7 +100,11 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                         }
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -109,7 +122,6 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         userField.set(admin1)
 
     }
-
 
     @BindingAdapter("imageUrl")
     fun loadImage(view: RoundedImageView, url: Admin1?) {

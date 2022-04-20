@@ -16,6 +16,7 @@ class AdapterPopular(
 ) :
     RecyclerView.Adapter<AdapterPopular.ViewHolder>() {
 
+    private var isShowMore = false
 
     class ViewHolder(val binding: ItemPopularBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -27,11 +28,19 @@ class AdapterPopular(
 
 
     override fun getItemCount(): Int {
-        return popularArrayList.size
+        //isShowMore -> False -> Show All Items
+        return if (isShowMore)
+            popularArrayList.size
+        else if (!isShowMore)
+            if (popularArrayList.size > 10)
+                10
+            else popularArrayList.size
+        else popularArrayList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.txtName.text = popularArrayList[position].name
+        holder.binding.txtName.text =
+            popularArrayList[position].fname + " " + popularArrayList[position].lname
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -45,11 +54,24 @@ class AdapterPopular(
             listener.onViewPopularClick(popularArrayList[position])
         }
 
+        holder.binding.tvAboutMee.setOnClickListener {
+            listener.onViewPopularClick(popularArrayList[position])
+        }
+
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
+    }
+
+    fun getList(): ArrayList<Admin> {
+        return popularArrayList;
+    }
+
+
+    fun showMoreOrLess(showMoreOrLess: Boolean) {
+        isShowMore = showMoreOrLess
     }
 
     interface onViewPopularClick {

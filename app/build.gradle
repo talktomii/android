@@ -98,7 +98,7 @@ dependencies {
     }
 
 
-    implementation 'androidx.work:work-runtime-ktx:2.7.0'
+//    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
 
     // agora sdk
@@ -230,8 +230,7 @@ permission*/
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation project(':placefinder')
-    implementation 'com.thefinestartist:finestwebview:1.2.7'
-
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
 
 }
 

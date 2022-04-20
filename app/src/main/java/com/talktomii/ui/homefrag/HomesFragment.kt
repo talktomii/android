@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.admin.Admin
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
+import com.talktomii.data.network.responseUtil.AppError
 import com.talktomii.databinding.HomeFragmentBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
@@ -19,6 +22,7 @@ import com.talktomii.utlis.SocketManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -31,10 +35,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     private var popularArrayList: ArrayList<Admin> = arrayListOf()
 
     @Inject
-    lateinit var viewModel: HomeScreenViewModel
-    @Inject
     lateinit var prefsManager: PrefsManager
+
+    @Inject
+    lateinit var viewModel: HomeScreenViewModel
     private lateinit var progressDialog: ProgressDialog
+    private var isShowMore = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +63,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.vm = viewModels
-//        binding.txtName.text =
         initAdapter()
         init()
     }
@@ -75,23 +79,50 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun init() {
+        initAdapter()
+
         progressDialog = ProgressDialog(requireActivity())
         viewModel.commonInterface = this
         viewModel.homeInterface = this
-        if (arguments?.getString("id") != null) {
-            viewModel.getInfluence(arguments?.getString("id")!!)
+        if (arguments?.getString("ID") != null) {
+            viewModel.getInfluence(arguments?.getString("ID")!!)
         } else {
-            viewModel.getInfluence("")
+            if (adapterPopular!!.getList().size > 0) {
+                adapterPopular!!.setPopularList(adapterPopular!!.getList())
+            } else {
+                viewModel.getInfluence("")
+            }
         }
 
+        binding.txtSeeAll.setOnClickListener {
+            handleShowMore()
+        }
+        handleShowMore()
+    }
+
+    private fun handleShowMore() {
+        if (isShowMore) {
+            adapterPopular!!.showMoreOrLess(isShowMore)
+            isShowMore = false
+            binding.txtSeeAll.text = "See more"
+        } else {
+            adapterPopular!!.showMoreOrLess(isShowMore)
+            isShowMore = true
+            binding.txtSeeAll.text = "See less"
+        }
     }
 
     override fun onFailure(message: String) {
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        val apiError: AppError = ApiUtils.getError(
+            code,
+            errorBody!!.string()
+        )
+        ApisRespHandler.handleError(apiError, requireActivity(), prefsManager)
     }
 
     override fun onStarted() {
@@ -107,7 +138,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         adapterPopular!!.setPopularList(payload.admin)
         var jsonObject = JSONObject()
         jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
-        (requireActivity() as MainActivity).socketManager.joinApp(jsonObject,this)
+        (requireActivity() as MainActivity).socketManager.joinApp(jsonObject, this)
     }
 
     override fun onMessageReceive(message: String, event: String) {

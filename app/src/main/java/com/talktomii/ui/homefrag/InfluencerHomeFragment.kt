@@ -18,6 +18,7 @@ import com.talktomii.utlis.listner.CallHistory
 import com.talktomii.utlis.listner.InfluenceListener
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluenceListener, CallHistory {
@@ -82,7 +83,7 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluenceListe
 
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
 
     }

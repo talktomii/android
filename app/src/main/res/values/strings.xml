@@ -320,4 +320,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="first_name">First Name</string>
     <string name="price">Price</string>
     <string name="add_price">Add Price</string>
+    <string name="select_appointment_date">Select appointment date</string>
 </resources>

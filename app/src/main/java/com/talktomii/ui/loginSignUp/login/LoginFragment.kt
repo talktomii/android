@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.facebook.CallbackManager
+import com.facebook.*
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -30,6 +32,7 @@ import com.talktomii.utlis.*
 import com.talktomii.utlis.LoginType.USER_ROLE
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
+import org.json.JSONException
 import java.net.URL
 import javax.inject.Inject
 
@@ -128,6 +131,46 @@ class LoginFragment : DaggerFragment() {
 
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
+        callbackManager = CallbackManager.Factory.create()
+
+
+        binding.fbLoginButton.registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                val request =
+                    GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
+                        try {
+                            Log.e("email", data.getString("email"))
+                            findNavController().navigate(
+                                R.id.action_signupFragment_to_createProfileFragment,
+                                bundleOf(
+
+                                    "email" to data.getString("email"),
+                                    "isSocial" to "true"
+                                )
+                            )
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    }
+                val parameters = Bundle()
+                parameters.putString(
+                    "fields",
+                    "id,email"
+                )
+                request.parameters = parameters
+                request.executeAsync()
+            }
+
+            override fun onCancel() {
+                print("---cancle--")
+            }
+
+            override fun onError(exception: FacebookException?) {
+                exception?.stackTrace
+            }
+        })
     }
 
     fun getDeviceToken() {
@@ -170,7 +213,13 @@ class LoginFragment : DaggerFragment() {
         callbackManager?.onActivityResult(requestCode, resultCode, data)
     }
 
+
     private fun setListener() {
+
+        binding.ivFacebook.setOnClickListener {
+            binding.fbLoginButton.performClick()
+        }
+
         binding.btnLogin.setOnClickListener {
             var email = binding.txtEmailId.text.toString()
             var password = binding.edPassword.text.toString()

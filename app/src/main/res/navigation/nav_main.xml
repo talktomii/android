@@ -215,13 +215,23 @@
         <action
             android:id="@+id/action_forget_to_resetPassword"
             app:destination="@id/resetPasswordFragment" />
+
+        <action
+            android:id="@+id/action_forget_to_signIn"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.talktomii.ui.loginSignUp.login.FragmentResetPassword"
         android:label="fragment_restPassword"
-        tools:layout="@layout/fragment_reset_password"/>
+        tools:layout="@layout/fragment_reset_password">
+
+    <action
+        android:id="@+id/action_resetForget_to_signIn"
+        app:destination="@id/loginFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/notificationFragment"

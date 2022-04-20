@@ -23,6 +23,8 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
     val login by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
     val role by lazy { SingleLiveEvent<Resource<RolesModel>>() }
     val verify by lazy { SingleLiveEvent<Resource<Any>>() }
+    val verfyCode by lazy { SingleLiveEvent<Resource<Any>>() }
+    val afterForgetPass by lazy { SingleLiveEvent<Resource<Any>>() }
     val createProfile by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
 
     fun createProfile(map: HashMap<String, RequestBody>) {
@@ -111,66 +113,94 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
             })
 
     }
-//
-//    fun verifyEmail(map: HashMap<String, Any>) {
-//        verify.value = Resource.loading()
-//        webService.verifyEmail(map)
-//            .enqueue(object : Callback<ApiResponse<Any>> {
-//                override fun onResponse(
-//                    call: Call<ApiResponse<Any>>,
-//                    response: Response<ApiResponse<Any>>
-//                ) {
-//                    if (response.isSuccessful) {
-//
-//                        verify.value = Resource.success(response.body()?.payload)
-//
-//                    } else {
-//                        verify.value = Resource.error(
-//                            ApiUtils.getError(
-//                                response.code(),
-//                                response.errorBody()?.string()
-//                            )
-//                        )
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
-//                    verify.value = Resource.error(ApiUtils.failure(t))
-//                }
-//
-//            })
-//    }
 
-// fun verifyPhone(hashMap: HashMap<String, Any>) {
-// verifyOTP.value = Resource.loading()
-// webService.verifyPhone(hashMap).enqueue(object : Callback<ApiResponse<UserData>> {
-// override fun onResponse(
-// call: Call<ApiResponse<UserData>>,
-// response: Response<ApiResponse<UserData>>
-// ) {
-// if (response.isSuccessful) {
-// if (response.body()?.status == 200)
-// verifyOTP.value = Resource.success(response.body()?.detail)
-// else verifyOTP.value = Resource.error(
-// ApiUtils.getError(
-// response.code(),
-// response.body()?.message
-// )
-// )
-// } else {
-// verifyOTP.value = Resource.error(
-// ApiUtils.getError(
-// response.code(),
-// response.errorBody()?.string()
-// )
-// )
-// }
-// }
-//
-// override fun onFailure(call: Call<ApiResponse<UserData>>, t: Throwable) {
-// verifyOTP.value = Resource.error(ApiUtils.failure(t))
-// }
-//
-// })
-// }
+    fun verifyEmail(map: HashMap<String, String>) {
+        verify.value = Resource.loading()
+        webService.verifyEmail(map)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+
+                        verify.value = Resource.success(response.body()?.payload)
+
+                    } else {
+                        verify.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    verify.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+    fun verifyCode(map: HashMap<String, String>) {
+        verfyCode.value = Resource.loading()
+        webService.verifyCode(map)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+
+                        verfyCode.value = Resource.success(response.body()?.payload)
+
+                    } else {
+                        verfyCode.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    verfyCode.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+    fun afterForget(map: HashMap<String, String>) {
+        afterForgetPass.value = Resource.loading()
+        webService.afterForget(map)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+
+                        afterForgetPass.value = Resource.success(response.body()?.payload)
+
+                    } else {
+                        afterForgetPass.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    afterForgetPass.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+
+
 }

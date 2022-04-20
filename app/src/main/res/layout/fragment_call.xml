@@ -18,7 +18,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imgDefault"
+            android:id="@+id/ivUserProfile"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:src="@drawable/ic_image_back"
@@ -40,9 +40,9 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_marginTop="@dimen/dp_20"
-            app:layout_constraintEnd_toEndOf="@+id/imgDefault"
-            app:layout_constraintStart_toStartOf="@+id/imgDefault"
-            app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
+            app:layout_constraintEnd_toEndOf="@+id/ivUserProfile"
+            app:layout_constraintStart_toStartOf="@+id/ivUserProfile"
+            app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
 
         <TextView
             android:id="@+id/txtUserName"
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_10"
-                android:src="@drawable/ic_mic"
+                android:src="@drawable/ic_mic1"
                 app:layout_constraintBottom_toTopOf="@+id/txtMute"
                 app:layout_constraintEnd_toEndOf="@+id/txtMute"
                 app:layout_constraintStart_toStartOf="@+id/txtMute" />
@@ -147,14 +147,15 @@
             android:layout_width="match_parent"
             android:visibility="gone"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout6">
 
             <ImageView
                 android:id="@+id/ivCallAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_accept"
-                android:layout_marginStart="@dimen/dp_30"
+                android:src="@drawable/ic_startcall"
+                android:layout_marginStart="@dimen/dp_50"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -163,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_end"
-                android:layout_marginEnd="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_50"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

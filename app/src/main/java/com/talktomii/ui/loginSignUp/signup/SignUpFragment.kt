@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -29,6 +33,7 @@ import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
+import org.json.JSONException
 import java.net.URL
 import javax.inject.Inject
 
@@ -37,11 +42,14 @@ class SignUpFragment : DaggerFragment() {
     private lateinit var binding: FragmentSignUpBinding
 
     private var isShowPass = false
+
     @Inject
     lateinit var viewModel: LoginViewModel
     private lateinit var progressDialog: ProgressDialog
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    private var callbackManager: CallbackManager? = null
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -87,7 +95,8 @@ class SignUpFragment : DaggerFragment() {
 
             val email = binding.txtEmailId.text.toString()
             val password = binding.edPassword.text.toString()
-            if (validation(email, password))
+            val repeatPassword = binding.repPassword.text.toString()
+            if (validation(email, password, repeatPassword))
                 if (binding.chckTerms.isChecked) {
                     findNavController().navigate(
                         R.id.action_signupFragment_to_createProfileFragment,
@@ -96,8 +105,7 @@ class SignUpFragment : DaggerFragment() {
                             "password" to binding.edPassword.text.toString()
                         )
                     )
-                }
-                else {
+                } else {
                     binding.chckTerms.showSnackBar("Please accept our terms & conditions")
                 }
         }
@@ -105,8 +113,50 @@ class SignUpFragment : DaggerFragment() {
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager?.onActivityResult(requestCode, resultCode, data)
+    }
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
+        callbackManager = CallbackManager.Factory.create()
+
+
+        binding.fbLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                val request =
+                    GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
+                        try {
+                            Log.e("email", data.getString("email"))
+                            findNavController().navigate(
+                                R.id.action_signupFragment_to_createProfileFragment,
+                                bundleOf(
+
+                                    "email" to data.getString("email"),
+                                    "isSocial" to "true"
+                                )
+                            )
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    }
+                val parameters = Bundle()
+                parameters.putString(
+                    "fields",
+                    "id,email"
+                )
+                request.parameters = parameters
+                request.executeAsync()
+            }
+
+            override fun onCancel() {
+                print("---cancle--")
+            }
+
+            override fun onError(exception: FacebookException?) {
+                exception?.stackTrace
+            }
+        })
     }
 
     private fun setSpannable() {
@@ -114,6 +164,11 @@ class SignUpFragment : DaggerFragment() {
     }
 
     private fun setListener() {
+
+        binding.ivFacebook.setOnClickListener {
+            binding.fbLoginButton.performClick()
+        }
+
         binding.tvTermsAndConditions.setOnClickListener {
             val dialog = BackToHomeDialog(this)
             dialog.show(requireActivity().supportFragmentManager, BackToHomeDialog.TAG)
@@ -151,18 +206,28 @@ class SignUpFragment : DaggerFragment() {
                 isShowPass = true
             }
         }
+
     }
 
-    private fun validation(email: String, password: String): Boolean {
+    private fun validation(email: String, password: String, repeatPassword: String): Boolean {
         return when {
             email.isEmpty() -> {
                 binding.txtEmailId.showSnackBar("please enter email id ")
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.txtEmailId.showSnackBar("Please enter a valid email address")
                 false
             }
             password.isEmpty() -> {
                 binding.edPassword.showSnackBar("please enter password")
                 false
             }
+            repeatPassword.isEmpty() -> {
+                binding.repPassword.showSnackBar("please retype your password")
+                false
+            }
+
             else -> true
 
         }
@@ -195,11 +260,17 @@ class SignUpFragment : DaggerFragment() {
     private fun getGoogleAccountInfo(completedTask: Task<GoogleSignInAccount>) {
 
         val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
-        println("Google detail:  $account")
+        Log.e("Google detail: ", " $account")
         var imageUrl = ""
         if (account.photoUrl != null) imageUrl = URL(account.photoUrl.toString()).toString()
+        findNavController().navigate(
+            R.id.action_signupFragment_to_createProfileFragment,
+            bundleOf(
 
-
+                "email" to account.email,
+                "isSocial" to "true"
+            )
+        )
     }
 
 
@@ -227,4 +298,5 @@ class SignUpFragment : DaggerFragment() {
 //    }
 
 
-    }}
+    }
+}

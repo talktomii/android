@@ -100,6 +100,7 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     }
 
     override fun onFailureAPI(message: String) {
+
     }
 
     override fun onStarted() {

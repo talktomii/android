@@ -6,12 +6,22 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.SearchInterface
 import com.google.android.gms.common.api.ApiException
+import com.talktomii.data.model.InterestResponse
+import com.talktomii.data.network.responseUtil.ApiResponse
+import com.talktomii.data.network.responseUtil.ApiUtils
+import com.talktomii.data.network.responseUtil.Resource
+import com.talktomii.di.SingleLiveEvent
+import com.talktomii.ui.tellusmore.RequestAdminModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val webService: WebService) : ViewModel() {
     var searchInterface: SearchInterface? = null
     var commonInterface: CommonInterface? = null
-
+    val interests by lazy { SingleLiveEvent<Resource<InterestResponse>>() }
+    val updateData by lazy { SingleLiveEvent<Resource<Any>>() }
 
     fun getAllInstruction(search: String) {
         commonInterface!!.onStarted()
@@ -36,6 +46,61 @@ class SearchViewModel @Inject constructor(private val webService: WebService) : 
                 ex.message?.let { commonInterface!!.onFailure(it) }
             }
         }
+    }
+    fun getAllInterests(search: String) {
+        interests.value = Resource.loading()
+        webService.getInterests()
+            .enqueue(object : Callback<ApiResponse<InterestResponse>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<InterestResponse>>,
+                    response: Response<ApiResponse<InterestResponse>>
+                ) {
+                    if (response.isSuccessful) {
+                        interests.value = Resource.success(response.body()?.payload)
+
+                    } else {
+                        interests.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<InterestResponse>>, t: Throwable) {
+                    interests.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
+
+    fun updateData(id: String, requestAdminModel: RequestAdminModel) {
+        updateData.value = Resource.loading()
+        webService.updateData(id,requestAdminModel)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        updateData.value = Resource.success(response.body()?.payload)
+
+                    } else {
+                        updateData.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    updateData.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
     }
 
 

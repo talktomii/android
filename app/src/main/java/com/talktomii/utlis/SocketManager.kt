@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import com.talktomii.data.model.UserData
 import com.google.gson.Gson
+import com.talktomii.ui.loginSignUp.MainActivity
 import io.socket.client.Ack
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -21,7 +22,9 @@ class SocketManager {
 
         // Listen Events
         const val LISTEN_LOCATION = "sendLocationResp"
-        const val CONNECT = "connection"
+        const val JOIN = "join"
+        const val connectCall = "connectCall"
+        const val onCallRequest = "onCallRequest"
 
         //Emit Events
         const val SEND_LOCATION = "send-location"
@@ -52,12 +55,13 @@ class SocketManager {
         options.forceNew = false
         options.reconnection = true
         var user= getUser(prefsManager)
-        socket = IO.socket(URI.create("https://socket.furnifix.com.sa/?access_token=${user!!.admin._id}&user_type=user"),
+        socket = IO.socket(URI.create("https://api.talktomii.com"),
             options
         )
         socket?.connect()
         socket?.on(Socket.EVENT_CONNECT) {
             Log.e("Socket", "Socket Connect ${socket?.id()}")
+            (activity as MainActivity).socketConnected()
         }
         socket?.on(Socket.EVENT_DISCONNECT) {
             Log.e("Socket", "Socket Disconnect")
@@ -106,12 +110,42 @@ class SocketManager {
                 )
             })
     }
+    fun joinApp(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            JOIN, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    JOIN
+                )
+            })
+    }
+    fun connectCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            connectCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    connectCall
+                )
+            })
+    }
     // Listen Events
-    fun onLocation(msgAck: OnMessageReceiver) {
-        socket?.on(LISTEN_LOCATION) { args ->
+    fun onCallRequest(msgAck: OnMessageReceiver) {
+        socket?.on(onCallRequest) { args ->
             msgAck.onMessageReceive(
                 args[0].toString(),
-                LISTEN_LOCATION
+                onCallRequest
+            )
+        }
+    }
+    fun onCallConnect(msgAck: OnMessageReceiver) {
+        socket?.on(connectCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                connectCall
             )
         }
     }

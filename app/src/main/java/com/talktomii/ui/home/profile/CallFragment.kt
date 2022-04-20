@@ -13,22 +13,34 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.facebook.FacebookSdk.getApplicationContext
+import com.google.gson.Gson
 import com.talktomii.R
+import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentCallBinding
 import com.talktomii.ui.home.HomeViewModel
-import com.talktomii.utlis.ExtendTimeDialog
+import com.talktomii.ui.loginSignUp.MainActivity
+import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.SocketManager
+import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
+import org.json.JSONObject
 import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.*
 import javax.inject.Inject
 
-class CallFragment : DaggerFragment() {
+class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
 
+    private lateinit var other: Admin1
+    private var agoraToken: String=""
     private val LOG_TAG: String ="abcd"
     private val PERMISSION_REQ_ID_RECORD_AUDIO = 22
 
@@ -79,6 +91,10 @@ class CallFragment : DaggerFragment() {
     @Inject
     lateinit var viewModel: HomeViewModel
 
+    @Inject
+    lateinit var prefsManager: PrefsManager
+    lateinit var progressDialog: ProgressDialog
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,30 +107,58 @@ class CallFragment : DaggerFragment() {
     }
     private fun setListener() {
 
-        binding.ivSpeaker.setOnClickListener {
-            val dialog = ExtendTimeDialog()
-            dialog.show(requireActivity().supportFragmentManager, ExtendTimeDialog.TAG)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        progressDialog=ProgressDialog(requireActivity())
         setListener()
-        if (checkSelfPermission(
-                Manifest.permission.RECORD_AUDIO,
-            PERMISSION_REQ_ID_RECORD_AUDIO
-            )
-        ) {
-            initAgoraEngineAndJoinChannel()
+        viewModel.initCall(getUser(prefsManager)?.admin?._id?:"")
+        bindObserver()
+        if(requireArguments()["DATA"]!=null){
+           other= Gson().fromJson(requireArguments()["DATA"].toString(),Admin1::class.java)
         }
 
 
     }
+
+    private fun bindObserver() {
+
+        viewModel.agoraToken.observe(requireActivity(), Observer {
+            it ?: return@Observer
+            when (it.status) {
+                Status.SUCCESS -> {
+                    agoraToken=it.data?.token?:""
+                    progressDialog.setLoading(false)
+                    if (checkSelfPermission(
+                            Manifest.permission.RECORD_AUDIO,
+                            PERMISSION_REQ_ID_RECORD_AUDIO
+                        )
+                    ) {
+
+                        initAgoraEngineAndJoinChannel()
+                    }
+                }
+
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+
+            }
+        })
+
+
+    }
+
     fun initAgoraEngineAndJoinChannel() {
         initializeAgoraEngine() // Tutorial Step 1
         joinChannel() // Tutorial Step 2
     }
+
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
         Log.i(LOG_TAG,
             "checkSelfPermission $permission $requestCode"
@@ -131,8 +175,13 @@ class CallFragment : DaggerFragment() {
             )
             return false
         }
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(permission),
+            requestCode
+        )
         return true
     }
+
     fun showLongToast(msg: String?) {
         requireActivity().runOnUiThread(Runnable {
             Toast.makeText(
@@ -142,6 +191,15 @@ class CallFragment : DaggerFragment() {
             ).show()
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        leaveChannel()
+        RtcEngine.destroy()
+        mRtcEngine = null
+    }
+
+
 
     // Tutorial Step 7
     fun onLocalAudioMuteClicked(view: View) {
@@ -157,6 +215,8 @@ class CallFragment : DaggerFragment() {
         // Stops/Resumes sending the local audio stream.
         mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
     }
+
+
 
     // Tutorial Step 5
     fun onSwitchSpeakerphoneClicked(view: View) {
@@ -175,10 +235,14 @@ class CallFragment : DaggerFragment() {
         mRtcEngine!!.setEnableSpeakerphone(view.isSelected())
     }
 
+
+
     // Tutorial Step 3
     fun onEncCallClicked(view: View?) {
         requireActivity().onBackPressed()
     }
+
+
 
     // Tutorial Step 1
     private fun initializeAgoraEngine() {
@@ -197,16 +261,18 @@ class CallFragment : DaggerFragment() {
         }
     }
 
+
+
     // Tutorial Step 2
     private fun joinChannel() {
-        var accessToken: String? = getString(R.string.agora_access_token)
-        if (TextUtils.equals(accessToken, "") || TextUtils.equals(
-                accessToken,
-                "#YOUR ACCESS TOKEN#"
-            )
-        ) {
-            accessToken = null // default, no token
-        }
+        var accessToken: String? = agoraToken
+//        if (TextUtils.equals(accessToken, "") || TextUtils.equals(
+//                accessToken,
+//                "#YOUR ACCESS TOKEN#"
+//            )
+//        ) {
+//            accessToken = null // default, no token
+//        }
 
         // Sets the channel profile of the Agora RtcEngine.
         // CHANNEL_PROFILE_COMMUNICATION(0): (Default) The Communication profile. Use this profile in one-on-one calls or group calls, where all users can talk freely.
@@ -216,16 +282,28 @@ class CallFragment : DaggerFragment() {
         // Allows a user to join a channel.
         mRtcEngine!!.joinChannel(
             accessToken,
-            "test",
+            getUser(prefsManager)?.admin?._id,
             "Extra Optional Data",
             0
-        ) // if you do not specify the uid, we will generate the uid for you
+        )
+        var jsonObject = JSONObject()
+        jsonObject.put("channelName", getUser(prefsManager)?.admin?._id)
+        jsonObject.put("isForVideoCall", false)
+        jsonObject.put("otherId", other._id)
+        jsonObject.put("token", agoraToken)
+        (requireActivity() as MainActivity).socketManager.connectCall(jsonObject,this)
+    // if you do not specify the uid, we will generate the uid for you
     }
 
+
+
     // Tutorial Step 3
-    private fun leaveChannel() {
-        mRtcEngine!!.leaveChannel()
+    private fun leaveChannel()
+    {
+        mRtcEngine?.leaveChannel()
     }
+
+
 
     // Tutorial Step 4
     private fun onRemoteUserLeft(uid: Int, reason: Int) {
@@ -239,6 +317,8 @@ class CallFragment : DaggerFragment() {
 //        tipMsg.visibility = View.VISIBLE
     }
 
+
+
     // Tutorial Step 6
     private fun onRemoteUserVoiceMuted(uid: Int, muted: Boolean) {
         showLongToast(
@@ -247,6 +327,10 @@ class CallFragment : DaggerFragment() {
                 uid and 0xFFFFFFFFL.toInt(), muted
             )
         )
+    }
+
+    override fun onMessageReceive(message: String, event: String) {
+        Log.e(event,message)
     }
 
 }

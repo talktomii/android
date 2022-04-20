@@ -42,8 +42,7 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
 
     val updateStatus by lazy { SingleLiveEvent<Resource<CartResponseModel>>() }
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
-    val paymentProccess by lazy { SingleLiveEvent<Resource<PaymentResponse>>() }
-    val paymentStatus by lazy { SingleLiveEvent<Resource<Any>>() }
+    val agoraToken by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
 
 
     fun addCard(hashMap: HashMap<String, String>) {
@@ -83,6 +82,33 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
             })
     }
 
+    fun initCall(channelName: String) {
+        agoraToken.value = Resource.loading()
+        webService.initCall(channelName)
+            .enqueue(object : Callback<ApiResponse<RegisterModel>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<RegisterModel>>,
+                    response: Response<ApiResponse<RegisterModel>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("Response ------", response.body()!!.payload.toString())
+                        agoraToken.value = Resource.success(response.body()?.payload)
+                    } else {
+                        agoraToken.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<RegisterModel>>, t: Throwable) {
+                    agoraToken.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
 
 
 }

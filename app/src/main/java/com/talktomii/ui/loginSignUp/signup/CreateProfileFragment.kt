@@ -16,11 +16,8 @@ import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentCreateProfileBinding
 import com.talktomii.databinding.FragmentSignUpBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
-import com.talktomii.utlis.ImageUtils
-import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.setImageFromFile
-import com.talktomii.utlis.showSnackBar
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -88,7 +85,9 @@ class CreateProfileFragment : DaggerFragment() {
 //                        binding.radioInfluencer.isChecked -> false
 //                        else -> null
 //                    }
-
+                    prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
+                    prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    requireContext().showMessage("Register  Successfully")
                     var userOrInfluencer = selectedRole.roleName == "user"
                     view?.findNavController()?.navigate(
                         CreateProfileFragmentDirections.actionCreateProfileFragmentToTellUsMore(
@@ -194,12 +193,17 @@ class CreateProfileFragment : DaggerFragment() {
 
             map["email"] =
                 "${requireArguments()["email"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
-            map["password"] =
-                "${requireArguments()["password"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
+            if(requireArguments()["isSocial"]!=null){
+                map["isSocial"] = "true".toRequestBody("text/plain".toMediaTypeOrNull())
+            }else {
+                map["password"] =
+                    "${requireArguments()["password"].toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
+                map["isSocial"] = "false".toRequestBody("text/plain".toMediaTypeOrNull())
+            }
             map["role"] = "${selectedRole._id}".toRequestBody("text/plain".toMediaTypeOrNull())
             map["userName"] =
                 "${binding.txtUserName.text.toString()}".toRequestBody("text/plain".toMediaTypeOrNull())
-            map["isSocial"] = "false".toRequestBody("text/plain".toMediaTypeOrNull())
+
             map["termsAndConditionIsTrue"] = "true".toRequestBody("text/plain".toMediaTypeOrNull())
             map["above18IsTrue"] = "true".toRequestBody("text/plain".toMediaTypeOrNull())
 

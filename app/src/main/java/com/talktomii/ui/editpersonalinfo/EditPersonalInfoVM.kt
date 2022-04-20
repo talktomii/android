@@ -110,6 +110,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
 
     }
 
+
     @BindingAdapter("imageUrl")
     fun loadImage(view: RoundedImageView, url: Admin1?) {
         if (url != null) {

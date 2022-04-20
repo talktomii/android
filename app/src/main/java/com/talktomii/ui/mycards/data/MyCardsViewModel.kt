@@ -77,10 +77,6 @@ import org.json.JSONException
 
 import retrofit2.adapter.rxjava2.Result.response
 
-
-
-
-
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
 
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
@@ -150,7 +146,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 )
                             )
                         }
-
                         val layoutManager = FlexboxLayoutManager()
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW

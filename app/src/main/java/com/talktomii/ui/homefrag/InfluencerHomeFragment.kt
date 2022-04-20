@@ -48,6 +48,7 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluenceListe
                 binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
             }
         }
+
         return binding.root
 
     }

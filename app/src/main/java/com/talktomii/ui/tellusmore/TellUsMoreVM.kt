@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.talktomii.R
+import com.talktomii.data.model.Interest
 import com.talktomii.recycleradapter.AbstractModel
 import com.talktomii.recycleradapter.RecyclerAdapter
 import javax.inject.Inject
@@ -41,24 +42,7 @@ class TellUsMoreVM @Inject constructor() : ViewModel() {
         }
     }
 
-
-    private val topicList = listOf(
-        ItemsViewModel(item = "Religion"),
-        ItemsViewModel(item = "Technology"),
-        ItemsViewModel(item = "Philosophy"),
-        ItemsViewModel(item = "Cryptocurrency"),
-        ItemsViewModel(item = "Music"),
-        ItemsViewModel(item = "Movie"),
-        ItemsViewModel(item = "Entrepreneurship"),
-        ItemsViewModel(item = "Psychology"),
-        ItemsViewModel(item = "Sociology"),
-        ItemsViewModel(item = "Religion"),
-        ItemsViewModel(item = "Technology"),
-        ItemsViewModel(item = "Philosophy"),
-    )
-
     init {
-        topicsAdapter.addItems(topicList)
         topicsAdapter.setOnItemClick(topicsAdapterClick)
     }
 
@@ -66,6 +50,12 @@ class TellUsMoreVM @Inject constructor() : ViewModel() {
 
 
 data class ItemsViewModel(
-    val item: String,
-    var isClicked: ObservableBoolean = ObservableBoolean(false)
+    val __v: Int,
+    val _id: String,
+    val createdAt: String,
+    val description: String,
+    val image: String,
+    val name: String,
+    var isClicked: ObservableBoolean = ObservableBoolean(false),
+    val updatedAt: String
 ) : AbstractModel()

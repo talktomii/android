@@ -2,6 +2,7 @@ package com.talktomii.ui.home.profile
 
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -177,6 +178,13 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.txtAboutMe.setOnClickListener {
             val dialog = AboutMeDialog()
             dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+        }
+
+        binding.ivShare.setOnClickListener {
+            val share = Intent(Intent.ACTION_SEND)
+            share.setType("text/plain")
+            share.putExtra(Intent.EXTRA_TEXT, "I'm being sent!!")
+            startActivity(Intent.createChooser(share, "Share Text"))
         }
     }
 

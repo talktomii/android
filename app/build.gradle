@@ -6,7 +6,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id  'androidx.navigation.safeargs.kotlin'
+    id 'androidx.navigation.safeargs.kotlin'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
@@ -29,7 +29,7 @@ android {
         android.applicationVariants.all { variant ->
             variant.outputs.all {
 //                outputFileName = "${variant.name}-${variant.versionName}.apk"
-                outputFileName = "F-User-${getDateTime()}.apk"
+                outputFileName = "TalkToMii_${getDateTime()}_${variant.name}_${variant.versionName}.apk"
             }
         }
         release {
@@ -235,6 +235,6 @@ permission*/
 }
 
 static def getDateTime() {
-    DateFormat df = new SimpleDateFormat("dd.MM.yyyy")
+    DateFormat df = new SimpleDateFormat("dd_MM_yyyy")
     return df.format(new Date())
 }

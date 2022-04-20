@@ -47,10 +47,12 @@
             android:exported="true" />
         <activity
             android:name=".ui.reportabuse.ReportAbuseActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" >
+
+        </activity>
         <activity
             android:name=".ui.callhistory.activities.CallInvoiceActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.mywallet.activities.IncomeDetailsActivity"
@@ -100,7 +102,6 @@
             android:windowSoftInputMode="adjustPan|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -306,7 +307,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             requireContext(),
             android.R.layout.simple_spinner_item, arrayList
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.spinner_list)
         binding.spinnerTimeDuration.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -316,6 +317,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     id: Long
                 ) {
                     selectedTimeSlots = availableTimeSlots!!.timeStops[position]
+                    (view as TextView).setTextColor(resources.getColor(R.color.calText))
                     var arrayList: ArrayList<TimeSlotsWithData> = arrayListOf()
                     for (i in availableTimeSlots!!.timeStops[position].slot) {
                         arrayList.add(TimeSlotsWithData(i, false))

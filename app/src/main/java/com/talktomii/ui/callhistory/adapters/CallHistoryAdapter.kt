@@ -19,8 +19,13 @@ import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
 import com.talktomii.ui.callhistory.models.CallHistoryItemModel
+import com.talktomii.ui.loginSignUp.login.LoginFragment
 import com.talktomii.ui.mycards.data.MyCardsViewModel
+import com.talktomii.utlis.PrefsManager
 import javax.inject.Inject
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+
 
 class CallHistoryAdapter(
     val mList: List<CallHistoryItemModel>,
@@ -112,7 +117,7 @@ class CallHistoryAdapter(
                         val close = dialog.findViewById(R.id.cancelcall_btn) as TextView
                         val delete = dialog.findViewById(R.id.deletecallCardBtn) as TextView
                         delete.setOnClickListener {
-                            viewModel.deleteCallHistory(mList[position].id)
+                            viewModel.deleteCallHistory(mList[position].ifid)
                             val dialog_delete = Dialog(context!!)
                             dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
                             dialog_delete.getWindow()!!
@@ -148,30 +153,99 @@ class CallHistoryAdapter(
                 return false
             }
         }
-
+        class moreMenuClickListenerInfluencer : PopupMenu.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.action_delete_history -> {
+                        if (!::viewModel.isInitialized) {
+                            viewModel = MyCardsViewModel(webService!!)
+                        }
+                        val dialog = Dialog(context!!)
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        dialog.getWindow()!!
+                            .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(false)
+                        dialog.setContentView(R.layout.deletecallhistory_popup)
+                        dialog.getWindow()!!.setLayout(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT
+                        );
+                        val close = dialog.findViewById(R.id.cancelcall_btn) as TextView
+                        val delete = dialog.findViewById(R.id.deletecallCardBtn) as TextView
+                        delete.setOnClickListener {
+                            viewModel.deleteCallHistory(mList[position].ifid)
+                            val dialog_delete = Dialog(context!!)
+                            dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                            dialog_delete.getWindow()!!
+                                .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+                            dialog_delete.setCancelable(false)
+                            dialog_delete.setContentView(R.layout.confirmdelete_callhistory)
+                            dialog_delete.getWindow()!!.setLayout(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.MATCH_PARENT
+                            );
+                            val close =
+                                dialog_delete.findViewById(R.id.closeConfirmDeleteHistoryPopup) as TextView
+                            val userName =
+                                dialog_delete.findViewById(R.id.delete_history_text) as TextView
+                            val userPhoto =
+                                dialog_delete.findViewById(R.id.callUserIcon) as ImageView
+                            userName.text = mList[position].call_name + " has been deleted"
+                            Picasso.with(context).load(Uri.parse(mList[position].call_Img))
+                                .into(userPhoto);
+                            close.setOnClickListener {
+                                dialog_delete.dismiss()
+                                viewModel.getCallHistory()
+                            }
+                            dialog.hide()
+                            dialog_delete.show()
+                        }
+                        close.setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        dialog.show()
+                    }
+                }
+                return false
+            }
+        }
         Picasso.with(context).load(Uri.parse(mList[position].call_Img)).into(holder.itemImg);
 //        holder.itemImg.setImageURI(Uri.parse(mList[position].call_Img))
         holder.itemName.text = mList[position].call_name
         holder.itemDate.text = mList[position].call_date
         holder.itemRs.text = "$" + mList[position].call_rs.toString()
         holder.itemTime.text = mList[position].call_time.toString() + " Min"
+        val sh: SharedPreferences = context!!.getSharedPreferences("RoleName", MODE_PRIVATE)
+        val name = sh.getString("name","")
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
-            val popupMenu = PopupMenu(context, view)
-            val menuInflater = MenuInflater(context)
-            menuInflater.inflate(R.menu.call_history_popup, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
-            popupMenu.show()
+            if(name == "user"){
+                val popupMenu = PopupMenu(context, view)
+                val menuInflater = MenuInflater(context)
+                menuInflater.inflate(R.menu.call_history_popup, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
+                popupMenu.show()
+            }else{
+                val popupMenu = PopupMenu(context, view)
+                val menuInflater = MenuInflater(context)
+                menuInflater.inflate(R.menu.call_history_popup_influencer, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener(moreMenuClickListenerInfluencer())
+                popupMenu.show()
+            }
+
         })
-        holder.detailCallHistory.setOnClickListener {
-            val intent = Intent(context, CallInvoiceActivity::class.java)
-            intent.putExtra("id",mList[position].ifid)
-            intent.putExtra("if_name",mList[position].if_Username)
-            intent.putExtra("image",mList[position].if_profile)
-            intent.putExtra("date",mList[position].call_date)
-            intent.putExtra("amount",mList[position].call_rs)
-            intent.putExtra("duration",mList[position].call_time)
-            context!!.startActivity(intent)
+        if(name == "user"){
+            holder.detailCallHistory.setOnClickListener {
+                val intent = Intent(context, CallInvoiceActivity::class.java)
+                intent.putExtra("id",mList[position].id)
+                intent.putExtra("if_name",mList[position].if_Username)
+                intent.putExtra("image",mList[position].if_profile)
+                intent.putExtra("date",mList[position].call_date)
+                intent.putExtra("amount",mList[position].call_rs)
+                intent.putExtra("duration",mList[position].call_time)
+                context!!.startActivity(intent)
+            }
         }
+
 
     }
 

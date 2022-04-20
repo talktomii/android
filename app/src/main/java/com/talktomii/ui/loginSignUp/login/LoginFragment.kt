@@ -32,6 +32,11 @@ import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import java.net.URL
 import javax.inject.Inject
+import android.R.attr.name
+
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 
 
 class LoginFragment : DaggerFragment() {
@@ -53,6 +58,8 @@ class LoginFragment : DaggerFragment() {
     var deviceToken: String? = ""
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
+    @Inject
+    lateinit var dataModel: MyCardsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,8 +113,17 @@ class LoginFragment : DaggerFragment() {
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
                     prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
                     prefsManager.save(PrefsManager.PREF_ROLE, it.data.admin.role.roleName)
-                    Log.d("user is ----", it.data.token.toString())
+                    Log.d("user is ----", it.data.admin.role.roleName)
+
+                    val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
+                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                    myEdit.putString("name", prefsManager.getString(PrefsManager.PREF_ROLE,""))
+                    myEdit.putString("id",prefsManager.getString(PrefsManager.PREF_API_ID,""))
+                    myEdit.putString("token",prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+                    myEdit.commit()
+
                     requireContext().showMessage("Login Successfully")
+                    dataModel.getTotalAmount()
                     if (it.data.admin.role._id == USER_ROLE)
                         findNavController().navigate(R.id.homeFragment)
                     else
@@ -249,5 +265,7 @@ class LoginFragment : DaggerFragment() {
 
     }
 
-
+    companion object{
+        lateinit var roleName : String
+    }
 }

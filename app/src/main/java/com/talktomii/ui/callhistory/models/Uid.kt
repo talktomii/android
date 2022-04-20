@@ -24,7 +24,7 @@ data class Uid(
     @SerializedName("customerId") var customerId: String? = null,
     @SerializedName("socialNetwork") var socialNetwork: ArrayList<SocialNetwork> = arrayListOf(),
     @SerializedName("price") var price: ArrayList<Price> = arrayListOf(),
-    @SerializedName("availaibility") var availaibility: ArrayList<String> = arrayListOf(),
+//    @SerializedName("availaibility") var availaibility: ArrayList<String> = arrayListOf(),
     @SerializedName("__v") var _v: Int? = null,
     @SerializedName("latestToken") var latestToken: String? = null,
     @SerializedName("aboutYou") var aboutYou: String? = null,

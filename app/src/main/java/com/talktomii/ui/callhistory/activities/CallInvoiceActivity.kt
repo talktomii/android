@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -43,6 +44,16 @@ class CallInvoiceActivity : DaggerAppCompatActivity() , Html2Pdf.OnCompleteConve
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_call_invoice)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_paymentdetail_dark)
+                binding.ivbackCall.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_payment_detail)
+                binding.ivbackCall.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.tvBackCallInvoice.setOnClickListener {
             finish()
         }

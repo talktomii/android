@@ -4,34 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtClose"
+        <LinearLayout
+            android:id="@+id/closeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/ic_cross_second"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginStart="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ivcloseBudges"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20">
+
+            </ImageView>
+            <TextView
+                android:id="@+id/txtClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close"
+                android:drawablePadding="10dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/myCards"
+                />
+        </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="My Budges"
-            android:textColor="@color/gray"
+            android:text="My Badges"
+            android:textColor="@color/addCardColor"
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/txtClose"
-            app:layout_constraintTop_toBottomOf="@+id/txtClose" />
+            app:layout_constraintStart_toStartOf="@+id/closeLayout"
+            app:layout_constraintTop_toBottomOf="@+id/closeLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMyBudges"

@@ -159,7 +159,11 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     override fun influenceCalenderList(payload: AppointmentPayload) {
         progressDialog.dismiss()
-        payload.Appointment!!.sortByDescending { SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(it.date)) }
+        payload.Appointment!!.sortByDescending {
+            SimpleDateFormat("yyyy-MM-dd").format(
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(it.date)
+            )
+        }
         appointmentAdapter!!.setList(payload.Appointment)
 
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
@@ -208,72 +212,134 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
     override fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int) {
         progressDialog.dismiss()
         selectedItemForReschedule = interest
-        reScheduleAppointmentDialog = BottomSheetDialog(
-            requireContext(),
-            R.style.MyTransparentBottomSheetDialogTheme
-        )
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.bottomsheet_reschedule_appointment, null)
-        val btnClose = view.findViewById<ImageView>(R.id.btnCloseAppointmentSheet)
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                btnClose.setBackgroundResource(R.drawable.closesheeticon_dark)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                btnClose.setBackgroundResource(R.drawable.close_sheet_icon)
-            }
-        }
-        recycleViewRescheduleSlot = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
-        spinnerTimeDuration = view.findViewById<Spinner>(R.id.spinnerTimeDuration)
-        val tvRescheduleAppointment = view.findViewById<TextView>(R.id.tvRescheduleAppointment)
+
+                reScheduleAppointmentDialog = BottomSheetDialog(
+                    requireContext(),
+                    R.style.MyTransparentBottomSheetDialogThemeDark
+                )
+                val view = LayoutInflater.from(context)
+                    .inflate(R.layout.bottomsheet_reschedule_appointment, null)
+                val btnClose = view.findViewById<ImageView>(R.id.btnCloseAppointmentSheet)
+
+                recycleViewRescheduleSlot =
+                    view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
+                spinnerTimeDuration = view.findViewById<Spinner>(R.id.spinnerTimeDuration)
+                val tvRescheduleAppointment =
+                    view.findViewById<TextView>(R.id.tvRescheduleAppointment)
 //        val rvTimeSlotAppointment = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
 
+                btnClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+                val date_view = view.findViewById<HorizontalCalendarView>(R.id.calendarViewa)
+                val startDate: Calendar = Calendar.getInstance()
+                val endDate: Calendar = Calendar.getInstance()
+                endDate.add(Calendar.DAY_OF_MONTH, +7)
 
-        val date_view =
-            view.findViewById<HorizontalCalendarView>(R.id.calendarViewa)
-        val startDate: Calendar = Calendar.getInstance()
-        val endDate: Calendar = Calendar.getInstance()
-        endDate.add(Calendar.DAY_OF_MONTH, +7)
+                horizontalCalendar =
+                    HorizontalCalendar.Builder(view, date_view.id)
+                        .range(startDate, endDate)
+                        .configure()
+                        .showTopText(false)
+                        .end()
+                        .datesNumberOnScreen(7)
+                        .build()
 
-        horizontalCalendar =
-            HorizontalCalendar.Builder(view, date_view.id)
-                .range(startDate, endDate)
-                .configure()
-                .showTopText(false)
-                .end()
-                .datesNumberOnScreen(7)
-                .build()
+                horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
+                    override fun onDateSelected(date: Calendar?, position: Int) {
+                        getTimeSlots(date)
+                    }
+                }
+                recycleViewRescheduleSlot!!.layoutManager = LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
 
-        horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
-            override fun onDateSelected(date: Calendar?, position: Int) {
-                getTimeSlots(date)
-            }
-        }
-        recycleViewRescheduleSlot!!.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        tvRescheduleAppointment.setOnClickListener {
-            val hashMap: java.util.HashMap<String, Any> = hashMapOf()
+                tvRescheduleAppointment.setOnClickListener {
+                    val hashMap: java.util.HashMap<String, Any> = hashMapOf()
 //            hashMap[Constants.IF_ID] = viewModel.userField.get()!!._id
 //            hashMap[Constants.UID] = getUser(prefsManager)!!.admin._id
-            hashMap[DATE] = selectedDate!!
-            hashMap[Constants.START_TIME] = selectedStartTime!!
-            hashMap[Constants.END_TIME] = selectedEndTime!!
-            hashMap[Constants.STATUS] = "Rescheduled"
-            hashMap[Constants.DURATON] = selectedTimeSlots!!.time
+                    hashMap[DATE] = selectedDate!!
+                    hashMap[Constants.START_TIME] = selectedStartTime!!
+                    hashMap[Constants.END_TIME] = selectedEndTime!!
+                    hashMap[Constants.STATUS] = "Rescheduled"
+                    hashMap[Constants.DURATON] = selectedTimeSlots!!.time
 
-            viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
+                    viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
+                }
+                btnClose.setOnClickListener {
+                    reScheduleAppointmentDialog!!.dismiss()
+                }
+                getTimeSlots(Calendar.getInstance())
+                reScheduleAppointmentDialog!!.setCancelable(false)
+                reScheduleAppointmentDialog!!.setContentView(view)
+                reScheduleAppointmentDialog!!.show()
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+
+                reScheduleAppointmentDialog = BottomSheetDialog(
+                    requireContext(),
+                    R.style.MyTransparentBottomSheetDialogTheme
+                )
+                val view = LayoutInflater.from(context)
+                    .inflate(R.layout.bottomsheet_reschedule_appointment, null)
+                val btnClose = view.findViewById<ImageView>(R.id.btnCloseAppointmentSheet)
+
+                recycleViewRescheduleSlot =
+                    view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
+                spinnerTimeDuration = view.findViewById<Spinner>(R.id.spinnerTimeDuration)
+                val tvRescheduleAppointment =
+                    view.findViewById<TextView>(R.id.tvRescheduleAppointment)
+//        val rvTimeSlotAppointment = view.findViewById<RecyclerView>(R.id.rvTimeSlotAppointment)
+                btnClose.setBackgroundResource(R.drawable.close_sheet_icon)
+                val date_view = view.findViewById<HorizontalCalendarView>(R.id.calendarViewa)
+                val startDate: Calendar = Calendar.getInstance()
+                val endDate: Calendar = Calendar.getInstance()
+                endDate.add(Calendar.DAY_OF_MONTH, +7)
+
+                horizontalCalendar =
+                    HorizontalCalendar.Builder(view, date_view.id)
+                        .range(startDate, endDate)
+                        .configure()
+                        .showTopText(false)
+                        .end()
+                        .datesNumberOnScreen(7)
+                        .build()
+
+                horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
+                    override fun onDateSelected(date: Calendar?, position: Int) {
+                        getTimeSlots(date)
+                    }
+                }
+                recycleViewRescheduleSlot!!.layoutManager = LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+
+                tvRescheduleAppointment.setOnClickListener {
+                    val hashMap: java.util.HashMap<String, Any> = hashMapOf()
+//            hashMap[Constants.IF_ID] = viewModel.userField.get()!!._id
+//            hashMap[Constants.UID] = getUser(prefsManager)!!.admin._id
+                    hashMap[DATE] = selectedDate!!
+                    hashMap[Constants.START_TIME] = selectedStartTime!!
+                    hashMap[Constants.END_TIME] = selectedEndTime!!
+                    hashMap[Constants.STATUS] = "Rescheduled"
+                    hashMap[Constants.DURATON] = selectedTimeSlots!!.time
+
+                    viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
+                }
+                btnClose.setOnClickListener {
+                    reScheduleAppointmentDialog!!.dismiss()
+                }
+                getTimeSlots(Calendar.getInstance())
+                reScheduleAppointmentDialog!!.setCancelable(false)
+                reScheduleAppointmentDialog!!.setContentView(view)
+                reScheduleAppointmentDialog!!.show()
+            }
         }
-        btnClose.setOnClickListener {
-            reScheduleAppointmentDialog!!.dismiss()
-        }
-        getTimeSlots(Calendar.getInstance())
-        reScheduleAppointmentDialog!!.setCancelable(false)
-        reScheduleAppointmentDialog!!.setContentView(view)
-        reScheduleAppointmentDialog!!.show()
+
     }
 
     private fun getTimeSlots(date: Calendar?) {

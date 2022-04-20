@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import com.example.example.PayloadCards
 import com.talktomii.R
@@ -206,7 +207,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             android.R.layout.simple_spinner_dropdown_item,
                             arrayStrings!!.toMutableList()
                         )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        adapter.setDropDownViewResource(R.layout.spinner_list)
                         RefillWalletActivity.filterTypes!!.setAdapter(adapter)
                         RefillWalletActivity.filterTypes!!.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
                             override fun onItemSelected(
@@ -216,6 +217,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 p3: Long
                             ) {
                                 Log.d("selected_item", carditemMap!!.keys.toString())
+                                (p1 as TextView).setTextColor(context!!.resources.getColor(R.color.calText))
                                 for (entry in carditemMap!!.entries) {
                                     if (entry.value === adapter.getItem(p2)) {
                                         System.out.println(
@@ -867,14 +869,8 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         AddBankAccountActivity.finishFunction()
                         getBank()
                     } else {
-                        addWallet.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.errorBody()?.string()
-                            )
-                        )
-                        var jsonObject: JSONObject? = null
                         AddBankAccountActivity.progress.visibility = View.GONE
+                        var jsonObject: JSONObject? = null
                         try {
                             jsonObject = JSONObject(response.errorBody()!!.string())
                             val userMessage = jsonObject.getString("message")
@@ -1045,20 +1041,39 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 date = sdf1.parse(i.date)
                                 val newDate = sdf2.format(date)
                                 println(newDate)
-                                Log.d("profile LLL ", i.uid!!.userName!!)
-                                dataList.add(
-                                    CallHistoryItemModel(
-                                        i.ifid!!.Id!!,
-                                        i.ifid!!.userName!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.Id!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.ifid!!.userName!!,
-                                        newDate,
-                                        i.price!!,
-                                        i.duration!!
+                                if(prefsManager.getString(PrefsManager.PREF_ROLE,"") == "user"){
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.ifid!!.Id!!,
+                                            i.ifid!!.userName!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.ifid!!.userName!!,
+                                            newDate,
+                                            i.price!!,
+                                            i.duration!!
+                                        )
                                     )
-                                )
+                                }
+                                else{
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.uid!!.Id!!,
+                                            i.uid!!.userName!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.uid!!.userName!!,
+                                            newDate,
+                                            i.price!!,
+                                            i.duration!!
+                                        )
+                                    )
+                                }
+
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }
@@ -1112,20 +1127,38 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 date = sdf1.parse(i.date)
                                 val newDate = sdf2.format(date)
                                 println(newDate)
-                                Log.d("profile LLL ", i.uid!!.userName!!)
-                                dataList.add(
-                                    CallHistoryItemModel(
-                                        i.ifid!!.Id!!,
-                                        i.ifid!!.userName!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.Id!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.ifid!!.userName!!,
-                                        newDate,
-                                        i.price!!,
-                                        i.duration!!
+                                if(prefsManager.getString(PrefsManager.PREF_ROLE,"") == "user"){
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.ifid!!.Id!!,
+                                            i.ifid!!.userName!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.ifid!!.userName!!,
+                                            newDate,
+                                            i.price!!,
+                                            i.duration!!
+                                        )
                                     )
-                                )
+                                }
+                                else{
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.uid!!.Id!!,
+                                            i.uid!!.userName!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.uid!!.userName!!,
+                                            newDate,
+                                            i.price!!,
+                                            i.duration!!
+                                        )
+                                    )
+                                }
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }

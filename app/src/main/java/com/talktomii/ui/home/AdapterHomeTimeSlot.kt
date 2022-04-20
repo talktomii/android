@@ -1,6 +1,7 @@
 package com.talktomii.ui.home
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -41,8 +42,15 @@ class AdapterHomeTimeSlot(
             holder.binding.tvTime.background =
                 ContextCompat.getDrawable(context, R.drawable.back_select)
         } else {
-            holder.binding.tvTime.background =
-                ContextCompat.getDrawable(context, R.drawable.back_tabs)
+            when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    holder.binding.tvTime.background = ContextCompat.getDrawable(context, R.drawable.back_tabs_dark)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    holder.binding.tvTime.background = ContextCompat.getDrawable(context, R.drawable.back_tabs)
+                }
+            }
+
         }
         holder.binding.tvTime.setOnClickListener {
 //            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).time > System.currentTimeMillis()) {

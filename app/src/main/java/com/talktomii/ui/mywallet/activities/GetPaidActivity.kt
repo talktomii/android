@@ -12,10 +12,14 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.R
+import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.databinding.ActivityGetPaidBinding
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
+import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.mycards.data.MyCardsViewModel
+import com.talktomii.utlis.DateUtils
 import dagger.android.support.DaggerAppCompatActivity
+import java.util.ArrayList
 import javax.inject.Inject
 
 class GetPaidActivity : DaggerAppCompatActivity() {
@@ -50,7 +54,20 @@ class GetPaidActivity : DaggerAppCompatActivity() {
             finish()
         }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayListOf("CITY BANK", "CITY BANK", "CITY BANK"))
+        val adapter = ArrayAdapter(this, R.layout.drop_down_custom_layout,R.id.spindata, arrayListOf("CITY BANK", "CITY BANK", "CITY BANK"))
+        binding.bankSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+//                    (view as TextView).setTextColor(resources.getColor(R.color.calText))
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
         binding.bankSpinner.setAdapter(adapter)
 
         viewModel.getCurrentWallet()

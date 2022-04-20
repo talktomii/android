@@ -153,6 +153,8 @@
                             android:hint="MM/YY"
                             android:textFontWeight="400"
                             android:textSize="17sp"
+                            android:inputType="number"
+                            android:maxLength="7"
                             android:textColor="@color/addCardHintColor"
                             android:textColorHint="@color/cardNumber"
                             app:hintTextColor="@color/cardNumber"

@@ -334,7 +334,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:hint="Enter routing number"
                     android:inputType="number"
-                    android:maxLength="12"
+                    android:maxLength="9"
                     android:textColor="@color/addCardHintColor"
                     android:textColorHint="@color/cardNumber"
                     android:textFontWeight="400"

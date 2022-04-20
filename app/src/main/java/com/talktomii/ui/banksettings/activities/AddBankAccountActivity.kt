@@ -101,10 +101,10 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 )
                 snackbar.show()
-            } else if (binding.etRoutingNumber.text!!.length < 12) {
+            } else if (binding.etRoutingNumber.text!!.length < 9) {
                 val snackbar = Snackbar.make(
                     layout,
-                    "Wrong Routing Number",
+                    "Routing Number must have 9 digits",
                     Snackbar.LENGTH_SHORT
                 )
                 snackbar.show()

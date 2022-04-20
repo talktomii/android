@@ -11,7 +11,6 @@
         android:layout_width="@dimen/dp_120"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/slot_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/slot_bg"
             android:fontFamily="@font/poppins_medium"
             android:paddingStart="@dimen/dp_16"
             android:paddingTop="@dimen/dp_12"

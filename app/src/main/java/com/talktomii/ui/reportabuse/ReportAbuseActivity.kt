@@ -2,6 +2,7 @@ package com.talktomii.ui.reportabuse
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -31,6 +32,17 @@ class ReportAbuseActivity : DaggerAppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report_abuse)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.typesFilterContainer.setBackgroundResource(R.drawable.bg_paymentdetail_dark)
+                binding.backReportIV.setImageResource(R.drawable.back_arrow)
+                supportActionBar!!.hide()
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.typesFilterContainer.setBackgroundResource(R.drawable.bg_payment_detail)
+                binding.backReportIV.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         getContext(this)
         binding.tvBackReportAbuse.setOnClickListener {
             finish()

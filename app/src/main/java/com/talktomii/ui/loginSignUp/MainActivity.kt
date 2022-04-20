@@ -290,4 +290,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     fun socketConnected() {
         socketManager.onCallRequest(this)
     }
+    fun openNotificationFragment() {
+        binding.menuBottom.selectedItemId = R.id.nav_notifications
+    }
 }

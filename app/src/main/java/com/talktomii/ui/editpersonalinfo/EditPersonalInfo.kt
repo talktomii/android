@@ -209,7 +209,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
 
                 for (i in userData!!.availaibility) {
-                    if (i.end == "Never") {
+                    if (i.end == "Never" || i.end == null) {
                         i.end = ""
                     }
                     val availbility = SendAvailaibility()

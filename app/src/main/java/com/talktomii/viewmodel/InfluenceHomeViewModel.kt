@@ -41,7 +41,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
 //                        searchInterface?.onSearchAllInstruction(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -61,9 +65,19 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         authResponse.body().let {
                             onSlotSelectedInterface!!.onSlotTimesList(authResponse.body()!!.payload)
                         }
+                    } else {
+                        commonInterface!!.onFailureAPI(
+                            authResponse.message(),
+                            authResponse.code(),
+                            authResponse.errorBody()
+                        )
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -84,7 +98,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         infulancerListner?.influenceList(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -104,7 +122,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         callHistoryListener?.getCallHistory(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -125,7 +147,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         infulancerCalenderListner?.influenceCalenderList(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -146,7 +172,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         addInfluncerItem?.addInfluenceItem(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }
@@ -167,7 +197,11 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
                         influncerItem?.influenceItem(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

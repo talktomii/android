@@ -237,7 +237,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         selectedDate = SimpleDateFormat("yyyy-MM-dd").format(startDate.time)
         viewModel.getAllSlotByDate(selectedDate.toString())
-        init()
     }
 
     override fun onFailure(message: String) {

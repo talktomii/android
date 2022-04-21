@@ -100,7 +100,7 @@ class ForgetFragment : DaggerFragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressDialog.setLoading(false)
-                    findNavController().navigate(R.id.action_forget_to_resetPassword)
+                    findNavController().navigate(R.id.action_forget_to_resetPassword, bundleOf("email" to requireArguments()["email"].toString()))
                }
 
                 Status.ERROR -> {

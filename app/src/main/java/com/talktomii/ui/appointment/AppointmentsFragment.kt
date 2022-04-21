@@ -393,7 +393,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
         val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
             requireContext(),
-            android.R.layout.simple_spinner_item, arrayList
+            R.layout.drop_down_custom_layout, arrayList
         )
         adapter.setDropDownViewResource(R.layout.spinner_list)
         spinnerTimeDuration!!.onItemSelectedListener =

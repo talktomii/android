@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:layout_marginStart="@dimen/dp_20"
     android:layout_marginEnd="@dimen/dp_20"
-    app:cardBackgroundColor="#F9F8FC"
+    app:cardBackgroundColor="@color/mycard_bgcolor"
     app:cardCornerRadius="@dimen/dp_20">
 
     <LinearLayout
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="Cancel"
-                android:textColor="#323F4B"
+                android:textColor="@color/calText"
                 android:textFontWeight="400"
                 android:textSize="@dimen/dp_16">
 

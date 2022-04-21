@@ -54,7 +54,8 @@ class GetPaidActivity : DaggerAppCompatActivity() {
             finish()
         }
 
-        val adapter = ArrayAdapter(this, R.layout.drop_down_custom_layout,R.id.spindata, arrayListOf("CITY BANK", "CITY BANK", "CITY BANK"))
+        val adapter = ArrayAdapter(this, R.layout.drop_down_custom_layout, arrayListOf("CITY BANK", "CITY BANK", "CITY BANK"))
+        adapter.setDropDownViewResource(R.layout.spinner_list)
         binding.bankSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(

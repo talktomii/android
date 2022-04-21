@@ -36,6 +36,7 @@
         tools:targetApi="m">
         <activity
             android:name=".ui.settings.PrivacyAndPolicyActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".ui.FAQ.FaqActivity"

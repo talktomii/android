@@ -204,7 +204,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         }
                         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             RefillWalletActivity.context,
-                            android.R.layout.simple_spinner_dropdown_item,
+                            R.layout.drop_down_custom_layout,
                             arrayStrings!!.toMutableList()
                         )
                         adapter.setDropDownViewResource(R.layout.spinner_list)
@@ -1273,17 +1273,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                     now,
                                     DateUtils.MINUTE_IN_MILLIS
                                 )
-                                if(i.notificationBy!!.name == null){
-                                    dataList.add(
-                                        NotificationItemModel(
-                                            i.Id!!,
-                                            i.title!!,
-                                            "",
-                                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-                                            ago.toString()
-                                        )
-                                    )
-                                }else{
+                                if(i.notificationBy != null){
                                     dataList.add(
                                         NotificationItemModel(
                                             i.Id!!,
@@ -1294,6 +1284,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                         )
                                     )
                                 }
+
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }
@@ -1349,7 +1340,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         }
                         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             ReportAbuseActivity.context,
-                            android.R.layout.simple_spinner_dropdown_item,
+                            R.layout.drop_down_custom_layout,
                             types.toMutableList()
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

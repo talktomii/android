@@ -68,7 +68,7 @@
                 android:id="@+id/txtTittle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Connect and chat over internet voice calls with \n your favorite creator"
+                android:text="Connect and chat over internet voice calls with \nyour favorite creator!"
                 android:textSize="14sp"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"

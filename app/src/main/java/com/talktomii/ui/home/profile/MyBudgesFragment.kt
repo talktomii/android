@@ -11,7 +11,7 @@ import com.talktomii.ui.home.HomeViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class MyBudgesFragment  : DaggerFragment() {
+class MyBudgesFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentMyBadgesBinding
 
@@ -35,7 +35,6 @@ class MyBudgesFragment  : DaggerFragment() {
             }
         }
         return binding.root
-
 
 
     }

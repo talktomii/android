@@ -85,9 +85,9 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="Leslie Alexander"
                     android:textColor="@color/calText"
-                    android:textSize="17dp"
-                    android:fontFamily="@font/inter_regular"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/dp_16"
+                    android:fontFamily="@font/inter_medium"
+                    android:textFontWeight="700"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -155,6 +155,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:riv_border_color="@color/white"
+                app:riv_border_width="1dp"
                 app:riv_corner_radius="@dimen/dp_60">
 
             </com.makeramen.roundedimageview.RoundedImageView>

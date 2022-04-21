@@ -305,7 +305,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         val adapter: ArrayAdapter<TimeSlotSpinner> = ArrayAdapter<TimeSlotSpinner>(
             requireContext(),
-            android.R.layout.simple_spinner_item, arrayList
+            R.layout.drop_down_custom_layout, arrayList
         )
         adapter.setDropDownViewResource(R.layout.spinner_list)
         binding.spinnerTimeDuration.onItemSelectedListener =

@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <LinearLayout
             android:id="@+id/closeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/dp_20"
             android:layout_marginStart="15dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/ivcloseBudges"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20">
 
             </ImageView>
+
             <TextView
                 android:id="@+id/txtClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Close"
-                android:drawablePadding="10dp"
                 android:layout_marginStart="@dimen/dp_10"
-                android:textSize="@dimen/sp_16"
+                android:drawablePadding="10dp"
+                android:text="Close"
                 android:textColor="@color/myCards"
-                />
+                android:textSize="@dimen/sp_16" />
         </LinearLayout>
-
 
 
         <TextView
@@ -55,12 +55,12 @@
             android:layout_height="0dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="3"
             tools:itemCount="6"
             tools:listitem="@layout/item_my_budges">

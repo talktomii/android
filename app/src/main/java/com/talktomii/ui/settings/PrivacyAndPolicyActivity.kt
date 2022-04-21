@@ -1,5 +1,6 @@
 package com.talktomii.ui.settings
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -19,6 +20,14 @@ class PrivacyAndPolicyActivity : DaggerAppCompatActivity(), AdvancedWebView.List
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_privacy_and_policy)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backToPrivacy.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backToPrivacy.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.tvBackPrivacy.setOnClickListener {
             finish()
         }

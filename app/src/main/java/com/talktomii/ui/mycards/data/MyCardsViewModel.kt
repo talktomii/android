@@ -1,7 +1,6 @@
 package com.talktomii.ui.mycards.data
 
 import android.content.Context
-import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
@@ -9,39 +8,25 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModel
 import com.example.example.PayloadCards
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.talktomii.R
+import com.talktomii.adapter.MyBankAdapter
 import com.talktomii.adapter.MyCardAdapter
+import com.talktomii.adapter.MyPaymentAdapter
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.network.responseUtil.ApiResponse
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.data.network.responseUtil.Resource
 import com.talktomii.di.SingleLiveEvent
-import com.talktomii.ui.mycards.activities.MyCardsActivity
-import com.talktomii.ui.mycards.fragments.CardFragment
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import org.apache.commons.lang3.StringUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
-import java.lang.Exception
-import javax.inject.Inject
-import com.google.android.material.snackbar.Snackbar
-import com.talktomii.ui.mywallet.activities.RefillWalletActivity
-import org.json.JSONObject
-import android.widget.Toast
-import com.facebook.FacebookSdk.getApplicationContext
-import com.talktomii.adapter.MyBankAdapter
-import com.talktomii.adapter.MyPaymentAdapter
 import com.talktomii.ui.banksettings.BankItemModel
 import com.talktomii.ui.banksettings.MyBankSettings
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.banksettings.models.BankData
 import com.talktomii.ui.banksettings.models.addBankData
 import com.talktomii.ui.callhistory.adapters.CallHistoryAdapter
-import com.talktomii.ui.callhistory.models.CallHistory
 import com.talktomii.ui.callhistory.models.CallHistoryData
 import com.talktomii.ui.callhistory.models.CallHistoryItemModel
 import com.talktomii.ui.coupon.CouponActivity
@@ -50,32 +35,38 @@ import com.talktomii.ui.home.notifications.AdapterTodayNotification
 import com.talktomii.ui.home.notifications.NotificationFragment
 import com.talktomii.ui.home.notifications.NotificationItemModel
 import com.talktomii.ui.home.notifications.models.NotificationData
-import com.talktomii.ui.mywallet.MyWallet
-import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
-import com.talktomii.ui.mywallet.fragments.RefillFragment
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.ui.mycards.PaymentItemsViewModel
+import com.talktomii.ui.mycards.activities.MyCardsActivity
+import com.talktomii.ui.mycards.fragments.CardFragment
 import com.talktomii.ui.mycards.fragments.PaymentFragment
 import com.talktomii.ui.mycards.model.PaymentPayload
+import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.activities.GetPaidActivity
+import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 import com.talktomii.ui.mywallet.adapters.WalletEarningAdapter
 import com.talktomii.ui.mywallet.adapters.WalletExpensesAdapter
+import com.talktomii.ui.mywallet.adapters.WalletRefillAdapter
 import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
+import com.talktomii.ui.mywallet.fragments.RefillFragment
 import com.talktomii.ui.mywallet.models.*
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
+import com.talktomii.utlis.DateUtils.getStringToDateWithDots
 import com.talktomii.utlis.PrefsManager
-import java.text.ParseException
-import java.util.logging.Handler
+import org.apache.commons.lang3.StringUtils
 import org.json.JSONException
-
-import retrofit2.adapter.rxjava2.Result.response
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
 
@@ -109,7 +100,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     }
 
 
-
     fun ViewModelFactory(context: Context?) {
         this.context = context
     }
@@ -125,7 +115,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCards() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
-        webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
                     call: Call<PayloadCards>,
@@ -180,7 +170,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         Log.d("token : ", MainActivity.retrivedToken)
         arrayStrings = ArrayList<String>()
         arrayStrings!!.add("Select card")
-        webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
                     call: Call<PayloadCards>,
@@ -207,31 +197,32 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             arrayStrings!!.toMutableList()
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        RefillWalletActivity.filterTypes!!.setAdapter(adapter)
-                        RefillWalletActivity.filterTypes!!.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
-                            override fun onItemSelected(
-                                p0: AdapterView<*>?,
-                                p1: View?,
-                                p2: Int,
-                                p3: Long
-                            ) {
-                                Log.d("selected_item", carditemMap!!.keys.toString())
-                                for (entry in carditemMap!!.entries) {
-                                    if (entry.value === adapter.getItem(p2)) {
-                                        System.out.println(
-                                            "The key for value " + adapter.getItem(p2)
-                                                .toString() + " is " + entry.key
-                                        )
-                                        selectedCardItem = entry.key
-                                        break
+                        RefillWalletActivity.filterTypes!!.adapter = adapter
+                        RefillWalletActivity.filterTypes!!.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    p0: AdapterView<*>?,
+                                    p1: View?,
+                                    p2: Int,
+                                    p3: Long
+                                ) {
+                                    Log.d("selected_item", carditemMap!!.keys.toString())
+                                    for (entry in carditemMap!!.entries) {
+                                        if (entry.value === adapter.getItem(p2)) {
+                                            System.out.println(
+                                                "The key for value " + adapter.getItem(p2)
+                                                    .toString() + " is " + entry.key
+                                            )
+                                            selectedCardItem = entry.key
+                                            break
+                                        }
                                     }
                                 }
-                            }
 
-                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                                override fun onNothingSelected(p0: AdapterView<*>?) {
 
+                                }
                             }
-                        }
 
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -426,9 +417,9 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
     fun getWallet() {
         wallets.value = Resource.loading()
-        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN, ""))
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -448,7 +439,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 val newDate = sdf2.format(date)
                                 println(newDate)
                                 Log.e("Date", newDate)
-                                if(i.type!! == "Credit") {
+                                if (i.type!! == "Credit") {
                                     dataList.add(
                                         WalletRefillItemModel(
                                             wallet_name = "Wallet " + i.type!!,
@@ -489,11 +480,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
     fun getEarnings() {
         wallets.value = Resource.loading()
-        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN, ""))
         val dataList = ArrayList<WalletEarningItemModel>()
-        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -513,7 +505,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 val newDate = sdf2.format(date)
                                 println(newDate)
                                 Log.e("Date", newDate)
-                                if(i.type!! == "Credit") {
+                                if (i.type!! == "Credit") {
                                     dataList.add(
                                         WalletEarningItemModel(
                                             wallet_name = "Wallet " + i.type!!,
@@ -554,11 +546,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
     fun getExpenses() {
         wallets.value = Resource.loading()
-        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_TOKEN, ""))
         val dataList = ArrayList<WalletExpensesItemModel>()
-        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -578,7 +571,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 val newDate = sdf2.format(date)
                                 println(newDate)
                                 Log.e("Date", newDate)
-                                if(i.type!! == "Debit") {
+                                if (i.type!! == "Debit") {
                                     dataList.add(
                                         WalletExpensesItemModel(
                                             wallet_name = "Wallet " + i.type!!,
@@ -622,7 +615,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getCurrentAmount(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getCurrentAmount(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<CurrentWalletPaylod> {
                 override fun onResponse(
                     call: Call<CurrentWalletPaylod>,
@@ -632,7 +625,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
-                        GetPaidActivity.total!!.text = "$" + data!!.walletData!!.currentAmount
+                        GetPaidActivity.total.text = "$" + data!!.walletData!!.currentAmount
                     } else {
                         Log.d("card data is : ", " : " + response.body())
                         wallets.value = Resource.error(
@@ -657,7 +650,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getWallet(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<WalletPayload> {
                 override fun onResponse(
                     call: Call<WalletPayload>,
@@ -692,7 +685,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         wallets.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
         val dataList = ArrayList<WalletRefillItemModel>()
-        webService.getCurrentAmount(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getCurrentAmount(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<CurrentWalletPaylod> {
                 override fun onResponse(
                     call: Call<CurrentWalletPaylod>,
@@ -726,9 +719,15 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
     fun getPayment() {
         payments.value = Resource.loading()
-        Log.d("token : ", prefsManager.getString(PrefsManager.PREF_API_ID,"") + "-- " + prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+        Log.d(
+            "token : ",
+            prefsManager.getString(PrefsManager.PREF_API_ID, "") + "-- " + prefsManager.getString(
+                PrefsManager.PREF_API_TOKEN,
+                ""
+            )
+        )
         val dataList = ArrayList<PaymentItemsViewModel>()
-        webService.getPayment(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getPayment(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<PaymentPayload> {
                 override fun onResponse(
                     call: Call<PaymentPayload>,
@@ -739,14 +738,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
                         for (i in data!!.wallet) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.createdAt)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.e("Date", i.toString())
                                 var paymentId = ""
                                 if (i.paymentId != null) {
                                     paymentId = i.paymentId!!
@@ -755,7 +747,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                     PaymentItemsViewModel(
                                         wallet_id = paymentId,
                                         wallet_name = "Wallet " + i.type!!,
-                                        wallet_date = newDate,
+                                        wallet_date = getStringToDateWithDots(i.createdAt!!),
                                         wallet_price = "-$" + i.amount
                                     )
                                 )
@@ -794,7 +786,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         banks.value = Resource.loading()
         Log.d("token bank: ", MainActivity.retrivedToken)
         val dataList = ArrayList<BankItemModel>()
-        webService.getBank(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getBank(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<BankData> {
                 override fun onResponse(
                     call: Call<BankData>,
@@ -809,7 +801,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 dataList.add(
                                     BankItemModel(
                                         i.Id!!,
-                                        i.holderName!!.toUpperCase(),
+                                        i.holderName!!.uppercase(Locale.getDefault()),
                                         i.bankType!!,
                                         i.routingNumber!!,
                                         i.accountNumber!!
@@ -859,7 +851,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
                         AddBankAccountActivity.progress.visibility = View.GONE
                         val snackbar = Snackbar.make(
-                            AddBankAccountActivity.layout!!,
+                            AddBankAccountActivity.layout,
                             response.body()!!.message!!,
                             Snackbar.LENGTH_SHORT
                         )
@@ -943,7 +935,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 ) {
                     if (response.isSuccessful) {
                         val snackbar = Snackbar.make(
-                            AddBankAccountActivity.layout!!,
+                            AddBankAccountActivity.layout,
                             response.body()!!.message!!,
                             Snackbar.LENGTH_SHORT
                         )
@@ -963,14 +955,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             val jObjError = JSONObject(data)
 
                             val snackbar = Snackbar.make(
-                                AddBankAccountActivity.layout!!,
+                                AddBankAccountActivity.layout,
                                 "Something wrong",
                                 Snackbar.LENGTH_SHORT
                             )
                             snackbar.show()
                         } catch (e: Exception) {
                             val snackbar = Snackbar.make(
-                                AddBankAccountActivity.layout!!,
+                                AddBankAccountActivity.layout,
                                 "Something wrong",
                                 Snackbar.LENGTH_SHORT
                             )
@@ -1028,7 +1020,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     }
 
     fun getCallHistory() {
-        webService.getCallHistory(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        webService.getCallHistory(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<CallHistoryData> {
                 override fun onResponse(
                     call: Call<CallHistoryData>,
@@ -1068,11 +1060,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val layoutManager = FlexboxLayoutManager()
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW
-                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager = layoutManager
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager =
+                            layoutManager
                         val adapter = CallHistoryAdapter(dataList, webService)
                         com.talktomii.ui.callhistory.CallHistory.recycleview.adapter = adapter
                         com.talktomii.ui.callhistory.CallHistory.progress.visibility = View.GONE
-                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility = View.VISIBLE
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility =
+                            View.VISIBLE
 
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -1094,8 +1088,11 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun getSearchedCallHistory(text : String) {
-        webService.getSearchedCallHistory(prefsManager.getString(PrefsManager.PREF_API_ID,""),text)
+    fun getSearchedCallHistory(text: String) {
+        webService.getSearchedCallHistory(
+            prefsManager.getString(PrefsManager.PREF_API_ID, ""),
+            text
+        )
             .enqueue(object : Callback<CallHistoryData> {
                 override fun onResponse(
                     call: Call<CallHistoryData>,
@@ -1135,11 +1132,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val layoutManager = FlexboxLayoutManager()
                         layoutManager.flexWrap = FlexWrap.WRAP
                         layoutManager.flexDirection = FlexDirection.ROW
-                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager = layoutManager
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.layoutManager =
+                            layoutManager
                         val adapter = CallHistoryAdapter(dataList, webService)
                         com.talktomii.ui.callhistory.CallHistory.recycleview.adapter = adapter
                         com.talktomii.ui.callhistory.CallHistory.progress.visibility = View.GONE
-                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility = View.VISIBLE
+                        com.talktomii.ui.callhistory.CallHistory.recycleview.visibility =
+                            View.VISIBLE
 
                     } else {
                         Log.d("card data is : ", " : " + response.body())
@@ -1189,6 +1188,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
     fun blockUser(hashMap: HashMap<String, String>) {
         deleteCallHistory.value = Resource.loading()
         webService.blockUser(hashMap)
@@ -1217,9 +1217,16 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
     fun getNotifications() {
-        Log.d("n_data : ",prefsManager.getString(PrefsManager.PREF_API_ID,"") + "-- " + "Bearer " + prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
-        webService.getNotifications(prefsManager.getString(PrefsManager.PREF_API_ID,""))
+        Log.d(
+            "n_data : ",
+            prefsManager.getString(
+                PrefsManager.PREF_API_ID,
+                ""
+            ) + "-- " + "Bearer " + prefsManager.getString(PrefsManager.PREF_API_TOKEN, "")
+        )
+        webService.getNotifications(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<NotificationData> {
                 override fun onResponse(
                     call: Call<NotificationData>,
@@ -1233,14 +1240,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                             sdf.timeZone = TimeZone.getTimeZone("GMT")
                             try {
-                                val time = sdf.parse(  i.createdAt).time
+                                val time = sdf.parse(i.createdAt).time
                                 val now = System.currentTimeMillis()
                                 val ago: CharSequence = DateUtils.getRelativeTimeSpanString(
                                     time,
                                     now,
                                     DateUtils.MINUTE_IN_MILLIS
                                 )
-                                if(i.notificationBy!!.name == null){
+                                if (i.notificationBy!!.name == null) {
                                     dataList.add(
                                         NotificationItemModel(
                                             i.Id!!,
@@ -1250,7 +1257,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                             ago.toString()
                                         )
                                     )
-                                }else{
+                                } else {
                                     dataList.add(
                                         NotificationItemModel(
                                             i.Id!!,
@@ -1302,7 +1309,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 ) {
                     if (response.isSuccessful) {
                         val data = response.body()!!.payload
-                        val types  = ArrayList<String>()
+                        val types = ArrayList<String>()
                         type_item = HashMap()
                         for (i in data!!.reportAbuse) {
                             val refilldata = i.type
@@ -1353,10 +1360,11 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
+
     fun addFeedback(hashMap: HashMap<String, String>) {
         Log.d("Abuse Data :  ", hashMap.toString())
         addFeedback.value = Resource.loading()
-        webService.addFeedback( hashMap)
+        webService.addFeedback(hashMap)
             .enqueue(object : Callback<AddReport> {
                 override fun onResponse(
                     call: Call<AddReport>,
@@ -1376,7 +1384,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
-                    }else{
+                    } else {
                         val snackbar = Snackbar.make(
                             ReportAbuseActivity.layout,
                             response.body()!!.message!!,
@@ -1404,7 +1412,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
                         GetPaidActivity.progressBar.visibility = View.GONE
                         val snackbar = Snackbar.make(
-                            GetPaidActivity.layout!!,
+                            GetPaidActivity.layout,
                             response.body()!!.message!!,
                             Snackbar.LENGTH_SHORT
                         )

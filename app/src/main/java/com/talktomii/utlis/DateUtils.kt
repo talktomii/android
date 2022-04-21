@@ -5,8 +5,10 @@ import android.app.DatePickerDialog
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
+import com.talktomii.utlis.DateFormate.DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.DAY_MONTH_DATE_YEAR
 import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT
+import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
@@ -108,6 +110,21 @@ object DateUtils {
 
     }
 
+    fun getStringToDateWithDots(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT_WITH_DOT)
+            val outputFormat = SimpleDateFormat(DATE_FORMAT_WITH_DOT)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
+            println(formattedDate)
+
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+
+    }
+
     fun getFormatedFullDate(calendar: Calendar): String {
         try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
@@ -172,12 +189,12 @@ object DateUtils {
         return df.format(cal.time)
     }
 
-    fun convertStringToCalender(time : String): Calendar {
+    fun convertStringToCalender(time: String): Calendar {
         val df = SimpleDateFormat(FULL_DATE_FORMAT)
         val d = df.parse(time)
         val cal = Calendar.getInstance()
         cal.time = d
-        return cal;
+        return cal
     }
 }
 
@@ -191,7 +208,9 @@ object DateFormate {
     const val LOCAL_DATE_FORMATE = "dd/M/yyyy hh:mm:ss"
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
+    const val DATE_FORMAT_WITH_DOT = "dd.MM.yyyy hh:mm aaa"
     const val TIME_FORMAT = "hh:mm aaa"
     const val WEEK_TIME_FORMAT = "EEE dd"
     const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    const val FULL_DATE_FORMAT_WITH_DOT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 }

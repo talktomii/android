@@ -9,9 +9,10 @@ import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
 import com.talktomii.data.model.admin1.UpdateAdmin
+import com.talktomii.data.model.admin1.UpdateAvailability
 import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
-import com.talktomii.data.model.appointment.UpdateAppointment
 import com.talktomii.data.model.appointment.GetAppointmentById
+import com.talktomii.data.model.appointment.UpdateAppointment
 import com.talktomii.data.model.currentwallet.CurrentWallet
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.GetAllAppoinments
@@ -30,9 +31,9 @@ import com.talktomii.ui.mywallet.models.WalletPayload
 import com.talktomii.ui.mywallet.models.addWalletData
 import com.talktomii.ui.reportabuse.models.AddReport
 import com.talktomii.ui.reportabuse.models.ReportAbuseData
-import retrofit2.Call
 import com.talktomii.ui.tellusmore.RequestAdminModel
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -69,6 +70,7 @@ interface WebService {
         private const val GET_ALL_SLOT_BY_DATE = "appointment/getAllSlotByDate"
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
+        private const val UPDATE_AVAIBILITY = "admin/updateAvailability"
         private const val VERIFY_EMAIL = "admin/verify-email"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
         private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
@@ -198,7 +200,7 @@ interface WebService {
 
     @GET(GET_CALL_HISTORY)
     fun getSearchedCallHistory(
-        @Query("id") id : String,
+        @Query("id") id: String,
         @Query("search") search: String
     ): Call<CallHistoryData>
 
@@ -282,6 +284,11 @@ interface WebService {
         @Path("id") id: String,
         @Body data: HashMap<String, Any>,
     ): Response<UpdateAdmin>
+
+    @PUT(UPDATE_AVAIBILITY)
+    suspend fun updateAvailability(
+        @Body data: HashMap<String, Any>,
+    ): Response<UpdateAvailability>
 
 
     @GET(GET_CURRENT_AMOUNT + "/{id}")

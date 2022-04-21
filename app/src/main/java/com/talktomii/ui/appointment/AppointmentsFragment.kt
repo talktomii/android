@@ -109,16 +109,10 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         progressDialog = ProgressDialog(requireActivity())
         initAdapter()
         viewModel.getAllAppointmentByCalender(getUser(prefsManager)!!.admin._id)
-        binding.calendarViewAppointment.setOnDateChangedListener(object : OnDateSelectedListener {
-            override fun onDateSelected(
-                widget: MaterialCalendarView,
-                date: CalendarDay,
-                selected: Boolean
-            ) {
-                val selectedDate = "" + date.year + "-" + date.month + "-" + date.day
-                viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
-            }
-        })
+        binding.calendarViewAppointment.setOnDateChangedListener { widget, date, selected ->
+            val selectedDate = "" + date.year + "-" + date.month + "-" + date.day
+            viewModel.getAllAppointmentByDate(selectedDate, getUser(prefsManager)!!.admin._id)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

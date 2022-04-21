@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.talktomii.R
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.databinding.BottomsheetAddtimeperiodBinding
@@ -18,12 +19,15 @@ import com.talktomii.utlis.DateUtils.getFormatedFullDate
 import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.monthsarray
 import com.talktomii.utlis.showMessage
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriodInterface, var availaibility: Availaibility?, var position: Int?) : BottomSheetDialogFragment() {
+class AddTimePeriodBottomSheetFragment(
+    var addTimePeriodInterface: AddTimePeriodInterface,
+    var availaibility: Availaibility?,
+    var position: Int?
+) : BottomSheetDialogFragment() {
     private lateinit var binding: BottomsheetAddtimeperiodBinding
 
     var isMonday = false
@@ -36,7 +40,11 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
     var calenderToFormat: String? = null
     var calenderFromFormat: String? = null
     var calenderDate: String? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = BottomsheetAddtimeperiodBinding.inflate(LayoutInflater.from(context))
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
@@ -64,6 +72,10 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
     private fun setdata() {
 
         binding.tvFrom.text = setDateToTime(availaibility!!.startTime)
+        val calenderFrom = Calendar.getInstance()
+        val calenderTo = Calendar.getInstance()
+        calenderFromFormat = getFormatedFullDate(calenderFrom)
+        calenderToFormat = getFormatedFullDate(calenderTo)
         binding.tvTo.text = setDateToTime(availaibility!!.endTime)
         for (item in availaibility!!.day) {
             if (item.equals("1")) {
@@ -83,113 +95,135 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
             }
         }
         setUpAllDays()
-        if (availaibility!!.end != null){
+        if (availaibility!!.end != null) {
             if (availaibility!!.end == "Never") {
                 binding.rbNever.isChecked = true
             } else {
                 binding.rbOn.isChecked = true
                 binding.tvDate.text = availaibility!!.end
             }
-        }else{
+        } else {
             binding.rbNever.isChecked = true
         }
 
-        binding.btnAddTimePeriod.text = "Edit Time Period"
+        if (availaibility == null) {
+            binding.btnAddTimePeriod.text = "Add Time Period"
+
+        } else {
+            binding.btnAddTimePeriod.text = "Edit Time Period"
+
+        }
     }
 
     private fun setUpAllDays() {
         if (!isMonday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvMonday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvMonday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvMonday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvMonday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvMonday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvMonday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isTuesday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isTuesday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isWednesday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvWednesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvWednesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvWednesday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvWednesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvWednesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvWednesday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isThursday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvThursday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvThursday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvThursday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvThursday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvThursday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvThursday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isFriday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvFriday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvFriday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvFriday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvFriday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvFriday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvFriday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isSaturday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSaturday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvSaturday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvSaturday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSaturday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvSaturday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvSaturday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
 
         if (!isSunday) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSunday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvSunday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvSunday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSunday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvSunday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvSunday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -203,8 +237,10 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         binding.llDate.setOnClickListener {
             val c = Calendar.getInstance()
             val dpd = DatePickerDialog(
-                requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    val date = monthsarray[monthOfYear] + " " + dayOfMonth.toString() + " " + year.toString()
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    val date =
+                        monthsarray[monthOfYear] + " " + dayOfMonth.toString() + " " + year.toString()
                     binding.tvDate.text = date
                 },
                 c.get(Calendar.YEAR),
@@ -226,7 +262,9 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
                 calendar.set(Calendar.MINUTE, minute)
                 calendar.set(Calendar.HOUR, hourOfDay)
                 calenderFromFormat = getFormatedFullDate(calendar)
-                binding.tvFrom.text = calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE).toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
+                binding.tvFrom.text =
+                    calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE)
+                        .toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false)
             timePickerDialog.show()
         }
@@ -237,7 +275,9 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
                 calendar.set(Calendar.MINUTE, minute)
                 calendar.set(Calendar.HOUR, hourOfDay)
                 calenderToFormat = getFormatedFullDate(calendar)
-                binding.tvTo.text = calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE).toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
+                binding.tvTo.text =
+                    calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE)
+                        .toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false)
             timePickerDialog.show()
         }
@@ -328,7 +368,14 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isSunday) {
             days.add("7")
         }
-        var model = Availaibility("", days, if (binding.rbNever.isChecked) "Never" else binding.tvDate.text.toString(), calenderToFormat.toString(), false, calenderFromFormat.toString())
+        var model = Availaibility(
+            if (availaibility != null) availaibility!!._id else "",
+            days,
+            if (binding.rbNever.isChecked) "Never" else binding.tvDate.text.toString(),
+            calenderToFormat.toString(),
+            false,
+            calenderFromFormat.toString()
+        )
 
         if (availaibility == null) {
             addTimePeriodInterface.addTimePeriod(model, false, 0)
@@ -344,13 +391,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isMonday) {
             isMonday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvMonday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvMonday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvMonday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isMonday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvMonday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvMonday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvMonday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -360,13 +409,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isTuesday) {
             isTuesday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isTuesday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvTuesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvTuesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvTuesday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -376,13 +427,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isWednesday) {
             isWednesday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvWednesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvWednesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvWednesday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isWednesday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvWednesday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvWednesday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvWednesday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -392,13 +445,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isThursday) {
             isThursday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvThursday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvThursday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvThursday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isThursday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvThursday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvThursday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvThursday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -408,13 +463,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isFriday) {
             isFriday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvFriday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvFriday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvFriday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isFriday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvFriday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvFriday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvFriday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -424,13 +481,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isSaturday) {
             isSaturday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSaturday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvSaturday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvSaturday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isSaturday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSaturday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvSaturday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvSaturday.setTextColor(requireContext().getColor(R.color.white))
             }
         }
@@ -440,13 +499,15 @@ class AddTimePeriodBottomSheetFragment(var addTimePeriodInterface: AddTimePeriod
         if (isSunday) {
             isSunday = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSunday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.white))
+                binding.tvSunday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.white))
                 binding.tvSunday.setTextColor(requireContext().getColor(R.color.black))
             }
         } else {
             isSunday = true
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.tvSunday.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
+                binding.tvSunday.backgroundTintList =
+                    ColorStateList.valueOf(requireContext().getColor(R.color.blue_check))
                 binding.tvSunday.setTextColor(requireContext().getColor(R.color.white))
             }
         }

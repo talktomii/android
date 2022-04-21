@@ -409,17 +409,46 @@
                     app:layout_constraintStart_toStartOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvSocialMedia"
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rvSocialMedia"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/textView8"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/textView8"-->
+<!--                    tools:itemCount="3"-->
+<!--                    tools:listitem="@layout/item_social_media" />-->
+
+                <ImageView
+                    android:id="@+id/ivInsta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_insta"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_social_media" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <ImageView
+                    android:id="@+id/ivTwitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_twitter"
+                    app:layout_constraintStart_toEndOf="@+id/ivInsta"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <ImageView
+                    android:id="@+id/ivTikTok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_ticktock"
+                    app:layout_constraintStart_toEndOf="@+id/ivTwitter"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
                 <View
                     android:id="@+id/view3"
@@ -428,7 +457,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:background="@color/gray"
                     android:layout_marginHorizontal="@dimen/dp_10"
-                    app:layout_constraintTop_toBottomOf="@+id/rvSocialMedia"
+                    app:layout_constraintTop_toBottomOf="@+id/ivInsta"
                     tools:layout_editor_absoluteX="10dp" />
 
                 <TextView

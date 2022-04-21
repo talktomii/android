@@ -45,7 +45,7 @@ class MyBankSettings : DaggerFragment() {
         binding = MyBankSettingsBinding.inflate(inflater, container, false)
         recycleview = binding.rvDisplayBanks
         progress = binding.displayBankProgress
-        progress.visibility = View.VISIBLE
+//        progress.visibility = View.VISIBLE
         dataModel.getBank()
 
         binding.addBankAccountCard.setOnClickListener {

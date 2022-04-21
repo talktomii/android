@@ -6,18 +6,15 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.api.ApiException
+import com.makeramen.roundedimageview.RoundedImageView
 import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.Interest
+import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
-import com.talktomii.interfaces.AdminDetailInterface
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.UpdatePhotoInterface
-import com.google.android.gms.common.api.ApiException
-import com.makeramen.roundedimageview.RoundedImageView
-import com.talktomii.data.network.responseUtil.ApiUtils
-import com.talktomii.interfaces.UpdateProfileInterface
+import com.talktomii.interfaces.*
 import okhttp3.RequestBody
 import javax.inject.Inject
 
@@ -25,6 +22,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
     var commonInterface: CommonInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
     var onUpdateProfileInterface: UpdateProfileInterface? = null
+    var updateAvailability: UpdateAvaibilityInterface? = null
     var userField = ObservableField<Admin1>()
     var updatePhotoInterface: UpdatePhotoInterface? = null
 
@@ -68,6 +66,32 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
                             onUpdateProfileInterface?.onUpdateProfileDetails(authResponse.body()!!.payload.admin)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun updateAvailabilityTime(data: HashMap<String, Any>, position: Int, model: Availaibility) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.updateAvailability(data)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            updateAvailability?.onUpdateAvibility(position,model)
                         }
                     }
                 } else {

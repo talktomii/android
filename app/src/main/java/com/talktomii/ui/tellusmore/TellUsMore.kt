@@ -144,22 +144,22 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
 
         }
         binding.rlFacebook.setOnClickListener {
-            val dialog = LinkAccountDialog("Facebook", this)
+            val dialog = LinkAccountDialog("Facebook", "", this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
         binding.rlTwitter.setOnClickListener {
-            val dialog = LinkAccountDialog("Twitter", this)
+            val dialog = LinkAccountDialog("Twitter", "", this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
         binding.rlInstagram.setOnClickListener {
-            val dialog = LinkAccountDialog("Instagram", this)
+            val dialog = LinkAccountDialog("Instagram", "", this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
         binding.rlTikTok.setOnClickListener {
-            val dialog = LinkAccountDialog("Tiktok", this)
+            val dialog = LinkAccountDialog("Tiktok", "", this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 

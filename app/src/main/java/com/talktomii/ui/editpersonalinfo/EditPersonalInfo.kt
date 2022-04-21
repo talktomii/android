@@ -25,7 +25,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.talktomii.R
 import com.talktomii.data.model.Admin
 import com.talktomii.data.model.RegisterModel
-import com.talktomii.data.model.UpdateInfluence
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
 import com.talktomii.data.model.admin.SendAvailaibility
@@ -35,14 +34,16 @@ import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.UpdateAvaibilityInterface
 import com.talktomii.interfaces.UpdateProfileInterface
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
 import com.talktomii.ui.home.profile.AdapterAvailability
-import com.talktomii.ui.home.profile.AdapterMySocialMedias
 import com.talktomii.ui.home.profile.AdapterPrice
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
+import com.talktomii.ui.tellusmore.SocialNetwork
+import com.talktomii.utlis.LinkAccountDialog
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
@@ -58,7 +59,8 @@ import javax.inject.Inject
 
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
-    CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface {
+    CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface,
+    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -75,6 +77,10 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private var fileCoverPhoto: File? = null
     private var isChangeProfile = false
     private var isChangeUserData = false
+    private var fbLink: SocialNetwork = SocialNetwork(name = "facebook", link = "")
+    private var twLink: SocialNetwork = SocialNetwork(name = "twitter", link = "")
+    private var insLink: SocialNetwork = SocialNetwork(name = "instagram", link = "")
+    private var tikLink: SocialNetwork = SocialNetwork(name = "tiktok", link = "")
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -152,14 +158,22 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             }
         })
         binding.rvAvailability.adapter = availableAdapter
-        binding.rvSocialMedia.adapter = AdapterMySocialMedias(requireContext())
+//        binding.rvSocialMedia.adapter = AdapterMySocialMedias(requireContext())
     }
 
     private fun setListeners() {
 
         binding.ivCamera.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 99)
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    99
+                )
             } else {
                 ImagePicker.with(this).createIntent { intent ->
                     profileImg_launcher.launch(intent)
@@ -168,8 +182,16 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         }
 
         binding.imgCam.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 99)
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    99
+                )
             } else {
                 ImagePicker.with(this).createIntent { intent ->
                     coverImg_launcher.launch(intent)
@@ -196,34 +218,31 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 
 
             if (!isUser(prefsManager)) {
-                val updateInfluence: UpdateInfluence = UpdateInfluence()
-//                updateInfluence.fname = binding.etFirstName.text.toString()
-//                updateInfluence.lname = binding.etLastName.text.toString()
-//                updateInfluence.userName = binding.etUsername.text.toString()
                 val hashMap: HashMap<String, Any> = hashMapOf()
                 hashMap["fname"] = binding.etFirstName.text.toString()
                 hashMap["lname"] = binding.etLastName.text.toString()
                 hashMap["userName"] = binding.etUsername.text.toString()
-
+                hashMap["socialNetwork"] = arrayListOf(fbLink, twLink, insLink, tikLink)
                 val userData = viewModel.userField.get()
                 var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
 
                 for (i in userData!!.availaibility) {
-                    if (i.end == "Never") {
-                        i.end = ""
+                    if (i._id.isNullOrBlank()) {
+                        if (i.end == "Never" || i.end == null) {
+                            i.end = ""
+                        }
+                        val availbility = SendAvailaibility()
+                        availbility.day = i.day
+                        availbility.end = i.end
+                        availbility.endTime = i.endTime
+                        availbility.startTime = i.startTime
+                        availaibility.add(availbility)
                     }
-                    val availbility = SendAvailaibility()
-                    availbility.day = i.day
-                    availbility.end = i.end
-                    availbility.endTime = i.endTime
-                    availbility.startTime = i.startTime
-                    availaibility.add(availbility)
                 }
                 hashMap["availaibility"] = availaibility
                 hashMap["location"] = userData.location
                 hashMap["price"] =
                     if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-                hashMap["socialNetwork"] = userData.socialNetwork
 
                 val interstArrayList: ArrayList<String> = arrayListOf()
                 for (i in userData.interest) {
@@ -231,27 +250,11 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 }
                 hashMap["interest"] = interstArrayList
 
-//                updateInfluence.availaibility = userData!!.availaibility
-//                updateInfluence.location = if (userData.location != null) userData.location else ""
-//                updateInfluence.price =
-//                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-//                updateInfluence.socialNetwork =
-//                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
-//                updateInfluence.interest =
-//                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
                 viewModel.updateProfile(
                     hashMap,
                     getUser(prefsManager)!!.admin._id
                 )
             } else {
-//                val updateUser: UpdateUser = UpdateUser()
-//
-//
-//                updateUser.lname = binding.etLastName.text.toString()
-//                updateUser.userName = binding.etUsername.text.toString()
-//                binding.etFirstName.text.toString().also { updateUser.fname = it }
-//                val request = JSONObject(Gson().toJson(updateUser).trim())
-
                 try {
                     val hashMap: HashMap<String, Any> = hashMapOf()
                     hashMap["fname"] = binding.etFirstName.text.toString()
@@ -329,6 +332,26 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 bundle
             )
         }
+
+//        binding.rlFacebook.setOnClickListener {
+//            val dialog = LinkAccountDialog("Facebook", this)
+//            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+//        }
+
+        binding.ivTwitter.setOnClickListener {
+            val dialog = LinkAccountDialog("Twitter", twLink.link, this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+
+        binding.ivInsta.setOnClickListener {
+            val dialog = LinkAccountDialog("Instagram", insLink.link, this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+
+        binding.ivTikTok.setOnClickListener {
+            val dialog = LinkAccountDialog("Tiktok", tikLink.link, this)
+            dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
     }
 
     private fun init() {
@@ -337,6 +360,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         viewModel.commonInterface = this
         viewModel.onUpdateProfileInterface = this
         binding.lifecycleOwner = this
+        viewModel.updateAvailability = this
         binding.viewModel = viewModel
         setListeners()
         initAdapters()
@@ -370,6 +394,23 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         this.admin1 = admin1
         Glide.with(requireContext()).load(admin1.profilePhoto).placeholder(R.drawable.ic_user)
             .error(R.drawable.ic_user).into(binding.imgDefault)
+
+        for (i in admin1.socialNetwork) {
+            when (i.name.lowercase()) {
+                "Facebook".lowercase() -> {
+                    fbLink.link = i.link
+                }
+                "Twitter".lowercase() -> {
+                    twLink.link = i.link
+                }
+                "Instagram".lowercase() -> {
+                    insLink.link = i.link
+                }
+                "Tiktok".lowercase() -> {
+                    tikLink.link = i.link
+                }
+            }
+        }
 //        if (admin1.coverPhoto != null) {
 //            val url = URL(admin1.coverPhoto)
 //            val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
@@ -396,7 +437,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 1
             )
             updateAvailabilityAdapter()
-            (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
+//            (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
 
         }
 
@@ -451,7 +492,23 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        viewModel.userField.get()!!.availaibility[position] = model
+                        if (model._id.isNullOrBlank()){
+                            viewModel.userField.get()!!.availaibility[position] = model
+                        }else{
+                            val updateHashMap: HashMap<String, Any> = hashMapOf()
+                            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
+                            updateHashMap["id"] = model._id
+                            updateHashMap["day"] = model.day
+                            updateHashMap["startTime"] = model.startTime
+                            updateHashMap["endTime"] = model.endTime
+                            if (model.end == "Never" || model.end.isNullOrBlank()) {
+                                updateHashMap["end"] = ""
+                            } else {
+                                updateHashMap["end"] = model.end
+                            }
+                            viewModel.updateAvailabilityTime(updateHashMap, position, model)
+                        }
+
                     } else {
                         viewModel.userField.get()!!.availaibility.add(model)
                     }
@@ -471,5 +528,28 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         findNavController().popBackStack()
 
 
+    }
+
+    override fun onLinkClicked(type: String, value: String) {
+        when (type) {
+            "Facebook" -> {
+                fbLink.link = value
+            }
+            "Twitter" -> {
+                twLink.link = value
+            }
+            "Instagram" -> {
+                insLink.link = value
+            }
+            "Tiktok" -> {
+                tikLink.link = value
+            }
+        }
+    }
+
+    override fun onUpdateAvibility(position: Int, model: Availaibility) {
+        progressDialog.dismiss()
+        viewModel.userField.get()!!.availaibility[position] = model
+        updateAvailabilityAdapter()
     }
 }

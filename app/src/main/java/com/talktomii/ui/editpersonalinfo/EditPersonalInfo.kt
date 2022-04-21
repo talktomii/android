@@ -358,17 +358,17 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 //        }
 
         binding.ivTwitter.setOnClickListener {
-            val dialog = LinkAccountDialog("Twitter", this)
+            val dialog = LinkAccountDialog("Twitter", twLink.link,this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
         binding.ivInsta.setOnClickListener {
-            val dialog = LinkAccountDialog("Instagram", this)
+            val dialog = LinkAccountDialog("Instagram", insLink.link, this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
         binding.ivTikTok.setOnClickListener {
-            val dialog = LinkAccountDialog("Tiktok", this)
+            val dialog = LinkAccountDialog("Tiktok", tikLink.link, this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
     }

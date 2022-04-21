@@ -25,7 +25,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.talktomii.R
 import com.talktomii.data.model.Admin
 import com.talktomii.data.model.RegisterModel
-import com.talktomii.data.model.UpdateInfluence
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
 import com.talktomii.data.model.admin.SendAvailaibility
@@ -219,10 +218,6 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 
 
             if (!isUser(prefsManager)) {
-                val updateInfluence: UpdateInfluence = UpdateInfluence()
-//                updateInfluence.fname = binding.etFirstName.text.toString()
-//                updateInfluence.lname = binding.etLastName.text.toString()
-//                updateInfluence.userName = binding.etUsername.text.toString()
                 val hashMap: HashMap<String, Any> = hashMapOf()
                 hashMap["fname"] = binding.etFirstName.text.toString()
                 hashMap["lname"] = binding.etLastName.text.toString()
@@ -232,15 +227,17 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
 
                 for (i in userData!!.availaibility) {
-                    if (i.end == "Never" || i.end == null) {
-                        i.end = ""
+                    if (i._id.isNullOrBlank()) {
+                        if (i.end == "Never" || i.end == null) {
+                            i.end = ""
+                        }
+                        val availbility = SendAvailaibility()
+                        availbility.day = i.day
+                        availbility.end = i.end
+                        availbility.endTime = i.endTime
+                        availbility.startTime = i.startTime
+                        availaibility.add(availbility)
                     }
-                    val availbility = SendAvailaibility()
-                    availbility.day = i.day
-                    availbility.end = i.end
-                    availbility.endTime = i.endTime
-                    availbility.startTime = i.startTime
-                    availaibility.add(availbility)
                 }
                 hashMap["availaibility"] = availaibility
                 hashMap["location"] = userData.location
@@ -258,14 +255,6 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     getUser(prefsManager)!!.admin._id
                 )
             } else {
-//                val updateUser: UpdateUser = UpdateUser()
-//
-//
-//                updateUser.lname = binding.etLastName.text.toString()
-//                updateUser.userName = binding.etUsername.text.toString()
-//                binding.etFirstName.text.toString().also { updateUser.fname = it }
-//                val request = JSONObject(Gson().toJson(updateUser).trim())
-
                 try {
                     val hashMap: HashMap<String, Any> = hashMapOf()
                     hashMap["fname"] = binding.etFirstName.text.toString()
@@ -503,18 +492,23 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        val updateHashMap: HashMap<String, Any> = hashMapOf()
-                        updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
-                        updateHashMap["id"] = model._id
-                        updateHashMap["day"] = model.day
-                        updateHashMap["startTime"] = model.startTime
-                        updateHashMap["endTime"] = model.endTime
-                        if (model.end == "Never" || model.end.isNullOrBlank()) {
-                            updateHashMap["end"] = ""
-                        } else {
-                            updateHashMap["end"] = model.end
+                        if (model._id.isNullOrBlank()){
+                            viewModel.userField.get()!!.availaibility[position] = model
+                        }else{
+                            val updateHashMap: HashMap<String, Any> = hashMapOf()
+                            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
+                            updateHashMap["id"] = model._id
+                            updateHashMap["day"] = model.day
+                            updateHashMap["startTime"] = model.startTime
+                            updateHashMap["endTime"] = model.endTime
+                            if (model.end == "Never" || model.end.isNullOrBlank()) {
+                                updateHashMap["end"] = ""
+                            } else {
+                                updateHashMap["end"] = model.end
+                            }
+                            viewModel.updateAvailabilityTime(updateHashMap, position, model)
                         }
-                        viewModel.updateAvailabilityTime(updateHashMap, position, model)
+
                     } else {
                         viewModel.userField.get()!!.availaibility.add(model)
                     }

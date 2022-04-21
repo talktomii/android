@@ -164,7 +164,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 //                    popupMenu.gravity = Gravity.END
 //                }
 //                popupMenu.show()
-//                openTimePeriodBottomSheet(model, position)
+                openTimePeriodBottomSheet(model, position)
             }
         })
         binding.rvAvailability.adapter = availableAdapter

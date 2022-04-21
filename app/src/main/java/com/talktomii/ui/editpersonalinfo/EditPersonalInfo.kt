@@ -116,6 +116,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 val data = result.data
 
                 if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
@@ -131,6 +132,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 val data = result.data
 
                 if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val filePath =

@@ -431,19 +431,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val data = response.body()!!.payload
                         MyWallet.totalWalletAmount!!.text = "$" + data!!.currentAmount
                         for (i in data.wallet) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.createdAt)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.e("Date", newDate)
                                 if (i.type!! == "Credit") {
                                     dataList.add(
                                         WalletRefillItemModel(
                                             wallet_name = "Wallet " + i.type!!,
-                                            wallet_date = newDate,
+                                            wallet_date = getStringToDateWithDots(i.createdAt!!),
                                             wallet_price = "-$" + i.amount
                                         )
                                     )
@@ -497,19 +490,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val data = response.body()!!.payload
                         MyWallet.totalWalletAmount!!.text = "$" + data!!.currentAmount
                         for (i in data.wallet) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.createdAt)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.e("Date", newDate)
                                 if (i.type!! == "Credit") {
                                     dataList.add(
                                         WalletEarningItemModel(
                                             wallet_name = "Wallet " + i.type!!,
-                                            wallet_date = newDate,
+                                            wallet_date = getStringToDateWithDots(i.createdAt!!),
                                             wallet_price = "-$" + i.amount
                                         )
                                     )
@@ -563,19 +549,12 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val data = response.body()!!.payload
                         MyWallet.totalWalletAmount!!.text = "$" + data!!.currentAmount
                         for (i in data.wallet) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.createdAt)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.e("Date", newDate)
                                 if (i.type!! == "Debit") {
                                     dataList.add(
                                         WalletExpensesItemModel(
                                             wallet_name = "Wallet " + i.type!!,
-                                            wallet_date = newDate,
+                                            wallet_date = getStringToDateWithDots(i.createdAt!!),
                                             wallet_price = "-$" + i.amount
                                         )
                                     )
@@ -1030,27 +1009,40 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
                         val data = response.body()!!.payload
                         for (i in data!!.callHistory) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.date)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.d("profile LLL ", i.uid!!.userName!!)
-                                dataList.add(
-                                    CallHistoryItemModel(
-                                        i.ifid!!.Id!!,
-                                        i.ifid!!.userName!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.Id!!,
-                                        i.ifid!!.profilePhoto!!,
-                                        i.ifid!!.userName!!,
-                                        newDate,
-                                        i.price!!,
-                                        i.duration!!
+                                if(prefsManager.getString(PrefsManager.PREF_ROLE,"") == "user"){
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.ifid!!.Id!!,
+                                            i.ifid!!.userName!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.ifid!!.profilePhoto!!,
+                                            i.ifid!!.userName!!,
+                                            getStringToDateWithDots(i.createdAt!!),
+                                            i.price!!,
+                                            i.duration!!
+                                        )
                                     )
-                                )
+                                }
+                                else{
+                                    dataList.clear()
+                                    dataList.add(
+                                        CallHistoryItemModel(
+                                            i.uid!!.Id!!,
+                                            i.uid!!.userName!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.Id!!,
+                                            i.uid!!.profilePhoto!!,
+                                            i.uid!!.userName!!,
+                                            getStringToDateWithDots(i.createdAt!!),
+                                            i.price!!,
+                                            i.duration!!
+                                        )
+                                    )
+                                }
+
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }
@@ -1102,14 +1094,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
                         val data = response.body()!!.payload
                         for (i in data!!.callHistory) {
-                            val sdf1 = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.ENGLISH)
-                            val sdf2 = SimpleDateFormat("dd.mm.yyyy hh:mm a", Locale.ENGLISH)
-                            var date: Date? = null
                             try {
-                                date = sdf1.parse(i.date)
-                                val newDate = sdf2.format(date)
-                                println(newDate)
-                                Log.d("profile LLL ", i.uid!!.userName!!)
                                 dataList.add(
                                     CallHistoryItemModel(
                                         i.ifid!!.Id!!,
@@ -1118,7 +1103,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                         i.Id!!,
                                         i.ifid!!.profilePhoto!!,
                                         i.ifid!!.userName!!,
-                                        newDate,
+                                        getStringToDateWithDots(i.createdAt!!),
                                         i.price!!,
                                         i.duration!!
                                     )

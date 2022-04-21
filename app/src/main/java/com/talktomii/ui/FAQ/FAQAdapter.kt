@@ -1,6 +1,7 @@
 package com.talktomii.ui.FAQ
 
 import android.content.Context
+import android.content.res.Configuration
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.LayoutInflater

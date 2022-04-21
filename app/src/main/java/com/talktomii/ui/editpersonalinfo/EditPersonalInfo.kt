@@ -8,10 +8,10 @@ import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -116,6 +116,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 val data = result.data
 
                 if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
@@ -131,6 +132,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 val data = result.data
 
                 if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val filePath =
@@ -154,6 +156,14 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         binding.rvInterest.adapter = context?.let { AdapterEditInterest(it) }
         availableAdapter = AdapterAvailability(object : AdapterAvailability.OnEditInterface {
             override fun onEdit(model: Availaibility, position: Int) {
+//                val popupMenu = PopupMenu(context, view)
+//                val menuInflater = MenuInflater(context)
+//                menuInflater.inflate(R.menu.appointment_popup, popupMenu.menu)
+//                popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    popupMenu.gravity = Gravity.END
+//                }
+//                popupMenu.show()
                 openTimePeriodBottomSheet(model, position)
             }
         })

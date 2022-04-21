@@ -72,6 +72,8 @@ interface WebService {
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val UPDATE_AVAIBILITY = "admin/updateAvailability"
         private const val VERIFY_EMAIL = "admin/verify-email"
+        private const val VERIFY_CODE = "admin/verify-code"
+        private const val AFTER_FORGET = "admin/after-forget"
         private const val GET_CURRENT_AMOUNT = "walletHistory/getCurrentAmount"
         private const val GET_ALL_APPOINTMENT = "appointment/getAllAppointment"
         private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
@@ -316,8 +318,21 @@ interface WebService {
 
     @PUT(VERIFY_EMAIL)
     fun verifyEmail(
-        @Body data: HashMap<String, Any>
-    ): Response<Any>
+        @Body data: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
+
+    @PUT(VERIFY_CODE)
+    fun verifyCode(
+        @Body data: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
+
+    @FormUrlEncoded
+    @POST(AFTER_FORGET)
+    fun afterForget(
+        @FieldMap map: HashMap<String, String>
+    ): Call<ApiResponse<Any>>
+
+
 
     @PUT(UPDATE_ADMIN + "/{id}")
     fun updateData(

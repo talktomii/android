@@ -35,6 +35,7 @@ import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
 import com.talktomii.interfaces.AdminDetailInterface
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.UpdateAvaibilityInterface
 import com.talktomii.interfaces.UpdateProfileInterface
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
@@ -60,7 +61,7 @@ import javax.inject.Inject
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
     CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface,
-    LinkAccountDialog.LinkListener {
+    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -230,22 +231,21 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 val userData = viewModel.userField.get()
                 var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
 
-//                for (i in userData!!.availaibility) {
-//                    if (i.end == "Never" || i.end == null) {
-//                        i.end = ""
-//                    }
-//                    val availbility = SendAvailaibility()
-//                    availbility.day = i.day
-//                    availbility.end = i.end
-//                    availbility.endTime = i.endTime
-//                    availbility.startTime = i.startTime
-//                    availaibility.add(availbility)
-//                }
+                for (i in userData!!.availaibility) {
+                    if (i.end == "Never" || i.end == null) {
+                        i.end = ""
+                    }
+                    val availbility = SendAvailaibility()
+                    availbility.day = i.day
+                    availbility.end = i.end
+                    availbility.endTime = i.endTime
+                    availbility.startTime = i.startTime
+                    availaibility.add(availbility)
+                }
                 hashMap["availaibility"] = availaibility
-                hashMap["location"] = userData!!.location
+                hashMap["location"] = userData.location
                 hashMap["price"] =
                     if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-//                hashMap["socialNetwork"] = userData.socialNetwork
 
                 val interstArrayList: ArrayList<String> = arrayListOf()
                 for (i in userData.interest) {
@@ -253,14 +253,6 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 }
                 hashMap["interest"] = interstArrayList
 
-//                updateInfluence.availaibility = userData!!.availaibility
-//                updateInfluence.location = if (userData.location != null) userData.location else ""
-//                updateInfluence.price =
-//                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-//                updateInfluence.socialNetwork =
-//                    if (userData.socialNetwork != null && userData.socialNetwork.size > 0) userData.socialNetwork else arrayListOf()
-//                updateInfluence.interest =
-//                    if (userData.interest != null && userData.interest.size > 0) userData.interest else arrayListOf()
                 viewModel.updateProfile(
                     hashMap,
                     getUser(prefsManager)!!.admin._id
@@ -358,7 +350,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 //        }
 
         binding.ivTwitter.setOnClickListener {
-            val dialog = LinkAccountDialog("Twitter", twLink.link,this)
+            val dialog = LinkAccountDialog("Twitter", twLink.link, this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
         }
 
@@ -379,6 +371,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         viewModel.commonInterface = this
         viewModel.onUpdateProfileInterface = this
         binding.lifecycleOwner = this
+        viewModel.updateAvailability = this
         binding.viewModel = viewModel
         setListeners()
         initAdapters()
@@ -413,7 +406,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         Glide.with(requireContext()).load(admin1.profilePhoto).placeholder(R.drawable.ic_user)
             .error(R.drawable.ic_user).into(binding.imgDefault)
 
-        for (i in admin1.socialNetwork){
+        for (i in admin1.socialNetwork) {
             when (i.name.lowercase()) {
                 "Facebook".lowercase() -> {
                     fbLink.link = i.link
@@ -510,7 +503,18 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        viewModel.userField.get()!!.availaibility[position] = model
+                        val updateHashMap: HashMap<String, Any> = hashMapOf()
+                        updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
+                        updateHashMap["id"] = model._id
+                        updateHashMap["day"] = model.day
+                        updateHashMap["startTime"] = model.startTime
+                        updateHashMap["endTime"] = model.endTime
+                        if (model.end == "Never" || model.end.isNullOrBlank()) {
+                            updateHashMap["end"] = ""
+                        } else {
+                            updateHashMap["end"] = model.end
+                        }
+                        viewModel.updateAvailabilityTime(updateHashMap, position, model)
                     } else {
                         viewModel.userField.get()!!.availaibility.add(model)
                     }
@@ -547,5 +551,11 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 tikLink.link = value
             }
         }
+    }
+
+    override fun onUpdateAvibility(position: Int, model: Availaibility) {
+        progressDialog.dismiss()
+        viewModel.userField.get()!!.availaibility[position] = model
+        updateAvailabilityAdapter()
     }
 }

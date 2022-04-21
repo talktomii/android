@@ -106,7 +106,13 @@ class AddTimePeriodBottomSheetFragment(
             binding.rbNever.isChecked = true
         }
 
-        binding.btnAddTimePeriod.text = "Edit Time Period"
+        if (availaibility == null) {
+            binding.btnAddTimePeriod.text = "Add Time Period"
+
+        } else {
+            binding.btnAddTimePeriod.text = "Edit Time Period"
+
+        }
     }
 
     private fun setUpAllDays() {
@@ -363,7 +369,7 @@ class AddTimePeriodBottomSheetFragment(
             days.add("7")
         }
         var model = Availaibility(
-            "",
+            if (availaibility != null) availaibility!!._id else "",
             days,
             if (binding.rbNever.isChecked) "Never" else binding.tvDate.text.toString(),
             calenderToFormat.toString(),

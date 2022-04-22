@@ -68,7 +68,7 @@
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/inter_regular"
                     android:gravity="center_vertical"
-                    android:hint="yourusername@domain"
+                    android:hint="Enter Email"
                     android:padding="15dp"
                     android:textColor="@color/textColor"
                     android:textColorHint="@color/textHintColor"

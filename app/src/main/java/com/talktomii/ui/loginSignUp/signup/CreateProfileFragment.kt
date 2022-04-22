@@ -186,8 +186,10 @@ class CreateProfileFragment : DaggerFragment() {
             )
         ) {
             val map: HashMap<String, RequestBody> = HashMap()
-            map["name"] =
-                "${binding.txtFirstName.text.toString()} ${binding.txtLastName.text.toString()}".toRequestBody(
+            map["fname"] = "${binding.txtFirstName.text.toString()}".toRequestBody(
+                    "text/plain".toMediaTypeOrNull()
+                )
+            map["lname"]=" ${binding.txtLastName.text.toString()}".toRequestBody(
                     "text/plain".toMediaTypeOrNull()
                 )
 

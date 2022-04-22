@@ -77,6 +77,7 @@ class SignUpFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        callbackManager = CallbackManager.Factory.create()
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivGoogle.setImageResource(R.drawable.googe_btn)
@@ -118,9 +119,6 @@ class SignUpFragment : DaggerFragment() {
     }
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
-        callbackManager = CallbackManager.Factory.create()
-
-
         binding.fbLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) {
                 val request =

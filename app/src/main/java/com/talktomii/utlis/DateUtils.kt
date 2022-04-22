@@ -202,6 +202,7 @@ object DateUtils {
         val d = df.parse(time)
         val cal = Calendar.getInstance()
         cal.time = d
+        cal.add(Calendar.MONTH, 1);
         return cal
     }
 }

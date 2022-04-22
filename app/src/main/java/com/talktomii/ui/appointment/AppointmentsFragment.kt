@@ -166,38 +166,38 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             calenderArrayList.add(
                 CalendarDay.from(
                     calender.get(Calendar.YEAR),
-                    calender.get(Calendar.MONTH + 1),
+                    calender.get(Calendar.MONTH),
                     calender.get(Calendar.DAY_OF_MONTH)
                 )
             )
         }
-        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-
-                binding.calendarViewAppointment.addDecorator(
-                    EventDecorator(
-                        R.color.siq_divider_color_light,
-                        calenderArrayList
-                    )
-                )
-                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
-                binding.calendarViewAppointment.invalidate()
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                binding.calendarViewAppointment.addDecorator(
-                    EventDecorator(
-                        R.color.siq_color_primary_dark,
-                        calenderArrayList
-                    )
-                )
-                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
-                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
-                binding.calendarViewAppointment.invalidate()
-            }
-        }
+//        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//
+//                binding.calendarViewAppointment.addDecorator(
+//                    EventDecorator(
+//                        R.color.siq_divider_color_light,
+//                        calenderArrayList
+//                    )
+//                )
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.white)
+//                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
+//                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.white)
+//                binding.calendarViewAppointment.invalidate()
+//            }
+//            Configuration.UI_MODE_NIGHT_NO -> {
+//                binding.calendarViewAppointment.addDecorator(
+//                    EventDecorator(
+//                        R.color.siq_color_primary_dark,
+//                        calenderArrayList
+//                    )
+//                )
+//                binding.calendarViewAppointment.setDateTextAppearance(R.color.black)
+//                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
+//                binding.calendarViewAppointment.setWeekDayTextAppearance(R.color.black)
+//                binding.calendarViewAppointment.invalidate()
+//            }
+//        }
 
     }
 

@@ -204,6 +204,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             view?.findNavController()
                 ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(userData)))
         }
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                customView.ivCancel.setImageResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                customView.ivCancel.setImageResource(R.drawable.close_sheet_icon)
+            }
+        }
         customView.ivCancel.setOnClickListener {
             customDialog?.dismiss()
         }

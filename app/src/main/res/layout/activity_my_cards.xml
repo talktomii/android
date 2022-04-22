@@ -49,6 +49,7 @@
                     android:id="@+id/textscanCreditCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_10"
@@ -75,8 +76,8 @@
                     android:textColor="@color/cardNumber"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textscanCreditCard"
-                    app:layout_constraintTop_toBottomOf="@+id/textscanCreditCard" />
+                    app:layout_constraintStart_toStartOf="@+id/tvAddcreditcard"
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddcreditcard" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCardNumber"

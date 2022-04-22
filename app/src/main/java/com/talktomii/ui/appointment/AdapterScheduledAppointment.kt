@@ -1,7 +1,13 @@
 package com.talktomii.ui.appointment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.text.SpannableString
+import android.text.style.BackgroundColorSpan
+import android.text.style.ForegroundColorSpan
+import android.util.AttributeSet
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -57,9 +63,8 @@ class AdapterScheduledAppointment(
             holder.binding.ivMore.visibility = View.VISIBLE
             holder.binding.txtCallNow.visibility = View.VISIBLE
         }
-        holder.binding.tvDayAndDate.text =
-            setDateToWeekDate(interest.date)
 
+        holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -78,6 +83,17 @@ class AdapterScheduledAppointment(
             val popupMenu = PopupMenu(context, view)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.appointment_popup, popupMenu.menu)
+//            for (i in 0 until popupMenu.menu.size()) {
+//                val item: MenuItem = popupMenu.menu.getItem(i)
+//                val spanString = SpannableString(popupMenu.menu.getItem(i).getTitle().toString())
+//                spanString.setSpan(
+//                    ForegroundColorSpan(context.resources.getColor(R.color.calText)),
+//                    0,
+//                    spanString.length,
+//                    0
+//                ) //fix the color to white
+//                item.title = spanString
+//            }
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 popupMenu.gravity = Gravity.END

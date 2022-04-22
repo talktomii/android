@@ -146,14 +146,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         CardFragment.recycleview.visibility = View.VISIBLE
 
                     } else {
-                        Log.d("card data is : ", " : " + response.body())
+                        CardFragment.progress.visibility = View.GONE
                         cards.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
+
                     }
                 }
 
@@ -455,14 +455,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         RefillFragment.progress!!.visibility = View.GONE
                         RefillFragment.recyclerview!!.visibility = View.VISIBLE
                     } else {
-                        Log.d("card data is : ", " : " + response.body())
+                        RefillFragment.progress!!.visibility = View.GONE
                         wallets.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
                     }
                 }
 
@@ -514,14 +513,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         EarningFragment.progress!!.visibility = View.GONE
                         EarningFragment.recyclerview!!.visibility = View.VISIBLE
                     } else {
-                        Log.d("card data is : ", " : " + response.body())
+                        EarningFragment.progress!!.visibility = View.GONE
                         wallets.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
                     }
                 }
 
@@ -573,6 +571,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         ExpenseFragment.progress!!.visibility = View.GONE
                         ExpenseFragment.recyclerview!!.visibility = View.VISIBLE
                     } else {
+                        ExpenseFragment.progress!!.visibility = View.GONE
                         wallets.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),

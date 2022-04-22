@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tvPriceWithTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
@@ -62,9 +62,9 @@
                     android:textColor="@color/calText"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPriceWithTime"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView4" />
+                    app:layout_constraintTop_toTopOf="@+id/tvPriceWithTime" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

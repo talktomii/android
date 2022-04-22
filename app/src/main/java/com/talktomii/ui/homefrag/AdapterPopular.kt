@@ -1,8 +1,8 @@
 package com.talktomii.ui.homefrag
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -47,6 +47,12 @@ class AdapterPopular(
                 popularArrayList[position].fname + " " + popularArrayList[position].lname
         }
 
+        if (popularArrayList[position].price != null && popularArrayList[position].price.isNotEmpty()) {
+            holder.binding.tvPriceWithTime.visibility = View.VISIBLE
+            holder.binding.tvPriceWithTime.text = "$" + popularArrayList[position].price[0].price + "/" + popularArrayList[position].price[0].time + "min"
+        } else {
+            holder.binding.tvPriceWithTime.visibility = View.INVISIBLE
+        }
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)

@@ -12,6 +12,7 @@ import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
+import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -81,7 +82,14 @@ object DateUtils {
         }
 
     }
-
+    fun getTimeFormat(hr: Int, min: Int): String? {
+        val cal = Calendar.getInstance()
+        cal[Calendar.HOUR_OF_DAY] = hr
+        cal[Calendar.MINUTE] = min
+        val formatter: Format
+        formatter = SimpleDateFormat("h:mm a")
+        return formatter.format(cal.time)
+    }
     fun setDateToWeekDate(startTime: String): String {
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
@@ -209,7 +217,7 @@ object DateFormate {
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
     const val DATE_FORMAT_WITH_DOT = "dd.MM.yyyy hh:mm aaa"
-    const val TIME_FORMAT = "hh:mm aaa"
+    const val TIME_FORMAT = "hh:mm a"
     const val WEEK_TIME_FORMAT = "EEE dd"
     const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val FULL_DATE_FORMAT_WITH_DOT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

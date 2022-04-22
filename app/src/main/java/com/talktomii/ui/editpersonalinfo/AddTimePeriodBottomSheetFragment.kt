@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import com.talktomii.R
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.databinding.BottomsheetAddtimeperiodBinding
 import com.talktomii.ui.editpersonalinfo.AddTimePeriodInterface
+import com.talktomii.utlis.DateUtils
+import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.getFormatedFullDate
 import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.monthsarray
@@ -39,7 +42,9 @@ class AddTimePeriodBottomSheetFragment(
     var isSunday = false
     var calenderToFormat: String? = null
     var calenderFromFormat: String? = null
-    var calenderDate: String? = null
+    var calenderTo: Calendar? = null
+    var calenderFrom: Calendar? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,15 +70,16 @@ class AddTimePeriodBottomSheetFragment(
         } else {
             setdata()
         }
-
+        calenderTo = Calendar.getInstance()
+        calenderFrom = Calendar.getInstance()
         setListeners()
     }
 
     private fun setdata() {
 
         binding.tvFrom.text = setDateToTime(availaibility!!.startTime)
-        val calenderFrom = Calendar.getInstance()
-        val calenderTo = Calendar.getInstance()
+        val calenderFrom = convertStringToCalender(availaibility!!.startTime)
+        val calenderTo = convertStringToCalender(availaibility!!.endTime)
         calenderFromFormat = getFormatedFullDate(calenderFrom)
         calenderToFormat = getFormatedFullDate(calenderTo)
         binding.tvTo.text = setDateToTime(availaibility!!.endTime)
@@ -257,28 +263,41 @@ class AddTimePeriodBottomSheetFragment(
         }
 
         binding.llFrom.setOnClickListener {
-            val calendar = Calendar.getInstance()
+//            calenderFrom= Calendar.getInstance()
             val timePickerDialog = TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
-                calendar.set(Calendar.MINUTE, minute)
-                calendar.set(Calendar.HOUR, hourOfDay)
-                calenderFromFormat = getFormatedFullDate(calendar)
-                binding.tvFrom.text =
-                    calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE)
-                        .toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false)
+                calenderFrom!!.timeInMillis = System.currentTimeMillis()
+                calenderFrom!!.set(Calendar.MINUTE, minute)
+                calenderFrom!!.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                var AMPM = if (hourOfDay < 12) {
+                    0
+                } else {
+                    1
+                }
+                calenderFrom!!.set(Calendar.AM_PM, AMPM)
+
+
+                calenderFromFormat = getFormatedFullDate(calenderFrom!!)
+                Log.e("Time 1", calenderFromFormat!!)
+                binding.tvFrom.text = DateUtils.getTimeFormat(hourOfDay, minute)
+            }, calenderFrom!!.get(Calendar.HOUR_OF_DAY), calenderFrom!!.get(Calendar.MINUTE), false)
             timePickerDialog.show()
         }
 
         binding.llTo.setOnClickListener {
-            val calendar = Calendar.getInstance()
             val timePickerDialog = TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
-                calendar.set(Calendar.MINUTE, minute)
-                calendar.set(Calendar.HOUR, hourOfDay)
-                calenderToFormat = getFormatedFullDate(calendar)
-                binding.tvTo.text =
-                    calendar.get(Calendar.HOUR).toString() + ":" + calendar.get(Calendar.MINUTE)
-                        .toString() + " " + if (calendar.get(Calendar.AM_PM) == Calendar.AM) "PM" else "AM"
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false)
+                calenderTo!!.timeInMillis = System.currentTimeMillis()
+                calenderTo!!.set(Calendar.MINUTE, minute)
+                calenderTo!!.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                var AMPM = if (hourOfDay < 12) {
+                    0
+                } else {
+                    1
+                }
+                calenderFrom!!.set(Calendar.AM_PM, AMPM)
+                calenderToFormat = getFormatedFullDate(calenderTo!!)
+                Log.e("Time 2", calenderToFormat!!)
+                binding.tvTo.text = DateUtils.getTimeFormat(hourOfDay, minute)
+            }, calenderTo!!.get(Calendar.HOUR_OF_DAY), calenderTo!!.get(Calendar.MINUTE), false)
             timePickerDialog.show()
         }
 

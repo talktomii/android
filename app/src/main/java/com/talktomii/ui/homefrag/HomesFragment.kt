@@ -82,9 +82,9 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         initAdapter()
         val admin = getUser(prefsManager)?.admin
         if (admin!!.fname != null) {
-            binding.txtName.text = "Hi "+admin.fname + admin.lname
+            binding.txtName.text = "Hi " + admin.fname
         } else {
-            binding.txtName.text = "Hi "+ (admin.name ?: "")
+            binding.txtName.text = "Hi " + admin.name
         }
         progressDialog = ProgressDialog(requireActivity())
         viewModel.commonInterface = this

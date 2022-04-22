@@ -2,6 +2,8 @@ package com.talktomii.utlis
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
@@ -14,6 +16,8 @@ import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
 import java.text.Format
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 object DateUtils {
@@ -212,6 +216,22 @@ object DateUtils {
         cal.time = d
         cal.add(Calendar.MONTH, 1);
         return cal
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)
+        val startLocalTime: LocalTime = LocalTime.parse(startTime, formatter)
+        val endLocalTime: LocalTime = LocalTime.parse(endTime, formatter)
+        val checkLocalTime: LocalTime = LocalTime.parse(checkTime, formatter)
+        var isInBetween = false
+        if (endLocalTime.isAfter(startLocalTime)) {
+            if (startLocalTime.isBefore(checkLocalTime) && endLocalTime.isAfter(checkLocalTime)) {
+                isInBetween = true
+            }
+        } else if (checkLocalTime.isAfter(startLocalTime) || checkLocalTime.isBefore(endLocalTime)) {
+            isInBetween = true
+        }
+        return isInBetween
     }
 }
 

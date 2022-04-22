@@ -80,13 +80,24 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     private fun init() {
         initAdapter()
-
+        val admin = getUser(prefsManager)?.admin
+        if (admin!!.fname != null) {
+            binding.txtName.text = "Hi " + admin.fname
+        } else {
+            binding.txtName.text = "Hi " + admin.name
+        }
         progressDialog = ProgressDialog(requireActivity())
         viewModel.commonInterface = this
         viewModel.homeInterface = this
         if (arguments?.getString("ID") != null) {
+            binding.constraintLayout.visibility = View.GONE
+            binding.txtPopular.visibility = View.GONE
+            binding.txtSeeAll.visibility = View.GONE
             viewModel.getInfluence(arguments?.getString("ID")!!)
         } else {
+            binding.constraintLayout.visibility = View.VISIBLE
+            binding.txtPopular.visibility = View.VISIBLE
+            binding.txtSeeAll.visibility = View.VISIBLE
             if (adapterPopular!!.getList().size > 0) {
                 adapterPopular!!.setPopularList(adapterPopular!!.getList())
             } else {

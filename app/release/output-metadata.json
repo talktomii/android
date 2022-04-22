@@ -11,9 +11,15 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
+<<<<<<< HEAD
       "versionCode": 2,
       "versionName": "1.1",
       "outputFile": "TalkToMii_21_04_2022_release_1.1.apk"
+=======
+      "versionCode": 1,
+      "versionName": "1.0",
+      "outputFile": "F-User-19.04.2022.apk"
+>>>>>>> origin/binal_dev
     }
   ],
   "elementType": "File"

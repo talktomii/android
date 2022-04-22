@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_30"
             android:src="@drawable/ic_filter"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/etSearch"
             app:layout_constraintStart_toEndOf="@+id/etSearch"
             app:layout_constraintTop_toTopOf="@+id/etSearch" />

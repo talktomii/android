@@ -28,6 +28,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.utlis.SocketManager

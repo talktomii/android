@@ -8,10 +8,11 @@ import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.widget.PopupMenu
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -224,9 +225,6 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
-
-
-
             if (!isUser(prefsManager)) {
                 val hashMap: HashMap<String, Any> = hashMapOf()
                 hashMap["fname"] = binding.etFirstName.text.toString()
@@ -502,9 +500,9 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        if (model._id.isNullOrBlank()){
+                        if (model._id.isNullOrBlank()) {
                             viewModel.userField.get()!!.availaibility[position] = model
-                        }else{
+                        } else {
                             val updateHashMap: HashMap<String, Any> = hashMapOf()
                             updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
                             updateHashMap["id"] = model._id
@@ -522,6 +520,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     } else {
                         viewModel.userField.get()!!.availaibility.add(model)
                     }
+                    Log.e("Time 3", model.startTime)
+                    Log.e("Time 4", model.endTime)
                     updateAvailabilityAdapter()
                 }
             },

@@ -71,7 +71,7 @@ class AdapterScheduledAppointment(
                         listener.onViewDeleteAppointment(interest, position)
                     }
                     R.id.action_rescedule -> {
-                        val datetime: Calendar = com.talktomii.utlis.DateUtils.convertStringToCalender(interest.date)
+                        val datetime: Calendar = com.talktomii.utlis.DateUtils.convertStringToCalender(interest.endTime)
                         val c: Calendar = Calendar.getInstance()
                         if (datetime.timeInMillis > c.timeInMillis) {
 //            it's after current

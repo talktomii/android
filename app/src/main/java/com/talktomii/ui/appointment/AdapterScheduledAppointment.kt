@@ -2,9 +2,11 @@ package com.talktomii.ui.appointment
 
 import android.content.Context
 import android.os.Build
+import android.text.format.DateUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.appointment.AppointmentInterestItem
@@ -13,7 +15,9 @@ import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class AdapterScheduledAppointment(
@@ -67,7 +71,16 @@ class AdapterScheduledAppointment(
                         listener.onViewDeleteAppointment(interest, position)
                     }
                     R.id.action_rescedule -> {
-                        listener.onViewRescheduleAppointment(interest, position)
+                        val datetime: Calendar = com.talktomii.utlis.DateUtils.convertStringToCalender(interest.date)
+                        val c: Calendar = Calendar.getInstance()
+                        if (datetime.timeInMillis > c.timeInMillis) {
+//            it's after current
+                            listener.onViewRescheduleAppointment(interest, position)
+                        } else {
+//            it's before current'
+                            Toast.makeText(context, context.getString(R.string.you_can_not_reschedule), Toast.LENGTH_SHORT).show()
+                        }
+                       
 
                     }
                 }

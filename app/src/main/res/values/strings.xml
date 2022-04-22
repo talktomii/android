@@ -321,4 +321,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="price">Price</string>
     <string name="add_price">Add Price</string>
     <string name="select_appointment_date">Select appointment date</string>
+    <string name="you_can_not_reschedule">You can not re-schedule past time appointment</string>
 </resources>

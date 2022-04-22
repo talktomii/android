@@ -202,6 +202,14 @@ object DateUtils {
         val d = df.parse(time)
         val cal = Calendar.getInstance()
         cal.time = d
+        return cal
+    }
+
+    fun convertStringToCalenderWithOne(time: String): Calendar {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(time)
+        val cal = Calendar.getInstance()
+        cal.time = d
         cal.add(Calendar.MONTH, 1);
         return cal
     }

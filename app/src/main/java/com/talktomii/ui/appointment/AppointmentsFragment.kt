@@ -35,6 +35,7 @@ import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
+import com.talktomii.utlis.DateUtils.convertStringToCalenderWithOne
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants
@@ -162,7 +163,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
         for (i in payload.Appointment!!) {
-            val calender = convertStringToCalender(i.date)
+            val calender = convertStringToCalenderWithOne(i.date)
             calenderArrayList.add(
                 CalendarDay.from(
                     calender.get(Calendar.YEAR),
@@ -263,6 +264,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                     viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
                 }
                 btnClose.setOnClickListener {
+                    progressDialog.dismiss()
                     reScheduleAppointmentDialog!!.dismiss()
                 }
                 getTimeSlots(Calendar.getInstance())
@@ -303,6 +305,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
                 horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
                     override fun onDateSelected(date: Calendar?, position: Int) {
+                        progressDialog.dismiss()
                         getTimeSlots(date)
                     }
                 }
@@ -325,6 +328,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                     viewModel.updateAppointment(selectedItemForReschedule!!._id, hashMap)
                 }
                 btnClose.setOnClickListener {
+                    progressDialog.dismiss()
                     reScheduleAppointmentDialog!!.dismiss()
                 }
                 getTimeSlots(Calendar.getInstance())

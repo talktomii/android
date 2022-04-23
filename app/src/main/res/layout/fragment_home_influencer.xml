@@ -47,7 +47,6 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,12 +54,12 @@
                     android:id="@+id/txtTittle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
                     android:fontFamily="@font/inter_regular"
                     android:text="Offer your services and find your audience on Talktomii!"
                     android:textColor="@color/myCards"
                     android:textFontWeight="400"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -70,41 +69,76 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <TextView
                 android:id="@+id/txtMyStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
+                android:fontFamily="@font/inter_regular"
                 android:text="My Stats"
                 android:textColor="@color/addCardColor"
-                android:textSize="@dimen/sp_24"
                 android:textFontWeight="700"
-                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_24"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-            <TextView
-                android:id="@+id/txtWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_dropdown"
-                android:drawablePadding="@dimen/dp_20"
-                android:text="Week"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
+            <!--            <com.skydoves.powerspinner.PowerSpinnerView-->
+            <!--                android:id="@+id/spinnerWeek"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="10dp"-->
+            <!--                android:textSize="14.5sp"-->
+            <!--                app:spinner_arrow_tint="@color/gray"-->
+            <!--                app:spinner_arrow_gravity="end"-->
+            <!--                app:spinner_arrow_padding="8dp"-->
+            <!--                app:spinner_arrow_show="true"-->
+            <!--                app:spinner_divider_show="true"-->
+            <!--                app:spinner_divider_size="0.4dp"-->
+            <!--                app:spinner_popup_animation="dropdown"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"-->
+            <!--                app:layout_constraintTop_toTopOf="@+id/txtMyStats"-->
+            <!--                app:spinner_popup_elevation="14dp" />-->
+
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:id="@+id/spinnerWeek"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="60dp"
+                android:paddingTop="@dimen/dp_10"
+                android:popupBackground="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                app:layout_constraintTop_toTopOf="@+id/txtMyStats" />
+                app:layout_constraintTop_toTopOf="@+id/txtMyStats"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_hint="Week"
+                app:smsp_hintColor="@color/gray"
+                app:smsp_itemListBackgroundColor="@color/white"
+                app:smsp_itemListHintColor="#FFFFFF"
+                app:smsp_multilineError="false"
+                app:smsp_selectedItemListColor="@color/gray"
+                app:smsp_underlineColor="@android:color/transparent" />
+
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/spinnerWeek"-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:drawableRight="@drawable/ic_dropdown"-->
+            <!--                            android:drawablePadding="@dimen/dp_20"-->
+            <!--                            android:text="Week"-->
+            <!--                            android:textSize="16sp"-->
+            <!--                            android:textStyle="bold"-->
+            <!--                            app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"-->
+            <!--                            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"-->
+            <!--                            app:layout_constraintTop_toTopOf="@+id/txtMyStats" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutEarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gray_home_background"
                 android:layout_marginTop="@dimen/dp_15"
                 android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/gray_home_background"
                 android:paddingStart="@dimen/dp_8"
                 android:paddingTop="@dimen/dp_8"
                 android:paddingEnd="50dp"
@@ -118,8 +152,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="Earnings"
                     android:fontFamily="@font/inter_regular"
+                    android:text="Earnings"
                     android:textColor="@color/calText"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -130,11 +164,11 @@
                     android:id="@+id/txtEarn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
                     android:text="$1,4K"
                     android:textColor="@color/calText"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/txtEarnings"
                     app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
 
@@ -142,11 +176,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     android:text="+5%"
                     android:textColor="@color/color_green"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintBottom_toBottomOf="@+id/txtEarn"
                     app:layout_constraintStart_toEndOf="@+id/txtEarn"
                     app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
@@ -164,7 +198,7 @@
                 android:paddingEnd="40dp"
                 android:paddingBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutEarning"
-                app:layout_constraintEnd_toEndOf="@+id/txtWeek"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerWeek"
                 app:layout_constraintTop_toTopOf="@+id/layoutEarning">
 
                 <TextView
@@ -173,9 +207,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="Earnings"
-                    android:textColor="@color/calText"
                     android:fontFamily="@font/inter_regular"
+                    android:text="Calls"
+                    android:textColor="@color/calText"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -185,11 +219,11 @@
                     android:id="@+id/txtCallsEarn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
                     android:text="35h 15m"
                     android:textColor="@color/calText"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/inter_regular"
                     app:layout_constraintStart_toStartOf="@+id/txtCalls"
                     app:layout_constraintTop_toBottomOf="@+id/txtCalls" />
 
@@ -197,15 +231,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     android:text="+5%"
                     android:textColor="@color/color_green"
                     android:textSize="12sp"
-                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/txtCallsEarn"
                     app:layout_constraintStart_toEndOf="@+id/txtCallsEarn"
                     app:layout_constraintTop_toTopOf="@+id/txtCallsEarn" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -214,11 +247,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:fontFamily="@font/inter_regular"
                 android:text="Nearest Appointments"
                 android:textColor="@color/addCardColor"
-                android:textSize="24dp"
-                android:fontFamily="@font/inter_regular"
                 android:textFontWeight="700"
+                android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="@+id/layoutEarning"
                 app:layout_constraintTop_toBottomOf="@+id/layoutEarning" />
 
@@ -234,19 +267,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtNearestAppoint"
                 tools:itemCount="5"
-                tools:listitem="@layout/item_nearest_appointments">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/item_nearest_appointments" />
 
             <TextView
                 android:id="@+id/txtMyAudience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
+                android:fontFamily="@font/inter_regular"
                 android:text="My Audience"
                 android:textColor="@color/addCardColor"
                 android:textFontWeight="700"
-                android:fontFamily="@font/inter_regular"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/txtNearestAppoint"
@@ -278,9 +309,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtMyAudience"
                 tools:itemCount="5"
-                tools:listitem="@layout/item_my_audience">
+                tools:listitem="@layout/item_my_audience" />
 
-            </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

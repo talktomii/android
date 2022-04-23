@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.talktomii.R
+import com.talktomii.data.model.admin1.UsersDataItem
 import com.talktomii.databinding.ItemMyAudienceBinding
-import com.talktomii.ui.callhistory.models.CallHistory
 
 class AdapterMyAudience(private var context: Context) :
     RecyclerView.Adapter<AdapterMyAudience.ViewHolder>() {
 
-    private var callHistoryArrayList: ArrayList<CallHistory> = arrayListOf()
+    private var list: ArrayList<UsersDataItem> = arrayListOf()
 
     class ViewHolder(val binding: ItemMyAudienceBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -27,25 +27,24 @@ class AdapterMyAudience(private var context: Context) :
 
 
     override fun getItemCount(): Int {
-        return callHistoryArrayList.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var callData = callHistoryArrayList[position]
-        Glide.with(context).load(callData.uid!!.coverPhoto).error(R.drawable.ic_user)
+        var model = list[position]
+        Glide.with(context).load(model.coverPhoto).error(R.drawable.ic_user)
             .placeholder(R.drawable.ic_user).into(holder.binding.ivImage)
-
-        if (callData.uid!!.name.isNullOrBlank()) {
-            holder.binding.txtName.text = callData.uid!!.name
+        if (model.name.isNullOrBlank()) {
+            holder.binding.txtName.text = model.name
         } else {
-            holder.binding.txtName.text = callData.uid!!.fname + " " + callData.uid!!.lname
+            holder.binding.txtName.text = model.fname + " " + model.lname
         }
-
-        holder.binding.txtUserNAme.text = callData.uid!!.userName
+        holder.binding.txtUserNAme.text = model.userName
     }
 
-    fun setList(callHistory: ArrayList<CallHistory>) {
-        this.callHistoryArrayList = callHistory
+    fun setList(list: ArrayList<UsersDataItem>) {
+        this.list = list
         notifyDataSetChanged()
     }
+
 }

@@ -77,14 +77,10 @@ class AdapterPopular(
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            admin.sortWith(
-//                Comparator.comparing(Admin::lname)
-//                    .thenComparing(Admin::fname)
-//            )
-//        } else {
-//            admin.sortBy { it.fname.lowercase() }
-//        }
+        admin.sortBy { it.fname?.lowercase() }
+        if(popularArrayList.isNotEmpty()){
+            popularArrayList.clear()
+        }
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
     }

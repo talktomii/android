@@ -370,4 +370,9 @@ interface WebService {
         @Query("type") type: String,
         @Query("id") id: String
     ): Response<ResponseInfluencerDashboard>
+
+    @GET(ALL_INFLUENCE)
+    suspend fun getAdminsBySearch(
+        @Query("search") id: String
+    ): Response<AdminResponse>
 }

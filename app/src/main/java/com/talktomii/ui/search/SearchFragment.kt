@@ -7,24 +7,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.talktomii.R
 import com.talktomii.data.model.Interest
 import com.talktomii.data.model.Payload
+import com.talktomii.data.model.admin.Admin
 import com.talktomii.databinding.SearchFragmentBinding
 import com.talktomii.interfaces.CommonInterface
+import com.talktomii.interfaces.OnAdminSearchInterface
 import com.talktomii.interfaces.SearchInterface
 import com.talktomii.interfaces.SearchItemClick
+import com.talktomii.ui.homefrag.AdapterPopular
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
-class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, SearchItemClick {
+class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, SearchItemClick,
+    OnAdminSearchInterface, AdapterPopular.onViewPopularClick {
 
     private lateinit var binding: SearchFragmentBinding
 
     @Inject
     lateinit var viewModel: SearchViewModel
     private var adapterCategories: AdapterCategories? = null
+    private var adapterPopular: AdapterPopular? = null
+    private var popularArrayList: ArrayList<Admin> = arrayListOf()
+
     private val search: String = ""
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,11 +54,15 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     private fun initAdapter() {
         adapterCategories = AdapterCategories(requireContext(), this)
         binding.rvCategories.adapter = adapterCategories
+
+        adapterPopular = AdapterPopular(requireContext(), popularArrayList, this)
+        binding.rvPopular.adapter = adapterPopular
     }
 
     private fun init() {
         viewModel.searchInterface = this
         viewModel.commonInterface = this
+        viewModel.searchAdminsInterface = this
         viewModel.getAllInstruction(search)
 
         binding.etSearch.addTextChangedListener(object : TextWatcher {
@@ -62,10 +75,14 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
 
             override fun afterTextChanged(p0: Editable?) {
                 if (binding.etSearch.text.isEmpty()) {
-                    viewModel.getAllInstruction(binding.etSearch.text.toString())
+                    binding.llCategories.visibility = View.VISIBLE
+                    binding.llPopular.visibility = View.GONE
+                } else {
+                    binding.llPopular.visibility = View.VISIBLE
+                    binding.llCategories.visibility = View.GONE
+                    viewModel.getAdminsBySearch(binding.etSearch.text.toString())
                 }
             }
-
         })
 
         binding.ivFilter.setOnClickListener {
@@ -98,6 +115,22 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
                     interest.name
                 )
             )
+    }
 
+    override fun onSearch(payload: com.talktomii.data.model.admin.Payload) {
+        adapterPopular!!.setPopularList(payload.admin)
+    }
+
+    override fun onViewPopularClick(admin: Admin) {
+        onCoverClicked(admin)
+    }
+
+    private fun onCoverClicked(admin: Admin) {
+        val bundle = Bundle()
+        bundle.putSerializable("profileId", admin._id)
+        findNavController().navigate(
+            R.id.action_searchFragment_to_influencerProfileFragment,
+            bundle
+        )
     }
 }

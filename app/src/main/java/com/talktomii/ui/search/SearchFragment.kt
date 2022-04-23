@@ -26,7 +26,11 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
     lateinit var viewModel: SearchViewModel
     private var adapterCategories: AdapterCategories? = null
     private val search: String = ""
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = SearchFragmentBinding.inflate(inflater, container, false)
         initAdapter()
@@ -83,12 +87,17 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
 
     override fun onSearchAllInstruction(data: Payload) {
         adapterCategories?.interestArrayList = arrayListOf()
-        adapterCategories!!.setImagesList(data.interest as ArrayList<Interest>)
+        adapterCategories!!.setImagesList(data.interest)
     }
 
     override fun onViewSearchClick(interest: Interest) {
         view?.findNavController()
-            ?.navigate(SearchFragmentDirections.actionSearchFragmentToHomeFragment(interest._id))
+            ?.navigate(
+                SearchFragmentDirections.actionSearchFragmentToHomeFragment(
+                    interest._id,
+                    interest.name
+                )
+            )
 
     }
 }

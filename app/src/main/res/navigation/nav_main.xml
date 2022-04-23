@@ -102,6 +102,10 @@
         <action
             android:id="@+id/action_home_to_influencer_profile"
             app:destination="@id/influencerProfileFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Popular" />
     </fragment>
 
     <fragment

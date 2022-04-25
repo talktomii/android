@@ -49,7 +49,8 @@ class AdapterPopular(
 
         if (popularArrayList[position].price != null && popularArrayList[position].price.isNotEmpty()) {
             holder.binding.tvPriceWithTime.visibility = View.VISIBLE
-            holder.binding.tvPriceWithTime.text = "$" + popularArrayList[position].price[0].price + "/" + popularArrayList[position].price[0].time + "min"
+            holder.binding.tvPriceWithTime.text =
+                "$" + popularArrayList[position].price[0].price + "/" + popularArrayList[position].price[0].time + "min"
         } else {
             holder.binding.tvPriceWithTime.visibility = View.INVISIBLE
         }
@@ -69,18 +70,17 @@ class AdapterPopular(
         holder.binding.tvAboutMee.setOnClickListener {
             listener.onViewPopularClick(popularArrayList[position])
         }
+        holder.binding.constrainItemListing.setOnClickListener {
+            listener.onViewPopularClick(popularArrayList[position])
+        }
 
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            admin.sortWith(
-//                Comparator.comparing(Admin::lname)
-//                    .thenComparing(Admin::fname)
-//            )
-//        } else {
-//            admin.sortBy { it.fname.lowercase() }
-//        }
+        admin.sortBy { it.fname?.lowercase() }
+        if(popularArrayList.isNotEmpty()){
+            popularArrayList.clear()
+        }
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
     }

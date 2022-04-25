@@ -172,6 +172,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 )
             )
         }
+        binding.calendarViewAppointment.addDecorator(
+            EventDecorator(R.color.siq_color_primary_dark, calenderArrayList)
+        )
 //        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
 //            Configuration.UI_MODE_NIGHT_YES -> {
 //

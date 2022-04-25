@@ -91,20 +91,24 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         viewModel.homeInterface = this
         if (arguments?.getString("ID") != null) {
             binding.constraintLayout.visibility = View.GONE
-            binding.txtPopular.visibility = View.GONE
+            binding.txtPopular.text = requireArguments().getString("name")!!.trim()
             binding.txtSeeAll.visibility = View.GONE
+            binding.ivBackArrow.visibility = View.VISIBLE
             viewModel.getInfluence(arguments?.getString("ID")!!)
         } else {
             binding.constraintLayout.visibility = View.VISIBLE
-            binding.txtPopular.visibility = View.VISIBLE
+            binding.txtPopular.text = "Popular"
             binding.txtSeeAll.visibility = View.VISIBLE
+            binding.ivBackArrow.visibility = View.GONE
             if (adapterPopular!!.getList().size > 0) {
                 adapterPopular!!.setPopularList(adapterPopular!!.getList())
             } else {
                 viewModel.getInfluence("")
             }
         }
-
+        binding.ivBackArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.txtSeeAll.setOnClickListener {
             handleShowMore()
         }

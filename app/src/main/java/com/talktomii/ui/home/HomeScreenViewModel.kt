@@ -1,8 +1,11 @@
 package com.talktomii.ui.home
 
+import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import androidx.navigation.findNavController
 import com.google.android.gms.common.api.ApiException
+import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.Coroutines
@@ -18,6 +21,13 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     var userField = ObservableField<Admin1>()
     var bookMark = ObservableField<Boolean>()
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
+
+    fun onClick(view: View) {
+        when (view.id) {
+            R.id.ivBack, R.id.tvBack -> view.findNavController().popBackStack()
+        }
+    }
+
     fun getInfluence(string: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
@@ -74,7 +84,7 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     private fun addBookmark() {
 
         var hashMap: HashMap<String, Any> = hashMapOf()
-        hashMap.put("ifid", userField.get()?._id?:"")
+        hashMap.put("ifid", userField.get()?._id ?: "")
 
         commonInterface!!.onStarted()
         Coroutines.main {

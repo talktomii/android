@@ -66,9 +66,8 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        if(prefsManager.getString(PrefsManager.PREF_ROLE, "") == "user"){
-            binding.txtBookmarks.visibility = View.VISIBLE
-        }else{
+        binding.txtBookmarks.visibility = View.VISIBLE
+        if(prefsManager.getString(PrefsManager.PREF_ROLE, "") != "user"){
             binding.txtBookmarks.visibility = View.GONE
         }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {

@@ -88,4 +88,7 @@
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/ic_down</item>
     </style>
+    <style name="MyPopup" parent="@style/Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@color/mycard_bgcolor</item>
+    </style>
 </resources>

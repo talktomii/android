@@ -8,6 +8,7 @@ import com.talktomii.data.model.RolesModel
 import com.talktomii.data.model.addbookmark.AddBookMarkResponse
 import com.talktomii.data.model.admin.AdminResponse
 import com.talktomii.data.model.admin1.AdminResponse1
+import com.talktomii.data.model.admin1.ResponseInfluencerDashboard
 import com.talktomii.data.model.admin1.UpdateAdmin
 import com.talktomii.data.model.admin1.UpdateAvailability
 import com.talktomii.data.model.appointment.GetAllCalenderAppoinment
@@ -79,7 +80,7 @@ interface WebService {
         private const val UPDATE_APPOINTMENT = "appointment/updateAppointment"
         private const val GET_APPOINTMENT_BY_DATE = "appointment/getAppointmentByDate"
         private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
-
+        private const val GET_INFLUENCER_DASHBOARD = "admin/influencer-dashboard"
     }
 
     @GET("card/getCardByuid/{id}")
@@ -333,7 +334,6 @@ interface WebService {
     ): Call<ApiResponse<Any>>
 
 
-
     @PUT(UPDATE_ADMIN + "/{id}")
     fun updateData(
         @Path("id") id: String,
@@ -363,4 +363,16 @@ interface WebService {
         @Path("id") id: String,
         @Body data: HashMap<String, Any>,
     ): Response<UpdateAppointment>
+
+
+    @GET(GET_INFLUENCER_DASHBOARD)
+    suspend fun getInfluencerDashboard(
+        @Query("type") type: String,
+        @Query("id") id: String
+    ): Response<ResponseInfluencerDashboard>
+
+    @GET(ALL_INFLUENCE)
+    suspend fun getAdminsBySearch(
+        @Query("search") id: String
+    ): Response<AdminResponse>
 }

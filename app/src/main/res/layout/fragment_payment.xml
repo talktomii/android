@@ -36,6 +36,7 @@
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/saerchPayment"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginStart="@dimen/dp_10"

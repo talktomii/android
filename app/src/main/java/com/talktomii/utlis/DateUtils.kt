@@ -2,6 +2,8 @@ package com.talktomii.utlis
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
@@ -12,7 +14,10 @@ import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
+import java.text.Format
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 object DateUtils {
@@ -81,7 +86,14 @@ object DateUtils {
         }
 
     }
-
+    fun getTimeFormat(hr: Int, min: Int): String? {
+        val cal = Calendar.getInstance()
+        cal[Calendar.HOUR_OF_DAY] = hr
+        cal[Calendar.MINUTE] = min
+        val formatter: Format
+        formatter = SimpleDateFormat("h:mm a")
+        return formatter.format(cal.time)
+    }
     fun setDateToWeekDate(startTime: String): String {
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
@@ -196,6 +208,31 @@ object DateUtils {
         cal.time = d
         return cal
     }
+
+    fun convertStringToCalenderWithOne(time: String): Calendar {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(time)
+        val cal = Calendar.getInstance()
+        cal.time = d
+        cal.add(Calendar.MONTH, 1);
+        return cal
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)
+        val startLocalTime: LocalTime = LocalTime.parse(startTime, formatter)
+        val endLocalTime: LocalTime = LocalTime.parse(endTime, formatter)
+        val checkLocalTime: LocalTime = LocalTime.parse(checkTime, formatter)
+        var isInBetween = false
+        if (endLocalTime.isAfter(startLocalTime)) {
+            if (startLocalTime.isBefore(checkLocalTime) && endLocalTime.isAfter(checkLocalTime)) {
+                isInBetween = true
+            }
+        } else if (checkLocalTime.isAfter(startLocalTime) || checkLocalTime.isBefore(endLocalTime)) {
+            isInBetween = true
+        }
+        return isInBetween
+    }
 }
 
 /*On Date selected listener*/
@@ -209,7 +246,7 @@ object DateFormate {
     const val CALENDER_DATE = "d:M:yyyy"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"
     const val DATE_FORMAT_WITH_DOT = "dd.MM.yyyy hh:mm aaa"
-    const val TIME_FORMAT = "hh:mm aaa"
+    const val TIME_FORMAT = "hh:mm a"
     const val WEEK_TIME_FORMAT = "EEE dd"
     const val FULL_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val FULL_DATE_FORMAT_WITH_DOT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

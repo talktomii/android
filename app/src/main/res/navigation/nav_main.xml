@@ -102,6 +102,10 @@
         <action
             android:id="@+id/action_home_to_influencer_profile"
             app:destination="@id/influencerProfileFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Popular" />
     </fragment>
 
     <fragment
@@ -153,6 +157,9 @@
         <action
             android:id="@+id/action_searchFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_influencerProfileFragment"
+            app:destination="@id/influencerProfileFragment" />
     </fragment>
 
     <fragment

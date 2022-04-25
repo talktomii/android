@@ -31,4 +31,5 @@
     <color name="searchlocation">#2B2B2B</color>
     <color name="slot_bg">#2B2B2B</color>
     <color name="backbg">#585B68</color>
+    <color name="popupbg">#2B2B2B</color>
 </resources>

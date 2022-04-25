@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.appointment.AppointmentInterestItem
@@ -13,7 +14,9 @@ import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class AdapterScheduledAppointment(
@@ -57,9 +60,8 @@ class AdapterScheduledAppointment(
             holder.binding.ivMore.visibility = View.VISIBLE
             holder.binding.txtCallNow.visibility = View.VISIBLE
         }
-        holder.binding.tvDayAndDate.text =
-            setDateToWeekDate(interest.date)
 
+        holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -67,7 +69,16 @@ class AdapterScheduledAppointment(
                         listener.onViewDeleteAppointment(interest, position)
                     }
                     R.id.action_rescedule -> {
-                        listener.onViewRescheduleAppointment(interest, position)
+                        val datetime: Calendar = com.talktomii.utlis.DateUtils.convertStringToCalender(interest.endTime)
+                        val c: Calendar = Calendar.getInstance()
+                        if (datetime.timeInMillis > c.timeInMillis) {
+//            it's after current
+                            listener.onViewRescheduleAppointment(interest, position)
+                        } else {
+//            it's before current'
+                            Toast.makeText(context, context.getString(R.string.you_can_not_reschedule), Toast.LENGTH_SHORT).show()
+                        }
+                       
 
                     }
                 }
@@ -78,6 +89,17 @@ class AdapterScheduledAppointment(
             val popupMenu = PopupMenu(context, view)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.appointment_popup, popupMenu.menu)
+//            for (i in 0 until popupMenu.menu.size()) {
+//                val item: MenuItem = popupMenu.menu.getItem(i)
+//                val spanString = SpannableString(popupMenu.menu.getItem(i).getTitle().toString())
+//                spanString.setSpan(
+//                    ForegroundColorSpan(context.resources.getColor(R.color.calText)),
+//                    0,
+//                    spanString.length,
+//                    0
+//                ) //fix the color to white
+//                item.title = spanString
+//            }
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 popupMenu.gravity = Gravity.END

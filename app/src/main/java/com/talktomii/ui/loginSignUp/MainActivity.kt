@@ -2,6 +2,7 @@ package com.talktomii.ui.loginSignUp
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.utlis.SocketManager
@@ -49,6 +51,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
         lateinit var bottombar : BottomNavigationView
         lateinit var drawer : DrawerLayout
         lateinit var btnMenu : ImageView
+        lateinit var bookMark : TextView
     }
 
 
@@ -65,6 +68,15 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val role: SharedPreferences = getSharedPreferences("RoleName", MODE_PRIVATE)
+        val roleName = role.getString("name","").toString()
+        bookMark = binding.txtBookmarks
+        Log.d("roleName is : ", roleName.toString())
+        if(roleName == "user"){
+            binding.txtBookmarks.visibility = View.VISIBLE
+        }else{
+            binding.txtBookmarks.visibility = View.GONE
+        }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.navigationView.setBackgroundResource(R.color.black)

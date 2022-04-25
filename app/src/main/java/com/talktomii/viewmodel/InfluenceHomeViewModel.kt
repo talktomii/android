@@ -8,10 +8,7 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.ErrorModelClass
 import com.talktomii.data.model.currentwallet.WalletData
 import com.talktomii.data.network.Coroutines
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.DeleteAppointmentListener
-import com.talktomii.interfaces.OnSlotSelectedInterface
-import com.talktomii.interfaces.RescheduleAppointmentListener
+import com.talktomii.interfaces.*
 import com.talktomii.utlis.listner.*
 import java.io.IOException
 import javax.inject.Inject
@@ -27,7 +24,7 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
     var onSlotSelectedInterface: OnSlotSelectedInterface? = null
     var deleteAppointmentListener: DeleteAppointmentListener? = null
     var rescheduleAppointmentListener: RescheduleAppointmentListener? = null
-
+    var influencerDashboardInterface: InfluencerDashboardInterface? = null
 
     fun getCurrentWallet(id: String) {
         commonInterface!!.onStarted()
@@ -304,6 +301,46 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
             }
         }
     }
+
+    fun getInfluencerDashboard(type: String, id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getInfluencerDashboard(type, id)
+                if (authResponse.isSuccessful) {
+                    influencerDashboardInterface?.onData(authResponse.body()!!.payload)
+                } else {
+                    if (authResponse.code() === 400) {
+                        val gson = GsonBuilder().create()
+                        var mError = ErrorModelClass()
+                        try {
+                            mError = gson.fromJson(
+                                authResponse.errorBody()!!.string(),
+                                ErrorModelClass::class.java
+                            )
+                            commonInterface!!.onFailureAPI(
+                                mError.message,
+                                authResponse.code(),
+                                authResponse.errorBody()
+                            )
+                        } catch (e: IOException) {
+                        }
+                    } else {
+                        commonInterface!!.onFailureAPI(
+                            authResponse.message(),
+                            authResponse.code(),
+                            authResponse.errorBody()
+                        )
+                    }
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
 }
 
 //object Converter {

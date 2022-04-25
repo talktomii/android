@@ -2,6 +2,7 @@ package com.talktomii.ui.homefrag
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,8 +40,20 @@ class AdapterPopular(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.txtName.text =
-            popularArrayList[position].fname + " " + popularArrayList[position].lname
+        if (popularArrayList[position].fname == null) {
+            holder.binding.txtName.text = ""
+        } else {
+            holder.binding.txtName.text =
+                popularArrayList[position].fname + " " + popularArrayList[position].lname
+        }
+
+        if (popularArrayList[position].price != null && popularArrayList[position].price.isNotEmpty()) {
+            holder.binding.tvPriceWithTime.visibility = View.VISIBLE
+            holder.binding.tvPriceWithTime.text =
+                "$" + popularArrayList[position].price[0].price + "/" + popularArrayList[position].price[0].time + "min"
+        } else {
+            holder.binding.tvPriceWithTime.visibility = View.INVISIBLE
+        }
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -57,16 +70,24 @@ class AdapterPopular(
         holder.binding.tvAboutMee.setOnClickListener {
             listener.onViewPopularClick(popularArrayList[position])
         }
+        holder.binding.constrainItemListing.setOnClickListener {
+            listener.onViewPopularClick(popularArrayList[position])
+        }
 
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
+        admin.sortBy { it.fname?.lowercase() }
+        if(popularArrayList.isNotEmpty()){
+            popularArrayList.clear()
+        }
         popularArrayList.addAll(admin)
         notifyDataSetChanged()
     }
 
+
     fun getList(): ArrayList<Admin> {
-        return popularArrayList;
+        return popularArrayList
     }
 
 

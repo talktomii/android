@@ -62,4 +62,5 @@
     <color name="searchlocation">#ffffff</color>
     <color name="slot_bg">#ffffff</color>
     <color name="backbg">#E5E5E5</color>
+    <color name="popupbg">#F9F8FC</color>
 </resources>

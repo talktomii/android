@@ -139,8 +139,20 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
         progressDialog.dismiss()
         binding.txtEarn.text = "$${payload.earning}"
         binding.txtCallsEarn.text = payload.totalHours
-        nearestAppointment!!.setList(payload.nearestAppointment)
-        myAudienceAdapter!!.setList(payload.usersData!!)
+        if (payload.nearestAppointment?.size ?: 0 > 0) {
+            nearestAppointment!!.setList(payload.nearestAppointment)
+            binding.txtNearestAppoint.visibility = View.VISIBLE
+        } else {
+            binding.txtNearestAppoint.visibility = View.GONE
+        }
+
+        if (payload.usersData?.size ?: 0 > 0) {
+            myAudienceAdapter!!.setList(payload.usersData!!)
+            binding.txtMyAudience.visibility = View.VISIBLE
+        } else {
+            binding.txtMyAudience.visibility = View.GONE
+        }
+
     }
 
 }

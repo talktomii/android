@@ -2,7 +2,6 @@ package com.talktomii.di
 
 import com.talktomii.ui.home.profile.InfluencerProfileFragment
 import com.talktomii.ui.search.SearchFragment
-import com.talktomii.VideoActivity
 import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.appointment.AppointmentsFragment
 import com.talktomii.ui.banksettings.MyBankSettings
@@ -46,6 +45,7 @@ import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.ui.settings.PrivacyAndPolicyActivity
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
+import com.talktomii.ui.tellusmore.VideoFragment
 import com.talktomii.utlis.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -60,7 +60,7 @@ abstract class BindingsModule {
     abstract fun homeActivity(): HomeActivity
 
     @ContributesAndroidInjector
-    abstract fun videoActivity(): VideoActivity
+    abstract fun videoFragment(): VideoFragment
 
     @ContributesAndroidInjector
     abstract fun mycardsActivity(): MyCardsActivity

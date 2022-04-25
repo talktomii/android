@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rvTopics" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRecordAudio"
+            android:id="@+id/tvRecordVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_12"
@@ -106,7 +106,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecordAudio" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRecordVideo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSetlocation"

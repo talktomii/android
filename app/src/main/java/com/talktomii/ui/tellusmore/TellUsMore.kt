@@ -1,7 +1,9 @@
 package com.talktomii.ui.tellusmore
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +13,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.talktomii.R
-import com.talktomii.adapter.TopicsAdapter
-import com.talktomii.databinding.TellUsMoreBinding
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.talktomii.R
+import com.talktomii.adapter.TopicsAdapter
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
+import com.talktomii.databinding.TellUsMoreBinding
+import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
+import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
+import java.util.*
 import javax.inject.Inject
 
 
@@ -80,12 +84,12 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         viewModels.isUser.set(args.isUser)
         if(args.isUser){
             binding.tvAboutYou.gone()
-            binding.tvRecordAudio.gone()
+//            binding.tvRecordVideo.gone()
             binding.tvLinkAccounts.gone()
             binding.llLinkAccounts.gone()
         }else{
             binding.tvAboutYou.visible()
-            binding.tvRecordAudio.visible()
+            binding.tvRecordVideo.visible()
             binding.tvLinkAccounts.visible()
             binding.llLinkAccounts.visible()
         }
@@ -144,12 +148,35 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         })
     }
 
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+//        if (requestCode == VIDEO_CAPTURE) {
+//            if (resultCode == RESULT_OK) {
+//                Toast.makeText(
+//                    requireContext(), """
+//     Video saved to:
+//     ${data.getData()}
+//     """.trimIndent(), Toast.LENGTH_LONG
+//                ).show()
+//            } else if (resultCode == RESULT_CANCELED) {
+//                Toast.makeText(requireContext(), "Video recording cancelled.", Toast.LENGTH_LONG).show()
+//            } else {
+//                //Toast.makeText(this, "Failed to record video",                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
+
     private fun setListener() {
 
         binding.tvSetlocation.setOnClickListener {
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(requireContext())
-            placeApiLauncher.launch(intent)
+//            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+//                .build(requireContext())
+//            placeApiLauncher.launch(intent)
+            val bottomsheet = AddEditLocationBottomSheet(object : AddLocationInterface {
+                override fun addPlace(place: String) {
+                    binding.tvSetlocation.text = place
+                }
+            })
+            bottomsheet.show(childFragmentManager, "addlocation")
 
         }
         binding.rlFacebook.setOnClickListener {
@@ -187,6 +214,14 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
                 view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
         }
 
+        binding.tvRecordVideo.setOnClickListener {
+            val intent: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30)
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1)
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, ) // set the image file
+
+            startActivityForResult(intent, 101101)
+        }
     }
 //getUser(prefsManager)?.admin?._id?
     //6257bc87dd85d624ccb6bb8a

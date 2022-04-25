@@ -5,9 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -52,13 +49,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import java.io.File
-import java.io.InputStream
 import javax.inject.Inject
 
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
     CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface,
-    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface , UpdatePhotoInterface {
+    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface, UpdatePhotoInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -148,19 +144,28 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     private fun initAdapters() {
         binding.rvPrice.adapter = AdapterPrice(this)
         binding.rvInterest.adapter = context?.let { AdapterEditInterest(it) }
-        availableAdapter = AdapterAvailability(object : AdapterAvailability.OnEditInterface {
-            override fun onEdit(model: Availaibility, position: Int) {
-//                val popupMenu = PopupMenu(context, view)
-//                val menuInflater = MenuInflater(context)
-//                menuInflater.inflate(R.menu.appointment_popup, popupMenu.menu)
-//                popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    popupMenu.gravity = Gravity.END
-//                }
-//                popupMenu.show()
-                openTimePeriodBottomSheet(model, position)
-            }
-        })
+        availableAdapter =
+            AdapterAvailability(requireContext(), object : AdapterAvailability.OnEditInterface {
+                override fun onEdit(model: Availaibility, position: Int, i: Int) {
+                    openTimePeriodBottomSheet(model, position)
+                }
+
+                override fun onDelete(model: Availaibility, position: Int, which: Int) {
+                    if (model._id.isNullOrEmpty()) {
+                        onUpdateAvibility(position, model, which)
+                    } else {
+                        getUser(prefsManager)?.admin?.let {
+                            viewModel.deleteAvailabilityTime(
+                                position,
+                                model._id,
+                                it._id,
+                                2
+                            )
+                        }
+
+                    }
+                }
+            })
         binding.rvAvailability.adapter = availableAdapter
 //        binding.rvSocialMedia.adapter = AdapterMySocialMedias(requireContext())
     }
@@ -395,7 +400,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         this.admin1 = admin1
         Glide.with(requireContext()).load(admin1.profilePhoto).placeholder(R.drawable.ic_user)
             .error(R.drawable.ic_user).into(binding.imgDefault)
-         Glide.with(requireContext()).load(admin1.coverPhoto).placeholder(R.drawable.bg_gradient_profile)
+        Glide.with(requireContext()).load(admin1.coverPhoto)
+            .placeholder(R.drawable.bg_gradient_profile)
             .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
 
         for (i in admin1.socialNetwork) {
@@ -509,7 +515,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                             } else {
                                 updateHashMap["end"] = model.end
                             }
-                            viewModel.updateAvailabilityTime(updateHashMap, position, model)
+                            viewModel.updateAvailabilityTime(updateHashMap, position, model, 1)
                         }
 
                     } else {
@@ -550,10 +556,20 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         }
     }
 
-    override fun onUpdateAvibility(position: Int, model: Availaibility) {
+    override fun onUpdateAvibility(position: Int, model: Availaibility?, which: Int) {
         progressDialog.dismiss()
-        viewModel.userField.get()!!.availaibility[position] = model
-        updateAvailabilityAdapter()
+        viewModel.userField.get()!!.availaibility[position] = model!!
+        if (which == 2) {
+            deleteAvailabilityAdapter(position)
+        } else {
+            updateAvailabilityAdapter()
+        }
+
+    }
+
+    private fun deleteAvailabilityAdapter(position: Int) {
+        viewModel.userField.get()!!.availaibility.removeAt(position)
+        availableAdapter?.deleteItem(position)
     }
 
     override fun onUpdatePhoto(admin: com.talktomii.data.photo.Admin) {

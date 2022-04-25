@@ -2,6 +2,7 @@ package com.talktomii.ui.appointment
 
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.ErrorModelClass
@@ -9,6 +10,9 @@ import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.AddAppointmentInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.FailureAPI400
+import com.talktomii.ui.home.profile.InfluencerProfileFragment
+import com.talktomii.ui.homefrag.InfluencerHomeFragment
+import com.talktomii.ui.mycards.fragments.CardFragment
 import java.io.IOException
 import javax.inject.Inject
 
@@ -38,7 +42,14 @@ class AppointmentViewModel @Inject constructor(private val webService: WebServic
                                 authResponse.errorBody()!!.string(),
                                 ErrorModelClass::class.java
                             )
-                            apiFailure!!.onFailureAPI400(mError.message)
+                            val snackbar = Snackbar.make(
+                                InfluencerProfileFragment.layout,
+                                mError.message,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+//                            apiFailure!!.onFailureAPI400(mError.message)
+
 
                         } catch (e: IOException) {
                             // handle failure to read error

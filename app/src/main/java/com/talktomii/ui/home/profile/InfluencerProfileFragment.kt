@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -86,6 +87,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentInfluencerProfileBinding.inflate(inflater, container, false)
+        layout = binding.profileLayout
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivShare.setBackgroundResource(R.drawable.share)
@@ -436,4 +438,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
 
+    companion object{
+        lateinit var layout : ConstraintLayout
+    }
 }

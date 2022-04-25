@@ -184,6 +184,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
         Log.d("token : ", MainActivity.retrivedToken)
         arrayStrings = ArrayList<String>()
         arrayStrings!!.add("Select card")
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            RefillWalletActivity.context,
+            R.layout.drop_down_custom_layout,
+            arrayStrings!!.toMutableList()
+        )
+        adapter.setDropDownViewResource(R.layout.spinner_list)
+        RefillWalletActivity.filterTypes!!.adapter = adapter
         webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
@@ -192,6 +199,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 ) {
                     Timber.d("--%s", response.body().toString())
                     val dataList = ArrayList<CardItemsViewModel>()
+                    arrayStrings!!.clear()
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
@@ -207,10 +215,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         }
                         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             RefillWalletActivity.context,
-                            android.R.layout.simple_spinner_dropdown_item,
+                            R.layout.drop_down_custom_layout,
                             arrayStrings!!.toMutableList()
                         )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        adapter.setDropDownViewResource(R.layout.spinner_list)
                         RefillWalletActivity.filterTypes!!.adapter = adapter
                         RefillWalletActivity.filterTypes!!.onItemSelectedListener =
                             object : AdapterView.OnItemSelectedListener {

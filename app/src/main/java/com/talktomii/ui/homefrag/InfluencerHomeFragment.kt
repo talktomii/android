@@ -54,14 +54,6 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
         }else{
             MainActivity.bookMark.visibility = View.GONE
         }
-        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
-            }
-        }
         return binding.root
     }
 

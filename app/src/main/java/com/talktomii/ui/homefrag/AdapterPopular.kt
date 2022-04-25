@@ -54,6 +54,12 @@ class AdapterPopular(
         } else {
             holder.binding.tvPriceWithTime.visibility = View.INVISIBLE
         }
+
+        if (popularArrayList[position].isOnline) {
+            holder.binding.ivUserStatus.visibility = View.VISIBLE
+        } else {
+            holder.binding.ivUserStatus.visibility = View.GONE
+        }
         holder.binding.textView6.text = popularArrayList[position].userName
         Glide.with(context).load(popularArrayList[position].coverPhoto)
             .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -77,8 +83,8 @@ class AdapterPopular(
     }
 
     fun setPopularList(admin: ArrayList<Admin>) {
-        admin.sortBy { it.fname?.lowercase() }
-        if(popularArrayList.isNotEmpty()){
+//        admin.sortBy { it.fname.lowercase() }
+        if (popularArrayList.isNotEmpty()) {
             popularArrayList.clear()
         }
         popularArrayList.addAll(admin)

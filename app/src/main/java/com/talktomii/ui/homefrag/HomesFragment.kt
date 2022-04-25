@@ -74,7 +74,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter()
         init()
     }
 
@@ -111,11 +110,11 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             binding.txtPopular.text = "Popular"
             binding.txtSeeAll.visibility = View.VISIBLE
             binding.ivBackArrow.visibility = View.GONE
-            if (adapterPopular!!.getList().size > 0) {
-                adapterPopular!!.setPopularList(adapterPopular!!.getList())
-            } else {
+//            if (adapterPopular!!.getList().size > 0) {
+//                adapterPopular!!.setPopularList(adapterPopular!!.getList())
+//            } else {
                 viewModel.getInfluence("")
-            }
+//            }
         }
         binding.ivBackArrow.setOnClickListener {
             findNavController().popBackStack()

@@ -238,9 +238,9 @@ interface WebService {
     @GET(ALL_INFLUENCE)
     suspend fun getAllAdmin(): Response<AdminResponse>
 
-    @GET(ALL_INFLUENCE + "?interest={id}")
+    @GET(ALL_INFLUENCE)
     suspend fun getAdminByInterest(
-        @Path("id") id: String
+        @Query("interest") id: String
     ): Response<AdminResponse>
 
     @GET(GET_ADMIN + "/{id}")

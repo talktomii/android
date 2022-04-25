@@ -119,7 +119,7 @@
             android:background="@drawable/gray_background"
             android:padding="@dimen/dp_12"
             android:gravity="center_vertical"
-            android:text="Set your location"
+            android:hint="Set your location"
             android:textSize="12sp"
             android:textColor="@color/calText"
             android:layout_marginTop="@dimen/dp_10"

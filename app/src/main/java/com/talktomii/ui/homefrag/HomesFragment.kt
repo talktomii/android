@@ -1,7 +1,10 @@
 package com.talktomii.ui.homefrag
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +24,7 @@ import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.SocketManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
+import dagger.android.support.DaggerAppCompatActivity
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -48,6 +52,13 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     ): View? {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
         MainActivity.btnMenu.visibility = View.GONE
+        val role: SharedPreferences = requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
+        val roleName = role.getString("name","").toString()
+        if(roleName == "user"){
+            MainActivity.bookMark.visibility = View.VISIBLE
+        }else{
+            MainActivity.bookMark.visibility = View.GONE
+        }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)

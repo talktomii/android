@@ -1,5 +1,7 @@
 package com.talktomii.ui.homefrag
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentHomeInfluencerBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.InfluencerDashboardInterface
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
@@ -42,6 +45,15 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeInfluencerBinding.inflate(inflater, container, false)
+        val role: SharedPreferences = requireContext().getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
+        val roleName = role.getString("name","").toString()
+        if(roleName == "user"){
+            MainActivity.bookMark.visibility = View.VISIBLE
+        }else{
+            MainActivity.bookMark.visibility = View.GONE
+        }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)

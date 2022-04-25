@@ -123,7 +123,7 @@ class LoginFragment : DaggerFragment() {
                     myEdit.putString("name", prefsManager.getString(PrefsManager.PREF_ROLE,""))
                     myEdit.putString("id",prefsManager.getString(PrefsManager.PREF_API_ID,""))
                     myEdit.putString("token",prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
-                    myEdit.commit()
+                    myEdit.apply()
 
                     requireContext().showMessage("Login Successfully")
                     dataModel.getTotalAmount()

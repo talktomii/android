@@ -16,6 +16,7 @@ data class Admin(
     val interest: List<Interest>,
     val isActive: Boolean,
     val isSocial: Boolean,
+    val isOnline: Boolean,
     val latestToken: String,
     val location: String,
     val modificationData: String,

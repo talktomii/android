@@ -82,7 +82,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clBackSave" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
                 android:id="@+id/layoutGrandiant"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_120"
@@ -91,11 +91,11 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSignIn"
-                tools:background="@drawable/bg_gradient_profile">
+                tools:background="@drawable/bg_gradient_profile"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/imgCam"

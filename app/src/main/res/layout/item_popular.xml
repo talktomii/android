@@ -84,11 +84,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:fontFamily="@font/inter_medium"
                     android:text="Leslie Alexander"
                     android:textColor="@color/calText"
-                    android:textSize="@dimen/dp_16"
-                    android:fontFamily="@font/inter_medium"
                     android:textFontWeight="700"
+                    android:textSize="@dimen/dp_16"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,10 +96,10 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
                     android:text="\@Leslie"
                     android:textColor="@color/calText"
                     android:textSize="@dimen/sp_14"
-                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/txtName"
                     app:layout_constraintTop_toBottomOf="@+id/txtName" />
@@ -158,9 +158,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:riv_border_color="@color/white"
                 app:riv_border_width="1dp"
-                app:riv_corner_radius="@dimen/dp_60">
+                app:riv_corner_radius="@dimen/dp_60" />
 
-            </com.makeramen.roundedimageview.RoundedImageView>
+            <ImageView
+                android:id="@+id/ivUserStatus"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@drawable/ic_accept"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/imgDefault"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDefault"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

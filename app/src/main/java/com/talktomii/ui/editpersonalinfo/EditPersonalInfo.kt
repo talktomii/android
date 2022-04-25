@@ -33,10 +33,7 @@ import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoFragmentBinding
-import com.talktomii.interfaces.AdminDetailInterface
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.UpdateAvaibilityInterface
-import com.talktomii.interfaces.UpdateProfileInterface
+import com.talktomii.interfaces.*
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
@@ -61,7 +58,7 @@ import javax.inject.Inject
 
 class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), AdminDetailInterface,
     CommonInterface, AdapterPrice.onViewEdiPriceClick, UpdateProfileInterface,
-    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface {
+    LinkAccountDialog.LinkListener, UpdateAvaibilityInterface , UpdatePhotoInterface {
     private lateinit var binding: EditPersonalInfoFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
@@ -139,11 +136,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
                     val filePath =
                         com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
                     fileCoverPhoto = File(filePath)
-                    val inputStream: InputStream =
-                        requireActivity().contentResolver.openInputStream(fileUri)!!
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    val image: Drawable = BitmapDrawable(requireContext().resources, bitmap)
-                    binding.layoutGrandiant.background = image
+                    Glide.with(requireContext()).load(filePath).into(binding.layoutGrandiant)
                 }
 
             }
@@ -213,15 +206,14 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         binding.tvSave.setOnClickListener {
 
             if (isChangeProfile) {
-
                 val map: HashMap<String, RequestBody> = HashMap()
                 if (fileProfile != null) {
                     val body = fileProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     map["profilePhoto\"; filename=\"imageProfile.png\" "] = body
                 }
                 if (fileCoverPhoto != null) {
-                    val body = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                    map["coverPhoto\"; filename=\"imageCover.png\" "] = body
+                    val body1 = fileCoverPhoto!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    map["coverPhoto\"; filename=\"coverPhoto.png\" "] = body1
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
@@ -367,6 +359,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         viewModel.adminDetailInterface = this
         viewModel.commonInterface = this
         viewModel.onUpdateProfileInterface = this
+        viewModel.updatePhotoInterface = this
         binding.lifecycleOwner = this
         viewModel.updateAvailability = this
         binding.viewModel = viewModel
@@ -402,6 +395,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         this.admin1 = admin1
         Glide.with(requireContext()).load(admin1.profilePhoto).placeholder(R.drawable.ic_user)
             .error(R.drawable.ic_user).into(binding.imgDefault)
+         Glide.with(requireContext()).load(admin1.coverPhoto).placeholder(R.drawable.bg_gradient_profile)
+            .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
 
         for (i in admin1.socialNetwork) {
             when (i.name.lowercase()) {
@@ -425,8 +420,8 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
 //            val image: Drawable = BitmapDrawable(requireContext().resources, bitmap)
 //            binding.layoutGrandiant.background = image
 //        } else {
-        binding.layoutGrandiant.background =
-            ContextCompat.getDrawable(requireContext(), R.drawable.bg_gradient_profile)
+//        binding.layoutGrandiant.background =
+//            ContextCompat.getDrawable(requireContext(), R.drawable.bg_gradient_profile)
 //        }
 
         if (isUser(prefsManager)) {
@@ -536,8 +531,6 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         registerModel!!.admin = admin1
         prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
         findNavController().popBackStack()
-
-
     }
 
     override fun onLinkClicked(type: String, value: String) {
@@ -561,5 +554,9 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
         progressDialog.dismiss()
         viewModel.userField.get()!!.availaibility[position] = model
         updateAvailabilityAdapter()
+    }
+
+    override fun onUpdatePhoto(admin: com.talktomii.data.photo.Admin) {
+        progressDialog.dismiss()
     }
 }

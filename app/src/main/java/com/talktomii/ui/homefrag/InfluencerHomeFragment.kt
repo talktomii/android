@@ -71,7 +71,12 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
         provinceList.add("Weekly")
         provinceList.add("Monthly")
         provinceList.add("Yearly")
-
+        val admin = getUser(prefsManager)?.admin
+        if (admin!!.fname != null) {
+            binding.txtName.text = "Hi " + admin.fname
+        } else {
+            binding.txtName.text = "Hi " + admin.name
+        }
         binding.spinnerWeek.item = provinceList as List<Any>?
 
         binding.spinnerWeek.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

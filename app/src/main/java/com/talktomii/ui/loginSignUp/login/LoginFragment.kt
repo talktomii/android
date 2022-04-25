@@ -39,6 +39,7 @@ import android.R.attr.name
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Patterns
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 
 
@@ -123,7 +124,7 @@ class LoginFragment : DaggerFragment() {
                     myEdit.putString("name", prefsManager.getString(PrefsManager.PREF_ROLE,""))
                     myEdit.putString("id",prefsManager.getString(PrefsManager.PREF_API_ID,""))
                     myEdit.putString("token",prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
-                    myEdit.commit()
+                    myEdit.apply()
 
                     requireContext().showMessage("Login Successfully")
                     dataModel.getTotalAmount()
@@ -273,10 +274,10 @@ class LoginFragment : DaggerFragment() {
                 binding.txtEmailId.showSnackBar("Please enter your email id")
                 false
             }
-//            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                binding.txtEmailId.showSnackBar("Please enter a valid email address")
-//                false
-//            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.txtEmailId.showSnackBar("Please enter a valid email address")
+                false
+            }
             password.isEmpty() ->{
                 binding.edPassword.showSnackBar("Please enter password")
                 false

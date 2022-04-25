@@ -63,19 +63,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/IvMore">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="Hi Cameron"
+                    android:text="Hi"
                     android:textColor="@color/myCards"
                     android:textFontWeight="700"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:drawableRight="@drawable/ic_hand"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Cameron"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="700"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/dp_5"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@+id/textView4"
+                    app:layout_constraintTop_toTopOf="@+id/textView4"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
                     android:id="@+id/ivCross"
@@ -99,7 +115,7 @@
                     android:textFontWeight="400"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/txtName"
+                    app:layout_constraintStart_toStartOf="@+id/textView4"
                     app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.talktomii.R
 import com.talktomii.adapter.TopicsAdapter
 import com.talktomii.databinding.TellUsMoreBinding
-import com.talktomii.utlis.PrefsManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -24,9 +23,8 @@ import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
-import com.talktomii.utlis.LinkAccountDialog
+import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.getUser
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -80,6 +78,17 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
 
         val recyclerview = binding.rvTopics
         viewModels.isUser.set(args.isUser)
+        if(args.isUser){
+            binding.tvAboutYou.gone()
+            binding.tvRecordAudio.gone()
+            binding.tvLinkAccounts.gone()
+            binding.llLinkAccounts.gone()
+        }else{
+            binding.tvAboutYou.visible()
+            binding.tvRecordAudio.visible()
+            binding.tvLinkAccounts.visible()
+            binding.llLinkAccounts.visible()
+        }
         val layoutManager = FlexboxLayoutManager()
         layoutManager.flexWrap = FlexWrap.WRAP
         layoutManager.flexDirection = FlexDirection.ROW
@@ -169,6 +178,7 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         }
 
         binding.tvSkip.setOnClickListener {
+
 
             var user= getUser(prefsManager)
             if (user?.admin?.role?.roleName == "user")

@@ -146,7 +146,21 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         CardFragment.recycleview.visibility = View.VISIBLE
 
                     } else {
-                        CardFragment.progress.visibility = View.GONE
+
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                CardFragment.layout,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                            CardFragment.progress.visibility = View.GONE
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
                         cards.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),

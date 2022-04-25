@@ -14,6 +14,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/cardlistLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,7 +33,7 @@
             android:id="@+id/rvCards"
             chipLayout="{true}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_10"
             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"

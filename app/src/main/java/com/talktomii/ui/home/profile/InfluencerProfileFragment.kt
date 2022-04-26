@@ -129,6 +129,28 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             )
 
         }
+
+        val endDate: Calendar = Calendar.getInstance()
+        endDate.add(Calendar.DAY_OF_MONTH, +7)
+
+        horizontalCalendar =
+            HorizontalCalendar.Builder(requireActivity(), R.id.calendarView)
+                .range(startDate, endDate)
+                .configure()
+                .showTopText(false)
+                .end()
+                .datesNumberOnScreen(7)
+                .build()
+
+        horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
+            override fun onDateSelected(date: Calendar?, position: Int) {
+                selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
+                viewModel.getAllSlotByDate(selectedDate.toString())
+            }
+        }
+
+        selectedDate = SimpleDateFormat("yyyy-MM-dd").format(startDate.time)
+
     }
 
     private fun initAdapter() {
@@ -233,29 +255,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         setListener()
         init()
-        val endDate: Calendar = Calendar.getInstance()
-        endDate.add(Calendar.DAY_OF_MONTH, +7)
-//        val startDate: Calendar = Calendar.getInstance()
-//        startDate.add(Calendar.DAY_OF_MONTH, 0)
 
-        horizontalCalendar =
-            HorizontalCalendar.Builder(requireActivity(), R.id.calendarView)
-                .range(startDate, endDate)
-                .configure()
-                .showTopText(false)
-                .end()
-                .datesNumberOnScreen(7)
-                .build()
-
-        horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
-            override fun onDateSelected(date: Calendar?, position: Int) {
-                selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
-                viewModel.getAllSlotByDate(selectedDate.toString())
-            }
-        }
-
-        selectedDate = SimpleDateFormat("yyyy-MM-dd").format(startDate.time)
-        viewModel.getAllSlotByDate(selectedDate.toString())
     }
 
     override fun onFailure(message: String) {
@@ -281,7 +281,6 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     override fun onAdminDetails(admin1: Admin1) {
         progressDialog.dismiss()
         selectedAdmin = admin1
-        viewModel.getAllSlotByDate(SimpleDateFormat("yyyy-MM-dd").format(startDate.time))
         context?.let {
             Glide.with(it).load(admin1.coverPhoto)
                 .placeholder(R.drawable.ic_image1).error(R.drawable.ic_image1)
@@ -293,7 +292,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(binding.imgDefault)
         }
-        socialMediaAdapter?.setItemList(admin1.socialNetwork)
+        if (admin1.socialNetwork != null && admin1.socialNetwork.isNotEmpty()){
+            socialMediaAdapter?.setItemList(admin1.socialNetwork)
+        }
         if (admin1.interest.size > 0) {
             if (admin1.interest.size > 3) {
                 binding.txtItemCount.visibility = View.VISIBLE
@@ -307,6 +308,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             binding.txtInterests.visibility = View.GONE
             binding.txtItemCount.visibility = View.GONE
         }
+        viewModel.getAllSlotByDate(selectedDate.toString())
     }
 
     private fun setTimeSlot() {

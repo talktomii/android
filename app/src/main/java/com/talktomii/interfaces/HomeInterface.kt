@@ -22,7 +22,7 @@ interface UpdateProfileInterface {
 }
 
 interface UpdateAvaibilityInterface {
-    fun onUpdateAvibility(admin1: Int, model: Availaibility)
+    fun onUpdateAvibility(admin1: Int, model: Availaibility?, which: Int)
 }
 
 interface OnSlotSelectedInterface {

@@ -159,7 +159,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(it.date)
             )
         }
-        appointmentAdapter!!.setList(payload.Appointment)
+
 
         val calenderArrayList: ArrayList<CalendarDay> = arrayListOf()
         for (i in payload.Appointment!!) {
@@ -175,6 +175,18 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         binding.calendarViewAppointment.addDecorator(
             EventDecorator(R.color.siq_color_primary_dark, calenderArrayList)
         )
+        if (payload.Appointment?.size ?: 0 > 0) {
+            binding.rlNoDataFound.visibility = View.GONE
+            binding.rvScheduled.visibility = View.VISIBLE
+            binding.tvLabeScheduleAppointment.visibility = View.VISIBLE
+            binding.imageView3.visibility = View.VISIBLE
+            appointmentAdapter!!.setList(payload.Appointment)
+        } else {
+            binding.rlNoDataFound.visibility = View.VISIBLE
+            binding.rvScheduled.visibility = View.GONE
+            binding.tvLabeScheduleAppointment.visibility = View.GONE
+            binding.imageView3.visibility = View.GONE
+        }
 //        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
 //            Configuration.UI_MODE_NIGHT_YES -> {
 //
@@ -450,11 +462,18 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         progressDialog.dismiss()
         if (payload.Appointment?.size ?: 0 > 0) {
             appointmentAdapter?.addItemsList(payload.Appointment)
-
+            binding.rlNoDataFound.visibility = View.GONE
+            binding.rvScheduled.visibility = View.VISIBLE
+            binding.imageView3.visibility = View.VISIBLE
+            binding.tvLabeScheduleAppointment.visibility = View.VISIBLE
         } else {
             appointmentAdapter?.clearList()
-
+            binding.rlNoDataFound.visibility = View.VISIBLE
+            binding.rvScheduled.visibility = View.GONE
+            binding.tvLabeScheduleAppointment.visibility = View.GONE
+            binding.imageView3.visibility = View.GONE
         }
+
     }
 
     override fun addInfluenceItem(payload: AppointmentByIdPayload) {

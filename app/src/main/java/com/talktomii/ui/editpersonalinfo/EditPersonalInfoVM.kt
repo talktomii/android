@@ -83,7 +83,12 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         }
     }
 
-    fun updateAvailabilityTime(data: HashMap<String, Any>, position: Int, model: Availaibility) {
+    fun updateAvailabilityTime(
+        data: HashMap<String, Any>,
+        position: Int,
+        model: Availaibility,
+        which: Int
+    ) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
@@ -91,7 +96,39 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
-                            updateAvailability?.onUpdateAvibility(position,model)
+                            updateAvailability?.onUpdateAvibility(position, model, which)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+
+    fun deleteAvailabilityTime(
+        position: Int,
+        id: String,
+        uid: String,
+        which: Int
+    ) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.deleteAvailability(id,uid)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            updateAvailability?.onUpdateAvibility(position, null, which)
                         }
                     }
                 } else {

@@ -72,6 +72,7 @@ interface WebService {
         private const val UPDATE_PHOTO = "admin/updatePhoto"
         private const val UPDATE_ADMIN = "admin/updateAdmin"
         private const val UPDATE_AVAIBILITY = "admin/updateAvailability"
+        private const val DELETE_AVAIBILITY = "admin/deleteAvailability"
         private const val VERIFY_EMAIL = "admin/verify-email"
         private const val VERIFY_CODE = "admin/verify-code"
         private const val AFTER_FORGET = "admin/after-forget"
@@ -237,9 +238,9 @@ interface WebService {
     @GET(ALL_INFLUENCE)
     suspend fun getAllAdmin(): Response<AdminResponse>
 
-    @GET(ALL_INFLUENCE + "?interest={id}")
+    @GET(ALL_INFLUENCE)
     suspend fun getAdminByInterest(
-        @Path("id") id: String
+        @Query("interest") id: String
     ): Response<AdminResponse>
 
     @GET(GET_ADMIN + "/{id}")
@@ -291,6 +292,13 @@ interface WebService {
     @PUT(UPDATE_AVAIBILITY)
     suspend fun updateAvailability(
         @Body data: HashMap<String, Any>,
+    ): Response<UpdateAvailability>
+
+
+    @PUT(DELETE_AVAIBILITY)
+    suspend fun deleteAvailability(
+        @Query("id") id: String,
+        @Query("uid") uid: String,
     ): Response<UpdateAvailability>
 
 

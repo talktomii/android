@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
-        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/backgroundColor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <TextView
                 android:id="@+id/txtMyAppointment"
@@ -19,8 +19,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_20"
-                android:text="My Appointments"
                 android:fontFamily="@font/inter_regular"
+                android:text="My Appointments"
                 android:textColor="@color/addCardColor"
                 android:textSize="@dimen/sp_24"
                 android:textStyle="bold"
@@ -33,13 +33,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
-                app:mcv_selectionColor="@color/blue"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:switchTextAppearance="@color/calText"
-                app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
-                app:mcv_weekDayTextAppearance="@style/CalenderViewDateCustomText"
-                app:mcv_headerTextAppearance="@style/CalenderViewDateCustomText"
                 app:layout_constraintTop_toBottomOf="@+id/txtMyAppointment"
+                app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_headerTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_selectionColor="@color/blue"
+                app:mcv_weekDayTextAppearance="@style/CalenderViewDateCustomText"
                 tools:layout_editor_absoluteX="16dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,15 +60,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/tvLabeScheduleAppointment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
                     android:text="Scheduled Appointments"
                     android:textColor="@color/myCards"
                     android:textSize="20sp"
-                    android:fontFamily="@font/inter_regular"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -77,17 +77,27 @@
                     android:id="@+id/rvScheduled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp_20"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    android:paddingBottom="@dimen/dp_20"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabeScheduleAppointment"
                     tools:itemCount="4"
-                    tools:listitem="@layout/item_scheduled_appointment">
+                    tools:listitem="@layout/item_scheduled_appointment" />
 
-                </androidx.recyclerview.widget.RecyclerView>
+                <RelativeLayout
+                    android:id="@+id/rlNoDataFound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabeScheduleAppointment">
 
 
+                    <include layout="@layout/layout_no_data_found" />
+                </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

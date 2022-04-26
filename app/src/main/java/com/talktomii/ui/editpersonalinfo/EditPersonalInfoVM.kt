@@ -22,6 +22,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
     var commonInterface: CommonInterface? = null
     var adminDetailInterface: AdminDetailInterface? = null
     var onUpdateProfileInterface: UpdateProfileInterface? = null
+    var onUpdateAboutYou: UpdateAboutYouVideo? = null
     var updateAvailability: UpdateAvaibilityInterface? = null
     var userField = ObservableField<Admin1>()
     var updatePhotoInterface: UpdatePhotoInterface? = null
@@ -124,7 +125,7 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.deleteAvailability(id,uid)
+                val authResponse = webService.deleteAvailability(id, uid)
                 if (authResponse.isSuccessful) {
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
@@ -158,6 +159,32 @@ class EditPersonalInfoVM @Inject constructor(private val webService: WebService)
                     if (authResponse.body()!!.result == 0) {
                         authResponse.body().let {
                             updatePhotoInterface?.onUpdatePhoto(authResponse.body()!!.payload.admin)
+                        }
+                    }
+                } else {
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
+
+    fun updateAboutYou(data: HashMap<String, RequestBody>, _id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.updateAboutYou(_id, data)
+                if (authResponse.isSuccessful) {
+                    if (authResponse.body()!!.result == 0) {
+                        authResponse.body().let {
+                            onUpdateAboutYou?.onUpdateAboutYou(authResponse.body()!!.payload.admin)
                         }
                     }
                 } else {

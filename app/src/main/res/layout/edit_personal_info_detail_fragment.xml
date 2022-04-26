@@ -43,10 +43,10 @@
                     android:id="@+id/tvBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
                     android:onClick="@{viewModel::onClick}"
                     android:text="Back"
                     android:textColor="@color/addCardColor"
-                    android:layout_marginStart="@dimen/dp_8"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivBack"
@@ -89,12 +89,12 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/dp_20"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSignIn"
-                tools:background="@drawable/bg_gradient_profile"/>
+                tools:background="@drawable/bg_gradient_profile" />
 
 
             <ImageView
@@ -135,10 +135,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:textFontWeight="400"
+                android:fontFamily="@font/inter_regular"
                 android:text="First Name"
                 android:textColor="@color/cardNumber"
-                android:fontFamily="@font/inter_regular"
+                android:textFontWeight="400"
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
@@ -148,9 +148,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                app:hintEnabled="false"
                 app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtFirst">
 
@@ -180,27 +180,29 @@
                 android:background="@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
                 tools:layout_editor_absoluteX="10dp" />
+
             <TextView
                 android:id="@+id/txtLast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:textFontWeight="400"
+                android:layout_marginTop="@dimen/dp_10"
+                android:fontFamily="@font/inter_regular"
                 android:text="Last Name"
                 android:textColor="@color/cardNumber"
-                android:fontFamily="@font/inter_regular"
+                android:textFontWeight="400"
                 android:textSize="@dimen/sp_12"
-                android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view1" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                app:hintEnabled="false"
                 app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtLast">
 
@@ -225,31 +227,33 @@
                 android:id="@+id/lview"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-               android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_marginHorizontal="@dimen/dp_10"
                 android:background="@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/txtLastName"
                 tools:layout_editor_absoluteX="10dp" />
+
             <TextView
                 android:id="@+id/txtUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:textFontWeight="400"
-                android:text="User Name"
                 android:layout_marginTop="@dimen/dp_10"
-                android:textColor="@color/cardNumber"
                 android:fontFamily="@font/inter_regular"
+                android:text="User Name"
+                android:textColor="@color/cardNumber"
+                android:textFontWeight="400"
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lview" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                app:hintEnabled="false"
                 app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtUser">
 
@@ -278,6 +282,38 @@
                 android:background="@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/txtUsername"
                 tools:layout_editor_absoluteX="10dp" />
+
+            <TextView
+                android:id="@+id/tvAboutYou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="About you"
+                android:textAlignment="center"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtUsername" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAboutYouVoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:background="@drawable/gray_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutYou">
+
+                <VideoView
+                    android:id="@+id/videoViewProfile"
+                    android:layout_width="@dimen/dp_120"
+                    android:layout_height="@dimen/dp_120"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -1,11 +1,16 @@
 package com.talktomii.ui.home.profile
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -28,12 +33,11 @@ import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.ui.tellusmore.SocialNetwork
-import com.talktomii.utlis.LinkAccountDialog
-import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
+import java.io.File
 import javax.inject.Inject
 
 class ProfileFragment : DaggerFragment(), AdminDetailInterface,
@@ -53,6 +57,7 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
     private var twLink: SocialNetwork = SocialNetwork(name = "twitter", link = "")
     private var insLink: SocialNetwork = SocialNetwork(name = "instagram", link = "")
     private var tikLink: SocialNetwork = SocialNetwork(name = "tiktok", link = "")
+    lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -73,25 +78,13 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        binding.rvInterest.adapter = AdapterInterests(requireContext())
-//        binding.rvAvailability.adapter = AdapterAvailability()
-
         binding.TextEditProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editPersonalInfoDetails)
         }
-//
-//        binding.txtBack.setOnClickListener {
-//            requireActivity().onBackPressed()
-//        }
-//
-//        binding.ivInterest.setOnClickListener {
-//            view.findNavController().navigate(R.id.action_profile_to_editInterestFragment)
-//        }
-//
-//        binding.txtBudgesCount.setOnClickListener {
-//            view.findNavController().navigate(R.id.action_profile_to_myBudgesFragment)
-//        }
+        binding.txtBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         init()
 
     }
@@ -127,62 +120,6 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
     }
 
     private fun setListeners() {
-
-//        binding.tvSave.setOnClickListener {
-//            if (!isUser(prefsManager)) {
-//                val hashMap: HashMap<String, Any> = hashMapOf()
-//                hashMap["fname"] = binding.etFirstName.text.toString()
-//                hashMap["lname"] = binding.etLastName.text.toString()
-//                hashMap["userName"] = binding.etUsername.text.toString()
-//                hashMap["socialNetwork"] = arrayListOf(fbLink, twLink, insLink, tikLink)
-//                val userData = viewModel.userField.get()
-//                var availaibility: ArrayList<SendAvailaibility> = arrayListOf()
-//
-//                for (i in userData!!.availaibility) {
-//                    if (i._id.isNullOrBlank()) {
-//                        if (i.end == "Never" || i.end == null) {
-//                            i.end = ""
-//                        }
-//                        val availbility = SendAvailaibility()
-//                        availbility.day = i.day
-//                        availbility.end = i.end
-//                        availbility.endTime = i.endTime
-//                        availbility.startTime = i.startTime
-//                        availaibility.add(availbility)
-//                    }
-//                }
-//                hashMap["availaibility"] = availaibility
-//                hashMap["location"] = userData.location
-//                hashMap["price"] =
-//                    if (userData.price != null && userData.price.size > 0) userData.price[0].price.toInt() else 0
-//
-//                val interstArrayList: ArrayList<String> = arrayListOf()
-//                for (i in userData.interest) {
-//                    interstArrayList.add(i._id)
-//                }
-//                hashMap["interest"] = interstArrayList
-//
-//                viewModel.updateProfile(
-//                    hashMap,
-//                    getUser(prefsManager)!!.admin._id
-//                )
-//            } else {
-//                try {
-//                    val hashMap: HashMap<String, Any> = hashMapOf()
-//                    hashMap["fname"] = binding.etFirstName.text.toString()
-//                    hashMap["lname"] = binding.etLastName.text.toString()
-//                    hashMap["userName"] = binding.etUsername.text.toString()
-//                    viewModel.updateProfile(
-//                        hashMap,
-//                        getUser(prefsManager)!!.admin._id
-//                    )
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//
-//            }
-//        }
-
         binding.ivInterest.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("Which", 1)
@@ -290,8 +227,6 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
     }
 
     private fun init() {
-
-
         progressDialog = ProgressDialog(requireActivity())
         viewModel.adminDetailInterface = this
         viewModel.commonInterface = this
@@ -307,6 +242,30 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 //        } else {
 //            updateInterestAdapter()
 //        }
+
+
+        binding.tvLabelAboutMe.setOnClickListener {
+            if (admin1!!.aboutYou != null){
+                val dialog = AboutMeDialog(admin1!!.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            }
+        }
+
+        profileImg_launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+//                if (resultCode == Activity.RESULT_OK) {
+//                    isChangeProfile = true
+//                    //Image Uri will not be null for RESULT_OK
+//                    val fileUri = data?.data!!
+//                    val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+//                    fileProfile = File(filePath)
+//                    Glide.with(requireContext()).load(fileUri).into(binding.imgDefault)
+//                }
+
+            }
     }
 
     override fun onFailure(message: String) {
@@ -336,6 +295,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             .placeholder(R.drawable.bg_gradient_profile)
             .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
 
+        if (admin1.aboutYou != null){
+
+        }
         for (i in admin1.socialNetwork) {
             when (i.name.lowercase()) {
                 "Facebook".lowercase() -> {
@@ -372,6 +334,19 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             viewModel.userField.get()!!.interest,
             1
         )
+        if (isUser(prefsManager)){
+            binding.constraintPrice.visibility = View.GONE
+            binding.tvLabelFollowMe.visibility = View.GONE
+            binding.constraintItems.visibility = View.GONE
+            binding.constraintBadges.visibility = View.GONE
+            binding.constarinAvaibility.visibility = View.GONE
+        }else{
+            binding.constraintPrice.visibility = View.VISIBLE
+            binding.tvLabelFollowMe.visibility = View.VISIBLE
+            binding.constraintItems.visibility = View.VISIBLE
+            binding.constraintBadges.visibility = View.VISIBLE
+            binding.constarinAvaibility.visibility = View.VISIBLE
+        }
         updateAvailabilityAdapter()
 //            (binding.rvSocialMedia.adapter as AdapterMySocialMedias).setItemList(viewModel.userField.get()!!.socialNetwork)
 

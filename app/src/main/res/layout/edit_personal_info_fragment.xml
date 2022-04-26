@@ -397,7 +397,7 @@
                     tools:layout_editor_absoluteX="10dp" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/tvLabelFollowMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -427,8 +427,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_20"
                     android:src="@drawable/ic_insta"
-                    app:layout_constraintStart_toStartOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintStart_toStartOf="@+id/tvLabelFollowMe"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
                 <ImageView
                     android:id="@+id/ivTwitter"
@@ -438,7 +438,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:src="@drawable/ic_twitter"
                     app:layout_constraintStart_toEndOf="@+id/ivInsta"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
                 <ImageView
                     android:id="@+id/ivTikTok"
@@ -448,7 +448,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:src="@drawable/ic_ticktock"
                     app:layout_constraintStart_toEndOf="@+id/ivTwitter"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
                 <View
                     android:id="@+id/view3"
@@ -470,7 +470,7 @@
                     android:fontFamily="@font/inter_regular"
                     android:textColor="@color/cardNumber"
                     android:textFontWeight="400"
-                    app:layout_constraintStart_toStartOf="@+id/textView8"
+                    app:layout_constraintStart_toStartOf="@+id/tvLabelFollowMe"
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
                 <androidx.recyclerview.widget.RecyclerView

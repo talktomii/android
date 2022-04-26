@@ -2,13 +2,19 @@ package com.talktomii.ui.editpersonalinfo
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,11 +31,9 @@ import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoDetailFragmentBinding
-import com.talktomii.interfaces.AdminDetailInterface
-import com.talktomii.interfaces.CommonInterface
-import com.talktomii.interfaces.UpdatePhotoInterface
-import com.talktomii.interfaces.UpdateProfileInterface
+import com.talktomii.interfaces.*
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
@@ -44,10 +48,12 @@ import javax.inject.Inject
 class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragment),
     AdminDetailInterface,
     CommonInterface, UpdateProfileInterface,
-    UpdatePhotoInterface {
+    UpdatePhotoInterface, UpdateAboutYouVideo {
     private lateinit var binding: EditPersonalInfoDetailFragmentBinding
 
     lateinit var profileImg_launcher: ActivityResultLauncher<Intent>
+    lateinit var gallerySelectRecord: ActivityResultLauncher<Intent>
+    lateinit var videoRecord: ActivityResultLauncher<Intent>
     lateinit var coverImg_launcher: ActivityResultLauncher<Intent>
 
     @Inject
@@ -58,8 +64,11 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
     private var admin1: Admin1? = null
 
     private var fileProfile: File? = null
+    private var fileAboutYou: File? = null
     private var fileCoverPhoto: File? = null
     private var isChangeProfile = false
+    private var isAddVideoRecord = false
+    private var fileUri: Uri? = null
 
     @Inject
     lateinit var prefsManager: PrefsManager
@@ -89,38 +98,6 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
         super.onViewCreated(view, savedInstanceState)
         init()
 
-        profileImg_launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-
-                if (resultCode == Activity.RESULT_OK) {
-                    isChangeProfile = true
-                    //Image Uri will not be null for RESULT_OK
-                    val fileUri = data?.data!!
-                    val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
-                    fileProfile = File(filePath)
-                    Glide.with(requireContext()).load(fileUri).into(binding.imgDefault)
-                }
-
-            }
-
-        coverImg_launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-
-                if (resultCode == Activity.RESULT_OK) {
-                    isChangeProfile = true
-                    //Image Uri will not be null for RESULT_OK
-                    val fileUri = data?.data!!
-                    val filePath =
-                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
-                    fileCoverPhoto = File(filePath)
-                    Glide.with(requireContext()).load(filePath).into(binding.layoutGrandiant)
-                }
-
-            }
 
 
     }
@@ -163,6 +140,10 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
             }
         }
 
+        binding.videoViewProfile.setOnClickListener {
+            recordVideo()
+        }
+
         binding.tvSave.setOnClickListener {
 
             if (isChangeProfile) {
@@ -176,6 +157,14 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                     map["coverPhoto\"; filename=\"coverPhoto.png\" "] = body1
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
+            }
+            if (isAddVideoRecord){
+                val map: HashMap<String, RequestBody> = HashMap()
+                if (fileAboutYou != null) {
+                    val body = fileAboutYou!!.asRequestBody("video/mp4".toMediaTypeOrNull())
+                    map["aboutYou\"; filename=\"aboutYou.mp4\" "] = body
+                }
+                viewModel.updateAboutYou(map, getUser(prefsManager)!!.admin._id)
             }
             try {
                 val hashMap: HashMap<String, Any> = hashMapOf()
@@ -201,11 +190,79 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
         viewModel.onUpdateProfileInterface = this
         viewModel.updatePhotoInterface = this
         binding.lifecycleOwner = this
+        viewModel.onUpdateAboutYou = this
         binding.viewModel = viewModel
         setListeners()
         if (admin1 == null) {
             viewModel.getAdminById(getUser(prefsManager)!!.admin._id)
         }
+
+        profileImg_launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    fileProfile = File(filePath)
+                    binding.videoViewProfile.setVideoURI(fileUri)
+                }
+
+            }
+
+        coverImg_launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isChangeProfile = true
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val filePath =
+                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    fileCoverPhoto = File(filePath)
+                    Glide.with(requireContext()).load(filePath).into(binding.layoutGrandiant)
+                }
+
+            }
+
+        videoRecord =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isAddVideoRecord = true
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val filePath =
+                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    fileAboutYou = File(filePath)
+                    binding.videoViewProfile.setVideoURI(fileUri)
+                }
+            }
+
+        gallerySelectRecord =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                val resultCode = result.resultCode
+                val data = result.data
+
+                if (resultCode == Activity.RESULT_OK) {
+                    isAddVideoRecord = true
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val filePath =
+                        com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
+                    fileAboutYou = File(filePath)
+                    binding.videoViewProfile.setVideoURI(fileUri)
+                }
+
+            }
+
     }
 
     override fun onFailure(message: String) {
@@ -242,10 +299,72 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
         var registerModel: RegisterModel? = getUser(prefsManager)
         registerModel!!.admin = admin1
         prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
-        findNavController().popBackStack()
+        context?.let { showToastMessage(it,getString(R.string.profile_updated_successfully)) }
+//        findNavController().popBackStack()
     }
 
     override fun onUpdatePhoto(admin: com.talktomii.data.photo.Admin) {
+        progressDialog.dismiss()
+    }
+
+    private fun recordVideo() {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+        val inflater: LayoutInflater = (context as Activity).layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.dialog_video_picker, null)
+        alertDialogBuilder.setView(dialogView)
+
+        val tvSelectCamera = dialogView.findViewById<TextView>(R.id.tvSelectCamera)
+        val tvSelectGallery = dialogView.findViewById<TextView>(R.id.tvSelectGallery)
+
+        alertDialogBuilder.setCancelable(false)
+        val alertDialog: AlertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+        alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        tvSelectCamera.setOnClickListener {
+
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    99
+                )
+            } else {
+                val takeVideoIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+                videoRecord.launch(takeVideoIntent)
+                alertDialog.dismiss()
+
+            }
+            alertDialog.dismiss()
+
+        }
+
+        tvSelectGallery.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    99
+                )
+            } else {
+
+                val i = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+                gallerySelectRecord.launch(i)
+            }
+            alertDialog.dismiss()
+
+        }
+    }
+
+    override fun onUpdateAboutYou(admin1: com.talktomii.data.photo.Admin) {
         progressDialog.dismiss()
     }
 }

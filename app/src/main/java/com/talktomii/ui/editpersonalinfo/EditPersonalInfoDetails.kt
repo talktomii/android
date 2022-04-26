@@ -21,7 +21,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.talktomii.R
@@ -32,10 +31,12 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.EditPersonalInfoDetailFragmentBinding
 import com.talktomii.interfaces.*
+import com.talktomii.utlis.AboutMeDialog
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
+import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -97,9 +98,6 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
-
-
     }
 
     private fun setListeners() {
@@ -140,8 +138,13 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
             }
         }
 
-        binding.videoViewProfile.setOnClickListener {
+        binding.ivMoreEditPersonal.setOnClickListener {
             recordVideo()
+        }
+
+        binding.ivVideoViewProfile.setOnClickListener {
+            val dialog = AboutMeDialog(admin1!!.aboutYou)
+            dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
         }
 
         binding.tvSave.setOnClickListener {
@@ -158,7 +161,7 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                 }
                 viewModel.updatePhoto(map, getUser(prefsManager)!!.admin._id)
             }
-            if (isAddVideoRecord){
+            if (isAddVideoRecord) {
                 val map: HashMap<String, RequestBody> = HashMap()
                 if (fileAboutYou != null) {
                     val body = fileAboutYou!!.asRequestBody("video/mp4".toMediaTypeOrNull())
@@ -179,7 +182,11 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                 e.printStackTrace()
             }
 
-
+            if (isUser(prefsManager)) {
+                binding.clAboutYouVoice.visibility = View.GONE
+            } else {
+                binding.clAboutYouVoice.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -242,7 +249,15 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                     val filePath =
                         com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
                     fileAboutYou = File(filePath)
-                    binding.videoViewProfile.setVideoURI(fileUri)
+                    admin1!!.aboutYou = fileAboutYou!!.absolutePath
+                    if (fileUri != null) {
+                        context?.let {
+                            Glide.with(it)
+                                .load(fileUri)
+                                .thumbnail(context?.let { it1 -> Glide.with(it1).load(fileUri) })
+                                .into(binding.ivVideoViewProfile)
+                        }
+                    }
                 }
             }
 
@@ -258,7 +273,15 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                     val filePath =
                         com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
                     fileAboutYou = File(filePath)
-                    binding.videoViewProfile.setVideoURI(fileUri)
+                    admin1!!.aboutYou = fileAboutYou!!.absolutePath
+                    if (fileUri != null) {
+                        context?.let {
+                            Glide.with(it)
+                                .load(fileUri)
+                                .thumbnail(context?.let { it1 -> Glide.with(it1).load(fileUri) })
+                                .into(binding.ivVideoViewProfile)
+                        }
+                    }
                 }
 
             }
@@ -291,6 +314,18 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
         Glide.with(requireContext()).load(admin1.coverPhoto)
             .placeholder(R.drawable.bg_gradient_profile)
             .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
+        if (!isUser(prefsManager)) {
+            if (admin1.aboutYou != null) {
+                context?.let {
+                    Glide.with(it)
+                        .load(admin1.aboutYou)
+                        .thumbnail(context?.let { it1 -> Glide.with(it1).load(admin1.aboutYou) })
+                        .into(binding.ivVideoViewProfile)
+                }
+
+            }
+        }
+
 
     }
 
@@ -299,7 +334,7 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
         var registerModel: RegisterModel? = getUser(prefsManager)
         registerModel!!.admin = admin1
         prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
-        context?.let { showToastMessage(it,getString(R.string.profile_updated_successfully)) }
+        context?.let { showToastMessage(it, getString(R.string.profile_updated_successfully)) }
 //        findNavController().popBackStack()
     }
 
@@ -333,7 +368,17 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     99
                 )
-            } else {
+            } else if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                99
+            )
+        } else {
                 val takeVideoIntent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
                 videoRecord.launch(takeVideoIntent)
                 alertDialog.dismiss()
@@ -366,5 +411,16 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
 
     override fun onUpdateAboutYou(admin1: com.talktomii.data.photo.Admin) {
         progressDialog.dismiss()
+        this.admin1!!.aboutYou = admin1.aboutYou!!
+        if (!isUser(prefsManager)) {
+            if (admin1.aboutYou != null) {
+                context?.let {
+                    Glide.with(it)
+                        .load(admin1.aboutYou)
+                        .thumbnail(context?.let { it1 -> Glide.with(it1).load(admin1.aboutYou) })
+                        .into(binding.ivVideoViewProfile)
+                }
+            }
+        }
     }
 }

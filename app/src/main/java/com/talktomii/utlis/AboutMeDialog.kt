@@ -41,11 +41,14 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
         binding.videoview.setOnPreparedListener { mediaPlayer ->
             val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
             val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
             val scaleX = videoRatio / screenRatio
             if (scaleX >= 1f) {
-                binding.videoview.scaleX = scaleX
+                binding.videoview.scaleX = width.toFloat()
             } else {
-                binding.videoview.scaleY = 1f / scaleX
+//                binding.videoview.scaleY = 1f / scaleX
+                binding.videoview.scaleY = height.toFloat()
             }
         }
         binding.videoview.start()
@@ -106,8 +109,10 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
         super.onStart()
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            val width = ViewGroup.LayoutParams.MATCH_PARENT
-            val height = ViewGroup.LayoutParams.MATCH_PARENT
+//            val width = ViewGroup.LayoutParams.MATCH_PARENT
+//            val height = ViewGroup.LayoutParams.MATCH_PARENT
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
             dialog.window?.setLayout(width, height)
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }

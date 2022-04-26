@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clBackSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_50"
+                    android:onClick="@{viewModel::onClick}"
+                    app:layout_constraintBaseline_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"></com.google.android.material.imageview.ShapeableImageView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::onClick}"
+                    android:text="Back"
+                    android:textColor="@color/addCardColor"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivBack"
+                    app:layout_constraintTop_toTopOf="@+id/ivBack" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/txtSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Edit Personal Info"
+                android:textAlignment="center"
+                android:textColor="@color/addCardColor"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clBackSave" />
+
+            <ImageView
+                android:id="@+id/layoutGrandiant"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_120"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/dp_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSignIn"
+                tools:background="@drawable/bg_gradient_profile"/>
+
+
+            <ImageView
+                android:id="@+id/imgCam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:src="@drawable/ic_camera"
+                app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
+                app:layout_constraintTop_toTopOf="@+id/layoutGrandiant" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgDefault"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/dp_60"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="@+id/layoutGrandiant"
+                app:layout_constraintStart_toStartOf="@+id/layoutGrandiant"
+                app:layout_constraintTop_toTopOf="@+id/layoutGrandiant"
+                app:riv_corner_radius="@dimen/dp_60"
+                tools:src="@drawable/ic_user">
+
+            </com.makeramen.roundedimageview.RoundedImageView>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:src="@drawable/ic_camera2"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
+                app:layout_constraintEnd_toEndOf="@+id/imgDefault" />
+
+            <TextView
+                android:id="@+id/txtFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="First Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:hintTextColor="@color/textHintColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtFirst">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="15dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/first_name"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{viewModel.userField.fname}"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/textHintColor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtLast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="Last Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:hintTextColor="@color/textHintColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLast">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="15dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="Last Name"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{viewModel.userField.lname}"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/textHintColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/lview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+               android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="User Name"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lview" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:hintTextColor="@color/textHintColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtUser">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="15dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint=" Username"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{viewModel.userField.userName}"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
+                    android:textSize="16sp"
+                    app:hintTextColor="@color/hint_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/uview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+                tools:layout_editor_absoluteX="10dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

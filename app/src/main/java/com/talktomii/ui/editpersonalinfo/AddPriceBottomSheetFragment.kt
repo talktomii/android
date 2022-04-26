@@ -39,7 +39,7 @@ class AddPriceBottomSheetFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.etPrice.setText(price.toString())
-
+        binding.seekbar.setOnTouchListener { p0, p1 -> true }
         val time = "15"
         if (!time.isNullOrEmpty() && time != "") {
             binding.seekbar.progress = time.toInt()

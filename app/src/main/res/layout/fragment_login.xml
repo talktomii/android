@@ -245,7 +245,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
-                android:text="Sign Up"
+                android:text="@string/sign_up_underline"
+                android:layout_marginStart="@dimen/dp_5"
                 android:textColor="@color/blue"
                 android:textSize="14sp"
                 android:textStyle="bold" />

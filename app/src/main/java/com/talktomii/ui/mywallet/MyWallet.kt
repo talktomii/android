@@ -3,6 +3,7 @@ package com.talktomii.ui.mywallet
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,8 +92,11 @@ class MyWallet : DaggerFragment(R.layout.my_wallet) {
         dataModel.getCurrentAmount()
 
         refillLayout.setOnClickListener {
-            val intent = Intent(context, RefillWalletActivity::class.java)
-            startActivity(intent)
+            Handler().postDelayed({
+                val intent = Intent(context, RefillWalletActivity::class.java)
+                startActivity(intent)
+            },300)
+
         }
         getPaidLayout.setOnClickListener {
             val intent = Intent(context, GetPaidActivity::class.java)

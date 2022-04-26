@@ -1,5 +1,6 @@
 package com.talktomii.ui.loginSignUp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -29,8 +30,10 @@ import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import android.util.Log
+import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.view.get
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.utlis.SocketManager
 import com.zoho.salesiqembed.ZohoSalesIQ
@@ -94,6 +97,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         bottombar = binding.menuBottom
+
 
         retrivedToken = prefsManager.getString(PrefsManager.PREF_API_TOKEN, "")
         user_id = prefsManager.getString(PrefsManager.PREF_API_ID, "")

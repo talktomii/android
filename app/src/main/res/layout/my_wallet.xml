@@ -67,6 +67,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -76,6 +77,7 @@
                         android:layout_marginHorizontal="@dimen/dp_12"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         app:cardCornerRadius="@dimen/dp_40"
+                        android:foreground="?android:attr/selectableItemBackground"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -95,6 +97,7 @@
                         android:textFontWeight="600"
                         android:textSize="@dimen/dp_12"
                         android:textStyle="bold"
+                        android:background="?android:attr/selectableItemBackground"
                         android:textColor="@color/white"
                         android:layout_marginTop="@dimen/dp_10"
                         android:text="Refill Wallet"

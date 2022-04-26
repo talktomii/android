@@ -51,6 +51,7 @@ class AddTimePeriodBottomSheetFragment(
         savedInstanceState: Bundle?
     ): View? {
         binding = BottomsheetAddtimeperiodBinding.inflate(LayoutInflater.from(context))
+
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivClose.setBackgroundResource(R.drawable.closesheeticon_dark)

@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundColor"
+        android:paddingTop="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_20">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,9 +24,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/gray_home_background"
                 android:paddingBottom="@dimen/dp_10"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                tools:ignore="MissingConstraints">
 
                 <TextView
                     android:id="@+id/txtName"
@@ -47,7 +46,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
-                    android:visibility="gone"
+                    android:padding="@dimen/dp_10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

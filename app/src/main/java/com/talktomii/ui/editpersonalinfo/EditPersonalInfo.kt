@@ -497,6 +497,7 @@ class EditPersonalInfo : DaggerFragment(R.layout.edit_personal_info_fragment), A
     }
 
     fun openTimePeriodBottomSheet(model: Availaibility?, position: Int?) {
+        requireContext().theme.applyStyle(R.style.MyTransparentBottomSheetDialogThemeDark, true);
         val bottomsheet = AddTimePeriodBottomSheetFragment(
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {

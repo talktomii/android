@@ -3,6 +3,7 @@ package com.talktomii.ui.editpersonalinfo.location
 
 import `in`.madapps.placesautocomplete.PlaceAPI
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

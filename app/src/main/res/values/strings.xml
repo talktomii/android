@@ -325,4 +325,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="sign_up_underline"><u>Sign Up</u></string>
     <string name="sign_in_underline"><u>Sign In</u></string>
     <string name="no_data_found">No Data Found!</string>
+    <string name="terms_policy">By signing up, you agree to our\n<u><font color="#55ADFF">Terms of Service</font></u> and <u><font color="#55ADFF">Privacy Policy</font></u>, and confirm\n that you are at least 18 years old. </string>
 </resources>

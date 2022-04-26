@@ -45,6 +45,16 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeInfluencerBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+        }
         val role: SharedPreferences = requireContext().getSharedPreferences("RoleName",
             Context.MODE_PRIVATE
         )
@@ -53,6 +63,22 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
             MainActivity.bookMark.visibility = View.VISIBLE
         }else{
             MainActivity.bookMark.visibility = View.GONE
+        }
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfoInfluencer",
+            Context.MODE_PRIVATE
+        )
+        binding.ivCross.setOnClickListener {
+            binding.constraintLayout.visibility = View.GONE
+            val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+            myEdit.putBoolean("hide", true)
+            myEdit.apply()
+        }
+
+        if (sharedPreferences.getBoolean("hide",false)){
+            binding.constraintLayout.visibility = View.GONE
+        }
+        else{
+            binding.constraintLayout.visibility = View.VISIBLE
         }
         return binding.root
     }
@@ -68,6 +94,22 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
         binding.rvMyAudience.adapter = myAudienceAdapter
         setListener()
         init()
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfoInfluencer",
+            Context.MODE_PRIVATE
+        )
+        binding.ivCross.setOnClickListener {
+            binding.constraintLayout.visibility = View.GONE
+            val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+            myEdit.putBoolean("hide", true)
+            myEdit.apply()
+        }
+
+        if (sharedPreferences.getBoolean("hide",false)){
+            binding.constraintLayout.visibility = View.GONE
+        }
+        else{
+            binding.constraintLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun init() {

@@ -27,12 +27,14 @@
             android:visibility="gone"
             android:indeterminateTintMode="src_atop"
             android:indeterminateTint="@color/colorAccent"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRefillWallet"
             chipLayout="{true}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginHorizontal="@dimen/dp_10"
             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

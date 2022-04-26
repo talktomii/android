@@ -50,12 +50,12 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/dp_30"
                     android:fontFamily="@font/inter_regular"
                     android:text="Email"
                     android:textColor="@color/gray"
                     android:textSize="12sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/dp_20"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtSignUp" />
 
@@ -84,8 +84,7 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_15"
+                    android:layout_marginHorizontal="@dimen/dp_30"
                     android:background="@color/gray"
                     app:layout_constraintTop_toBottomOf="@id/txtEmailId"
                     tools:layout_editor_absoluteX="10dp" />
@@ -101,7 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginEnd="@dimen/dp_20"
                         android:background="@null"
                         android:drawablePadding="@dimen/dp_10"
                         android:fontFamily="@font/inter_regular"
@@ -121,8 +120,7 @@
                         android:id="@+id/view1"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_marginHorizontal="@dimen/dp_30"
                         android:background="@color/gray"
                         app:layout_constraintTop_toBottomOf="@id/edPassword"
                         tools:layout_editor_absoluteX="10dp" />
@@ -139,8 +137,6 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constPass2"
                     android:layout_width="match_parent"
@@ -152,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_20"
                         android:background="@null"
                         android:drawablePadding="@dimen/dp_10"
                         android:fontFamily="@font/inter_regular"
@@ -172,8 +168,7 @@
                         android:id="@+id/view2"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
+                        android:layout_marginHorizontal="@dimen/dp_30"
                         android:background="@color/gray"
                         app:layout_constraintTop_toBottomOf="@id/repPassword"
                         tools:layout_editor_absoluteX="10dp" />
@@ -190,56 +185,35 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <CheckBox
-                    android:id="@+id/chckYearsOld"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:buttonTint="@color/gray"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="I'm 18 Years Old"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/sp_14"
-                    app:layout_constraintStart_toStartOf="@+id/constPass"
-                    app:layout_constraintTop_toBottomOf="@+id/constPass2" />
-
                 <LinearLayout
                     android:id="@+id/linearTerms"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_20"
                     app:layout_constraintEnd_toEndOf="@+id/constPass2"
-                    app:layout_constraintStart_toStartOf="@+id/chckYearsOld"
-                    app:layout_constraintTop_toBottomOf="@+id/chckYearsOld">
-
-                    <CheckBox
-                        android:id="@+id/chckTerms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/gray"
-                        android:fontFamily="@font/inter_regular"
-                        android:text="I agree with "
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/sp_14" />
+                    app:layout_constraintStart_toStartOf="@+id/constPass2"
+                    app:layout_constraintTop_toBottomOf="@+id/constPass2">
 
                     <TextView
                         android:id="@+id/tvTermsAndConditions"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
                         android:clickable="true"
                         android:focusable="true"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Terms And Conditions"
-                        android:textColor="@color/blue"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/terms_policy"
+                        android:textSize="@dimen/dp_14"
+                        android:layout_weight="400"
+                        android:textColor="@color/myCards"
+                        />
 
                 </LinearLayout>
-
                 <TextView
                     android:id="@+id/btnNext"
                     android:layout_width="match_parent"
@@ -257,7 +231,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/constPass2"
                     app:layout_constraintStart_toStartOf="@+id/constPass2"
                     app:layout_constraintTop_toBottomOf="@+id/linearTerms" />
-
                 <TextView
                     android:id="@+id/txtLoginWith"
                     android:layout_width="wrap_content"
@@ -274,7 +247,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/btnNext"
                     app:layout_constraintStart_toStartOf="@+id/btnNext"
                     app:layout_constraintTop_toBottomOf="@+id/btnNext" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constSocial"
                     android:layout_width="wrap_content"
@@ -315,13 +287,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_40"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constSocial">
 
@@ -332,6 +304,7 @@
                         android:fontFamily="@font/inter_regular"
                         android:text="Already Have An Account?"
                         android:textColor="@color/alreadyAccountcolor"
+                        android:textStyle="bold"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView

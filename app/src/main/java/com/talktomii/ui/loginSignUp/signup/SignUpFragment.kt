@@ -3,7 +3,14 @@ package com.talktomii.ui.loginSignUp.signup
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -71,6 +78,29 @@ class SignUpFragment : DaggerFragment() {
                 binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
             }
         }
+        val text = requireContext().resources.getString(R.string.terms_policy)
+        val ss = SpannableString(text)
+        val clickableSpan1: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://app.talktomii.com/terms"))
+                startActivity(browserIntent)
+            }
+        }
+
+        val clickableSpan2: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://app.talktomii.com/privacy"))
+                startActivity(browserIntent)
+            }
+        }
+
+        ss.setSpan(clickableSpan1, 32, 48, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(ForegroundColorSpan(Color.parseColor("#55ADFF")), 32, 48, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(clickableSpan2, 52, 67, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(ForegroundColorSpan(Color.parseColor("#55ADFF")), 52, 67, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.tvTermsAndConditions.text = ss
+        binding.tvTermsAndConditions.movementMethod = LinkMovementMethod.getInstance()
         return binding.root
     }
 
@@ -98,17 +128,13 @@ class SignUpFragment : DaggerFragment() {
             val password = binding.edPassword.text.toString()
             val repeatPassword = binding.repPassword.text.toString()
             if (validation(email, password, repeatPassword))
-                if (binding.chckTerms.isChecked) {
-                    findNavController().navigate(
-                        R.id.action_signupFragment_to_createProfileFragment,
-                        bundleOf(
-                            "email" to binding.txtEmailId.text.toString(),
-                            "password" to binding.edPassword.text.toString()
-                        )
+                findNavController().navigate(
+                    R.id.action_signupFragment_to_createProfileFragment,
+                    bundleOf(
+                        "email" to binding.txtEmailId.text.toString(),
+                        "password" to binding.edPassword.text.toString()
                     )
-                } else {
-                    binding.chckTerms.showSnackBar("Please accept our terms & conditions")
-                }
+                )
         }
 
     }

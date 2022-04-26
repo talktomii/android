@@ -12,6 +12,7 @@
         <item name="fontFamily">@font/poppins_regular</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue</item>
+<!--        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>-->
         <!-- Customize your theme here. -->
     </style>
 
@@ -42,6 +43,7 @@
     <style name="Theme.FurnitureMarket.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
 <!--        <item name="android:windowBackground">@drawable/ic_rectangle</item>-->
     </style>
 

@@ -28,7 +28,6 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/walletRefillImage"
-                android:layout_weight="0.2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="start"
@@ -37,9 +36,9 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_20"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -67,16 +66,15 @@
             </LinearLayout>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvWalletRefillPrice"
-                android:layout_weight="0.2"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="end"
-                android:fontFamily="@font/inter_extra_bold"
-                android:textColor="@color/walletText"
-                android:layout_marginEnd="@dimen/dp_20"
+                android:fontFamily="@font/inter_medium"
                 android:textFontWeight="500"
                 android:textSize="@dimen/dp_14"
+                android:textColor="@color/walletText"
                 android:textStyle="bold">
 
             </androidx.appcompat.widget.AppCompatTextView>

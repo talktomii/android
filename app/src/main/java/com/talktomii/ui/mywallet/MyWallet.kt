@@ -95,16 +95,20 @@ class MyWallet : DaggerFragment(R.layout.my_wallet) {
             Handler().postDelayed({
                 val intent = Intent(context, RefillWalletActivity::class.java)
                 startActivity(intent)
-            },300)
+            }, 300)
 
         }
         getPaidLayout.setOnClickListener {
-            val intent = Intent(context, GetPaidActivity::class.java)
-            startActivity(intent)
+            Handler().postDelayed({
+                val intent = Intent(context, GetPaidActivity::class.java)
+                startActivity(intent)
+            }, 300)
         }
         addCoupnLayout.setOnClickListener {
-            val intent = Intent(context, CouponActivity::class.java)
-            startActivity(intent)
+            Handler().postDelayed({
+                val intent = Intent(context, CouponActivity::class.java)
+                startActivity(intent)
+            }, 300)
         }
         return root
 

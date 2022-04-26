@@ -4,6 +4,7 @@
     <RelativeLayout
         android:id="@+id/rootView"
         android:layout_width="wrap_content"
+        android:elevation="@dimen/dp_10"
         android:layout_height="wrap_content"
         android:background="@drawable/bottomsheet_round_bg"
         android:clickable="true"

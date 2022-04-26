@@ -69,12 +69,40 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
                 MainActivity.btnMenu.visibility = View.GONE
             }
         }
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+        binding.ivCross.setOnClickListener {
+            binding.constraintLayout.visibility = View.GONE
+            val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+            myEdit.putBoolean("hide", true)
+            myEdit.apply()
+        }
+
+        if (sharedPreferences.getBoolean("hide",false)){
+            binding.constraintLayout.visibility = View.GONE
+        }
+        else{
+            binding.constraintLayout.visibility = View.VISIBLE
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+        binding.ivCross.setOnClickListener {
+            binding.constraintLayout.visibility = View.GONE
+            val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+            myEdit.putBoolean("hide", true)
+            myEdit.apply()
+        }
+
+        if (sharedPreferences.getBoolean("hide",false)){
+            binding.constraintLayout.visibility = View.GONE
+        }
+        else{
+            binding.constraintLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun initAdapter() {

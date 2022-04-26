@@ -1,6 +1,7 @@
 package com.talktomii.ui.loginSignUp
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.talktomii.data.apis.WebService
 import com.talktomii.data.model.RegisterModel
@@ -26,6 +27,7 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
     val verfyCode by lazy { SingleLiveEvent<Resource<Any>>() }
     val afterForgetPass by lazy { SingleLiveEvent<Resource<Any>>() }
     val createProfile by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
+    val checkUserName by lazy { SingleLiveEvent<Resource<Any>>() }
 
     fun createProfile(map: HashMap<String, RequestBody>) {
         createProfile.value = Resource.loading()
@@ -201,6 +203,34 @@ class LoginViewModel @Inject constructor(private val webService: WebService) : V
             })
     }
 
+
+    fun checkUserName(userName: String) {
+        checkUserName.value = Resource.loading()
+        webService.checkUserName(userName)
+            .enqueue(object : Callback<ApiResponse<Any>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<Any>>,
+                    response: Response<ApiResponse<Any>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("Response ------", response.body()!!.payload.toString())
+                        checkUserName.value = Resource.success(response.body()?.payload)
+                    } else {
+                        checkUserName.value = Resource.error(
+                            ApiUtils.getError(
+                                response.code(),
+                                response.errorBody()?.string()
+                            )
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<Any>>, t: Throwable) {
+                    checkUserName.value = Resource.error(ApiUtils.failure(t))
+                }
+
+            })
+    }
 
 
 }

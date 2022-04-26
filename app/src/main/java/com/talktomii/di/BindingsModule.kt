@@ -169,8 +169,11 @@ abstract class BindingsModule {
     abstract fun callEndFragment(): CallEndFragment
 
 
+//    @ContributesAndroidInjector
+//    abstract fun backToHomeDialog(): BackToHomeDialog
+
     @ContributesAndroidInjector
-    abstract fun backToHomeDialog(): BackToHomeDialog
+    abstract fun termsAndConditionsDialog(): TermsAndConditionsDialog
 
     @ContributesAndroidInjector
     abstract fun callDialog(): CallDialog

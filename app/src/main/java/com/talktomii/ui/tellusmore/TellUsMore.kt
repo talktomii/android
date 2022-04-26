@@ -1,7 +1,10 @@
 package com.talktomii.ui.tellusmore
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -27,15 +30,21 @@ import com.talktomii.databinding.TellUsMoreBinding
 import com.talktomii.ui.editpersonalinfo.location.AddEditLocationBottomSheet
 import com.talktomii.ui.editpersonalinfo.location.AddLocationInterface
 import com.talktomii.utlis.*
+import com.talktomii.utlis.ImageUtils.getVideoPathFromGallery
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
 
 class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.LinkListener {
 
+    private var videoPath: String=""
     private var fbLink: SocialNetwork = SocialNetwork(name = "facebook",link = "")
     private var twLink: SocialNetwork = SocialNetwork(name = "twitter",link = "")
     private var insLink: SocialNetwork = SocialNetwork(name = "instagram",link = "")
@@ -84,7 +93,7 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         viewModels.isUser.set(args.isUser)
         if(args.isUser){
             binding.tvAboutYou.gone()
-//            binding.tvRecordVideo.gone()
+            binding.tvRecordVideo.gone()
             binding.tvLinkAccounts.gone()
             binding.llLinkAccounts.gone()
         }else{
@@ -136,6 +145,24 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
                         view?.findNavController()?.navigate(R.id.homeFragment)
                     else
                         view?.findNavController()?.navigate(R.id.homeInfluencerFragment)
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
+
+        interestVM.uploadMedia.observe(requireActivity(), Observer {
+            it ?: return@Observer
+
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressDialog.setLoading(false)
+
                 }
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
@@ -200,6 +227,12 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         }
 
         binding.btnNext.setOnClickListener {
+            val map: HashMap<String, RequestBody> = HashMap()
+            if (!videoPath.isNullOrEmpty()) {
+                val body = File(videoPath).asRequestBody("*/*".toMediaTypeOrNull())
+                map["aboutYou\"; filename=\"aboutYou.mp4\" "] = body
+            }
+            interestVM.uploadMedia(map,getUser(prefsManager)?.admin?._id?:"")
             var request=RequestAdminModel(interest=interests,location = binding.tvSetlocation.text.toString(),socialNetwork = arrayListOf(fbLink,twLink,insLink,tikLink))
             interestVM.updateData(getUser(prefsManager)?.admin?._id?:"",request)
         }
@@ -218,7 +251,7 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
             val intent: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
             intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30)
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1)
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, ) // set the image file
+//           intent.putExtra(MediaStore.EXTRA_OUTPUT, ) // set the image file
 
             startActivityForResult(intent, 101101)
         }
@@ -254,6 +287,20 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
             }
         }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==101101 && resultCode==RESULT_OK){
+            val fileToUploadNew=getVideoPathFromGallery(requireContext(),data?.data!!)
+            videoPath = fileToUploadNew?.absolutePath ?: ""
+            val bMap = ThumbnailUtils.createVideoThumbnail(
+                videoPath,
+                MediaStore.Video.Thumbnails.MICRO_KIND
+            )
+            binding.tvRecordVideo.gone()
+            binding.ivShowVideo.visible()
+            binding.ivShowVideo.setImageBitmap(bMap)
+        }
+    }
 
     private fun addItemsOnRecycler() {
         val recyclerview = binding.rvTopics

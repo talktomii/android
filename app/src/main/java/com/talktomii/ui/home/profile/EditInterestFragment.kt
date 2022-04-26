@@ -2,6 +2,7 @@ package com.talktomii.ui.home.profile
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -120,7 +121,9 @@ class EditInterestFragment : DaggerFragment(com.talktomii.R.layout.edit_interest
     override fun onItems(list: ArrayList<Interest>) {
         for (item in list) {
             for (item2 in editPersonalInfoVM.userField.get()!!.interest) {
-                item.isClicked = item._id == item2._id
+                if (item._id == item2._id) {
+                    item.isClicked = true
+                }
             }
         }
         (binding.rvTopics.adapter as AdapterEditInterest).setItemList(list, 2)

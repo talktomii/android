@@ -62,9 +62,9 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
                 val authResponse = webService.getAdminByID(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
-                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                         bookMark.set(authResponse.body()!!.payload.admin[0].bookmark)
                         userField.set(authResponse.body()!!.payload.admin[0])
+                        adminDetailInterface?.onAdminDetails(authResponse.body()!!.payload.admin[0])
                     }
                 } else {
                     commonInterface!!.onFailureAPI(

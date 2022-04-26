@@ -32,10 +32,10 @@ class AdapterEditInterest(context: Context) :
     class ViewHolder(val binding: ItemEditInterestBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int {
-        return if (arraylist.size > 3)
-            3
-        else
-            arraylist.size
+//        return if (arraylist.size > 3)
+//            3
+//        else
+        return arraylist.size
     }
 
     fun setItemList(list: ArrayList<Interest>, which: Int) {
@@ -58,7 +58,8 @@ class AdapterEditInterest(context: Context) :
             Configuration.UI_MODE_NIGHT_YES -> {
                 if (isWhich == 1) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
+                        holder.binding.tvItemName.backgroundTintList =
+                            ColorStateList.valueOf(context.getColor(R.color.blue))
                         holder.binding.tvItemName.setTextColor(context.getColor(R.color.white))
                     }
                 } else {
@@ -101,7 +102,8 @@ class AdapterEditInterest(context: Context) :
             Configuration.UI_MODE_NIGHT_NO -> {
                 if (isWhich == 1) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        holder.binding.tvItemName.backgroundTintList = ColorStateList.valueOf(context.getColor(R.color.blue))
+                        holder.binding.tvItemName.backgroundTintList =
+                            ColorStateList.valueOf(context.getColor(R.color.blue))
                         holder.binding.tvItemName.setTextColor(context.getColor(R.color.white))
                     }
                 } else {
@@ -142,8 +144,6 @@ class AdapterEditInterest(context: Context) :
                 }
             }
         }
-
-
     }
 
 }

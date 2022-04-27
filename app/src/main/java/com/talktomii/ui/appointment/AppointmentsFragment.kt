@@ -98,7 +98,6 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         return binding.root
     }
 
-
     private fun init() {
         viewModel.commonInterface = this
         viewModel.infulancerCalenderListner = this

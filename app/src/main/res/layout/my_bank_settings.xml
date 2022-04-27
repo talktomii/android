@@ -14,7 +14,7 @@
     </data>
 
     <RelativeLayout
-        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -44,6 +44,7 @@
                 android:layout_marginHorizontal="@dimen/dp_12"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_weight="1"
+                android:textColor="@color/myCards"
                 android:fontFamily="@font/inter_extra_bold"
                 android:text="@string/bank_settings"
                 android:textFontWeight="700"
@@ -63,7 +64,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/bank_content"
-                android:textColor="#85898A"
+                android:textColor="@color/cardNumber"
                 android:textFontWeight="400"
                 android:textSize="@dimen/dp_16"
                 android:textStyle="italic"
@@ -98,7 +99,7 @@
                         android:layout_marginHorizontal="@dimen/dp_12"
                         android:fontFamily="@font/inter_regular"
                         android:text="Add Bank account"
-                        android:textColor="#455154"
+                        android:textColor="@color/walletText"
                         android:textFontWeight="700"
                         android:textSize="@dimen/dp_16" />
 
@@ -123,6 +124,7 @@
                 app:cardBackgroundColor="@color/mycard_bgcolor"
                 app:cardCornerRadius="@dimen/dp_6"
                 app:cardElevation="0dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addBankAccountCard"
@@ -141,7 +143,7 @@
                         android:layout_marginHorizontal="@dimen/dp_12"
                         android:fontFamily="@font/inter_regular"
                         android:text="Add Stripe account"
-                        android:textColor="#455154"
+                        android:textColor="@color/walletText"
                         android:textFontWeight="700"
                         android:textSize="@dimen/dp_16" />
 

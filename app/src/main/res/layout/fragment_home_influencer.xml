@@ -3,270 +3,331 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-  <ScrollView
-      android:layout_width="match_parent"
-      android:paddingBottom="@dimen/dp_20"
-      android:layout_height="wrap_content">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20">
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
-          <androidx.constraintlayout.widget.ConstraintLayout
-              android:id="@+id/constraintLayout"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_20"
-              android:layout_marginStart="15dp"
-              android:layout_marginEnd="15dp"
-              android:background="@drawable/gray_home_background"
-              android:paddingBottom="@dimen/dp_10"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/gray_home_background"
+                android:paddingBottom="@dimen/dp_10"
+                tools:ignore="MissingConstraints">
 
-              <TextView
-                  android:id="@+id/txtName"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/dp_20"
-                  android:layout_marginTop="@dimen/dp_20"
-                  android:text="Hi Cameron"
-                  android:textColor="@color/gray"
-                  android:textSize="20sp"
-                  android:textStyle="bold"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hi"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="700"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:drawableRight="@drawable/ic_hand"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-              <ImageView
-                  android:id="@+id/ivCross"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="@dimen/dp_20"
-                  android:layout_marginEnd="@dimen/dp_20"
-                  android:src="@drawable/ic_cross"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Cameron"
+                    android:textColor="@color/myCards"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@+id/textView4"
+                    app:layout_constraintTop_toTopOf="@+id/textView4" />
 
-              <TextView
-                  android:id="@+id/txtTittle"
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_marginEnd="@dimen/dp_10"
-                  android:text="Offer your services and find your audience on Talktomii!"
-                  android:textSize="14sp"
-                  android:textStyle="bold"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="@+id/txtName"
-                  app:layout_constraintTop_toBottomOf="@+id/txtName" />
+                <ImageView
+                    android:id="@+id/ivCross"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-          </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txtTittle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Offer your services and find your audience on Talktomii!"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="400"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/txtMyStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:fontFamily="@font/inter_regular"
+                android:text="My Stats"
+                android:textColor="@color/addCardColor"
+                android:textFontWeight="700"
+                android:textSize="@dimen/sp_24"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
+            <!--            <com.skydoves.powerspinner.PowerSpinnerView-->
+            <!--                android:id="@+id/spinnerWeek"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="10dp"-->
+            <!--                android:textSize="14.5sp"-->
+            <!--                app:spinner_arrow_tint="@color/gray"-->
+            <!--                app:spinner_arrow_gravity="end"-->
+            <!--                app:spinner_arrow_padding="8dp"-->
+            <!--                app:spinner_arrow_show="true"-->
+            <!--                app:spinner_divider_show="true"-->
+            <!--                app:spinner_divider_size="0.4dp"-->
+            <!--                app:spinner_popup_animation="dropdown"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"-->
+            <!--                app:layout_constraintTop_toTopOf="@+id/txtMyStats"-->
+            <!--                app:spinner_popup_elevation="14dp" />-->
 
-          <TextView
-              android:id="@+id/txtMyStats"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="My Stats"
-              android:textStyle="bold"
-              android:textSize="@dimen/sp_24"
-              android:textColor="@color/gray"
-              android:layout_marginTop="@dimen/dp_20"
-              app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-              app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:id="@+id/spinnerWeek"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="60dp"
+                android:paddingTop="@dimen/dp_10"
+                android:popupBackground="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                app:layout_constraintTop_toTopOf="@+id/txtMyStats"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_hint="Week"
+                app:smsp_hintColor="@color/gray"
+                app:smsp_itemListBackgroundColor="@color/white"
+                app:smsp_itemListHintColor="#FFFFFF"
+                app:smsp_multilineError="false"
+                app:smsp_selectedItemListColor="@color/gray"
+                app:smsp_underlineColor="@android:color/transparent" />
 
-          <TextView
-              android:id="@+id/txtWeek"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:drawableRight="@drawable/ic_dropdown"
-              android:drawablePadding="@dimen/dp_20"
-              android:text="Week"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"
-              app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-              app:layout_constraintTop_toTopOf="@+id/txtMyStats" />
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/spinnerWeek"-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:drawableRight="@drawable/ic_dropdown"-->
+            <!--                            android:drawablePadding="@dimen/dp_20"-->
+            <!--                            android:text="Week"-->
+            <!--                            android:textSize="16sp"-->
+            <!--                            android:textStyle="bold"-->
+            <!--                            app:layout_constraintBottom_toBottomOf="@+id/txtMyStats"-->
+            <!--                            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"-->
+            <!--                            app:layout_constraintTop_toTopOf="@+id/txtMyStats" />-->
 
-          <androidx.constraintlayout.widget.ConstraintLayout
-              android:id="@+id/layoutEarning"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingTop="@dimen/dp_8"
-              android:paddingBottom="8dp"
-              android:paddingStart="@dimen/dp_8"
-              android:paddingEnd="50dp"
-              android:background="@drawable/gray_home_background"
-              app:layout_constraintStart_toStartOf="@+id/txtMyStats"
-              app:layout_constraintTop_toBottomOf="@+id/txtMyStats">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutEarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="@drawable/gray_home_background"
+                android:paddingStart="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="50dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintStart_toStartOf="@+id/txtMyStats"
+                app:layout_constraintTop_toBottomOf="@+id/txtMyStats">
 
-              <TextView
-                  android:id="@+id/txtEarnings"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Earnings"
-                  android:textStyle="bold"
-                  android:textSize="16sp"
-                  android:textColor="@color/black"
-                  android:layout_marginTop="@dimen/dp_10"
-                  android:layout_marginStart="@dimen/dp_10"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtEarnings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Earnings"
+                    android:textColor="@color/calText"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-              <TextView
-                  android:id="@+id/txtEarn"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="$1,4K"
-                  android:textColor="@color/black"
-                  android:textSize="24sp"
-                  android:textStyle="bold"
-                  app:layout_constraintStart_toStartOf="@+id/txtEarnings"
-                  app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
+                <TextView
+                    android:id="@+id/txtEarn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="$1,4K"
+                    android:textColor="@color/calText"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/txtEarnings"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
 
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="+5%"
-                  android:textStyle="bold"
-                  android:textSize="12sp"
-                  android:layout_marginStart="@dimen/dp_20"
-                  android:textColor="@color/color_green"
-                  app:layout_constraintBottom_toBottomOf="@+id/txtEarn"
-                  app:layout_constraintStart_toEndOf="@+id/txtEarn"
-                  app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
-
-
-          </androidx.constraintlayout.widget.ConstraintLayout>
-
-          <androidx.constraintlayout.widget.ConstraintLayout
-              android:id="@+id/layoutCalls"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="@drawable/gray_home_background"
-              android:paddingStart="@dimen/dp_8"
-              android:paddingTop="@dimen/dp_8"
-              android:paddingEnd="40dp"
-              android:paddingBottom="8dp"
-              app:layout_constraintBottom_toBottomOf="@+id/layoutEarning"
-              app:layout_constraintEnd_toEndOf="@+id/txtWeek"
-              app:layout_constraintTop_toTopOf="@+id/layoutEarning">
-
-              <TextView
-                  android:id="@+id/txtCalls"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/dp_10"
-                  android:layout_marginTop="@dimen/dp_10"
-                  android:text="Earnings"
-                  android:textColor="@color/black"
-                  android:textSize="16sp"
-                  android:textStyle="bold"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
-
-              <TextView
-                  android:id="@+id/txtCallsEarn"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="35h 15m"
-                  android:textColor="@color/black"
-                  android:textSize="24sp"
-                  android:textStyle="bold"
-                  app:layout_constraintStart_toStartOf="@+id/txtCalls"
-                  app:layout_constraintTop_toBottomOf="@+id/txtCalls" />
-
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/dp_20"
-                  android:text="+5%"
-                  android:textColor="@color/color_green"
-                  android:textSize="12sp"
-                  android:textStyle="bold"
-                  app:layout_constraintBottom_toBottomOf="@+id/txtCallsEarn"
-                  app:layout_constraintStart_toEndOf="@+id/txtCallsEarn"
-                  app:layout_constraintTop_toTopOf="@+id/txtCallsEarn" />
-
-
-          </androidx.constraintlayout.widget.ConstraintLayout>
-
-          <TextView
-              android:id="@+id/txtNearestAppoint"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textColor="@color/gray"
-              android:textSize="24dp"
-              android:textStyle="bold"
-              android:text="Nearest Appointments"
-              android:layout_marginTop="25dp"
-              app:layout_constraintStart_toStartOf="@+id/layoutEarning"
-              app:layout_constraintTop_toBottomOf="@+id/layoutEarning" />
-
-          <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/rvNearestAppointment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="horizontal"
-              tools:itemCount="5"
-              android:layout_marginStart="15dp"
-              tools:listitem="@layout/item_nearest_appointments"
-              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/txtNearestAppoint">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="+5%"
+                    android:textColor="@color/color_green"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtEarn"
+                    app:layout_constraintStart_toEndOf="@+id/txtEarn"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEarnings" />
 
 
-          </androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-          <TextView
-              android:id="@+id/txtMyAudience"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="My Audience"
-              android:textStyle="bold"
-              android:textSize="24sp"
-              android:textColor="@color/gray"
-              android:layout_marginTop="@dimen/dp_20"
-              app:layout_constraintStart_toStartOf="@+id/txtNearestAppoint"
-              app:layout_constraintTop_toBottomOf="@+id/rvNearestAppointment" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCalls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_home_background"
+                android:paddingStart="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutEarning"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerWeek"
+                app:layout_constraintTop_toTopOf="@+id/layoutEarning">
 
-          <TextView
-              android:id="@+id/txtLastCalls"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:drawableRight="@drawable/ic_dropdown"
-              android:drawablePadding="@dimen/dp_20"
-              android:text="Last calls"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              app:layout_constraintBottom_toBottomOf="@+id/txtMyAudience"
-              app:layout_constraintEnd_toEndOf="@+id/layoutCalls"
-              app:layout_constraintTop_toTopOf="@+id/txtMyAudience" />
+                <TextView
+                    android:id="@+id/txtCalls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Calls"
+                    android:textColor="@color/calText"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-          <androidx.recyclerview.widget.RecyclerView
-              android:id="@+id/rvMyAudience"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="horizontal"
-              tools:itemCount="5"
-              tools:listitem="@layout/item_my_audience"
-              android:layout_marginStart="5dp"
-              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@+id/txtMyAudience">
+                <TextView
+                    android:id="@+id/txtCallsEarn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="35h 15m"
+                    android:textColor="@color/calText"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/txtCalls"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCalls" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="+5%"
+                    android:textColor="@color/color_green"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtCallsEarn"
+                    app:layout_constraintStart_toEndOf="@+id/txtCallsEarn"
+                    app:layout_constraintTop_toTopOf="@+id/txtCallsEarn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txtNearestAppoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/inter_regular"
+                android:text="Nearest Appointments"
+                android:textColor="@color/addCardColor"
+                android:textFontWeight="700"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="@+id/layoutEarning"
+                app:layout_constraintTop_toBottomOf="@+id/layoutEarning" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNearestAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtNearestAppoint"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_nearest_appointments" />
+
+            <TextView
+                android:id="@+id/txtMyAudience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:fontFamily="@font/inter_regular"
+                android:text="My Audience"
+                android:textColor="@color/addCardColor"
+                android:textFontWeight="700"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txtNearestAppoint"
+                app:layout_constraintTop_toBottomOf="@+id/rvNearestAppointment" />
+
+            <TextView
+                android:id="@+id/txtLastCalls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:drawablePadding="@dimen/dp_20"
+                android:text="Last calls"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/txtMyAudience"
+                app:layout_constraintEnd_toEndOf="@+id/layoutCalls"
+                app:layout_constraintTop_toTopOf="@+id/txtMyAudience" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMyAudience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtMyAudience"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_my_audience" />
 
 
-          </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-  </ScrollView>
+    </ScrollView>
 
 </layout>

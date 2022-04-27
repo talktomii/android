@@ -20,21 +20,34 @@ class HomeViewModel @Inject constructor(private val webService: WebService) : Vi
     @Inject
     lateinit var userRepository: UserRepository
 
-
+    val logout by lazy { SingleLiveEvent<Resource<Any>>() }
+    val langugeUpdate by lazy { SingleLiveEvent<Resource<Any>>() }
+    val deleteCard by lazy { SingleLiveEvent<Resource<Any>>() }
+    val getHomeData by lazy { SingleLiveEvent<Resource<HomeModel>>() }
+    val citiesData by lazy { SingleLiveEvent<Resource<HomeModel>>() }
+    val getProfile by lazy { SingleLiveEvent<Resource<UserData>>() }
     val cards by lazy { SingleLiveEvent<Resource<List<CardData>>>() }
     val getProducts by lazy { SingleLiveEvent<Resource<List<ProductsModel>>>() }
     val address by lazy { SingleLiveEvent<Resource<List<AddressModel>>>() }
-
+    val addaddress by lazy { SingleLiveEvent<Resource<AddressModel>>() }
+    val imageData by lazy { SingleLiveEvent<Resource<String>>() }
+    val addToCart by lazy { SingleLiveEvent<Resource<CartResponseModel>>() }
+    val couponApply by lazy { SingleLiveEvent<Resource<CartResponseModel>>() }
+    val removeCart by lazy { SingleLiveEvent<Resource<List<CartResponseModel>>>() }
+    val myCartList by lazy { SingleLiveEvent<Resource<CartResponse>>() }
+    val timeSlots by lazy { SingleLiveEvent<Resource<List<TimeSlotModel>>>() }
 
     val notifications by lazy { SingleLiveEvent<Resource<NotificationResponse>>() }
+    val ratingReview by lazy { SingleLiveEvent<Resource<RatingReviewModel>>() }
 
+    val updateStatus by lazy { SingleLiveEvent<Resource<CartResponseModel>>() }
     val addCard by lazy { SingleLiveEvent<Resource<Any>>() }
     val agoraToken by lazy { SingleLiveEvent<Resource<RegisterModel>>() }
 
 
     fun addCard(hashMap: HashMap<String, String>) {
         addCard.value = Resource.loading()
-        webService.addCard("Bearer " + MainActivity.retrivedToken, hashMap)
+        webService.addCard(hashMap)
             .enqueue(object : Callback<ApiResponse<addCardData>> {
                 override fun onResponse(
                     call: Call<ApiResponse<addCardData>>,

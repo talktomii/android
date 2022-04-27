@@ -13,11 +13,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainProfileLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clBackSave"
@@ -34,9 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_50"
                     android:onClick="@{viewModel::onClick}"
-                    android:src="@drawable/back_arrow"
                     app:layout_constraintBaseline_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"></com.google.android.material.imageview.ShapeableImageView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvBack"
@@ -44,6 +46,8 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{viewModel::onClick}"
                     android:text="Back"
+                    android:textColor="@color/addCardColor"
+                    android:layout_marginStart="@dimen/dp_8"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivBack"
@@ -73,13 +77,13 @@
                 android:layout_marginTop="@dimen/dp_20"
                 android:text="Edit Personal Info"
                 android:textAlignment="center"
-                android:textColor="@color/gray"
+                android:textColor="@color/addCardColor"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clBackSave" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
                 android:id="@+id/layoutGrandiant"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_120"
@@ -88,11 +92,11 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSignIn"
-                tools:background="@drawable/bg_gradient_profile">
+                tools:background="@drawable/bg_gradient_profile"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/imgCam"
@@ -131,10 +135,12 @@
                 android:id="@+id/txtFirst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
                 android:text="First Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
                 android:textSize="@dimen/sp_12"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgDefault" />
 
@@ -143,358 +149,499 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgDefault">
+                app:layout_constraintTop_toBottomOf="@+id/txtFirst">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
-                    android:hint="First Name"
-                    android:text="@{viewModel.userField.name}"
-                    android:textColor="@color/gray"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/first_name"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{viewModel.userField.fname}"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:hintTextColor="@color/hint_color" />
+                    app:hintTextColor="@color/textHintColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtLast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="Last Name"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:visibility="gone"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtFirstName">
+                app:layout_constraintTop_toBottomOf="@+id/txtLast">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
                     android:hint="Last Name"
-                    android:textColor="@color/gray"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{viewModel.userField.lname}"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:hintTextColor="@color/hint_color" />
+                    app:hintTextColor="@color/textHintColor" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <View
+                android:id="@+id/lview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+               android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+                tools:layout_editor_absoluteX="10dp" />
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textFontWeight="400"
+                android:text="User Name"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/cardNumber"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lview" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                app:hintTextColor="@color/hint_color"
+                app:hintTextColor="@color/textHintColor"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLastName">
+                app:layout_constraintTop_toBottomOf="@+id/txtUser">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginEnd="15dp"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/inter_regular"
                     android:hint=" Username"
+                    android:padding="@dimen/dp_10"
                     android:text="@{viewModel.userField.userName}"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/calText"
+                    android:textFontWeight="400"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     app:hintTextColor="@color/hint_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txtPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
+            <View
+                android:id="@+id/uview"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainInfluancer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp_30"
-                android:text="Price"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/uview">
 
-            <TextView
-                android:id="@+id/txtAddPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:drawableLeft="@drawable/plus"
-                android:drawablePadding="5dp"
-                android:text="Add Price"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/sp_14"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtPrice" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPrice"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_price" />
+                    <TextView
+                        android:id="@+id/txtPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:textColor="@color/cardNumber"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:textFontWeight="400"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Location"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txtPrice"
-                app:layout_constraintTop_toBottomOf="@+id/rvPrice" />
+                    <TextView
+                        android:id="@+id/txtAddPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:drawableLeft="@drawable/plus"
+                        android:drawablePadding="5dp"
+                        android:text="@string/add_price"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:drawableRight="@drawable/ic_edit"
-                android:padding="15dp"
-                android:text="@{viewModel.userField.location}"
-                android:textColor="@color/gray"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPrice"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_price" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:background="@color/gray"
-                app:layout_constraintTop_toBottomOf="@+id/location"
-                tools:layout_editor_absoluteX="10dp" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Follow me"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:text="Location"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/cardNumber"
+                    android:textStyle="bold"
+                    android:textFontWeight="400"
+                    app:layout_constraintStart_toStartOf="@+id/constraintPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintPrice" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvSocialMedia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_social_media" />
+                <LinearLayout
+                    android:id="@+id/llLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7">
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@color/gray"
-                app:layout_constraintTop_toBottomOf="@+id/rvSocialMedia"
-                tools:layout_editor_absoluteX="10dp" />
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:fontFamily="@font/inter_regular"
+                        android:paddingBottom="15dp"
+                        android:text="@{viewModel.userField.location}"
+                        android:textColor="@color/calText"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/txtInterests"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="Interest"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+                    <ImageView
+                        android:id="@+id/ivEditLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:src="@drawable/ic_edit" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvInterest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInterests"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_interests" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtItemCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:drawableLeft="@drawable/plus"
-                android:drawablePadding="@dimen/dp_2"
-                android:text="3"
-                android:textColor="@color/blue"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/rvInterest"
-                app:layout_constraintStart_toEndOf="@+id/rvInterest"
-                app:layout_constraintTop_toTopOf="@+id/rvInterest" />
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/llLocation"
+                    tools:layout_editor_absoluteX="10dp" />
 
-            <ImageView
-                android:id="@+id/ivInterest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="@+id/txtItemCount"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtItemCount" />
+                <TextView
+                    android:id="@+id/tvLabelFollowMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Follow me"
+                    android:textSize="@dimen/sp_12"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
+                    app:layout_constraintStart_toStartOf="@+id/textView7"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@color/gray"
-                app:layout_constraintTop_toBottomOf="@+id/rvInterest"
-                tools:layout_editor_absoluteX="10dp" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rvSocialMedia"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/textView8"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/textView8"-->
+<!--                    tools:itemCount="3"-->
+<!--                    tools:listitem="@layout/item_social_media" />-->
 
-            <TextView
-                android:id="@+id/txtBudges"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="Badges"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txtInterests"
-                app:layout_constraintTop_toBottomOf="@+id/view4" />
+                <ImageView
+                    android:id="@+id/ivInsta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_insta"
+                    app:layout_constraintStart_toStartOf="@+id/tvLabelFollowMe"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
-            <ImageView
-                android:id="@+id/ivBudge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/ic_badge1"
-                app:layout_constraintStart_toStartOf="@+id/txtBudges"
-                app:layout_constraintTop_toBottomOf="@+id/txtBudges" />
+                <ImageView
+                    android:id="@+id/ivTwitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_twitter"
+                    app:layout_constraintStart_toEndOf="@+id/ivInsta"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:src="@drawable/ic_badge2"
-                app:layout_constraintStart_toStartOf="@+id/ivBudge"
-                app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+                <ImageView
+                    android:id="@+id/ivTikTok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@drawable/ic_ticktock"
+                    app:layout_constraintStart_toEndOf="@+id/ivTwitter"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLabelFollowMe" />
 
-            <ImageView
-                android:id="@+id/ivBug"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_5"
-                android:src="@drawable/ic_badge3"
-                app:layout_constraintStart_toEndOf="@+id/ivBudge"
-                app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@color/gray"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@+id/ivInsta"
+                    tools:layout_editor_absoluteX="10dp" />
 
-            <TextView
-                android:id="@+id/txtBudgesCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
-                android:drawableLeft="@drawable/plus"
-                android:drawablePadding="@dimen/dp_5"
-                android:text="3"
-                android:textColor="@color/blue"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivBug"
-                app:layout_constraintStart_toEndOf="@+id/ivBug"
-                app:layout_constraintTop_toTopOf="@+id/ivBug" />
+                <TextView
+                    android:id="@+id/txtInterests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="Interest"
+                    android:textSize="@dimen/sp_12"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
+                    app:layout_constraintStart_toStartOf="@+id/tvLabelFollowMe"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-            <TextView
-                android:id="@+id/txtAvailability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="Availability"
-                android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txtBudges"
-                app:layout_constraintTop_toBottomOf="@+id/ivBudge" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvInterest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtInterests"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_interests" />
 
-            <TextView
-                android:id="@+id/txtAddTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:drawableLeft="@drawable/plus"
-                android:drawablePadding="@dimen/dp_5"
-                android:text="Add Time Period"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/sp_14"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/txtAvailability"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtAvailability" />
+                <TextView
+                    android:id="@+id/txtItemCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:drawableLeft="@drawable/plus"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:text="3"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/rvInterest"
+                    app:layout_constraintStart_toEndOf="@+id/rvInterest"
+                    app:layout_constraintTop_toTopOf="@+id/rvInterest" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvAvailability"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_availability" />
+                <ImageView
+                    android:id="@+id/ivInterest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtItemCount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtItemCount" />
 
-            <View
-                android:id="@+id/rgView"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:background="@color/gray"
-                app:layout_constraintTop_toBottomOf="@+id/rvAvailability" />
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@color/gray"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@+id/rvInterest"
+                    tools:layout_editor_absoluteX="10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="Switch to personal account"
-                android:textColor="@color/blue"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/txtAvailability"
-                app:layout_constraintTop_toBottomOf="@+id/rgView" />
+                <TextView
+                    android:id="@+id/txtBudges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="Badges"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="@+id/txtInterests"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" />
 
+                <ImageView
+                    android:id="@+id/ivBudge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_badge1"
+                    app:layout_constraintStart_toStartOf="@+id/txtBudges"
+                    app:layout_constraintTop_toBottomOf="@+id/txtBudges" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_badge2"
+                    app:layout_constraintStart_toStartOf="@+id/ivBudge"
+                    app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+                <ImageView
+                    android:id="@+id/ivBug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:src="@drawable/ic_badge3"
+                    app:layout_constraintStart_toEndOf="@+id/ivBudge"
+                    app:layout_constraintTop_toTopOf="@+id/ivBudge" />
+
+                <TextView
+                    android:id="@+id/txtBudgesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:drawableLeft="@drawable/plus"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="3"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivBug"
+                    app:layout_constraintStart_toEndOf="@+id/ivBug"
+                    app:layout_constraintTop_toTopOf="@+id/ivBug" />
+
+                <TextView
+                    android:id="@+id/txtAvailability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="Availability"
+                    android:textSize="@dimen/sp_12"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/cardNumber"
+                    android:textFontWeight="400"
+                    app:layout_constraintStart_toStartOf="@+id/txtBudges"
+                    app:layout_constraintTop_toBottomOf="@+id/ivBudge" />
+
+                <TextView
+                    android:id="@+id/txtAddTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:drawableLeft="@drawable/plus"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="Add Time Period"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAvailability"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtAvailability" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAvailability"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_availability" />
+
+                <View
+                    android:id="@+id/rgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/gray"
+                    app:layout_constraintTop_toBottomOf="@+id/rvAvailability" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="Switch to personal account"
+                    android:textColor="@color/blue"
+                    android:textSize="14sp"
+                    android:textFontWeight="400"
+                    android:layout_marginBottom="@dimen/dp_20"
+                  android:paddingVertical="@dimen/dp_20"
+                    android:fontFamily="@font/inter_regular"
+                    app:layout_constraintStart_toStartOf="@+id/txtAvailability"
+                    app:layout_constraintTop_toBottomOf="@+id/rgView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

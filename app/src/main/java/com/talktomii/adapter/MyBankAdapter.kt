@@ -102,7 +102,8 @@ class MyBankAdapter(val mList: List<BankItemModel>, var webService: WebService? 
         }
         holder.itemName.text = itemsViewModel.bank_name
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
-            val popupMenu = PopupMenu(context, view)
+            val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+            val popupMenu = PopupMenu(wrapper, view)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.bank_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())

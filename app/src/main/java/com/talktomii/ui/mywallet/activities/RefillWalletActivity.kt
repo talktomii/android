@@ -1,6 +1,5 @@
 package com.talktomii.ui.mywallet.activities
 
-import android.R
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -10,14 +9,12 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.databinding.ActivityRefillWalletBinding
-import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.app.Activity
-import android.content.Intent
-import com.talktomii.ui.mycards.data.getAllData
-
+import android.content.res.Configuration
+import com.talktomii.R
 
 class RefillWalletActivity : DaggerAppCompatActivity() {
 
@@ -26,24 +23,34 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var dataModel: MyCardsViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.WHITE;
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, com.talktomii.R.layout.activity_refill_wallet)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backRefill.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backRefill.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         getContext(this)
         etAmount = binding.addselectedAmount
         refillLayout = binding.refillMainLayout
         walletProgress = binding.addWalletProgress
         binding.selectAmount1.setOnClickListener {
             binding.addselectedAmount.setText("100")
+            binding.addselectedAmount.setSelection(binding.addselectedAmount.text!!.length);
         }
         binding.selectAmount2.setOnClickListener {
             binding.addselectedAmount.setText("200")
+            binding.addselectedAmount.setSelection(binding.addselectedAmount.text!!.length);
         }
         binding.selectAmount3.setOnClickListener {
             binding.addselectedAmount.setText("300")
+            binding.addselectedAmount.setSelection(binding.addselectedAmount.text!!.length);
         }
         binding.tvrefillBack.setOnClickListener {
             finish()
@@ -79,12 +86,12 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         }
 
 
-        if(repeatAmount != null){
+        if(repeatAmount != "null"){
             binding.addselectedAmount.setText(repeatAmount.toString())
         }else{
             binding.addselectedAmount.setText("")
         }
-        filterTypes = binding.typesFilter
+        filterTypes = binding.cardspinner
         dataModel.getCardlistWallet()
 
 //        binding.typesFilter.setText("Select card")
@@ -92,7 +99,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
 
     companion object{
         var cardList : MutableList<String> ?= null
-        var filterTypes : AutoCompleteTextView?= null
+        var filterTypes : Spinner?= null
         var refillLayout : RelativeLayout ?= null
         var walletProgress : ProgressBar ?= null
         var etAmount : EditText ?= null

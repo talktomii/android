@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/paymentdetailLayout"
+            android:background="@color/backgroundColor"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ProgressBar
@@ -21,6 +24,7 @@
                 android:visibility="gone"
                 android:indeterminateTintMode="src_atop"
                 android:indeterminateTint="@color/colorAccent"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -38,19 +42,21 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/backPaymentDetailsImg"
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
-                        android:src="@drawable/back_arrow1" />
+                        android:layout_gravity="center" />
 
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvBack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/dp_8"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:fontFamily="@font/inter_extra_bold"
+                        android:fontFamily="@font/inter_regular"
                         android:text="@string/back"
+                        android:textColor="@color/addCardColor"
                         android:textFontWeight="400"
                         android:textSize="@dimen/dp_16" />
                 </LinearLayout>
@@ -63,7 +69,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:fontFamily="@font/inter_regular"
                     android:text="@string/payment_details"
-                    android:textColor="#585B68"
+                    android:textColor="@color/myCards"
                     android:textFontWeight="700"
                     android:textSize="@dimen/dp_24"
                     android:textStyle="bold"
@@ -99,7 +105,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/inter_regular"
                             android:text="@string/referenceID"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="600"
                             android:textSize="@dimen/dp_14"
                             android:textStyle="bold" />
@@ -116,7 +122,7 @@
                             android:gravity="end"
                             android:maxLines="1"
                             android:text="6436345364775"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="400"
                             android:textSize="@dimen/dp_12"
                             android:textStyle="bold" />
@@ -137,7 +143,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/inter_regular"
                             android:text="@string/date"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="600"
                             android:textSize="@dimen/dp_14"
                             android:textStyle="bold" />
@@ -152,7 +158,7 @@
                             android:fontFamily="@font/inter_regular"
                             android:gravity="end"
                             android:text="Feb 23, 2022"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="400"
                             android:textSize="@dimen/dp_12"
                             android:textStyle="bold" />
@@ -173,7 +179,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/inter_regular"
                             android:text="@string/type"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="600"
                             android:textSize="@dimen/dp_14"
                             android:textStyle="bold" />
@@ -188,7 +194,7 @@
                             android:fontFamily="@font/inter_regular"
                             android:gravity="end"
                             android:text="Wallet Refill"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="400"
                             android:textSize="@dimen/dp_12"
                             android:textStyle="bold" />
@@ -209,7 +215,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/inter_regular"
                             android:text="@string/description"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="600"
                             android:textSize="@dimen/dp_14"
                             android:textStyle="bold" />
@@ -223,7 +229,7 @@
                             android:fontFamily="@font/inter_regular"
                             android:gravity="end"
                             android:text="-----"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="400"
                             android:textSize="@dimen/dp_12"
                             android:textStyle="bold" />
@@ -245,7 +251,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/inter_regular"
                             android:text="@string/amount"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="600"
                             android:textSize="@dimen/dp_14"
                             android:textStyle="bold" />
@@ -260,7 +266,7 @@
                             android:fontFamily="@font/inter_regular"
                             android:gravity="end"
                             android:text="$200.00"
-                            android:textColor="#455154"
+                            android:textColor="@color/paymentDetailTitle"
                             android:textFontWeight="700"
                             android:textSize="@dimen/dp_12"
                             android:textStyle="bold" />
@@ -296,7 +302,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/repeat_payment"
-                        android:textColor="#455154"
+                        android:textColor="@color/paymentDetailTitle"
                         android:textFontWeight="400"
                         android:textSize="@dimen/dp_16" />
 
@@ -337,9 +343,7 @@
                         android:layout_width="@dimen/sp_22"
                         android:layout_height="@dimen/sp_22"
                         android:layout_gravity="center"
-                        android:src="@drawable/refund_paymenticon">
-
-                    </androidx.appcompat.widget.AppCompatImageView>
+                        android:src="@drawable/refund_paymenticon"></androidx.appcompat.widget.AppCompatImageView>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
@@ -349,7 +353,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/refund_payment"
-                        android:textColor="#455154"
+                        android:textColor="@color/paymentDetailTitle"
                         android:textFontWeight="400"
                         android:textSize="@dimen/dp_16" />
 
@@ -357,9 +361,7 @@
                         android:layout_width="@dimen/dp_12"
                         android:layout_height="@dimen/dp_12"
                         android:layout_gravity="center"
-                        android:src="@drawable/right_arrowicon">
-
-                    </androidx.appcompat.widget.AppCompatImageView>
+                        android:src="@drawable/right_arrowicon"></androidx.appcompat.widget.AppCompatImageView>
                 </LinearLayout>
 
                 <View
@@ -402,7 +404,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/download_receipt"
-                        android:textColor="#455154"
+                        android:textColor="@color/paymentDetailTitle"
                         android:textFontWeight="400"
                         android:textSize="@dimen/dp_16" />
 

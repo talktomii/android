@@ -6,6 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/couponayout"
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -39,9 +40,10 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/backCoupon"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
-                    android:src="@drawable/back_arrow1" />
+                    />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -49,8 +51,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginTop="@dimen/dp_2"
-                    android:fontFamily="@font/inter_extra_bold"
+                    android:textColor="@color/addCardColor"
+                    android:fontFamily="@font/inter_regular"
                     android:text="@string/back"
                     android:textFontWeight="400"
                     android:textSize="@dimen/dp_16" />
@@ -64,7 +66,7 @@
                 android:layout_marginTop="@dimen/dp_15"
                 android:fontFamily="@font/inter_regular"
                 android:text="Add Coupon"
-                android:textColor="#585B68"
+                android:textColor="@color/addCardColor"
                 android:textFontWeight="700"
                 android:textSize="@dimen/dp_24"
                 android:textStyle="bold"

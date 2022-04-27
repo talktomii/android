@@ -19,13 +19,30 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
 
                 <VideoView
                     android:id="@+id/videoview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+                <com.universalvideoview.UniversalVideoView
+                    android:id="@+id/videoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    app:uvv_autoRotation="true"
+                    android:layout_centerHorizontal="true"
+                    app:uvv_fitXY="false" />
 
+                <com.universalvideoview.UniversalMediaController
+                    android:id="@+id/media_controller"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerHorizontal="true"
+                    app:uvv_scalable="true" />
                 <ImageView
                     android:id="@+id/ivClose"
                     android:layout_width="@dimen/dp_24"

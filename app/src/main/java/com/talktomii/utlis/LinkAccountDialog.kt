@@ -12,7 +12,8 @@ import com.talktomii.R
 import com.talktomii.databinding.DialogLinkAccountBinding
 import dagger.android.support.DaggerDialogFragment
 
-class LinkAccountDialog(var type: String,var listener:LinkListener) : DaggerDialogFragment() {
+class LinkAccountDialog(var type: String, var link: String, var listener: LinkListener) :
+    DaggerDialogFragment() {
 
     lateinit var binding: DialogLinkAccountBinding
 
@@ -37,12 +38,14 @@ class LinkAccountDialog(var type: String,var listener:LinkListener) : DaggerDial
         binding.txtCancel.setOnClickListener {
             dismiss()
         }
+        binding.etYourLink.setText(link)
         binding.txtLink.setOnClickListener {
-            if(binding.etYourLink.text.toString().isNotEmpty()) {
-                listener.onLinkClicked(type,binding.etYourLink.text.toString())
+            if (binding.etYourLink.text.toString().isNotEmpty()) {
+                listener.onLinkClicked(type, binding.etYourLink.text.toString())
                 dismiss()
-            }else{
-                Toast.makeText(requireContext(),"Please Enter your link",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Please Enter your link", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -59,11 +62,11 @@ class LinkAccountDialog(var type: String,var listener:LinkListener) : DaggerDial
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.MATCH_PARENT
             dialog.window?.setLayout(width, height)
-            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
 
-    public interface LinkListener {
-        abstract fun onLinkClicked(type: String, value: String)
+    interface LinkListener {
+        fun onLinkClicked(type: String, value: String)
     }
 }

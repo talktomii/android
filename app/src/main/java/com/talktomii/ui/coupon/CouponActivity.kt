@@ -2,6 +2,7 @@ package com.talktomii.ui.coupon
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -30,6 +31,14 @@ class CouponActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         getContext(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coupon)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.backCoupon.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.backCoupon.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         progress = binding.addCouponProgress
         layout = binding.couponayout
         binding.tvCouponBack.setOnClickListener {

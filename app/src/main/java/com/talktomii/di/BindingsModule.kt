@@ -1,8 +1,8 @@
 package com.talktomii.di
 
+
 import com.talktomii.ui.home.profile.InfluencerProfileFragment
 import com.talktomii.ui.search.SearchFragment
-import com.talktomii.VideoActivity
 import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.appointment.AppointmentsFragment
 import com.talktomii.ui.banksettings.MyBankSettings
@@ -10,12 +10,13 @@ import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.callhistory.CallHistory
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
 import com.talktomii.ui.coupon.CouponActivity
-import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
-import com.talktomii.ui.helpsupport.ChatSupportActivity
-import com.talktomii.ui.helpsupport.HelpSupport
 import com.talktomii.ui.drawer.bookmark.BookmarkFragment
 import com.talktomii.ui.drawer.helpsupport.HelpSupportFragment
 import com.talktomii.ui.drawer.settings.SettingsFragment
+import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
+import com.talktomii.ui.editpersonalinfo.EditPersonalInfoDetails
+import com.talktomii.ui.helpsupport.ChatSupportActivity
+import com.talktomii.ui.helpsupport.HelpSupport
 import com.talktomii.ui.home.HomeActivity
 import com.talktomii.ui.home.homeFragment.HomeFragment
 import com.talktomii.ui.home.notifications.NotificationFragment
@@ -43,8 +44,10 @@ import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
 import com.talktomii.ui.mywallet.fragments.RefillFragment
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
+import com.talktomii.ui.settings.PrivacyAndPolicyActivity
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
+import com.talktomii.ui.tellusmore.VideoFragment
 import com.talktomii.utlis.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -59,7 +62,7 @@ abstract class BindingsModule {
     abstract fun homeActivity(): HomeActivity
 
     @ContributesAndroidInjector
-    abstract fun videoActivity(): VideoActivity
+    abstract fun videoFragment(): VideoFragment
 
     @ContributesAndroidInjector
     abstract fun mycardsActivity(): MyCardsActivity
@@ -78,6 +81,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun reportAbuseActivity(): ReportAbuseActivity
+
+    @ContributesAndroidInjector
+    abstract fun privacyActivity(): PrivacyAndPolicyActivity
 
     @ContributesAndroidInjector
     abstract fun helpsupportActivity(): HelpSupport
@@ -108,6 +114,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun editInterestFragment(): EditInterestFragment
+
+    @ContributesAndroidInjector
+    abstract fun viewInterestFragment(): ViewInterestFragment
 
     @ContributesAndroidInjector
     abstract fun homeFrag(): MyCards
@@ -162,14 +171,15 @@ abstract class BindingsModule {
     abstract fun callEndFragment(): CallEndFragment
 
 
+//    @ContributesAndroidInjector
+//    abstract fun backToHomeDialog(): BackToHomeDialog
+
     @ContributesAndroidInjector
-    abstract fun backToHomeDialog(): BackToHomeDialog
+    abstract fun termsAndConditionsDialog(): TermsAndConditionsDialog
 
     @ContributesAndroidInjector
     abstract fun callDialog(): CallDialog
 
-    @ContributesAndroidInjector
-    abstract fun aboutMeDialog(): AboutMeDialog
 
     @ContributesAndroidInjector
     abstract fun extendTimeDialog(): ExtendTimeDialog
@@ -184,7 +194,13 @@ abstract class BindingsModule {
     abstract fun profileFragment(): ProfileFragment
 
     @ContributesAndroidInjector
+    abstract fun editPersonalDetails(): EditPersonalInfoDetails
+
+    @ContributesAndroidInjector
     abstract fun profileInfluencerFragment(): InfluencerProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun aboutMeDialog(): AboutMeDialog
 
 
     @ContributesAndroidInjector

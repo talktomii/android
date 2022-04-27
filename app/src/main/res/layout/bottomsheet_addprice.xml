@@ -25,17 +25,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add Price/Call Duration"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/dp_18"
-                    android:textStyle="bold"></TextView>
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/add_price_call_duration"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/dp_18" />
 
                 <ImageView
                     android:id="@+id/ivClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_close_24"></ImageView>
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center_vertical"></ImageView>
 
             </LinearLayout>
 
@@ -53,13 +53,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price"></TextView>
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Price"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/dp_12" />
 
                 <EditText
+                    android:id="@+id/etPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/transparent"
-                    android:hint="$0"></EditText>
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="$0"
+                    android:textColor="@color/myCards"
+                    android:textColorHint="@color/addCardHintColor"
+                    android:textSize="@dimen/dp_16" />
 
             </LinearLayout>
 
@@ -73,13 +82,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="15"></TextView>
+                    android:fontFamily="@font/inter_regular"
+                    android:text="15"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="400" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="90"></TextView>
+                    android:fontFamily="@font/inter_regular"
+                    android:text="90"
+                    android:textColor="@color/myCards"
+                    android:textFontWeight="400" />
 
             </RelativeLayout>
 
@@ -89,9 +104,10 @@
                 android:layout_height="wrap_content"
                 android:max="90"
                 android:min="15"
+                android:clickable="false"
                 android:progressBackgroundTint="@color/blue_check"
                 android:progressTint="@color/blue_check"
-                android:thumb="@drawable/seekbar"></SeekBar>
+                android:thumb="@drawable/seekbar" />
 
             <TextView
                 android:id="@+id/tvMin"
@@ -99,11 +115,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/inter_regular"
                 android:text="15 min"
-                android:textSize="18dp"></TextView>
+                android:textColor="@color/myCards"
+                android:textFontWeight="400"
+                android:textSize="18dp" />
 
             <TextView
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnAddprice"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/dp_24"

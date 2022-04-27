@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.provider.Settings
@@ -20,24 +21,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.androidisland.ezpermission.EzPermission
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.talktomii.R
-import com.talktomii.data.model.UserData
+import com.talktomii.data.model.RegisterModel
 import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.listner.PermissionCallback
-import com.google.android.material.snackbar.Snackbar
-import com.talktomii.data.model.RegisterModel
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 fun View.gone() {
     visibility = View.GONE
@@ -51,15 +49,16 @@ fun View.invisible() {
     visibility = View.INVISIBLE
 }
 
-fun Context.showMessage(message: String){
+fun Context.showMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Activity.showMessage(message: String){
+fun Activity.showMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
-fun EditText.isValidText(error: String):Boolean{
-    if(this.text.toString().trim().isNotEmpty()){
+
+fun EditText.isValidText(error: String): Boolean {
+    if (this.text.toString().trim().isNotEmpty()) {
         return true
     }
     this.error = error
@@ -71,20 +70,20 @@ fun ImageView.setImageFromFile(file: File?) {
     Glide.with(context).load(file).placeholder(R.color.grey_text).into(this@setImageFromFile)
 }
 
-fun EditText.isValidEmail(error: String):Boolean{
-    if(isValidFormat(this.text.toString().trim())){
+fun EditText.isValidEmail(error: String): Boolean {
+    if (isValidFormat(this.text.toString().trim())) {
         return true
     }
-    this.error  = error
+    this.error = error
     this.requestFocus()
     return false
 }
 
-fun EditText.isValidPass(error: String):Boolean{
-    if(this.text.toString().trim().length>5){
+fun EditText.isValidPass(error: String): Boolean {
+    if (this.text.toString().trim().length > 5) {
         return true
     }
-    this.error  = error
+    this.error = error
     this.requestFocus()
     return false
 }
@@ -96,6 +95,7 @@ fun checkAccessFineLocationGranted(context: Context): Boolean {
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 }
+
 fun showGPSNotEnabledDialog(context: Context) {
     AlertDialog.Builder(context)
         .setTitle("gps_gfg_enabled")
@@ -183,11 +183,20 @@ fun logoutUser(activity: Activity?, prefsManager: PrefsManager) {
 
     Log.d("logoutCalled", "clearData")
 
-    val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    val notificationManager =
+        activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.cancelAll()
 
     prefsManager.removeAll()
 
+    val preferences: SharedPreferences = activity.getSharedPreferences("hideInfo", Context.MODE_PRIVATE)
+    val editor: SharedPreferences.Editor = preferences.edit()
+    editor.clear()
+    editor.apply()
+    val preferences_in: SharedPreferences = activity.getSharedPreferences("hideInfoInfluencer", Context.MODE_PRIVATE)
+    val editor_in: SharedPreferences.Editor = preferences_in.edit()
+    editor_in.clear()
+    editor_in.apply()
     activity.startActivity(
         Intent(activity, MainActivity::class.java)
     )
@@ -292,7 +301,8 @@ fun TextView.makeLinks(color: Int, vararg links: Pair<String, View.OnClickListen
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
     }
-    this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+    this.movementMethod =
+        LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
 
@@ -359,6 +369,13 @@ fun getUser(prefsManager: PrefsManager): RegisterModel? {
     return (prefsManager.getObject(PrefsManager.PREF_PROFILE, RegisterModel::class.java))
 
 }
+
+fun isUser(prefsManager: PrefsManager): Boolean {
+    var registerModel =
+        (prefsManager.getObject(PrefsManager.PREF_PROFILE, RegisterModel::class.java))
+    return registerModel!!.admin.role._id == LoginType.USER_ROLE
+}
+
 fun getFormatFromDateUtc(date: Date, format: String): String? {
     val f = SimpleDateFormat(format, Locale.US)
     f.timeZone = TimeZone.getTimeZone("UTC")
@@ -368,13 +385,13 @@ fun getFormatFromDateUtc(date: Date, format: String): String? {
 fun getDate(date: String): Calendar {
     val f = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     f.timeZone = TimeZone.getTimeZone("UTC")
-    val cal = Calendar.getInstance();
-    cal.setTime(f.parse(date))
+    val cal = Calendar.getInstance()
+    cal.time = f.parse(date)
     return cal
 }
 
 
-fun printDatesInMonth(year: Int, month: Int):ArrayList<String> {
+fun printDatesInMonth(year: Int, month: Int): ArrayList<String> {
     val list = ArrayList<String>()
     val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
     val cal = Calendar.getInstance()
@@ -392,11 +409,11 @@ fun convertFromUtcFormat(dateString: String?, toFormat: String): String {
     try {
         val from =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        from.setTimeZone(TimeZone.getTimeZone("UTC"))
+        from.timeZone = TimeZone.getTimeZone("UTC")
         val date = from.parse(dateString ?: "") ?: Date()
 
         val tooo = SimpleDateFormat(toFormat, Locale.ENGLISH)
-        tooo.setTimeZone(TimeZone.getDefault())
+        tooo.timeZone = TimeZone.getDefault()
         val formattedDate = tooo.format(date)
         return formattedDate
     } catch (e: ParseException) {
@@ -409,11 +426,11 @@ fun convertFormat(dateString: String?, toFormat: String): String {
     try {
         val from =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-      //  from.setTimeZone(TimeZone.getTimeZone("UTC"))
+        //  from.setTimeZone(TimeZone.getTimeZone("UTC"))
         val date = from.parse(dateString ?: "") ?: Date()
 
         val tooo = SimpleDateFormat(toFormat, Locale.ENGLISH)
-        tooo.setTimeZone(TimeZone.getDefault())
+        tooo.timeZone = TimeZone.getDefault()
         val formattedDate = tooo.format(date)
         return formattedDate
     } catch (e: ParseException) {

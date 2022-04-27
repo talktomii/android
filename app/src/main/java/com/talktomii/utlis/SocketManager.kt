@@ -9,6 +9,7 @@ import io.socket.client.Ack
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import io.socket.engineio.client.Socket.EVENT_ERROR
 import org.json.JSONObject
 import java.net.URI
 
@@ -16,15 +17,19 @@ class SocketManager {
     private lateinit var userData: UserData
     var socket: Socket? = null
 
-    var activity: Activity?= null
+    var activity: Activity? = null
 
     companion object {
 
         // Listen Events
         const val LISTEN_LOCATION = "sendLocationResp"
         const val JOIN = "join"
+        const val acceptCall = "acceptCall"
+        const val rejectCall = "rejectCall"
         const val connectCall = "connectCall"
         const val onCallRequest = "onCallRequest"
+        const val onRejectCall = "onRejectCall"
+        const val onAcceptCall = "onAcceptCall"
 
         //Emit Events
         const val SEND_LOCATION = "send-location"
@@ -49,13 +54,14 @@ class SocketManager {
         }
     }
 
-    fun connect(activity:Activity,prefsManager: PrefsManager) {
+    fun connect(activity: Activity, prefsManager: PrefsManager) {
         this.activity = activity
         val options = IO.Options()
         options.forceNew = false
         options.reconnection = true
-        var user= getUser(prefsManager)
-        socket = IO.socket(URI.create("https://api.talktomii.com"),
+        var user = getUser(prefsManager)
+        socket = IO.socket(
+            URI.create("https://api.talktomii.com"),
             options
         )
         socket?.connect()
@@ -76,6 +82,7 @@ class SocketManager {
             Log.e("Socket", "Socket error second${Gson().toJson(it[0])}")
         }
     }
+
     fun disconnect() {
         socketOff()
         socket?.off()
@@ -110,17 +117,20 @@ class SocketManager {
                 )
             })
     }
+
     fun joinApp(arg: JSONObject, msgAck: OnMessageReceiver) {
         socket?.emit(
             JOIN, arg,
             Ack { args ->
-                println("------------------" + args[0])
+                println("------JOIN------------" + args[0])
                 msgAck.onMessageReceive(
                     args[0].toString(),
                     JOIN
                 )
             })
+        onCallRequest(msgAck)
     }
+
     fun connectCall(arg: JSONObject, msgAck: OnMessageReceiver) {
         socket?.emit(
             connectCall, arg,
@@ -132,6 +142,31 @@ class SocketManager {
                 )
             })
     }
+
+    fun rejectCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            rejectCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    rejectCall
+                )
+            })
+    }
+    fun acceptCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            acceptCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    acceptCall
+                )
+            })
+    }
+
+
     // Listen Events
     fun onCallRequest(msgAck: OnMessageReceiver) {
         socket?.on(onCallRequest) { args ->
@@ -141,6 +176,23 @@ class SocketManager {
             )
         }
     }
+    fun onRejectCall(msgAck: OnMessageReceiver) {
+        socket?.on(onRejectCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                onRejectCall
+            )
+        }
+    }
+    fun onAcceptCall(msgAck: OnMessageReceiver) {
+        socket?.on(onAcceptCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                onAcceptCall
+            )
+        }
+    }
+
     fun onCallConnect(msgAck: OnMessageReceiver) {
         socket?.on(connectCall) { args ->
             msgAck.onMessageReceive(
@@ -149,6 +201,7 @@ class SocketManager {
             )
         }
     }
+
     private fun socketOff() {
         socket?.off(LISTEN_LOCATION)
     }

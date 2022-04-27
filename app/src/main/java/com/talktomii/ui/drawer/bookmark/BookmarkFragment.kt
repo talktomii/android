@@ -8,16 +8,25 @@ import androidx.navigation.fragment.findNavController
 import com.talktomii.R
 import com.talktomii.data.model.drawer.bookmark.Payload
 import com.talktomii.data.model.drawer.bookmark.Service
+import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentBookmarkBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.drawer.BookMarkInterface
+import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
+import com.talktomii.utlis.isUser
 import dagger.android.support.DaggerFragment
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, CommonInterface,
     BookMarkInterface {
     lateinit var binding: FragmentBookmarkBinding
+
+    @Inject
+    lateinit var prefsManager: PrefsManager
 
     @Inject
     lateinit var viewModel: BookmarkViewModel
@@ -42,7 +51,7 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
     }
 
     private fun initAdapter() {
-        adapter = AdapterBookmark(requireContext(), arrayList, this)
+        adapter = AdapterBookmark(requireContext(), arrayList, this, isUser(prefsManager))
         binding.rvPopular.adapter = adapter
     }
 
@@ -51,15 +60,21 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
 
         viewModel.commonInterface = this
         viewModel.onbookmarkinterface = this
-        viewModel.getBookmarks("")
+        viewModel.getBookmarks(getUser(prefsManager)!!.admin._id)
     }
 
     override fun onFailure(message: String) {
         progressDialog.dismiss()
     }
 
-    override fun onFailureAPI(message: String) {
+    override fun onFailureAPI(message: String, code: Int, errorBody: ResponseBody?) {
         progressDialog.dismiss()
+        ApisRespHandler.handleError(
+            ApiUtils.handleError(
+                code,
+                errorBody!!.string()
+            ), requireActivity(), prefsManager
+        )
     }
 
     override fun onStarted() {

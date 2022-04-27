@@ -76,4 +76,23 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:colorBackground">#7F000000</item>
     </style>
+    <style name="MyTransparentBottomSheetDialogThemeDark" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">#4Fffffff</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/calText</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/ic_down</item>
+    </style>
+    <style name="MyPopup" parent="@style/Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@color/mycard_bgcolor</item>
+    </style>
+    <style name="Talk.PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">@color/calText</item>
+        <item name="android:itemBackground">@color/slot_bg</item>
+    </style>
 </resources>

@@ -8,7 +8,7 @@ data class Wallet(
     @SerializedName("paymentId") var paymentId: String? = null,
     @SerializedName("_id") var Id: String? = null,
     @SerializedName("uid") var uid: String? = null,
-    @SerializedName("amount") var amount: Int? = null,
+    @SerializedName("amount") var amount: Long? = null,
     @SerializedName("type") var type: String? = null,
     @SerializedName("createdAt") var createdAt: String? = null,
     @SerializedName("updatedAt") var updatedAt: String? = null,

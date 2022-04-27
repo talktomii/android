@@ -1,12 +1,14 @@
 package com.talktomii.utlis
 
 import android.app.Dialog
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.talktomii.R
 import com.talktomii.databinding.CallDialogBinding
 import dagger.android.support.DaggerDialogFragment
 
@@ -20,6 +22,14 @@ class CallDialog  : DaggerDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = CallDialogBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivCancel.setImageResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivCancel.setImageResource(R.drawable.close_sheet_icon)
+            }
+        }
         return binding.root
     }
 

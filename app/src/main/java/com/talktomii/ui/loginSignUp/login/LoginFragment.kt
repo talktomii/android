@@ -2,16 +2,19 @@ package com.talktomii.ui.loginSignUp.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -24,11 +27,20 @@ import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentLoginBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
+import com.talktomii.ui.loginSignUp.MainActivity
 import com.talktomii.utlis.*
+import com.talktomii.utlis.LoginType.USER_ROLE
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
+import org.json.JSONException
 import java.net.URL
 import javax.inject.Inject
+import android.R.attr.name
+
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import android.util.Patterns
+import com.talktomii.ui.mycards.data.MyCardsViewModel
 
 
 class LoginFragment : DaggerFragment() {
@@ -50,6 +62,8 @@ class LoginFragment : DaggerFragment() {
     var deviceToken: String? = ""
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
+    @Inject
+    lateinit var dataModel: MyCardsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,11 +72,29 @@ class LoginFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivGoogle.setImageResource(R.drawable.googe_btn)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivGoogle.setImageResource(R.drawable.google_btn_light)
+            }
+        }
         init()
         initializeGoogle()
 
@@ -83,8 +115,20 @@ class LoginFragment : DaggerFragment() {
                     progressDialog.setLoading(false)
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
+                    prefsManager.save(PrefsManager.PREF_ROLE, it.data.admin.role.roleName)
+                    Log.d("user is ----", it.data.admin.role.roleName)
+
+                    val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
+                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                    myEdit.putString("name", prefsManager.getString(PrefsManager.PREF_ROLE,""))
+                    myEdit.putString("id",prefsManager.getString(PrefsManager.PREF_API_ID,""))
+                    myEdit.putString("token",prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+                    myEdit.apply()
+
                     requireContext().showMessage("Login Successfully")
-                    if (it.data?.admin?.role?.roleName == "user")
+                    dataModel.getTotalAmount()
+                    if (it.data.admin.role._id == USER_ROLE)
                         findNavController().navigate(R.id.homeFragment)
                     else
                         findNavController().navigate(R.id.homeInfluencerFragment)
@@ -104,6 +148,46 @@ class LoginFragment : DaggerFragment() {
 
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
+        callbackManager = CallbackManager.Factory.create()
+
+
+        binding.fbLoginButton.registerCallback(callbackManager, object :
+            FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                val request =
+                    GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
+                        try {
+                            Log.e("email", data.getString("email"))
+                            findNavController().navigate(
+                                R.id.action_signupFragment_to_createProfileFragment,
+                                bundleOf(
+
+                                    "email" to data.getString("email"),
+                                    "isSocial" to "true"
+                                )
+                            )
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    }
+                val parameters = Bundle()
+                parameters.putString(
+                    "fields",
+                    "id,email"
+                )
+                request.parameters = parameters
+                request.executeAsync()
+            }
+
+            override fun onCancel() {
+                print("---cancle--")
+            }
+
+            override fun onError(exception: FacebookException?) {
+                exception?.stackTrace
+            }
+        })
     }
 
     fun getDeviceToken() {
@@ -127,6 +211,7 @@ class LoginFragment : DaggerFragment() {
         binding.txtForgetPass.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgetPassword)
         }
+
         binding.ivGoogle.setOnClickListener {
             googleResultLauncher.launch(mGoogleSignInClient.signInIntent)
         }
@@ -145,7 +230,13 @@ class LoginFragment : DaggerFragment() {
         callbackManager?.onActivityResult(requestCode, resultCode, data)
     }
 
+
     private fun setListener() {
+
+        binding.ivFacebook.setOnClickListener {
+            binding.fbLoginButton.performClick()
+        }
+
         binding.btnLogin.setOnClickListener {
             var email = binding.txtEmailId.text.toString()
             var password = binding.edPassword.text.toString()
@@ -224,5 +315,7 @@ class LoginFragment : DaggerFragment() {
 
     }
 
-
+    companion object{
+        lateinit var roleName : String
+    }
 }

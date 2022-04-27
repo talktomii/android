@@ -9,3 +9,6 @@ interface SearchInterface {
 interface SearchItemClick{
     fun onViewSearchClick(interest: Interest)
 }
+interface OnAdminSearchInterface {
+    fun onSearch(payload: com.talktomii.data.model.admin.Payload)
+}

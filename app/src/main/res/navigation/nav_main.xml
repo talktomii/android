@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_login_to_home"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeInfluencerFragment"
+            app:destination="@id/homeInfluencerFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -65,6 +68,9 @@
         <action
             android:id="@+id/action_tellUsMore_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"
+            app:destination="@id/homeInfluencerFragment" />
 
         <!--        <action-->
         <!--            android:id="@+id/action_tellUsMore_to_homeInfluencerFragment"-->
@@ -77,16 +83,29 @@
         <!--        <action-->
         <!--            android:id="@+id/action_editPersonalInfo_to_homeFragment"-->
         <!--            app:destination="@id/homeFragment" />-->
+        <action
+            android:id="@+id/action_editPersonalInfo_to_editInterestFragment"
+            app:destination="@id/editInterestFragment" />
+        <action
+            android:id="@+id/action_editPersonalInfo_to_myBudgesFragment"
+            app:destination="@id/myBudgesFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.talktomii.ui.homefrag.HomesFragment"
         android:label="HomeFragment" >
-
+        <argument
+            android:name="ID"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_home_to_influencer_profile"
             app:destination="@id/influencerProfileFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Popular" />
     </fragment>
 
     <fragment
@@ -97,6 +116,14 @@
         <action
             android:id="@+id/action_influencer_profile_to_call_fragmnet"
             app:destination="@id/callFragment" />
+        <action
+            android:id="@+id/action_influencerProfileFragment_to_myWalletFragment"
+            app:destination="@id/myWalletFragment" />
+        <action
+            android:id="@+id/action_influencerProfileFragment_to_viewInterestFragment"
+            app:destination="@id/viewInterestFragment" >
+
+        </action>
     </fragment>
 
     <fragment
@@ -120,13 +147,23 @@
         <action
             android:id="@+id/action_profile_to_myBudgesFragment"
             app:destination="@id/myBudgesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editPersonalInfoDetails"
+            app:destination="@id/editPersonalInfoDetails" />
     </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.talktomii.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/search_fragment"/>
+        tools:layout="@layout/search_fragment">
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_influencerProfileFragment"
+            app:destination="@id/influencerProfileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/appointmentsFragment"
@@ -180,7 +217,7 @@
         tools:layout="@layout/call_history"/>
     <!--    <fragment-->
     <!--        android:id="@+id/searchFragment"-->
-    <!--        android:name="com.furniture.ui.search.SearchFragment"-->
+    <!--        android:name="com.talktomii.ui.search.SearchFragment"-->
     <!--        android:label="fragment_search"-->
     <!--        tools:layout="@layout/search_fragment"/>-->
 
@@ -193,13 +230,23 @@
         <action
             android:id="@+id/action_forget_to_resetPassword"
             app:destination="@id/resetPasswordFragment" />
+
+        <action
+            android:id="@+id/action_forget_to_signIn"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.talktomii.ui.loginSignUp.login.FragmentResetPassword"
         android:label="fragment_restPassword"
-        tools:layout="@layout/fragment_reset_password"/>
+        tools:layout="@layout/fragment_reset_password">
+
+    <action
+        android:id="@+id/action_resetForget_to_signIn"
+        app:destination="@id/loginFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/notificationFragment"
@@ -233,5 +280,14 @@
             android:id="@+id/action_bookmarkFragment_to_influencerProfileFragment"
             app:destination="@id/influencerProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/viewInterestFragment"
+        android:name="com.talktomii.ui.home.profile.ViewInterestFragment"
+        android:label="ViewInterestFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/editPersonalInfoDetails"
+        android:name="com.talktomii.ui.editpersonalinfo.EditPersonalInfoDetails"
+        android:label="EditPersonalInfoDetails" />
 
 </navigation>

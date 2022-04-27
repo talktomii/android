@@ -1,33 +1,42 @@
 package com.talktomii.data.model.admin1
 
-import com.talktomii.data.model.admin.*
+import com.talktomii.data.model.Interest
+import com.talktomii.data.model.admin.Availaibility
+import com.talktomii.data.model.admin.Price
+import com.talktomii.data.model.admin.SocialNetwork
+import com.talktomii.data.model.admin.Status
 import java.io.Serializable
 
 data class Admin1(
-    var __v: Int?=null,
-    var _id: String?=null,
-    var aboutYou: Any?=null,
-    var availaibility: ArrayList<Availaibility>?=null,
-    var blocked: List<Any>?=null,
-    var couponIsUsed: Boolean?=null,
-    var coverPhoto: String?=null,
-    var customerId: String?=null,
-    var email: String?=null,
-    var interest: ArrayList<Interest>?=null,
-    var isActive: Boolean?=null,
-    var bookmark: Boolean?=null,
-    var isSocial: Boolean?=null,
-    var latestToken: String?=null,
-    var location: String?=null,
-    var modificationData: String?=null,
-    var name: String?=null,
-    var price: ArrayList<Price>?=null,
-    var profilePhoto: String?=null,
-    var registrationDate: String?=null,
-    var role: Role?=null,
-    var socialNetwork: ArrayList<SocialNetwork>?=null,
-    var status: Status?=null,
-    var userName: String?=null
+    val __v: Int,
+    val _id: String,
+    var aboutYou: Any,
+    var availaibility: ArrayList<Availaibility>,
+    val blocked: List<Any>,
+    val couponIsUsed: Boolean,
+    val coverPhoto: String,
+    val customerId: String,
+    val email: String,
+    var interest: ArrayList<Interest>,
+    val isActive: Boolean,
+    var bookmark: Boolean,
+    val isSocial: Boolean,
+    val latestToken: String,
+    var location: String,
+    val modificationData: String,
+    var name: String,
+    var fname: String,
+    var lname: String,
+//    var priceList: ArrayList<Int>,
+    var price: ArrayList<Price>,
+    val profilePhoto: String,
+    val registrationDate: String,
+    val role: Role,
+    val socialNetwork: ArrayList<SocialNetwork>,
+    val status: Status,
+    var userName: String,
+    val badges: ArrayList<BadgesItem> = arrayListOf()
+
 ) : Serializable
 
 data class Role(

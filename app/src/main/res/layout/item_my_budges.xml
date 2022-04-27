@@ -17,25 +17,27 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/tvImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_fun"
+                android:id="@+id/ivBadgesImage"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:src="@drawable/ic_badge_1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtCount"
+                android:id="@+id/tvBadgesName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_5"
                 android:text="Smart"
+                android:textFontWeight="400"
                 android:textSize="@dimen/sp_12"
-                android:textStyle="bold"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/myCards"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/tvImage"
-                app:layout_constraintStart_toStartOf="@+id/tvImage"
-                app:layout_constraintTop_toBottomOf="@+id/tvImage" />
+                app:layout_constraintEnd_toEndOf="@+id/ivBadgesImage"
+                app:layout_constraintStart_toStartOf="@+id/ivBadgesImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivBadgesImage" />
 
             <TextView
                 android:id="@+id/txtBudges"
@@ -48,8 +50,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:layout_marginEnd="@dimen/dp_5"
-                app:layout_constraintEnd_toEndOf="@+id/tvImage"
-                app:layout_constraintTop_toTopOf="@+id/tvImage" />
+                app:layout_constraintEnd_toEndOf="@+id/ivBadgesImage"
+                app:layout_constraintTop_toTopOf="@+id/ivBadgesImage" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

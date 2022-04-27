@@ -1,25 +1,19 @@
 package com.talktomii.ui.mywallet.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.*
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.ui.mywallet.models.WalletEarningItemModel
 
-class WalletEarningAdapter(val mList: List<WalletEarningItemModel>) :
+class WalletEarningAdapter(private val mList: List<WalletEarningItemModel>) :
     RecyclerView.Adapter<WalletEarningAdapter.ViewHolder>() {
-
-    companion object{
-        @SuppressLint("StaticFieldLeak")
-        private var context: Context? = null
-    }
+    private var context: Context? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.wallet_earning_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.wallet_earning_item, parent, false)
         context = parent.context
         return ViewHolder(view)
     }
@@ -27,25 +21,21 @@ class WalletEarningAdapter(val mList: List<WalletEarningItemModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val itemsViewModel = mList[position]
-        holder.itemImg.setImageResource(mList[position].wallet_Img)
-        holder.itemName.text = mList[position].wallet_holder_name
-        holder.itemDate.text = mList[position].wallet_date
-        holder.itemRs.text = mList[position].wallet_rs
-        holder.itemTime.text = mList[position].wallet_time
-
+        holder.itemName.text = itemsViewModel.wallet_name
+        holder.itemDate.text = itemsViewModel.wallet_date
+        holder.itemPrice.text = itemsViewModel.wallet_price
     }
 
     override fun getItemCount(): Int {
         return mList.size
     }
 
-
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val itemImg : ImageView = itemView.findViewById(R.id.walletEarningImg)
-        val itemName: TextView = itemView.findViewById(R.id.walletEarningName)
-        val itemDate: TextView = itemView.findViewById(R.id.walletearningDate)
-        val itemRs : TextView = itemView.findViewById(R.id.walletearningrs)
-        val itemTime : TextView = itemView.findViewById(R.id.walletEarningTime)
+        val itemName: TextView = itemView.findViewById(R.id.tvWalletRefilltext)
+        val itemDate : TextView = itemView.findViewById(R.id.tvWalletRefillDate)
+        val itemPrice : TextView = itemView.findViewById(R.id.tvWalletRefillPrice)
+        val payItems : ConstraintLayout = itemView.findViewById(R.id.walletRefillItems)
+
     }
 
 }

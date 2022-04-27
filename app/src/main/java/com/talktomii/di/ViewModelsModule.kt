@@ -2,10 +2,11 @@ package com.talktomii.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.talktomii.ui.appointment.AppointmentViewModel
+import com.talktomii.ui.editpersonalinfo.EditPersonalInfoVM
+import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.ui.home.HomeViewModel
 import com.talktomii.ui.loginSignUp.LoginViewModel
-import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.home.HomeScreenViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -39,6 +40,18 @@ abstract class ViewModelsModule {
     @IntoMap
     @ViewModelKey(HomeScreenViewModel::class)
     abstract fun homeScreenViewModel(viewModel: HomeScreenViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditPersonalInfoVM::class)
+    abstract fun editPersonalInfoViewModel(viewModel: EditPersonalInfoVM): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AppointmentViewModel::class)
+    abstract fun appoinementViewModel(viewModel: AppointmentViewModel): ViewModel
 
 }
 

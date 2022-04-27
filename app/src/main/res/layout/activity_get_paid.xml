@@ -5,9 +5,22 @@
     tools:context=".ui.mywallet.activities.RefillWalletActivity">
 
     <RelativeLayout
+        android:id="@+id/getPaidMainLayout"
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/getPaidProgress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:translationZ="@dimen/dp_10"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorAccent"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,9 +43,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/backGetPaid"
                         android:layout_width="@dimen/dp_20"
                         android:layout_height="@dimen/dp_20"
-                        android:src="@drawable/back_arrow1" />
+                        />
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -40,8 +54,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_8"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:fontFamily="@font/inter_extra_bold"
+                        android:textColor="@color/addCardColor"
+                        android:fontFamily="@font/inter_regular"
                         android:text="@string/back"
                         android:textFontWeight="400"
                         android:textSize="@dimen/dp_16" />
@@ -53,13 +67,14 @@
                     android:layout_marginHorizontal="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_15"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/refillwallet"
-                    android:textColor="#585B68"
+                    android:text="Get Paid"
+                    android:textColor="@color/addCardColor"
                     android:textFontWeight="700"
                     android:textSize="@dimen/dp_24"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/getWalletAmount"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_150"
                     android:layout_gravity="center"
@@ -70,7 +85,8 @@
                     android:gravity="center"
                     android:hint="$10"
                     android:inputType="number"
-                    android:textColor="#585B68"
+                    android:textColor="@color/addCardHintColor"
+                    android:textColorHint="@color/addCardHintColor"
                     android:textFontWeight="700"
                     android:textSize="@dimen/dp_80"
                     android:textStyle="bold">
@@ -91,25 +107,25 @@
                     android:fontFamily="@font/inter_regular"
                     />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
+                    android:id="@+id/getPaidTotalAmountDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="$1,037"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="#585B68"
+                    android:textColor="@color/myCards"
                     android:textSize="@dimen/dp_24"
                     android:textFontWeight="700"
                     android:textStyle="bold"
                     android:fontFamily="@font/inter_regular"
                     >
 
-                </androidx.appcompat.widget.AppCompatTextView>
+                </TextView>
 
 
                 <TextView
-                    android:id="@+id/btnNext"
+                    android:id="@+id/btnGetPaid"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="@dimen/dp_20"
@@ -142,52 +158,17 @@
                             android:layout_gravity="center"
                             android:adjustViewBounds="true"
                             android:padding="@dimen/dp_8"
-                            android:src="@drawable/add_bank_account_icon"
-
-                            >
+                            android:src="@drawable/add_bank_account_icon">
 
                         </androidx.appcompat.widget.AppCompatImageView>
                     </RelativeLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/typesFilterContainer"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    <Spinner
+                        android:id="@+id/bankSpinner"
+                        android:layout_height="@dimen/dp_40"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_15"
-                        android:layout_marginEnd="@dimen/dp_15"
-                        android:background="@color/white"
-                        android:gravity="start"
-                        android:textColorHint="#565656"
-                        app:boxBackgroundColor="@color/white"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:endIconDrawable="@drawable/dropdown_end_icon"
-                        app:endIconTint="#55ADFF"
-                        app:hintTextColor="#565656"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textaccountType">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/typesFilter"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/inter_regular"
-                            android:inputType="none"
-                            android:maxLines="1"
-                            android:paddingStart="0dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="2dp"
-                            android:singleLine="true"
-                            android:text="53****1234"
-                            android:textColor="@color/black"
-                            android:textFontWeight="500"
-                            android:textSize="16dp"
-                            tools:ignore="LabelFor" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:background="@android:color/transparent"
+                        android:layout_marginStart="@dimen/dp_10" />
                 </LinearLayout>
             </LinearLayout>
 

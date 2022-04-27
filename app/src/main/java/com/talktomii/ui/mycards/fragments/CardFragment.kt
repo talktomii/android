@@ -15,6 +15,7 @@ import com.talktomii.ui.mycards.data.getCardDetail
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 
 
 class CardFragment : DaggerFragment(R.layout.fragment_card) {
@@ -38,6 +39,7 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
 //        binding.vm = viewModels
         recycleview = binding.rvCards
         progress = binding.displayCardProgress
+        layout = binding.cardlistLayout
         progress.visibility  = View.VISIBLE
         recycleview.visibility = View.GONE
         dataModel.getCards()
@@ -47,5 +49,6 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
     companion object{
         lateinit var recycleview: RecyclerView
         lateinit var progress : ProgressBar
+        lateinit var layout : RelativeLayout
     }
 }

@@ -21,6 +21,7 @@ import android.os.Build
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import android.widget.*
 import android.widget.DatePicker.OnDateChangedListener
@@ -65,6 +66,15 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_cards)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.textscanCreditCard.setBackgroundResource(R.drawable.bg_scan_card_rounder_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.textscanCreditCard.setBackgroundResource(R.drawable.bg_scan_card_rounder)
+            }
+        }
+
         getContext(this)
         cardHolderName = binding.etCardHolder
         addCardButton = binding.btnAddCard
@@ -74,20 +84,19 @@ class MyCardsActivity : DaggerAppCompatActivity() {
         layout = binding.relativeLayout
         cardCVV = binding.etCVV
         progress = binding.addCardProgress
+//
+//        val materialDateBuilder = MaterialDatePicker.Builder.datePicker()
+//        materialDateBuilder.setTitleText("Select a Expire Date");
+//        val materialDatePicker = materialDateBuilder.build();
 
-
-        val materialDateBuilder = MaterialDatePicker.Builder.datePicker()
-        materialDateBuilder.setTitleText("Select a Expire Date");
-        val materialDatePicker = materialDateBuilder.build();
-        materialDatePicker.addOnPositiveButtonClickListener(
-            MaterialPickerOnPositiveButtonClickListener<Any?> {
-                cardExpireDate.setText(materialDatePicker.headerText)
-                yYear =
-                    materialDatePicker.headerText.substring(materialDatePicker.headerText.length - 4)
-                mMonth = materialDatePicker.headerText.substring(0, 2)
-                cardExpireDate.setSelection(cardExpireDate.text!!.length)
-                Log.d("dates is --- ", yYear + mMonth)
-            })
+//        materialDatePicker.addOnPositiveButtonClickListener(
+//            MaterialPickerOnPositiveButtonClickListener<Any?> {
+//                cardExpireDate.setText(materialDatePicker.headerText)
+//                yYear = materialDatePicker.headerText.substring(materialDatePicker.headerText.length - 4)
+//                mMonth = materialDatePicker.headerText.substring(0, 2)
+//                cardExpireDate.setSelection(cardExpireDate.text!!.length)
+//                Log.d("dates is --- ", yYear + mMonth)
+//            })
 
         cardNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -105,12 +114,26 @@ class MyCardsActivity : DaggerAppCompatActivity() {
             override fun afterTextChanged(s: Editable) {}
         })
 
+        cardExpireDate.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val str: String = cardExpireDate.text.toString()
+                val textLength: Int = cardExpireDate.text!!.length
+                if (textLength == 2) {
+                    if (!str.contains("/")) {
+                        cardExpireDate.setText(StringBuilder(cardExpireDate .getText().toString()).insert(str.length, "/").toString());
+                        cardExpireDate.setSelection(cardExpireDate .text!!.length);
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(text: Editable) {
 
-        cardExpireDate.setOnClickListener {
-            materialDatePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER");
-        }
-
+            }
+        })
         addCardButton.setOnClickListener {
+            mMonth = cardExpireDate.text!!.substring(0,2)
+            yYear = cardExpireDate.text!!.substring(3,7)
+            Log.d("dates is : ",mMonth + yYear)
             if (cardNumber.text.toString() == "") {
                 val snackbar = Snackbar.make(
                     layout,
@@ -141,6 +164,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
                 snackbar.show()
             } else {
                 val hashmap = HashMap<String, String>()
+
                 hashmap["cardNumber"] = binding.etCardNumber.text.toString().replace(" ", "")
                 hashmap["exp_month"] = mMonth
                 hashmap["exp_year"] = yYear

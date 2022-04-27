@@ -5,7 +5,6 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.data.network.Coroutines
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.drawer.BookMarkInterface
-import com.talktomii.utlis.AUTHORIZATION
 import com.talktomii.utlis.uid
 import com.google.android.gms.common.api.ApiException
 import javax.inject.Inject
@@ -20,13 +19,17 @@ class BookmarkViewModel @Inject constructor(private val webService: WebService) 
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getBookmarks(uid, AUTHORIZATION)
+                val authResponse = webService.getBookmarks(string)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
                         onbookmarkinterface?.onBookmarkAdmins(authResponse.body()!!.payload)
                     }
                 } else {
-                    commonInterface!!.onFailure(authResponse.message())
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
                 }
             } catch (e: ApiException) {
                 e.message?.let { commonInterface!!.onFailure(it) }

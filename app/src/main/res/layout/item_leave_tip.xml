@@ -30,7 +30,7 @@
                 android:paddingBottom="@dimen/dp_12"
                 android:text="$10"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/myCards"
                 android:textSize="@dimen/sp_12"
                 android:textStyle="bold" />
 

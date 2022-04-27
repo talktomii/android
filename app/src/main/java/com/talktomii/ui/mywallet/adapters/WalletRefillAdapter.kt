@@ -30,10 +30,6 @@ class WalletRefillAdapter(private val mList: List<WalletRefillItemModel>) :
         holder.itemName.text = itemsViewModel.wallet_name
         holder.itemDate.text = itemsViewModel.wallet_date
         holder.itemPrice.text = itemsViewModel.wallet_price
-        holder.payItems.setOnClickListener {
-            val intent = Intent(context, PaymentDetailsActivity::class.java)
-            context!!.startActivity(intent)
-        }
     }
 
     override fun getItemCount(): Int {

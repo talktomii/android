@@ -43,6 +43,32 @@ object ApiUtils {
             }
         }
     }
+    fun handleError(statusCode: Int, errorJson: String?): AppError {
+        val message = getErrorMessage(errorJson)
+        return when (statusCode) {
+            401 -> {
+                AppError.ApiUnauthorized(message)
+            }
+            402 -> {
+                AppError.ApiAccountBlock(message)
+            }
+            403 -> {
+                AppError.ApiAccountRuleChanged(message)
+            }
+            400 -> {
+                AppError.ApiPermium(message)
+            }
+            404 -> {
+                AppError.ApiAlertPremium(message)
+            }
+            200 -> {
+                AppError.ApiAlertPremium(errorJson ?: "")
+            }
+            else -> {
+                AppError.ApiError(statusCode, message)
+            }
+        }
+    }
 
     fun failure(throwable: Throwable): AppError {
         return AppError.ApiFailure(throwable.localizedMessage ?: "")

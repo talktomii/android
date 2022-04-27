@@ -2,12 +2,15 @@ package com.talktomii.ui.loginSignUp.signup
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import com.talktomii.R
 import com.talktomii.data.model.Role
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
@@ -45,6 +48,14 @@ class CreateProfileFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCreateProfileBinding.inflate(inflater, container, false)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.imgDefault.setImageResource(R.drawable.ic_user_dark_profile)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.imgDefault.setImageResource(R.drawable.ic_user)
+            }
+        }
         return binding.root
     }
 
@@ -54,15 +65,14 @@ class CreateProfileFragment : DaggerFragment() {
         viewModel.getRoles()
 
         binding.btnNEXT.setOnClickListener {
+            viewModel.checkUserName(binding.txtUserName.text.toString())
 
-            radioCheck()
         }
 
 //        var email=requireArguments()["email"].toString()
 //        var password =requireArguments()["password"].toString()
         setListener()
         addObserver()
-
     }
 
     private fun addObserver() {
@@ -107,6 +117,26 @@ class CreateProfileFragment : DaggerFragment() {
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
                     ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
+
+        viewModel.checkUserName.observe(requireActivity(), Observer {
+            it ?: return@Observer
+            when (it.status) {
+                Status.SUCCESS -> {
+                    radioCheck()
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+//                    requireContext().showMessage("Username already exists. Please enter unique username")
+//                    Log.e("MESSAGE",it.message?:"")
+                    binding.btnNEXT.showSnackBar("Username already exists. Please enter unique username")
+
+//                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
                 }
                 Status.LOADING -> {
                     progressDialog.setLoading(true)
@@ -178,8 +208,10 @@ class CreateProfileFragment : DaggerFragment() {
             )
         ) {
             val map: HashMap<String, RequestBody> = HashMap()
-            map["name"] =
-                "${binding.txtFirstName.text.toString()} ${binding.txtLastName.text.toString()}".toRequestBody(
+            map["fname"] = "${binding.txtFirstName.text.toString()}".toRequestBody(
+                    "text/plain".toMediaTypeOrNull()
+                )
+            map["lname"]=" ${binding.txtLastName.text.toString()}".toRequestBody(
                     "text/plain".toMediaTypeOrNull()
                 )
 
@@ -232,7 +264,7 @@ class CreateProfileFragment : DaggerFragment() {
                 false
             }
             username.isNullOrEmpty() -> {
-                binding.txtUserName.showSnackBar("please enter username")
+                binding.txtUserName.showSnackBar("Please enter unique username")
                 false
 
             }

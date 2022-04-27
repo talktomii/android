@@ -1,7 +1,9 @@
 package com.talktomii.ui.mycards.activities
 
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -38,6 +40,16 @@ import pdf.app.library.DesignPdf
 import android.view.ViewGroup
 import android.content.Context
 import io.github.lucasfsc.html2pdf.Html2Pdf
+import androidx.core.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.os.Build.VERSION.SDK_INT
+import android.provider.Settings
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import com.talktomii.BuildConfig
+import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
+
 
 class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteConversion {
 
@@ -57,23 +69,39 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
     val v_type: TextView? = null
     var v_amount: TextView? = null
     var v_id: TextView? = null
-    var receipt_id : String = ""
-    var filepath : File ?= null
+    var receipt_id: String = ""
+    var filepath: File? = null
+
+    private val PERMISSION_REQUEST_CODE = 200
+    var r_id : String ?= null
+    var date : String ?= null
+    var t_amount : String ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment_details)
-
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_paymentdetail_dark)
+                binding.backPaymentDetailsImg.setImageResource(R.drawable.back_arrow)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.detailCardLayout.setBackgroundResource(R.drawable.bg_payment_detail)
+                binding.backPaymentDetailsImg.setImageResource(R.drawable.back_arrow_light)
+            }
+        }
         binding.headerLayout.setOnClickListener {
             finish()
         }
+        Log.d("amount -- ", intent.getStringExtra("amount")!!)
         binding.paymentReferenceid.text = intent.getStringExtra("id")
         binding.paymentDate.text = intent.getStringExtra("date")
         binding.paymentType.text = intent.getStringExtra("type")
-        binding.paymentAmount.text = intent.getStringExtra("amount")!!.replace("-", "")
+        binding.paymentAmount.text = intent.getStringExtra("amount")
 
-        val r_id = intent.getStringExtra("id")
-        val date = intent.getStringExtra("date")
-        val t_amount = intent.getStringExtra("amount")!!.replace("-", "")
+        r_id = intent.getStringExtra("id")
+        date = intent.getStringExtra("date")
+        t_amount = intent.getStringExtra("amount")!!.replace("-", "")
 
         receipt_id = intent.getStringExtra("id")!!
         binding.repeatPaymentLayout.setOnClickListener {
@@ -82,27 +110,97 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
             startActivity(intent)
         }
         binding.refundPaymentLayout.setOnClickListener {
-            val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogTheme)
-            val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
-            val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
-            btnClose.setOnClickListener {
-                dialog.dismiss()
+
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogThemeDark)
+                    val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
+                    val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
+                    val bg = view.findViewById<LinearLayout>(R.id.bottomsheetView)
+                    val toCredit = view.findViewById<LinearLayout>(R.id.toCreditCardLayout)
+                    val toBank = view.findViewById<LinearLayout>(R.id.toBankAccountLayout)
+                    val toWallet = view.findViewById<LinearLayout>(R.id.toWalletLayout)
+                    bg.setBackgroundResource(R.drawable.bg_bottomsheet_card_dark)
+                    toCredit.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    toBank.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    toWallet.setBackgroundResource(R.drawable.bg_bottomsheetdata_dark)
+                    btnClose.setBackgroundResource(R.drawable.closesheeticon_dark)
+                    btnClose.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setCancelable(false)
+                    dialog.setContentView(view)
+                    dialog.show()
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    val dialog = BottomSheetDialog(this, R.style.MyTransparentBottomSheetDialogTheme)
+                    val view = layoutInflater.inflate(R.layout.bottomsheet_refund_payment, null)
+                    val btnClose = view.findViewById<ImageView>(R.id.btnCloseSheet)
+                    val bg = view.findViewById<LinearLayout>(R.id.bottomsheetView)
+                    val toCredit = view.findViewById<LinearLayout>(R.id.toCreditCardLayout)
+                    val toBank = view.findViewById<LinearLayout>(R.id.toBankAccountLayout)
+                    val toWallet = view.findViewById<LinearLayout>(R.id.toWalletLayout)
+                    bg.setBackgroundResource(R.drawable.bg_bottomsheet_card)
+                    toCredit.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    toBank.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    toWallet.setBackgroundResource(R.drawable.bg_bottomsheet_data)
+                    btnClose.setBackgroundResource(R.drawable.close_sheet_icon)
+                    btnClose.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setCancelable(false)
+                    dialog.setContentView(view)
+                    dialog.show()
+                }
             }
-            dialog.setCancelable(false)
-            dialog.setContentView(view)
-            dialog.show()
+
         }
 
 
         binding.downloadReceipt.setOnClickListener {
-            if(receipt_id == ""){
-                filepath =  File(Environment.getExternalStorageDirectory().toString() + "/PDF/receipt123.pdf")
-            }else{
-                filepath =  File(Environment.getExternalStorageDirectory().toString() + "/PDF/" + receipt_id + ".pdf")
+            if (checkPermission()) {
+                if (SDK_INT >= Build.VERSION_CODES.R) {
+                    if (Environment.isExternalStorageManager()) {
+                        downloadPDF()
+                    }
+                    else{
+                        val snackbar = Snackbar.make(
+                            binding.paymentdetailLayout,
+                            "Please allow management of all files",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        Handler().postDelayed({
+                            val i = Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                            )
+                            startActivity(i)
+                        },2000)
+                    }
+                }
+            } else {
+                requestPermission();
             }
-            val converter = Html2Pdf.Companion.Builder()
-                .context(this)
-                .html("<!DOCTYPE html>\n" +
+
+        }
+    }
+
+    fun downloadPDF(){
+        if (receipt_id == "") {
+            filepath = File(
+                Environment.getExternalStorageDirectory().toString() + "/PDF/receipt123.pdf"
+            )
+        } else {
+            filepath = File(
+                Environment.getExternalStorageDirectory()
+                    .toString() + "/PDF/" + receipt_id + ".pdf"
+            )
+        }
+        val converter = Html2Pdf.Companion.Builder()
+            .context(this)
+            .html(
+                "<!DOCTYPE html>\n" +
                         "<html lang=\"en\">\n" +
                         "  <head>\n" +
                         "    <meta charset=\"utf-8\" />\n" +
@@ -159,29 +257,30 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
                         "      </tr>\n" +
                         "    </table>\n" +
                         "  </body>\n" +
-                        "</html>")
-                .file(filepath!!)
-                .build()
+                        "</html>"
+            )
+            .file(filepath!!)
+            .build()
 
-            //can be called with a callback to warn the user
-            converter.convertToPdf(this)
+        //can be called with a callback to warn the user
+        converter.convertToPdf(this)
 
-            //or without a callback
-            converter.convertToPdf()
-            binding.openPDFProgress.visibility = View.VISIBLE
-            Handler().postDelayed({
-                openGeneratedPDF(filepath!!)
-            },3000)
-        }
+        //or without a callback
+        converter.convertToPdf()
+        binding.openPDFProgress.visibility = View.VISIBLE
+        Handler().postDelayed({
+            openGeneratedPDF(filepath!!)
+        }, 3000)
     }
 
-    private fun openGeneratedPDF(file : File) {
+    private fun openGeneratedPDF(file: File) {
         binding.openPDFProgress.visibility = View.GONE
         if (file.exists()) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val apkURI = FileProvider.getUriForFile(applicationContext, "$packageName.provider", file)
+                val apkURI =
+                    FileProvider.getUriForFile(applicationContext, "$packageName.provider", file)
                 intent.setDataAndType(apkURI, "application/pdf")
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             } else {
@@ -206,5 +305,66 @@ class PaymentDetailsActivity : DaggerAppCompatActivity(), Html2Pdf.OnCompleteCon
     override fun onSuccess() {
 
     }
+
+    private fun checkPermission(): Boolean {
+        return !(ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+                != PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (Environment.isExternalStorageManager()) {
+                    downloadPDF()
+                }
+                else{
+                    val snackbar = Snackbar.make(
+                        binding.paymentdetailLayout,
+                        "Please allow management of all files",
+                        Snackbar.LENGTH_SHORT
+                    )
+                    snackbar.show()
+                    Handler().postDelayed({
+                        val i = Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                        )
+                        startActivity(i)
+                    },2000)
+                }
+            } else {
+                val snackbar = Snackbar.make(
+                    binding.paymentdetailLayout,
+                    "Permission Denied",
+                    Snackbar.LENGTH_SHORT
+                )
+                snackbar.show()
+            }
+        }
+    }
+
 
 }

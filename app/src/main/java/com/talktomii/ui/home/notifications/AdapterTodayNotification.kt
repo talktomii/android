@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.makeramen.roundedimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 import com.talktomii.R
@@ -55,7 +56,9 @@ class AdapterTodayNotification(
         holder.itemName.text = itemsViewModel.n_title
         holder.itemUser.text = itemsViewModel.n_name
         holder.itemDuration.text = itemsViewModel.n_duration
-        Picasso.with(context).load(Uri.parse(mList[position].n_image)).into(holder.img);
+        Glide.with(context!!).load((mList[position].n_image)).error(R.drawable.ic_user)
+            .placeholder(R.drawable.ic_user).into(holder.img)
+//        Picasso.with(context).load(Uri.parse(mList[position].n_image)).into(holder.img);
     }
 
     override fun getItemCount(): Int {

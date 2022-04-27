@@ -5,13 +5,15 @@
 
 
     <ScrollView
+        android:background="@color/backgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/dp_10"
+        android:background="@color/backgroundColor"
         tools:context=".ui.tellusmore.TellUsMore">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,7 +25,7 @@
             android:text="@string/tell_us_more_about_you"
             android:textSize="35sp"
             android:textStyle="bold"
-            android:textColor="@color/gray"
+            android:textColor="@color/myCards"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,15 +40,15 @@
             android:text="@string/preferred_topics"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/gray"
+            android:textColor="@color/myCards"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTellUsMore" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTopics"
-            android:layout_width="match_parent"
             chipLayout="{true}"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_20"
             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
@@ -66,27 +68,38 @@
             android:fontFamily="@font/inter_bold"
             android:text="About you"
             android:textSize="18sp"
+            android:textColor="@color/myCards"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvTopics" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRecordAudio"
+            android:id="@+id/tvRecordVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_12"
             android:layout_marginHorizontal="@dimen/dp_12"
             android:gravity="center_vertical"
             android:background="@drawable/gray_background"
-            android:drawableEnd="@drawable/mic_24"
+            android:drawableEnd="@drawable/ic_dot"
             android:fontFamily="@font/inter_medium"
             android:text="Record Short Video"
             android:textSize="12sp"
+            android:textColor="@color/calText"
             android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAboutYou" />
+
+        <ImageView
+            android:id="@+id/ivShowVideo"
+            android:layout_width="80dp"
+            android:visibility="gone"
+            android:layout_height="120dp"
+            app:layout_constraintStart_toStartOf="@+id/tvRecordVideo"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecordVideo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLocation"
@@ -97,10 +110,11 @@
             android:fontFamily="@font/inter_bold"
             android:text="Location"
             android:textSize="18sp"
+            android:textColor="@color/myCards"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecordAudio" />
+            app:layout_constraintTop_toBottomOf="@+id/ivShowVideo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSetlocation"
@@ -113,8 +127,10 @@
             android:background="@drawable/gray_background"
             android:padding="@dimen/dp_12"
             android:gravity="center_vertical"
-            android:text="Set your location"
+            android:hint="Set your location"
             android:textSize="12sp"
+            android:textColor="@color/calText"
+            android:layout_marginTop="@dimen/dp_10"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +146,7 @@
             android:fontFamily="@font/inter_bold"
             android:text="Link Accounts"
             android:textSize="18sp"
+            android:textColor="@color/myCards"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +160,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal"
             android:weightSum="4"
-
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLinkAccounts">
@@ -166,7 +183,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivFacebook"
                     android:layout_centerHorizontal="true"
-                    android:text="Facebook" />
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Facebook"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/calText" />
 
             </RelativeLayout>
 
@@ -189,7 +209,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivTwitter"
                     android:layout_centerHorizontal="true"
-                    android:text="Twitter" />
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Twitter"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/calText" />
 
             </RelativeLayout>
 
@@ -205,14 +228,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_insta_a" />
+                    android:src="@drawable/instagram" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivInstagram"
                     android:layout_centerHorizontal="true"
-                    android:text="Instagram" />
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Instagram"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/calText" />
 
             </RelativeLayout>
 
@@ -235,7 +261,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivTiktok"
                     android:layout_centerHorizontal="true"
-                    android:text="TikTok" />
+                    android:fontFamily="@font/inter_regular"
+                    android:text="TikTok"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/calText" />
 
             </RelativeLayout>
 

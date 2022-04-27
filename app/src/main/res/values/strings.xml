@@ -37,7 +37,7 @@
     <string name="how_we_work">How it work?</string>
     <string name="select_service">Select Service</string>
     <string name="upload_images">Upload Images</string>
-    <string name="book_appoinment">Book Appoinment</string>
+    <string name="book_appoinment">Book Appointment</string>
     <string name="service_inspection_by_experts">Service Inspection by Experts</string>
     <string name="pay_online_or_by_cash">Pay Online or by Cash</string>
     <string name="profile">Profile</string>
@@ -287,8 +287,21 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="privacy_and_safety">Privacy and safety</string>
     <string name="more">More</string>
     <string name="delete">Delete</string>
+    <string name="delete_appointment">Are you sure that you want to delete appointment ? </string>
+    <string name="appoint_text">Reschedule Appointment</string>
 
 
+    <string name="empty_price">Price should not be empty!</string>
+    <string name="empty_end_time">End Time should not be empty!</string>
+    <string name="empty_start_time">Start Time should not be empty!</string>
+    <string name="select_repeat_option">Select at least one repeat option!</string>
+    <string name="select_day">Select at least one day!</string>
+    <string name="you_add_only_one_item">You have to add only one item</string>
+    <string name="add_price_call_duration">Add Price/Call Duration</string>
+    <string name="edit_interests">Edit Interests</string>
+    <string name="view_interests">View Interests</string>
+    <string name="calls">Calls</string>
+    <string name="earnings">Earnings</string>
     <string name="app__name" translatable="false">Talktomii</string>
 
     <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
@@ -302,4 +315,17 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="agora_access_token" translatable="false">0069048bd89642e4679ba79ee4f41ed3e50IAAfmm/QdLl4HBdYhqHxV4Ee+P2pwYtl360jfJaT4+1T2ruiVPAAAAAAEABTv2OXo3leYgEAAQDReV5i</string>
     <string name="link_your_facebook_account_n_to_talk_to_mii">Link your type account \n to Talk To Mii</string>
     <string name="to_link_account_paste_your_facebook_n_profile_link_in_below_field">To link account paste your type \n profile link in below field</string>
+    <string name="book_a_call_capatal">BOOK A CALL</string>
+    <string name="select_time_slot">Select Time Slot</string>
+    <string name="first_name">First Name</string>
+    <string name="price">Price</string>
+    <string name="add_price">Add Price</string>
+    <string name="select_appointment_date">Select appointment date</string>
+    <string name="you_can_not_reschedule">You can not re-schedule past time appointment</string>
+    <string name="sign_up_underline"><u>Sign Up</u></string>
+    <string name="sign_in_underline"><u>Sign In</u></string>
+    <string name="no_data_found">No Data Found!</string>
+    <string name="terms_policy">By signing up, you agree to our\n<u><font color="#55ADFF">Terms of Service</font></u> and <u><font color="#55ADFF">Privacy Policy</font></u>, and confirm\n that you are at least 18 years old. </string>
+    <string name="select_location">Select Location</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
 </resources>

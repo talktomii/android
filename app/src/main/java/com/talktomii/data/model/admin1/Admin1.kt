@@ -11,7 +11,7 @@ data class Admin1(
     val __v: Int,
     val _id: String,
     var aboutYou: Any,
-    val availaibility: ArrayList<Availaibility>,
+    var availaibility: ArrayList<Availaibility>,
     val blocked: List<Any>,
     val couponIsUsed: Boolean,
     val coverPhoto: String,

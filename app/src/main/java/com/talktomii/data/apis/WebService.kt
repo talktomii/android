@@ -310,7 +310,7 @@ interface WebService {
     ): Response<UpdateAvailability>
 
 
-    @PUT(DELETE_AVAIBILITY)
+    @DELETE(DELETE_AVAIBILITY)
     suspend fun deleteAvailability(
         @Query("id") id: String,
         @Query("uid") uid: String,

@@ -12,6 +12,7 @@ import com.talktomii.data.model.appointment.AppointmentInterestItem
 import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTime
+import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
 import java.util.*
@@ -52,7 +53,7 @@ class AdapterScheduledAppointment(
             if (interest.ifid.fname != null) interest.ifid.fname else "" + " " + if (interest.ifid.lname != null) interest.ifid.lname else ""
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
         holder.binding.txtTime.text =
-            setDateToTime(interest.startTime) + "-" + setDateToTime(interest.endTime)
+            setDateToTimeUTCToLocal(interest.startTime) + "-" + setDateToTimeUTCToLocal(interest.endTime)
         if (interest.status == CANCELLED) {
             holder.binding.ivMore.visibility = View.GONE
             holder.binding.txtCallNow.visibility = View.GONE

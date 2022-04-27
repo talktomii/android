@@ -413,38 +413,10 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        if (model._id.isNullOrBlank()) {
-//                            viewModel.userField.get()!!.availaibility[position] = model
-                            val updateHashMap: HashMap<String, Any> = hashMapOf()
-                            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
-                            updateHashMap["id"] = model._id
-                            updateHashMap["day"] = model.day
-                            updateHashMap["startTime"] = model.startTime
-                            updateHashMap["endTime"] = model.endTime
-                            if (model.end == "Never" || model.end.isNullOrBlank()) {
-                                updateHashMap["end"] = ""
-                            } else {
-                                updateHashMap["end"] = model.end
-                            }
-                            viewModel.updateAvailabilityTime(updateHashMap, position, model, 1)
-                        } else {
-                            val updateHashMap: HashMap<String, Any> = hashMapOf()
-                            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
-                            updateHashMap["id"] = model._id
-                            updateHashMap["day"] = model.day
-                            updateHashMap["startTime"] = model.startTime
-                            updateHashMap["endTime"] = model.endTime
-                            if (model.end == "Never" || model.end.isNullOrBlank()) {
-                                updateHashMap["end"] = ""
-                            } else {
-                                updateHashMap["end"] = model.end
-                            }
-                            viewModel.updateAvailabilityTime(updateHashMap, position, model, 1)
-                        }
-
+                        addAPIAvaibility(model, false, position)
                     } else {
 //                        viewModel.userField.get()!!.availaibility.add(model)
-                        addAPIAvaibility(model)
+                        addAPIAvaibility(model, true, 0)
                     }
                     Log.e("Time 3", model.startTime)
                     Log.e("Time 4", model.endTime)
@@ -513,25 +485,42 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         progressDialog.dismiss()
     }
 
-    private fun addAPIAvaibility(i: Availaibility) {
+    private fun addAPIAvaibility(i: Availaibility, isNewDataAdd: Boolean, position: Int) {
         val hashMap: HashMap<String, Any> = hashMapOf()
-        val availaibility: ArrayList<SendAvailaibility> = arrayListOf()
-        if (i._id.isNullOrBlank()) {
-            if (i.end == "Never" || i.end == null) {
-                i.end = ""
+        if (isNewDataAdd) {
+            val availaibility: ArrayList<SendAvailaibility> = arrayListOf()
+            if (i._id.isNullOrBlank()) {
+                if (i.end == "Never" || i.end == null) {
+                    i.end = ""
+                }
+                val availbility = SendAvailaibility()
+                availbility.day = i.day
+                availbility.end = i.end
+                availbility.endTime = i.endTime
+                availbility.startTime = i.startTime
+                availaibility.add(availbility)
             }
-            val availbility = SendAvailaibility()
-            availbility.day = i.day
-            availbility.end = i.end
-            availbility.endTime = i.endTime
-            availbility.startTime = i.startTime
-            availaibility.add(availbility)
+            hashMap["availaibility"] = availaibility
+            viewModel.updateProfile(
+                hashMap,
+                getUser(prefsManager)!!.admin._id
+            )
+        } else {
+            val updateHashMap: HashMap<String, Any> = hashMapOf()
+            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
+            updateHashMap["id"] = i._id
+            updateHashMap["day"] = i.day
+            updateHashMap["startTime"] = i.startTime
+            updateHashMap["endTime"] = i.endTime
+            if (i.end == "Never" || i.end.isNullOrBlank()) {
+                updateHashMap["end"] = ""
+            } else {
+                updateHashMap["end"] = i.end
+            }
+            viewModel.updateAvailabilityTime(updateHashMap, position, i, 1)
         }
-        hashMap["availaibility"] = availaibility
-        viewModel.updateProfile(
-            hashMap,
-            getUser(prefsManager)!!.admin._id
-        )
+
+
     }
 
     companion object {

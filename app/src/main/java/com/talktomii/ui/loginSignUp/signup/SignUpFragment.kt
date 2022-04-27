@@ -193,10 +193,10 @@ class SignUpFragment : DaggerFragment() {
             binding.fbLoginButton.performClick()
         }
 
-        binding.tvTermsAndConditions.setOnClickListener {
-            val dialog = TermsAndConditionsDialog(this)
-            dialog.show(requireActivity().supportFragmentManager, TermsAndConditionsDialog.TAG)
-        }
+//        binding.tvTermsAndConditions.setOnClickListener {
+//            val dialog = TermsAndConditionsDialog(this)
+//            dialog.show(requireActivity().supportFragmentManager, TermsAndConditionsDialog.TAG)
+//        }
 
         binding.txtSignIn.setOnClickListener {
 //            findNavController().navigate(R.id.action_signupFragment_to_signIn)

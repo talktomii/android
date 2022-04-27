@@ -189,9 +189,9 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload) {
         progressDialog.dismiss()
         adapterPopular!!.setPopularList(payload.admin)
-        var jsonObject = JSONObject()
-        jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
-        (requireActivity() as MainActivity).socketManager.joinApp(jsonObject, this)
+//        var jsonObject = JSONObject()
+//        jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
+//        (requireActivity() as MainActivity).socketManager.joinApp(jsonObject, this)
     }
 
     override fun onMessageReceive(message: String, event: String) {

@@ -20,7 +20,11 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
     @Inject
     lateinit var viewModel: HomeScreenViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DialogAboutMeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,19 +37,19 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
 
     fun playVideo() {
         binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
-        binding.videoview.setOnPreparedListener { mediaPlayer ->
-            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
-            val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
-            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
-            val scaleX = videoRatio / screenRatio
-            if (scaleX >= 1f) {
-                binding.videoview.scaleX = width.toFloat()
-            } else {
-//                binding.videoview.scaleY = 1f / scaleX
-                binding.videoview.scaleY = height.toFloat()
-            }
-        }
+//        binding.videoview.setOnPreparedListener { mediaPlayer ->
+//            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
+//            val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
+//            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+//            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
+//            val scaleX = videoRatio / screenRatio
+//            if (scaleX >= 1f) {
+//                binding.videoview.scaleX = width.toFloat()
+//            } else {
+////                binding.videoview.scaleY = 1f / scaleX
+//                binding.videoview.scaleY = height.toFloat()
+//            }
+//        }
         binding.videoview.start()
 //        if (aboutYou != null){
 //            binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
@@ -54,10 +58,10 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
 //            binding.videoview.setVideoURI(Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))
 //        }
 
-        binding.videoView.setVideoURI(Uri.parse(aboutYou as String))
-        binding.videoView.setMediaController(binding.mediaController);
-
-        binding.videoView.start()
+//        binding.videoView.setVideoURI(Uri.parse(aboutYou as String))
+//        binding.videoView.setMediaController(binding.mediaController);
+//
+//        binding.videoView.start()
 //        binding.videoview.setOnPreparedListener { mediaPlayer ->
 //            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
 //            val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
@@ -103,8 +107,16 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
 //    }
 
     private fun setListener() {
+        var isPlaying = true
         binding.ivClose.setOnClickListener {
             dismiss()
+        }
+        binding.ivPause.setOnClickListener {
+            if (binding.videoview.isPlaying) {
+                binding.videoview.pause()
+            }else{
+                binding.videoview.resume();
+            }
         }
     }
 

@@ -68,8 +68,12 @@ class AddTimePeriodBottomSheetFragment(
 
         if (availaibility == null) {
             binding.tvDate.text = SimpleDateFormat("MMM dd yyyy").format(Date())
+            binding.btnAddTimePeriod.visibility = View.VISIBLE
+            binding.tvLabelAddTimePeriod.text = getString(R.string.add_time_period)
         } else {
             setdata()
+            binding.btnAddTimePeriod.visibility = View.GONE
+            binding.tvLabelAddTimePeriod.text = getString(R.string.view_time_period)
         }
         calenderTo = Calendar.getInstance()
         calenderFrom = Calendar.getInstance()
@@ -242,6 +246,8 @@ class AddTimePeriodBottomSheetFragment(
         }
 
         binding.llDate.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             val c = Calendar.getInstance()
             val dpd = DatePickerDialog(
                 requireContext(),
@@ -258,12 +264,16 @@ class AddTimePeriodBottomSheetFragment(
         }
 
         binding.rbNever.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             binding.rbNever.isChecked = true
             binding.rbOn.isChecked = false
 
         }
 
         binding.llFrom.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
 //            calenderFrom= Calendar.getInstance()
             val timePickerDialog = TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
                 calenderFrom!!.timeInMillis = System.currentTimeMillis()
@@ -285,6 +295,8 @@ class AddTimePeriodBottomSheetFragment(
         }
 
         binding.llTo.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             val timePickerDialog = TimePickerDialog(requireContext(), { view, hourOfDay, minute ->
                 calenderTo!!.timeInMillis = System.currentTimeMillis()
                 calenderTo!!.set(Calendar.MINUTE, minute)
@@ -303,39 +315,57 @@ class AddTimePeriodBottomSheetFragment(
         }
 
         binding.rbOn.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             binding.rbNever.isChecked = false
             binding.rbOn.isChecked = true
         }
 
         binding.tvMonday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupMonday()
         }
 
         binding.tvTuesday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupTuesday()
         }
 
         binding.tvWednesday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupWednesday()
         }
 
         binding.tvThursday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupThursday()
         }
 
         binding.tvFriday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupFriday()
         }
 
         binding.tvSaturday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupSaturday()
         }
 
         binding.tvSunday.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             setupSunday()
         }
 
         binding.btnAddTimePeriod.setOnClickListener {
+            if (availaibility != null)
+                return@setOnClickListener
             validation()
         }
     }

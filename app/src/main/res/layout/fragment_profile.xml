@@ -15,14 +15,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundColor"
-        >
+        android:background="@color/backgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundColor"
-            >
+            android:background="@color/backgroundColor">
 
             <ImageView
                 android:id="@+id/layoutGrandiant"
@@ -108,11 +106,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
+                android:fontFamily="@font/inter_regular"
                 android:text="@{viewModel.userField.fname +' '+viewModel.userField.lname}"
                 android:textColor="@color/myCards"
-                android:textSize="16sp"
                 android:textFontWeight="600"
-                android:fontFamily="@font/inter_regular"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
                 app:layout_constraintStart_toEndOf="@+id/imgDefault"
                 app:layout_constraintTop_toTopOf="@+id/imgDefault"
@@ -123,11 +121,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
+                android:fontFamily="@font/inter_regular"
                 android:text="@{viewModel.userField.userName}"
                 android:textColor="@color/myCards"
-                android:textSize="@dimen/sp_14"
                 android:textFontWeight="400"
-                android:fontFamily="@font/inter_regular"
+                android:textSize="@dimen/sp_14"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
                 app:layout_constraintTop_toBottomOf="@+id/txtName"
                 tools:text="\@Leslie" />
@@ -142,57 +140,54 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginHorizontal="@dimen/dp_10"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tvLabelAboutMe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1.2"
                         android:background="@drawable/bg_white_strok"
                         android:drawableLeft="@drawable/ic_video"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/dp_20"
                         android:paddingTop="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_40"
-                        android:paddingStart="@dimen/dp_20"
                         android:paddingBottom="10dp"
                         android:text="About Me"
                         android:textColor="@color/calText"
-                        android:textSize="12sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
                         android:textFontWeight="600"
-                        android:fontFamily="@font/inter_regular"
-                        />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/TextEditProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
                         android:background="@drawable/bg_white_strok"
                         android:drawableLeft="@drawable/ic_editcolor"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center"
                         android:paddingStart="@dimen/dp_20"
                         android:paddingTop="@dimen/dp_10"
                         android:paddingBottom="10dp"
                         android:text="Edit Personal Info"
                         android:textColor="@color/calText"
-                        android:textSize="12sp"
                         android:textFontWeight="600"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:fontFamily="@font/inter_regular"
+                        android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/tvLabelAboutMe"
                         app:layout_constraintStart_toEndOf="@+id/tvLabelAboutMe"
                         app:layout_constraintTop_toTopOf="@+id/tvLabelAboutMe" />
                 </LinearLayout>
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -216,10 +211,10 @@
                         android:id="@+id/txtPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/price"
-                        android:fontFamily="@font/inter_regular"
-                        android:textColor="@color/cardNumber"
                         android:layout_marginStart="@dimen/dp_10"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/price"
+                        android:textColor="@color/cardNumber"
                         android:textFontWeight="400"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -571,8 +566,7 @@
                     android:textColor="@color/blue"
                     android:textFontWeight="400"
                     android:textSize="14sp"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

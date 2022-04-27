@@ -22,10 +22,6 @@ import com.talktomii.R
 import com.talktomii.databinding.ActivityMainBinding
 import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.utlis.LocaleHelper
-import com.talktomii.utlis.PrefsManager
-import com.talktomii.utlis.isUser
-import com.talktomii.utlis.logoutUser
 import dagger.android.support.DaggerAppCompatActivity
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -35,8 +31,9 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.get
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
-import com.talktomii.utlis.SocketManager
+import com.talktomii.utlis.*
 import com.zoho.salesiqembed.ZohoSalesIQ
+import org.json.JSONObject
 
 
 class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver {
@@ -306,7 +303,9 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     }
 
     fun socketConnected() {
-        socketManager.onCallRequest(this)
+        var jsonObject = JSONObject()
+        jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
+       socketManager.joinApp(jsonObject, this)
     }
     fun openNotificationFragment() {
         binding.menuBottom.selectedItemId = R.id.nav_notifications

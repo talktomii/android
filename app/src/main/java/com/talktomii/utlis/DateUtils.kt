@@ -15,6 +15,7 @@ import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
 import java.text.Format
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -86,6 +87,28 @@ object DateUtils {
         }
 
     }
+
+    fun setDateToTimeUTCToLocal(startTime: String): String {
+        var dateToReturn: String = startTime
+
+        val sdf = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+        var gmt: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(TIME_FORMAT)
+        sdfOutPutToSend.timeZone = TimeZone.getDefault()
+
+        try {
+            gmt = sdf.parse(startTime)
+            dateToReturn = sdfOutPutToSend.format(gmt)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return dateToReturn
+
+    }
+
     fun getTimeFormat(hr: Int, min: Int): String? {
         val cal = Calendar.getInstance()
         cal[Calendar.HOUR_OF_DAY] = hr
@@ -94,6 +117,7 @@ object DateUtils {
         formatter = SimpleDateFormat("h:mm a")
         return formatter.format(cal.time)
     }
+
     fun setDateToWeekDate(startTime: String): String {
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
@@ -214,9 +238,28 @@ object DateUtils {
         val d = df.parse(time)
         val cal = Calendar.getInstance()
         cal.time = d
-        cal.add(Calendar.MONTH, 1);
+        cal.add(Calendar.MONTH, 1)
         return cal
     }
+
+    fun simpleDateToLocalToUTCDate(date: String): String {
+        var dateToReturn: String? = null
+        val sdf = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdf.timeZone = TimeZone.getDefault()
+        var gmt: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdfOutPutToSend.timeZone = TimeZone.getTimeZone("UTC")
+
+        try {
+            gmt = sdf.parse(date)
+            dateToReturn = sdfOutPutToSend.format(gmt)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return dateToReturn.toString()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)

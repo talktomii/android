@@ -1,6 +1,5 @@
 package com.talktomii.ui.home.profile
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +18,7 @@ import com.talktomii.data.model.Admin
 import com.talktomii.data.model.RegisterModel
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
+import com.talktomii.data.model.admin.SendAvailaibility
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.ApiUtils
@@ -34,10 +34,10 @@ import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.ui.tellusmore.SocialNetwork
 import com.talktomii.utlis.*
+import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
-import java.io.File
 import javax.inject.Inject
 
 class ProfileFragment : DaggerFragment(), AdminDetailInterface,
@@ -127,7 +127,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         }
 
         binding.txtBudgesCount.setOnClickListener {
-            findNavController().navigate(R.id.action_profile_to_myBudgesFragment)
+            var bundle: Bundle = Bundle()
+            bundle.putSerializable("badges", admin1!!.badges)
+            findNavController().navigate(R.id.action_profile_to_myBudgesFragment, bundle)
         }
 
         binding.txtAddPrice.setOnClickListener {
@@ -245,7 +247,7 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
 
         binding.tvLabelAboutMe.setOnClickListener {
-            if (admin1!!.aboutYou != null){
+            if (admin1!!.aboutYou != null) {
                 val dialog = AboutMeDialog(admin1!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             }
@@ -295,22 +297,23 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             .placeholder(R.drawable.bg_gradient_profile)
             .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
 
-        if (admin1.aboutYou != null){
-
-        }
         for (i in admin1.socialNetwork) {
             when (i.name.lowercase()) {
                 "Facebook".lowercase() -> {
-                    fbLink.link = i.link
+                    if (i.link != null)
+                        fbLink.link = i.link
                 }
                 "Twitter".lowercase() -> {
-                    twLink.link = i.link
+                    if (i.link != null)
+                        twLink.link = i.link
                 }
                 "Instagram".lowercase() -> {
-                    insLink.link = i.link
+                    if (i.link != null)
+                        insLink.link = i.link
                 }
                 "Tiktok".lowercase() -> {
-                    tikLink.link = i.link
+                    if (i.link != null)
+                        tikLink.link = i.link
                 }
             }
         }
@@ -334,13 +337,13 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             viewModel.userField.get()!!.interest,
             1
         )
-        if (isUser(prefsManager)){
+        if (isUser(prefsManager)) {
             binding.constraintPrice.visibility = View.GONE
             binding.tvLabelFollowMe.visibility = View.GONE
             binding.constraintItems.visibility = View.GONE
             binding.constraintBadges.visibility = View.GONE
             binding.constarinAvaibility.visibility = View.GONE
-        }else{
+        } else {
             binding.constraintPrice.visibility = View.VISIBLE
             binding.tvLabelFollowMe.visibility = View.VISIBLE
             binding.constraintItems.visibility = View.VISIBLE
@@ -411,29 +414,14 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             object : AddTimePeriodInterface {
                 override fun addTimePeriod(model: Availaibility, isEdit: Boolean, position: Int) {
                     if (isEdit) {
-                        if (model._id.isNullOrBlank()) {
-                            viewModel.userField.get()!!.availaibility[position] = model
-                        } else {
-                            val updateHashMap: HashMap<String, Any> = hashMapOf()
-                            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
-                            updateHashMap["id"] = model._id
-                            updateHashMap["day"] = model.day
-                            updateHashMap["startTime"] = model.startTime
-                            updateHashMap["endTime"] = model.endTime
-                            if (model.end == "Never" || model.end.isNullOrBlank()) {
-                                updateHashMap["end"] = ""
-                            } else {
-                                updateHashMap["end"] = model.end
-                            }
-                            viewModel.updateAvailabilityTime(updateHashMap, position, model, 1)
-                        }
-
+                        addAPIAvaibility(model, false, position)
                     } else {
-                        viewModel.userField.get()!!.availaibility.add(model)
+//                        viewModel.userField.get()!!.availaibility.add(model)
+                        addAPIAvaibility(model, true, 0)
                     }
                     Log.e("Time 3", model.startTime)
                     Log.e("Time 4", model.endTime)
-                    updateAvailabilityAdapter()
+//                    updateAvailabilityAdapter()
                 }
             },
             model, position
@@ -448,8 +436,10 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         prefsManager.save(PrefsManager.PREF_PROFILE, registerModel)
         var admin = viewModel.userField.get()
         admin!!.price = admin1.price
+        admin.availaibility = admin1.availaibility
         viewModel.userField.set(admin)
         updatePriceAdapter()
+        updateAvailabilityAdapter()
 //        findNavController().popBackStack()
     }
 
@@ -478,10 +468,10 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
     override fun onUpdateAvibility(position: Int, model: Availaibility?, which: Int) {
         progressDialog.dismiss()
-        viewModel.userField.get()!!.availaibility[position] = model!!
         if (which == 2) {
             deleteAvailabilityAdapter(position)
         } else {
+            viewModel.userField.get()!!.availaibility[position] = model!!
             updateAvailabilityAdapter()
         }
 
@@ -494,6 +484,44 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
     override fun onUpdatePhoto(admin: com.talktomii.data.photo.Admin) {
         progressDialog.dismiss()
+    }
+
+    private fun addAPIAvaibility(i: Availaibility, isNewDataAdd: Boolean, position: Int) {
+        val hashMap: HashMap<String, Any> = hashMapOf()
+        if (isNewDataAdd) {
+            val availaibility: ArrayList<SendAvailaibility> = arrayListOf()
+            if (i._id.isNullOrBlank()) {
+                if (i.end == "Never" || i.end == null) {
+                    i.end = ""
+                }
+                val availbility = SendAvailaibility()
+                availbility.day = i.day
+                availbility.end = i.end
+                availbility.endTime = simpleDateToLocalToUTCDate(i.endTime)
+                availbility.startTime = simpleDateToLocalToUTCDate(i.startTime)
+                availaibility.add(availbility)
+            }
+            hashMap["availaibility"] = availaibility
+            viewModel.updateProfile(
+                hashMap,
+                getUser(prefsManager)!!.admin._id
+            )
+        } else {
+            val updateHashMap: HashMap<String, Any> = hashMapOf()
+            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
+            updateHashMap["id"] = i._id
+            updateHashMap["day"] = i.day
+            updateHashMap["startTime"] = simpleDateToLocalToUTCDate(i.startTime)
+            updateHashMap["endTime"] = simpleDateToLocalToUTCDate(i.endTime)
+            if (i.end == "Never" || i.end.isNullOrBlank()) {
+                updateHashMap["end"] = ""
+            } else {
+                updateHashMap["end"] = i.end
+            }
+            viewModel.updateAvailabilityTime(updateHashMap, position, i, 1)
+        }
+
+
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.talktomii.data.model
 
+import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin.Price
 
 data class Admin(
@@ -16,4 +17,5 @@ data class Admin(
     val status: Status,
     val userName: String,
     var price: ArrayList<Price>,
-)
+    val availaibility: ArrayList<Availaibility>
+    )

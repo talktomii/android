@@ -50,12 +50,12 @@ class MyBudgesFragment : DaggerFragment() {
         adapterMyBudges = AdapterMyBudges()
         binding.rvMyBudges.adapter = adapterMyBudges
         var badgesArrayList: ArrayList<BadgesItem> = arrayListOf()
-        badgesArrayList.add(BadgesItem(0, "Fun"))
-        badgesArrayList.add(BadgesItem(0, "Humor"))
-        badgesArrayList.add(BadgesItem(0, "Smart"))
-        badgesArrayList.add(BadgesItem(0, "Knowledgeable"))
-        badgesArrayList.add(BadgesItem(0, "Kind"))
-        badgesArrayList.add(BadgesItem(0, "Talkative"))
+        badgesArrayList.add(BadgesItem(0, "Fun",R.drawable.ic_badge_1))
+        badgesArrayList.add(BadgesItem(0, "Humor",R.drawable.ic_badge_1))
+        badgesArrayList.add(BadgesItem(0, "Smart",R.drawable.ic_badge_1))
+        badgesArrayList.add(BadgesItem(0, "Knowledgeable",R.drawable.ic_badge_2))
+        badgesArrayList.add(BadgesItem(0, "Kind",R.drawable.ic_badge_1))
+        badgesArrayList.add(BadgesItem(0, "Talkative",R.drawable.ic_badge_3))
 
         if (requireArguments().getSerializable("badges") != null){
             for (i in requireArguments().getSerializable("badges") as ArrayList<BadgesItem>) {

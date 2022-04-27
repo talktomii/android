@@ -25,7 +25,7 @@ class AdapterMyBudges : RecyclerView.Adapter<AdapterMyBudges.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val badgesItem = badgesArrayList[position]
         holder.binding.txtBudges.text = badgesItem.count.toString()
-        holder.binding.tvBadgesName.text = badgesItem.count.toString()
+        holder.binding.tvBadgesName.text = badgesItem._id.toString()
         holder.binding.ivBadgesImage.setImageResource(badgesItem.resourse)
 
 

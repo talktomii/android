@@ -495,10 +495,10 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
     override fun onUpdateAvibility(position: Int, model: Availaibility?, which: Int) {
         progressDialog.dismiss()
-        viewModel.userField.get()!!.availaibility[position] = model!!
         if (which == 2) {
             deleteAvailabilityAdapter(position)
         } else {
+            viewModel.userField.get()!!.availaibility[position] = model!!
             updateAvailabilityAdapter()
         }
 

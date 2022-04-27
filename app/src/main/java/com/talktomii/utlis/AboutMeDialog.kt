@@ -32,12 +32,7 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
     }
 
     fun playVideo() {
-        if (aboutYou != null){
-            binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
-
-        }else{
-            binding.videoview.setVideoURI(Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))
-        }
+        binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
         binding.videoview.setOnPreparedListener { mediaPlayer ->
             val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
             val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()

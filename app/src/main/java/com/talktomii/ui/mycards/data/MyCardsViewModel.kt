@@ -1031,7 +1031,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         val data = response.body()!!.payload
                         for (i in data!!.callHistory) {
                             try {
-                                if(prefsManager.getString(PrefsManager.PREF_ROLE,"") == "user"){
+                                if (prefsManager.getString(PrefsManager.PREF_ROLE, "") == "user") {
                                     dataList.clear()
                                     dataList.add(
                                         CallHistoryItemModel(
@@ -1046,8 +1046,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                             i.duration!!
                                         )
                                     )
-                                }
-                                else{
+                                } else {
                                     dataList.clear()
                                     dataList.add(
                                         CallHistoryItemModel(
@@ -1253,13 +1252,26 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                     now,
                                     DateUtils.MINUTE_IN_MILLIS
                                 )
-                                if(i.notificationBy != null){
+
+                                if (i.notificationBy != null) {
+                                    var profile = ""
+                                    if (i.notificationBy!!.profilePhoto != null) {
+                                        profile = i.notificationBy!!.profilePhoto.toString()
+                                    } else {
+                                        profile = ""
+                                    }
+                                    var name = ""
+                                    if (i.notificationBy!!.userName != null) {
+                                        name = i.notificationBy!!.userName.toString()
+                                    } else {
+                                        name = "user"
+                                    }
                                     dataList.add(
                                         NotificationItemModel(
                                             i.Id!!,
                                             i.title!!,
-                                            "@" + i.notificationBy!!.userName!!,
-                                            i.notificationBy!!.profilePhoto!!,
+                                            "@" + name,
+                                            profile,
                                             ago.toString()
                                         )
                                     )

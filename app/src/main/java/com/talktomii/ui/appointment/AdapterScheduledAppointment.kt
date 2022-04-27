@@ -86,20 +86,10 @@ class AdapterScheduledAppointment(
             }
         }
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
-            val popupMenu = PopupMenu(context, view)
+            val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+            val popupMenu = PopupMenu(wrapper, view)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.appointment_popup, popupMenu.menu)
-//            for (i in 0 until popupMenu.menu.size()) {
-//                val item: MenuItem = popupMenu.menu.getItem(i)
-//                val spanString = SpannableString(popupMenu.menu.getItem(i).getTitle().toString())
-//                spanString.setSpan(
-//                    ForegroundColorSpan(context.resources.getColor(R.color.calText)),
-//                    0,
-//                    spanString.length,
-//                    0
-//                ) //fix the color to white
-//                item.title = spanString
-//            }
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 popupMenu.gravity = Gravity.END

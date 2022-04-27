@@ -201,8 +201,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             viewModel.checkAndSetBookMark()
         }
         binding.txtAboutMe.setOnClickListener {
-            val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
-            dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            if (selectedAdmin!!.aboutYou != null) {
+                val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            }else{
+                val dialog = AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            }
+
         }
 
         binding.ivShare.setOnClickListener {
@@ -292,7 +298,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(binding.imgDefault)
         }
-        if (admin1.socialNetwork != null && admin1.socialNetwork.isNotEmpty()){
+        if (admin1.socialNetwork != null && admin1.socialNetwork.isNotEmpty()) {
             socialMediaAdapter?.setItemList(admin1.socialNetwork)
         }
         if (admin1.interest.size > 0) {
@@ -440,7 +446,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
 
-    companion object{
-        lateinit var layout : ConstraintLayout
+    companion object {
+        lateinit var layout: ConstraintLayout
     }
 }

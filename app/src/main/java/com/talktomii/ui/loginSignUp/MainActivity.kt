@@ -127,6 +127,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
             ZohoSalesIQ.showLauncher(false)
             ZohoSalesIQ.unregisterVisitor(this)
             logoutUser(this, prefsManager)
+
         }
         binding.txtMyCards.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)

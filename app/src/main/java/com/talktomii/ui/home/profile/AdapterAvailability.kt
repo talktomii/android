@@ -1,14 +1,12 @@
 package com.talktomii.ui.home.profile
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.ViewGroup
+import android.view.*
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
+import com.talktomii.adapter.MyCardAdapter
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.databinding.ItemAvailabilityBinding
 import com.talktomii.utlis.DateUtils.getDateToShortDate
@@ -105,8 +103,8 @@ class AdapterAvailability(private var context: Context, onEditInterface: OnEditI
         }
 
         holder.binding.ivEdit.setOnClickListener {
-
-            val popupMenu = PopupMenu(context, it)
+            val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+            val popupMenu = PopupMenu(wrapper, it)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.avaibility_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(object :

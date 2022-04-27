@@ -91,4 +91,8 @@
     <style name="MyPopup" parent="@style/Widget.MaterialComponents.PopupMenu">
         <item name="android:popupBackground">@color/mycard_bgcolor</item>
     </style>
+    <style name="Talk.PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">@color/calText</item>
+        <item name="android:itemBackground">@color/slot_bg</item>
+    </style>
 </resources>

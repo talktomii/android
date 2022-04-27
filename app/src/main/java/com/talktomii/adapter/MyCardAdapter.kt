@@ -95,7 +95,8 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
         holder.itemName.text = itemsViewModel.last4
         holder.itemImg.setImageResource(itemsViewModel.img)
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
-            val popupMenu = PopupMenu(context, view)
+            val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+            val popupMenu = PopupMenu(wrapper, view)
             val menuInflater = MenuInflater(context)
             menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(moreMenuClickListener())

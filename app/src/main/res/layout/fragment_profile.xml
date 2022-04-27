@@ -14,11 +14,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            >
 
             <ImageView
                 android:id="@+id/layoutGrandiant"
@@ -49,6 +53,7 @@
                     android:drawableLeft="@drawable/back_arrow"
                     android:padding="@dimen/dp_10"
                     android:text="Back"
+                    android:textColor="@color/myCards"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -104,9 +109,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
                 android:text="@{viewModel.userField.fname +' '+viewModel.userField.lname}"
-                android:textColor="@color/gray"
+                android:textColor="@color/myCards"
                 android:textSize="16sp"
-                android:textStyle="bold"
+                android:textFontWeight="600"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintBottom_toBottomOf="@+id/imgDefault"
                 app:layout_constraintStart_toEndOf="@+id/imgDefault"
                 app:layout_constraintTop_toTopOf="@+id/imgDefault"
@@ -118,9 +124,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@{viewModel.userField.userName}"
-                android:textColor="@color/gray"
+                android:textColor="@color/myCards"
                 android:textSize="@dimen/sp_14"
-                android:textStyle="bold"
+                android:textFontWeight="400"
+                android:fontFamily="@font/inter_regular"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
                 app:layout_constraintTop_toBottomOf="@+id/txtName"
                 tools:text="\@Leslie" />
@@ -132,45 +139,61 @@
                 android:layout_marginTop="@dimen/dp_20"
                 app:layout_constraintTop_toBottomOf="@+id/imgDefault">
 
-                <TextView
-                    android:id="@+id/tvLabelAboutMe"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_white_strok"
-                    android:drawableLeft="@drawable/ic_video"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:paddingStart="50dp"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_40"
-                    android:paddingBottom="10dp"
-                    android:text="About Me"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="@dimen/dp_10"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
 
-                <TextView
-                    android:id="@+id/TextEditProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:background="@drawable/bg_white_strok"
-                    android:drawableLeft="@drawable/ic_editcolor"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:paddingStart="40dp"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_40"
-                    android:paddingBottom="10dp"
-                    android:text="Edit Personal Info"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvLabelAboutMe"
-                    app:layout_constraintStart_toEndOf="@+id/tvLabelAboutMe"
-                    app:layout_constraintTop_toTopOf="@+id/tvLabelAboutMe" />
+                    <TextView
+                        android:id="@+id/tvLabelAboutMe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.2"
+                        android:background="@drawable/bg_white_strok"
+                        android:drawableLeft="@drawable/ic_video"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_40"
+                        android:paddingStart="@dimen/dp_20"
+                        android:paddingBottom="10dp"
+                        android:text="About Me"
+                        android:textColor="@color/calText"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textFontWeight="600"
+                        android:fontFamily="@font/inter_regular"
+                        />
+
+                    <TextView
+                        android:id="@+id/TextEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:background="@drawable/bg_white_strok"
+                        android:drawableLeft="@drawable/ic_editcolor"
+                        android:paddingStart="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="10dp"
+                        android:text="Edit Personal Info"
+                        android:textColor="@color/calText"
+                        android:textSize="12sp"
+                        android:textFontWeight="600"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/inter_regular"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvLabelAboutMe"
+                        app:layout_constraintStart_toEndOf="@+id/tvLabelAboutMe"
+                        app:layout_constraintTop_toTopOf="@+id/tvLabelAboutMe" />
+                </LinearLayout>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -193,12 +216,11 @@
                         android:id="@+id/txtPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:fontFamily="@font/inter_regular"
                         android:text="@string/price"
+                        android:fontFamily="@font/inter_regular"
                         android:textColor="@color/cardNumber"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:textFontWeight="400"
-                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -490,6 +512,7 @@
                     android:id="@+id/constarinAvaibility"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     app:layout_constraintStart_toStartOf="@+id/constraintBadges"
                     app:layout_constraintTop_toBottomOf="@+id/constraintBadges">
 
@@ -526,9 +549,7 @@
                         android:id="@+id/rvAvailability"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginEnd="@dimen/dp_10"
                         android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -16,6 +16,7 @@ import com.talktomii.ui.callhistory.models.CallHistoryItemModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.talktomii.adapter.MyCardAdapter
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -50,10 +51,11 @@ class CallHistory: DaggerFragment(R.layout.call_history) {
             }
         }
         binding.clearHistoryBtn.setOnClickListener {
-            val popupMenu = PopupMenu(context, view, Gravity.TOP)
-            val menuInflater = MenuInflater(context)
-            menuInflater.inflate(R.menu.clear_history_popup, popupMenu.menu)
-            popupMenu.show()
+//            val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+//            val popupMenu = PopupMenu(wrapper, view, Gravity.TOP)
+//            val menuInflater = MenuInflater(context)
+//            menuInflater.inflate(R.menu.clear_history_popup, popupMenu.menu)
+//            popupMenu.show()
         }
         binding.searchCallHistory.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

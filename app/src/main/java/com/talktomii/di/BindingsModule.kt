@@ -1,7 +1,5 @@
 package com.talktomii.di
 
-import com.talktomii.ui.home.profile.InfluencerProfileFragment
-import com.talktomii.ui.search.SearchFragment
 import com.talktomii.VideoActivity
 import com.talktomii.ui.FAQ.FaqActivity
 import com.talktomii.ui.appointment.AppointmentsFragment
@@ -10,12 +8,13 @@ import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
 import com.talktomii.ui.callhistory.CallHistory
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
 import com.talktomii.ui.coupon.CouponActivity
-import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
-import com.talktomii.ui.helpsupport.ChatSupportActivity
-import com.talktomii.ui.helpsupport.HelpSupport
 import com.talktomii.ui.drawer.bookmark.BookmarkFragment
 import com.talktomii.ui.drawer.helpsupport.HelpSupportFragment
 import com.talktomii.ui.drawer.settings.SettingsFragment
+import com.talktomii.ui.editpersonalinfo.EditPersonalInfo
+import com.talktomii.ui.editpersonalinfo.EditPersonalInfoDetails
+import com.talktomii.ui.helpsupport.ChatSupportActivity
+import com.talktomii.ui.helpsupport.HelpSupport
 import com.talktomii.ui.home.HomeActivity
 import com.talktomii.ui.home.homeFragment.HomeFragment
 import com.talktomii.ui.home.notifications.NotificationFragment
@@ -43,6 +42,7 @@ import com.talktomii.ui.mywallet.fragments.EarningFragment
 import com.talktomii.ui.mywallet.fragments.ExpenseFragment
 import com.talktomii.ui.mywallet.fragments.RefillFragment
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
+import com.talktomii.ui.search.SearchFragment
 import com.talktomii.ui.settings.PrivacyAndPolicyActivity
 import com.talktomii.ui.settings.Settings
 import com.talktomii.ui.tellusmore.TellUsMore
@@ -187,6 +187,9 @@ abstract class BindingsModule {
 
     @ContributesAndroidInjector
     abstract fun profileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun editPersonalDetails(): EditPersonalInfoDetails
 
     @ContributesAndroidInjector
     abstract fun profileInfluencerFragment(): InfluencerProfileFragment

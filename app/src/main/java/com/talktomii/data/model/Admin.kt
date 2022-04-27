@@ -1,5 +1,7 @@
 package com.talktomii.data.model
 
+import com.talktomii.data.model.admin.Price
+
 data class Admin(
     val _id: String,
     val coverPhoto: String,
@@ -12,5 +14,6 @@ data class Admin(
     val profilePhoto: String,
     val role: Role,
     val status: Status,
-    val userName: String
+    val userName: String,
+    var price: ArrayList<Price>,
 )

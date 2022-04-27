@@ -82,6 +82,7 @@ interface WebService {
         private const val GET_APPOINTMENT_BY_DATE = "appointment/getAppointmentByDate"
         private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
         private const val GET_INFLUENCER_DASHBOARD = "admin/influencer-dashboard"
+        private const val UPDATE_VIDEO = "admin/updateAudio"
     }
 
     @GET("card/getCardByuid/{id}")
@@ -383,4 +384,13 @@ interface WebService {
     suspend fun getAdminsBySearch(
         @Query("search") id: String
     ): Response<AdminResponse>
+
+    @Multipart
+    @PUT(UPDATE_VIDEO + "/{id}")
+    suspend fun updateAboutYou(
+        @Path("id") id: String,
+        @PartMap map: HashMap<String, RequestBody>
+    ): Response<UpdatePhoto>
+
+
 }

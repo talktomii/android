@@ -47,3 +47,7 @@ interface DeleteAppointmentListener {
 interface RescheduleAppointmentListener {
     fun onRescheduleAppointment(admin: UpdateAppointmentPayload)
 }
+
+interface UpdateAboutYouVideo {
+    fun onUpdateAboutYou(admin1: Admin)
+}

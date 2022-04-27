@@ -104,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:max="90"
                 android:min="15"
+                android:clickable="false"
                 android:progressBackgroundTint="@color/blue_check"
                 android:progressTint="@color/blue_check"
                 android:thumb="@drawable/seekbar" />

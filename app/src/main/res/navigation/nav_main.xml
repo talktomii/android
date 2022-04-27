@@ -147,6 +147,9 @@
         <action
             android:id="@+id/action_profile_to_myBudgesFragment"
             app:destination="@id/myBudgesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editPersonalInfoDetails"
+            app:destination="@id/editPersonalInfoDetails" />
     </fragment>
 
     <fragment
@@ -282,5 +285,9 @@
         android:name="com.talktomii.ui.home.profile.ViewInterestFragment"
         android:label="ViewInterestFragment" >
     </fragment>
+    <fragment
+        android:id="@+id/editPersonalInfoDetails"
+        android:name="com.talktomii.ui.editpersonalinfo.EditPersonalInfoDetails"
+        android:label="EditPersonalInfoDetails" />
 
 </navigation>

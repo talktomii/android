@@ -10,7 +10,7 @@ import java.io.Serializable
 data class Admin1(
     val __v: Int,
     val _id: String,
-    val aboutYou: Any,
+    var aboutYou: Any,
     val availaibility: ArrayList<Availaibility>,
     val blocked: List<Any>,
     val couponIsUsed: Boolean,

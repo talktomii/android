@@ -142,7 +142,8 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
 
         binding.txtProfile.setOnClickListener {
             binding.drawerLayout.closeDrawer(binding.navigationView)
-            viewModel.navController.navigate(R.id.editPersonalInfo)
+//            viewModel.navController.navigate(R.id.editPersonalInfo)
+            viewModel.navController.navigate(R.id.profileFragment)
             binding.menuBottom.isVisible = true
         }
 

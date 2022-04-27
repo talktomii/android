@@ -13,7 +13,7 @@ import com.talktomii.ui.home.HomeScreenViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
-class AboutMeDialog() : DaggerDialogFragment() {
+class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
 
     lateinit var binding: DialogAboutMeBinding
 
@@ -28,11 +28,29 @@ class AboutMeDialog() : DaggerDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListener()
-        playvideo()
+        playVideo()
     }
 
-    fun playvideo() {
-        binding.videoview.setVideoURI(Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))
+    fun playVideo() {
+        if (aboutYou != null){
+            binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
+
+        }else{
+            binding.videoview.setVideoURI(Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"))
+        }
+        binding.videoview.setOnPreparedListener { mediaPlayer ->
+            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
+            val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
+            val scaleX = videoRatio / screenRatio
+            if (scaleX >= 1f) {
+                binding.videoview.scaleX = width.toFloat()
+            } else {
+//                binding.videoview.scaleY = 1f / scaleX
+                binding.videoview.scaleY = height.toFloat()
+            }
+        }
         binding.videoview.start()
     }
 
@@ -91,8 +109,10 @@ class AboutMeDialog() : DaggerDialogFragment() {
         super.onStart()
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            val width = ViewGroup.LayoutParams.MATCH_PARENT
-            val height = ViewGroup.LayoutParams.MATCH_PARENT
+//            val width = ViewGroup.LayoutParams.MATCH_PARENT
+//            val height = ViewGroup.LayoutParams.MATCH_PARENT
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
             dialog.window?.setLayout(width, height)
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }

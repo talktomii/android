@@ -176,10 +176,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             showPopup()
         }
 
-        binding.txtAboutMe.setOnClickListener {
-            val dialog = DeleteAppointmentDialog()
-            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-        }
+//        binding.txtAboutMe.setOnClickListener {
+//            val dialog = DeleteAppointmentDialog()
+//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
+//        }
 
 //        binding.txtAboutMe.setOnClickListener {
 //            val dialog = DeleteAppointmentDialog()
@@ -201,7 +201,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             viewModel.checkAndSetBookMark()
         }
         binding.txtAboutMe.setOnClickListener {
-            val dialog = AboutMeDialog()
+            val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
             dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
         }
 

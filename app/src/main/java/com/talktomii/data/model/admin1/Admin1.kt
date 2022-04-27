@@ -34,7 +34,9 @@ data class Admin1(
     val role: Role,
     val socialNetwork: ArrayList<SocialNetwork>,
     val status: Status,
-    var userName: String
+    var userName: String,
+    val badges: ArrayList<BadgesItem> = arrayListOf()
+
 ) : Serializable
 
 data class Role(

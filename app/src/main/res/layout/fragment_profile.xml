@@ -490,6 +490,7 @@
                     android:id="@+id/constarinAvaibility"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     app:layout_constraintStart_toStartOf="@+id/constraintBadges"
                     app:layout_constraintTop_toBottomOf="@+id/constraintBadges">
 

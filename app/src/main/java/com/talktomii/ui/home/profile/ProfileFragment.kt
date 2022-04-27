@@ -1,6 +1,5 @@
 package com.talktomii.ui.home.profile
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +36,6 @@ import com.talktomii.utlis.*
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
-import java.io.File
 import javax.inject.Inject
 
 class ProfileFragment : DaggerFragment(), AdminDetailInterface,
@@ -127,7 +125,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         }
 
         binding.txtBudgesCount.setOnClickListener {
-            findNavController().navigate(R.id.action_profile_to_myBudgesFragment)
+            var bundle: Bundle = Bundle()
+            bundle.putSerializable("badges", admin1!!.badges)
+            findNavController().navigate(R.id.action_profile_to_myBudgesFragment,bundle)
         }
 
         binding.txtAddPrice.setOnClickListener {
@@ -245,7 +245,7 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
 
 
         binding.tvLabelAboutMe.setOnClickListener {
-            if (admin1!!.aboutYou != null){
+            if (admin1!!.aboutYou != null) {
                 val dialog = AboutMeDialog(admin1!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             }
@@ -295,7 +295,7 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             .placeholder(R.drawable.bg_gradient_profile)
             .error(R.drawable.bg_gradient_profile).into(binding.layoutGrandiant)
 
-        if (admin1.aboutYou != null){
+        if (admin1.aboutYou != null) {
 
         }
         for (i in admin1.socialNetwork) {
@@ -334,13 +334,13 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             viewModel.userField.get()!!.interest,
             1
         )
-        if (isUser(prefsManager)){
+        if (isUser(prefsManager)) {
             binding.constraintPrice.visibility = View.GONE
             binding.tvLabelFollowMe.visibility = View.GONE
             binding.constraintItems.visibility = View.GONE
             binding.constraintBadges.visibility = View.GONE
             binding.constarinAvaibility.visibility = View.GONE
-        }else{
+        } else {
             binding.constraintPrice.visibility = View.VISIBLE
             binding.tvLabelFollowMe.visibility = View.VISIBLE
             binding.constraintItems.visibility = View.VISIBLE

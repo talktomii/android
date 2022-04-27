@@ -203,8 +203,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             viewModel.checkAndSetBookMark()
         }
         binding.txtAboutMe.setOnClickListener {
-            val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
-            dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            if (selectedAdmin!!.aboutYou != null) {
+                val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            }else{
+                val dialog = AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            }
+
         }
 
         binding.ivShare.setOnClickListener {

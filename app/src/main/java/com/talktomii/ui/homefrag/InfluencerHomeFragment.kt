@@ -97,6 +97,16 @@ class InfluencerHomeFragment : DaggerFragment(), CommonInterface, InfluencerDash
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfoInfluencer",
             Context.MODE_PRIVATE
         )
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
+                MainActivity.btnMenu.visibility = View.GONE
+            }
+        }
         binding.ivCross.setOnClickListener {
             binding.constraintLayout.visibility = View.GONE
             val myEdit: SharedPreferences.Editor = sharedPreferences.edit()

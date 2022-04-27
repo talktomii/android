@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.provider.Settings
@@ -20,7 +21,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -189,6 +189,14 @@ fun logoutUser(activity: Activity?, prefsManager: PrefsManager) {
 
     prefsManager.removeAll()
 
+    val preferences: SharedPreferences = activity.getSharedPreferences("hideInfo", Context.MODE_PRIVATE)
+    val editor: SharedPreferences.Editor = preferences.edit()
+    editor.clear()
+    editor.apply()
+    val preferences_in: SharedPreferences = activity.getSharedPreferences("hideInfoInfluencer", Context.MODE_PRIVATE)
+    val editor_in: SharedPreferences.Editor = preferences_in.edit()
+    editor_in.clear()
+    editor_in.apply()
     activity.startActivity(
         Intent(activity, MainActivity::class.java)
     )

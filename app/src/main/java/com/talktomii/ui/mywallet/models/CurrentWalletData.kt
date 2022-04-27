@@ -6,5 +6,5 @@ class CurrentWalletData (
     @SerializedName("uid")
     var uid: String? = null,
     @SerializedName("currentAmount")
-    var currentAmount: Int? = null
+    var currentAmount: Long? = null
 )

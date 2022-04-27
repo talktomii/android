@@ -92,7 +92,7 @@
                 android:id="@+id/constWallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:background="@drawable/blue_drak_background"
@@ -126,11 +126,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/txtMyWallet" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:src="@drawable/ic_right_arrow"
+                    android:layout_width="13dp"
+                    android:layout_height="11dp"
+                    android:layout_marginEnd="@dimen/dp_10"
                     android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txtMyWallet"

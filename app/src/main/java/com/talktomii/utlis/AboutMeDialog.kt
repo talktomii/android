@@ -32,6 +32,21 @@ class AboutMeDialog(private var aboutYou: Any) : DaggerDialogFragment() {
     }
 
     fun playVideo() {
+        binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
+        binding.videoview.setOnPreparedListener { mediaPlayer ->
+            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
+            val screenRatio = binding.videoview.width / binding.videoview.height.toFloat()
+            val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.60).toInt()
+            val scaleX = videoRatio / screenRatio
+            if (scaleX >= 1f) {
+                binding.videoview.scaleX = width.toFloat()
+            } else {
+//                binding.videoview.scaleY = 1f / scaleX
+                binding.videoview.scaleY = height.toFloat()
+            }
+        }
+        binding.videoview.start()
 //        if (aboutYou != null){
 //            binding.videoview.setVideoURI(Uri.parse(aboutYou as String))
 //

@@ -25,6 +25,7 @@ import com.talktomii.utlis.PrefsManager
 import javax.inject.Inject
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.talktomii.adapter.MyCardAdapter
 
 
 class CallHistoryAdapter(
@@ -219,13 +220,15 @@ class CallHistoryAdapter(
         val name = sh.getString("name","")
         holder.moreOptions.setOnClickListener(View.OnClickListener { view ->
             if(name == "user"){
-                val popupMenu = PopupMenu(context, view)
+                val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+                val popupMenu = PopupMenu(wrapper, view)
                 val menuInflater = MenuInflater(context)
                 menuInflater.inflate(R.menu.call_history_popup, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener(moreMenuClickListener())
                 popupMenu.show()
             }else{
-                val popupMenu = PopupMenu(context, view)
+                val wrapper: Context = ContextThemeWrapper(context, R.style.Talk_PopupMenu)
+                val popupMenu = PopupMenu(wrapper, view)
                 val menuInflater = MenuInflater(context)
                 menuInflater.inflate(R.menu.call_history_popup_influencer, popupMenu.menu)
                 popupMenu.setOnMenuItemClickListener(moreMenuClickListenerInfluencer())

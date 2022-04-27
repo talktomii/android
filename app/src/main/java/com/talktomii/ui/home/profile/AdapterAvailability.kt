@@ -13,6 +13,7 @@ import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.databinding.ItemAvailabilityBinding
 import com.talktomii.utlis.DateUtils.getDateToShortDate
 import com.talktomii.utlis.DateUtils.setDateToTime
+import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import java.util.*
 
 class AdapterAvailability(private var context: Context, onEditInterface: OnEditInterface) :
@@ -53,7 +54,7 @@ class AdapterAvailability(private var context: Context, onEditInterface: OnEditI
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var model = arraylist.get(position)
         holder.binding.txtTime.text =
-            setDateToTime(model.startTime) + "-" + setDateToTime(model.endTime)
+            setDateToTimeUTCToLocal(model.startTime) + "-" + setDateToTimeUTCToLocal(model.endTime)
 
         var day: String = ""
         for (item in model.day) {

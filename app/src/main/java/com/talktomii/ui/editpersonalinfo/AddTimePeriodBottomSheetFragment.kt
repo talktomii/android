@@ -19,7 +19,7 @@ import com.talktomii.ui.editpersonalinfo.AddTimePeriodInterface
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.getFormatedFullDate
-import com.talktomii.utlis.DateUtils.setDateToTime
+import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.monthsarray
 import com.talktomii.utlis.showMessage
 import java.text.SimpleDateFormat
@@ -78,12 +78,12 @@ class AddTimePeriodBottomSheetFragment(
 
     private fun setdata() {
 
-        binding.tvFrom.text = setDateToTime(availaibility!!.startTime)
+        binding.tvFrom.text = setDateToTimeUTCToLocal(availaibility!!.startTime)
         val calenderFrom = convertStringToCalender(availaibility!!.startTime)
         val calenderTo = convertStringToCalender(availaibility!!.endTime)
         calenderFromFormat = getFormatedFullDate(calenderFrom)
         calenderToFormat = getFormatedFullDate(calenderTo)
-        binding.tvTo.text = setDateToTime(availaibility!!.endTime)
+        binding.tvTo.text = setDateToTimeUTCToLocal(availaibility!!.endTime)
         for (item in availaibility!!.day) {
             if (item.equals("1")) {
                 isMonday = true

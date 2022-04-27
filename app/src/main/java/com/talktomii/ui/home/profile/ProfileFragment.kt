@@ -34,6 +34,7 @@ import com.talktomii.ui.editpersonalinfo.time.AddTimePeriodBottomSheetFragment
 import com.talktomii.ui.home.profile.editinterest.AdapterEditInterest
 import com.talktomii.ui.tellusmore.SocialNetwork
 import com.talktomii.utlis.*
+import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
 import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
@@ -496,8 +497,8 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
                 val availbility = SendAvailaibility()
                 availbility.day = i.day
                 availbility.end = i.end
-                availbility.endTime = i.endTime
-                availbility.startTime = i.startTime
+                availbility.endTime = simpleDateToLocalToUTCDate(i.endTime)
+                availbility.startTime = simpleDateToLocalToUTCDate(i.startTime)
                 availaibility.add(availbility)
             }
             hashMap["availaibility"] = availaibility
@@ -510,8 +511,8 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
             updateHashMap["id"] = i._id
             updateHashMap["day"] = i.day
-            updateHashMap["startTime"] = i.startTime
-            updateHashMap["endTime"] = i.endTime
+            updateHashMap["startTime"] = simpleDateToLocalToUTCDate(i.startTime)
+            updateHashMap["endTime"] = simpleDateToLocalToUTCDate(i.endTime)
             if (i.end == "Never" || i.end.isNullOrBlank()) {
                 updateHashMap["end"] = ""
             } else {

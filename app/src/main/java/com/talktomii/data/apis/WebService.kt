@@ -83,6 +83,8 @@ interface WebService {
         private const val GET_APPOINTMENT_BY_ID = "appointment/getAppointmentById"
         private const val GET_INFLUENCER_DASHBOARD = "admin/influencer-dashboard"
         private const val UPDATE_VIDEO = "admin/updateAudio"
+        private const val UPLOAD_MEDIA = "admin/updateAudio/{id}"
+       private const val CHECKUSER_NAME = "admin/checkuserName"
     }
 
     @GET("card/getCardByuid/{id}")
@@ -94,6 +96,11 @@ interface WebService {
     fun initCall(
         @Query("channelName") channelName: String?
     ): Call<ApiResponse<RegisterModel>>
+
+    @GET(CHECKUSER_NAME)
+    fun checkUserName(
+        @Query("userName") userName: String?
+    ): Call<ApiResponse<Any>>
 
     @POST(ADD_CARD)
     @FormUrlEncoded
@@ -122,6 +129,13 @@ interface WebService {
     fun createProfile(
         @PartMap map: HashMap<String, RequestBody>
     ): Call<ApiResponse<RegisterModel>>
+
+    @Multipart
+    @PUT(UPLOAD_MEDIA)
+    fun uploadMedia(
+        @PartMap map: HashMap<String, RequestBody>,
+        @Path("id") uId:String
+    ): Call<ApiResponse<Any>>
 
 
     @FormUrlEncoded

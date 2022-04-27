@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +65,8 @@ class CreateProfileFragment : DaggerFragment() {
         viewModel.getRoles()
 
         binding.btnNEXT.setOnClickListener {
-            radioCheck()
+            viewModel.checkUserName(binding.txtUserName.text.toString())
+
         }
 
 //        var email=requireArguments()["email"].toString()
@@ -115,6 +117,26 @@ class CreateProfileFragment : DaggerFragment() {
                 Status.ERROR -> {
                     progressDialog.setLoading(false)
                     ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
+                }
+                Status.LOADING -> {
+                    progressDialog.setLoading(true)
+                }
+            }
+        })
+
+        viewModel.checkUserName.observe(requireActivity(), Observer {
+            it ?: return@Observer
+            when (it.status) {
+                Status.SUCCESS -> {
+                    radioCheck()
+                }
+                Status.ERROR -> {
+                    progressDialog.setLoading(false)
+//                    requireContext().showMessage("Username already exists. Please enter unique username")
+//                    Log.e("MESSAGE",it.message?:"")
+                    binding.btnNEXT.showSnackBar("Username already exists. Please enter unique username")
+
+//                    ApisRespHandler.handleError(it.error, requireActivity(), prefsManager)
                 }
                 Status.LOADING -> {
                     progressDialog.setLoading(true)
@@ -242,7 +264,7 @@ class CreateProfileFragment : DaggerFragment() {
                 false
             }
             username.isNullOrEmpty() -> {
-                binding.txtUserName.showSnackBar("please enter username")
+                binding.txtUserName.showSnackBar("Please enter unique username")
                 false
 
             }

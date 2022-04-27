@@ -194,8 +194,8 @@ class SignUpFragment : DaggerFragment() {
         }
 
         binding.tvTermsAndConditions.setOnClickListener {
-            val dialog = BackToHomeDialog(this)
-            dialog.show(requireActivity().supportFragmentManager, BackToHomeDialog.TAG)
+            val dialog = TermsAndConditionsDialog(this)
+            dialog.show(requireActivity().supportFragmentManager, TermsAndConditionsDialog.TAG)
         }
 
         binding.txtSignIn.setOnClickListener {
@@ -251,6 +251,11 @@ class SignUpFragment : DaggerFragment() {
                 binding.repPassword.showSnackBar("please retype your password")
                 false
             }
+//            repeatPassword==password ->{
+//                binding.repPassword.showSnackBar("Password doesn't match")
+//
+//                false
+//            }
 
             else -> true
 

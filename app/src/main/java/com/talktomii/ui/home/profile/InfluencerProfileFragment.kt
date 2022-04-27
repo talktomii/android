@@ -171,20 +171,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         binding.txtCallNow.setOnClickListener {
-            val dialog = CallDialog()
+//            val dialog = CallDialog()
 //            dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
             showPopup()
         }
 
-//        binding.txtAboutMe.setOnClickListener {
-//            val dialog = DeleteAppointmentDialog()
-//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-//        }
-
-//        binding.txtAboutMe.setOnClickListener {
-//            val dialog = DeleteAppointmentDialog()
-//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-//        }
 
 
         binding.tvBookAppointment.setOnClickListener {

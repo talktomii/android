@@ -320,7 +320,7 @@
                     android:layout_width="@dimen/dp_120"
                     android:layout_height="@dimen/dp_120"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivMoreEditPersonal"

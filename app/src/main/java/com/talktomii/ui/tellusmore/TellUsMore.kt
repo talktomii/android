@@ -3,7 +3,6 @@ package com.talktomii.ui.tellusmore
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
 import android.media.ThumbnailUtils
 import android.os.Bundle
 import android.provider.MediaStore
@@ -40,6 +39,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.LinkListener {
@@ -227,14 +227,17 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         }
 
         binding.btnNext.setOnClickListener {
-            val map: HashMap<String, RequestBody> = HashMap()
-            if (!videoPath.isNullOrEmpty()) {
-                val body = File(videoPath).asRequestBody("*/*".toMediaTypeOrNull())
-                map["aboutYou\"; filename=\"aboutYou.mp4\" "] = body
-            }
-            interestVM.uploadMedia(map,getUser(prefsManager)?.admin?._id?:"")
-            var request=RequestAdminModel(interest=interests,location = binding.tvSetlocation.text.toString(),socialNetwork = arrayListOf(fbLink,twLink,insLink,tikLink))
-            interestVM.updateData(getUser(prefsManager)?.admin?._id?:"",request)
+            val location = binding.tvSetlocation.text.toString()
+           if(dataIsValid(interests,videoPath,location)){
+               val map: HashMap<String, RequestBody> = HashMap()
+               if (!videoPath.isNullOrEmpty()) {
+                   val body = File(videoPath).asRequestBody("*/*".toMediaTypeOrNull())
+                   map["aboutYou\"; filename=\"aboutYou.mp4\" "] = body
+               }
+               interestVM.uploadMedia(map,getUser(prefsManager)?.admin?._id?:"")
+               var request=RequestAdminModel(interest=interests,location = binding.tvSetlocation.text.toString(),socialNetwork = arrayListOf(fbLink,twLink,insLink,tikLink))
+               interestVM.updateData(getUser(prefsManager)?.admin?._id?:"",request)
+           }
         }
 
         binding.tvSkip.setOnClickListener {
@@ -254,6 +257,26 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
 //           intent.putExtra(MediaStore.EXTRA_OUTPUT, ) // set the image file
 
             startActivityForResult(intent, 101101)
+        }
+    }
+
+    private fun dataIsValid(interest: ArrayList<String>, video: String, location: String, ): Boolean {
+        return when {
+            interest.isEmpty() ->{
+                binding.rvTopics.showSnackBar("Please select your preferred interest")
+                false
+            }
+            video.isEmpty() ->{
+                binding.tvRecordVideo.showSnackBar("Please record a video that best describes you")
+                false
+            }
+
+            location.isEmpty() ->{
+                binding.tvLocation.showSnackBar("Please select your location")
+                false
+            }
+
+            else -> true
         }
     }
 //getUser(prefsManager)?.admin?._id?

@@ -37,6 +37,7 @@ import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.convertStringToCalenderWithOne
 import com.talktomii.utlis.DateUtils.getFormatedFullDate
+import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants
@@ -395,14 +396,18 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     override fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int) {
         val currentTime = getFormatedFullDate(Calendar.getInstance())
-//        var calenderStartTime = simpleDateToUTCTOLocalDate(interest.startTime)
-        var calenderStartTime = "2022-04-28T17:27:47.085Z"
-        var calenderEnd = convertStringToCalender(calenderStartTime)
+        val calenderStartTime = simpleDateToUTCTOLocalDate(interest.startTime)
+        val calenderEnd = convertStringToCalender(calenderStartTime)
         calenderEnd[Calendar.MINUTE] = calenderEnd[Calendar.MINUTE] - 1
-        var calenderEndTime = getFormatedFullDate(calenderEnd)
+        val calenderEndTime = getFormatedFullDate(calenderEnd)
 
-        DateUtils.checkTimeIsBetween(calenderEndTime, calenderStartTime, currentTime)
-//        showPopup()
+        val isBetween =
+            DateUtils.checkTimeIsBetween(calenderEndTime, calenderStartTime, currentTime)
+        if (isBetween) {
+            showPopup()
+        } else {
+            context?.let { showToastMessage(it, getString(R.string.call_button_availble)) }
+        }
     }
 
     private fun setTimeSlot() {

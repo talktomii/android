@@ -222,8 +222,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         customView.txtCall.setOnClickListener {
             customDialog?.cancel()
 //            userData=Admin1(_id = "625e09d929499b944fc9e6a5")
+//            var test=selectedAdmin
             view?.findNavController()
-                ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(userData)))
+                ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(selectedAdmin)))
         }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {

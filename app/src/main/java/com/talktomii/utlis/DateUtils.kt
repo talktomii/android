@@ -300,7 +300,7 @@ object DateUtils {
 
     @RequiresApi(Build.VERSION_CODES.O)
     public fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT)
         val startLocalTime: LocalTime = LocalTime.parse(startTime, formatter)
         val endLocalTime: LocalTime = LocalTime.parse(endTime, formatter)
         val checkLocalTime: LocalTime = LocalTime.parse(checkTime, formatter)

@@ -182,6 +182,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.ivBookMark.setOnClickListener {
             viewModel.checkAndSetBookMark()
         }
+        binding.tvBadgesName.setOnClickListener {
+            val bundle: Bundle = Bundle()
+            bundle.putSerializable("badges", selectedAdmin!!.badges)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
+        }
+
         binding.txtAboutMe.setOnClickListener {
             if (selectedAdmin!!.aboutYou != null) {
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)

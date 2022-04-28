@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object DateUtils {
 
@@ -260,6 +261,25 @@ object DateUtils {
         }
         return dateToReturn.toString()
     }
+
+    fun simpleDateToUTCTOLocalDate(date: String): String {
+        var dateToReturn: String? = null
+        val sdf = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        var gmt: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdfOutPutToSend.timeZone = TimeZone.getDefault()
+
+        try {
+            gmt = sdf.parse(date)
+            dateToReturn = sdfOutPutToSend.format(gmt)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return dateToReturn.toString()
+    }
+
     fun shortDateToLocalToUTCDate(date: String): String {
         var dateToReturn: String? = null
         val sdf = SimpleDateFormat(CALENDER_SHORT_DATE)
@@ -279,7 +299,7 @@ object DateUtils {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
+    public fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)
         val startLocalTime: LocalTime = LocalTime.parse(startTime, formatter)
         val endLocalTime: LocalTime = LocalTime.parse(endTime, formatter)
@@ -294,6 +314,7 @@ object DateUtils {
         }
         return isInBetween
     }
+
 }
 
 /*On Date selected listener*/

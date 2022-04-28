@@ -127,9 +127,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         }
 
         binding.txtBudgesCount.setOnClickListener {
-            var bundle: Bundle = Bundle()
+            val bundle: Bundle = Bundle()
             bundle.putSerializable("badges", admin1!!.badges)
-            findNavController().navigate(R.id.action_profile_to_myBudgesFragment, bundle)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
         }
 
         binding.txtAddPrice.setOnClickListener {

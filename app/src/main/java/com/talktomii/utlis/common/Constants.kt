@@ -10,7 +10,9 @@ class Constants {
         val DURATON ="duration"
         val STATUS ="status"
         val CANCELLED ="Cancelled"
+
     }
+
 }
 
 

@@ -31,10 +31,12 @@ import com.talktomii.interfaces.DeleteAppointmentListener
 import com.talktomii.interfaces.OnSlotSelectedInterface
 import com.talktomii.interfaces.RescheduleAppointmentListener
 import com.talktomii.ui.home.AdapterHomeTimeSlot
+import com.talktomii.utlis.DateFormate
 import com.talktomii.utlis.DateUtils
-import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.convertStringToCalenderWithOne
-import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
+import com.talktomii.utlis.DateUtils.convertStringToCalenderWithUTCToLocal
+import com.talktomii.utlis.DateUtils.getDateDiff
+import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants
@@ -389,6 +391,14 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    override fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int) {
+//        val currentTime = Calendar.getInstance()
+//        var calenderCurrentTime = simpleDateToUTCTOLocalDate(interest.startTime)
+
+//        DateUtils.checkTimeIsBetween(calenderCurrentTime,calenderCurrentTime)
+
     }
 
     private fun setTimeSlot() {

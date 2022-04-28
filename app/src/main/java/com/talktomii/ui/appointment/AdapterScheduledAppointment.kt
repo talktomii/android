@@ -62,6 +62,10 @@ class AdapterScheduledAppointment(
             holder.binding.txtCallNow.visibility = View.VISIBLE
         }
 
+        holder.binding.txtCallNow.setOnClickListener {
+            listener.onViewCallButtonClick(interest, position)
+        }
+
         holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -139,5 +143,6 @@ class AdapterScheduledAppointment(
     interface onScheduleAppointment {
         fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int)
         fun onViewDeleteAppointment(interest: AppointmentInterestItem, position: Int)
+        fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int)
     }
 }

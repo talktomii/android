@@ -3,16 +3,12 @@ package com.talktomii.ui.home.profile
 import android.content.Context
 import android.view.*
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
-import com.talktomii.adapter.MyCardAdapter
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.databinding.ItemAvailabilityBinding
 import com.talktomii.utlis.DateUtils.getDateToShortDate
-import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
-import java.util.*
 
 class AdapterAvailability(private var context: Context, onEditInterface: OnEditInterface) :
     RecyclerView.Adapter<AdapterAvailability.ViewHolder>() {

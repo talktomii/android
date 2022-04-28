@@ -33,7 +33,9 @@ class AdapterNearestAppointment : RecyclerView.Adapter<AdapterNearestAppointment
             if (interest.ifid.fname != null) interest.ifid.fname else "" + " " + if (interest.ifid.lname != null) interest.ifid.lname else ""
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
         holder.binding.txtTime.text =
-            DateUtils.setDateToTime(interest.startTime) + "-" + DateUtils.setDateToTime(interest.endTime)
+            DateUtils.setDateToTimeUTCToLocal(interest.startTime) + "-" + DateUtils.setDateToTimeUTCToLocal(
+                interest.endTime
+            )
         holder.binding.txtDate.text = DateUtils.setDateToWeekDate(interest.date)
     }
 

@@ -388,6 +388,8 @@
                     android:drawableLeft="@drawable/plus"
                     android:drawablePadding="@dimen/dp_5"
                     android:text="3"
+                    android:paddingStart="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_5"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBug"

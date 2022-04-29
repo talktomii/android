@@ -265,8 +265,7 @@ class SignUpFragment : DaggerFragment() {
 
     fun initializeGoogle() {
 
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -278,9 +277,7 @@ class SignUpFragment : DaggerFragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
-
-                val task: Task<GoogleSignInAccount> =
-                    GoogleSignIn.getSignedInAccountFromIntent(data)
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
                 if (task != null) getGoogleAccountInfo(task)
             }
         }

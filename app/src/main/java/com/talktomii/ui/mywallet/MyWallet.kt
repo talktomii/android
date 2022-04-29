@@ -74,7 +74,7 @@ class MyWallet : DaggerFragment(R.layout.my_wallet) {
         refillLayout = root.findViewById(R.id.refillWalletLayout)
         getPaidLayout = root.findViewById(R.id.getPaidLayout)
         addCoupnLayout = root.findViewById(R.id.addCouponLayout)
-
+        totalWalletAmount!!.text = "$0"
         if (prefsManager.getString(PrefsManager.PREF_ROLE, "") == "user") {
             val adapter = ViewPagerWalletAdapterUser(childFragmentManager, lifecycle)
             viewPager.adapter = adapter

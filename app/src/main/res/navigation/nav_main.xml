@@ -124,6 +124,9 @@
             app:destination="@id/viewInterestFragment" >
 
         </action>
+        <action
+            android:id="@+id/action_influencerProfileFragment_to_myBudgesFragment"
+            app:destination="@id/myBudgesFragment" />
     </fragment>
 
     <fragment

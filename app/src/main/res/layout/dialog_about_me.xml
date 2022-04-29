@@ -1,62 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+
+    <!--        <androidx.cardview.widget.CardView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginLeft="@dimen/dp_10"-->
+    <!--            android:layout_marginTop="@dimen/dp_80"-->
+    <!--            android:layout_marginRight="@dimen/dp_10"-->
+    <!--            android:layout_marginBottom="@dimen/dp_80"-->
+    <!--            app:cardCornerRadius="@dimen/dp_20"-->
+    <!--            app:cardElevation="3dp"-->
+    <!--            app:cardUseCompatPadding="true">-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:gravity="center">-->
+
+    <!--                <VideoView-->
+    <!--                    android:id="@+id/videoview"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent" />-->
+    <!--&lt;!&ndash;                <com.universalvideoview.UniversalVideoView&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:id="@+id/videoView"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_gravity="center"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    app:uvv_autoRotation="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    app:uvv_fitXY="false" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                <com.universalvideoview.UniversalMediaController&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:id="@+id/media_controller"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_width="fill_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_height="fill_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    app:uvv_scalable="true" />&ndash;&gt;-->
+
+
+    <!--            </RelativeLayout>-->
+
+    <!--        </androidx.cardview.widget.CardView>-->
+
+    <!--    </RelativeLayout>-->
+
+    <FrameLayout
+        android:id="@+id/video_view_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/dp_30"
+        android:layout_marginVertical="@dimen/dp_60"
+        android:background="@drawable/rounded_video_background"
+        android:outlineProvider="background">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_80"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_80"
-            app:cardCornerRadius="@dimen/dp_20"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true">
+        <!--        <VideoView-->
+        <!--            android:id="@+id/videoview"-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="fill_parent"-->
+        <!--            android:layout_gravity="center" />-->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/rounded_video_background"
+            android:outlineProvider="background">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center">
+            <VideoView
+                android:id="@+id/videoview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/rounded_video_background" />
+        </RelativeLayout>
 
-                <VideoView
-                    android:id="@+id/videoview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"/>
-                <com.universalvideoview.UniversalVideoView
-                    android:id="@+id/videoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    app:uvv_autoRotation="true"
-                    android:layout_centerHorizontal="true"
-                    app:uvv_fitXY="false" />
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="end"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ic_cross_light" />
 
-                <com.universalvideoview.UniversalMediaController
-                    android:id="@+id/media_controller"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_centerHorizontal="true"
-                    app:uvv_scalable="true" />
-                <ImageView
-                    android:id="@+id/ivClose"
-                    android:layout_width="@dimen/dp_24"
-                    android:layout_height="@dimen/dp_24"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:src="@drawable/ic_close_24" />
+        <ImageView
+            android:id="@+id/ivPause"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/pause_video" />
 
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
+    </FrameLayout>
 </layout>

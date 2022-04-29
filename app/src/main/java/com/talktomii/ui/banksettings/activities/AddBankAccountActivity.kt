@@ -19,6 +19,7 @@ import com.talktomii.databinding.ActivityAddBankAccountBinding
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import com.talktomii.ui.mywallet.activities.RefillWalletActivity
+import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -31,7 +32,8 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
     lateinit var viewModel: MyCardsViewModel
 
     var selectedAccountType = ""
-
+    @Inject
+    lateinit var prefsManager: PrefsManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,110 +147,13 @@ class AddBankAccountActivity : DaggerAppCompatActivity() {
                 snackbar.show()
             } else {
                 val hashmap = HashMap<String, String>()
-                hashmap["uid"] = "622877f9e3e5080bdcde6ebf"
+                hashmap["uid"] = prefsManager.getString(PrefsManager.PREF_API_ID, "")
                 hashmap["routingNumber"] = binding.etRoutingNumber.text.toString()
                 hashmap["accountNumber"] = binding.etConfirmAccountNumber.text.toString()
                 hashmap["bankType"] = selectedAccountType
                 hashmap["holderName"] = binding.etaccountHolderName.text.toString()
                 progress.visibility = View.VISIBLE
                 viewModel.addBank(hashmap)
-            }
-
-        }
-        if (intent.getStringExtra("bank") == "update") {
-            binding.btnSaveBankAccount.visibility = View.GONE
-            binding.btnUpdateBankAccount.visibility = View.VISIBLE
-            binding.tvaddBankaccount.text = "Update Bank Account"
-            binding.etaccountHolderName.setText(intent.getStringExtra("name"))
-            binding.etRoutingNumber.setText(intent.getStringExtra("rnumber"))
-            binding.etAccountNumber.setText(intent.getStringExtra("anumber"))
-            binding.etConfirmAccountNumber.setText(intent.getStringExtra("anumber"))
-            var i = 0
-            while (i < adapter.count) {
-                if (intent.getStringExtra("type")!!.trim() == adapter.getItem(i)) {
-                    selectedAccountType = adapter.getItem(i)!!
-//                    binding.bankspinner.setText(adapter.getItem(i), false);
-                    break
-                }
-                i++
-            }
-            binding.btnUpdateBankAccount.setOnClickListener {
-                if (binding.etaccountHolderName.text.toString() == "") {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Enter Account Holder Name",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (selectedAccountType == "") {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Select Account Type",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etRoutingNumber.text.toString() == "") {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Enter Routing Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etRoutingNumber.text!!.length < 12) {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Wrong Routing Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etAccountNumber.text.toString() == "") {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Enter Accounting Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etAccountNumber.text!!.length < 12) {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Wrong Accounting Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etConfirmAccountNumber.text.toString() == "") {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Re Enter Accounting Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etConfirmAccountNumber.text!!.length < 12) {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Wrong Confirm Accounting Number",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else if (binding.etAccountNumber.text!!.trim() != binding.etConfirmAccountNumber.text!!.trim()) {
-                    val snackbar = Snackbar.make(
-                        layout,
-                        "Accounting Number Not Matched",
-                        Snackbar.LENGTH_SHORT
-                    )
-                    snackbar.show()
-                } else {
-                    val hashmap = HashMap<String, String>()
-                    val id = intent.getStringExtra("id")
-                    hashmap["uid"] = "622877f9e3e5080bdcde6ebf"
-                    hashmap["routingNumber"] = binding.etRoutingNumber.text.toString()
-                    hashmap["accountNumber"] = binding.etConfirmAccountNumber.text.toString()
-                    hashmap["bankType"] = selectedAccountType
-                    hashmap["holderName"] = binding.etaccountHolderName.text.toString()
-                    progress.visibility = View.VISIBLE
-                    viewModel.updateBank(id!!, hashmap)
-                    binding.btnSaveBankAccount.visibility = View.VISIBLE
-                    binding.btnUpdateBankAccount.visibility = View.GONE
-                }
             }
 
         }

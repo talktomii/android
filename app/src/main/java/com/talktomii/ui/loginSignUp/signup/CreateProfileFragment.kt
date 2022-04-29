@@ -1,7 +1,9 @@
 package com.talktomii.ui.loginSignUp.signup
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -89,6 +91,17 @@ class CreateProfileFragment : DaggerFragment() {
 //                    }
                     prefsManager.save(PrefsManager.PREF_API_TOKEN, it.data?.token)
                     prefsManager.save(PrefsManager.PREF_PROFILE, it.data)
+                    prefsManager.save(PrefsManager.PREF_API_ID, it.data!!.admin._id)
+                    prefsManager.save(PrefsManager.PREF_ROLE, it.data.admin.role.roleName)
+                    val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName",
+                        Context.MODE_PRIVATE
+                    )
+                    val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
+                    myEdit.putString("name", prefsManager.getString(PrefsManager.PREF_ROLE,""))
+                    myEdit.putString("id",prefsManager.getString(PrefsManager.PREF_API_ID,""))
+                    myEdit.putString("token",prefsManager.getString(PrefsManager.PREF_API_TOKEN,""))
+                    myEdit.apply()
+
                     requireContext().showMessage("Register  Successfully")
                     var userOrInfluencer = selectedRole.roleName == "user"
                     view?.findNavController()?.navigate(

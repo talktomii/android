@@ -151,7 +151,7 @@
                             android:background="@android:color/transparent"
                             android:drawableRight="@drawable/calender"
                             android:fontFamily="@font/inter_regular"
-                            android:hint="MM/YY"
+                            android:hint="MM/YYYY"
                             android:textFontWeight="400"
                             android:textSize="17sp"
                             android:inputType="number"

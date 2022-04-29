@@ -1,6 +1,8 @@
 package com.talktomii.ui.banksettings
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +17,7 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.databinding.FragmentPaymentBinding
 import com.talktomii.databinding.MyBankSettingsBinding
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
-import com.talktomii.ui.loginSignUp.MainActivity
-import com.talktomii.ui.mycards.MyPaymentsVM
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.mycards.fragments.PaymentFragment
-import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -27,9 +25,7 @@ import javax.inject.Inject
 class MyBankSettings : DaggerFragment() {
 
     private lateinit var binding: MyBankSettingsBinding
-
     private val viewModels by viewModels<MyBankSettingsVM>()
-
     @Inject
     lateinit var viewModel: MyBankSettingsVM
 
@@ -43,10 +39,14 @@ class MyBankSettings : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = MyBankSettingsBinding.inflate(inflater, container, false)
+        Companion.getContext(requireContext())
         recycleview = binding.rvDisplayBanks
         progress = binding.displayBankProgress
-//        progress.visibility = View.VISIBLE
-        dataModel.getBank()
+        progress.visibility = View.VISIBLE
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
+        dataModel.getBank(sharedPreferences.getString("id","").toString())
 
         binding.addBankAccountCard.setOnClickListener {
             val intent = Intent(context,AddBankAccountActivity::class.java)
@@ -58,5 +58,9 @@ class MyBankSettings : DaggerFragment() {
     companion object{
         lateinit var recycleview: RecyclerView
         lateinit var progress : ProgressBar
+        lateinit var context: Context
+        fun getContext(context: Context){
+            this.context = context
+        }
     }
 }

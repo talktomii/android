@@ -3,11 +3,6 @@
 
 
     <item
-        android:id="@+id/action_update"
-        android:orderInCategory="101"
-        android:title="@string/update" />
-
-    <item
         android:id="@+id/action_delete"
         android:orderInCategory="102"
         android:title="@string/delete" />

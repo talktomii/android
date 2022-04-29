@@ -472,7 +472,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                         WalletRefillItemModel(
                                             wallet_name = "Wallet " + i.type!!,
                                             wallet_date = getStringToDateWithDots(i.createdAt!!),
-                                            wallet_price = "-$" + i.amount
+                                            wallet_price = "$" + i.amount
                                         )
                                     )
                                 }
@@ -530,7 +530,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                         WalletEarningItemModel(
                                             wallet_name = "Wallet " + i.type!!,
                                             wallet_date = getStringToDateWithDots(i.createdAt!!),
-                                            wallet_price = "-$" + i.amount
+                                            wallet_price = "$" + i.amount
                                         )
                                     )
                                 }

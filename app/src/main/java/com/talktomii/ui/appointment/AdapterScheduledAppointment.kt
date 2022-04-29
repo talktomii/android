@@ -11,13 +11,12 @@ import com.talktomii.R
 import com.talktomii.data.model.appointment.AppointmentInterestItem
 import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.utlis.DateUtils.setDateToTime
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class AdapterScheduledAppointment(
@@ -29,6 +28,7 @@ class AdapterScheduledAppointment(
     @Inject
     lateinit var viewModel: HomeScreenViewModel
     private var interestArrayList: ArrayList<AppointmentInterestItem> = arrayListOf()
+    lateinit var hashMap: HashMap<Int, String>
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -40,6 +40,7 @@ class AdapterScheduledAppointment(
 //        return ViewHolder(view)
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemScheduledAppointmentBinding.inflate(layoutInflater, parent, false)
+        hashMap = HashMap()
         return AdapterScheduledAppointment.ViewHolder(binding)
     }
 
@@ -49,6 +50,7 @@ class AdapterScheduledAppointment(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var interest = interestArrayList[position]
+
         holder.binding.txtName.text =
             if (interest.ifid.fname != null) interest.ifid.fname else "" + " " + if (interest.ifid.lname != null) interest.ifid.lname else ""
         holder.binding.textMinutes.text = "" + interest.duration + " Minute Meeting"
@@ -61,8 +63,17 @@ class AdapterScheduledAppointment(
             holder.binding.ivMore.visibility = View.VISIBLE
             holder.binding.txtCallNow.visibility = View.VISIBLE
         }
-
-        holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
+        if (position == 0) {
+            holder.binding.tvDayAndDate.visibility = View.VISIBLE;
+            holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+        } else {
+            if (interestArrayList.get(position - 1).date.equals(interest.date)) {
+                holder.binding.tvDayAndDate.visibility = View.INVISIBLE;
+            } else {
+                holder.binding.tvDayAndDate.visibility = View.VISIBLE;
+                holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+            }
+        }
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -70,16 +81,21 @@ class AdapterScheduledAppointment(
                         listener.onViewDeleteAppointment(interest, position)
                     }
                     R.id.action_rescedule -> {
-                        val datetime: Calendar = com.talktomii.utlis.DateUtils.convertStringToCalender(interest.endTime)
+                        val datetime: Calendar =
+                            com.talktomii.utlis.DateUtils.convertStringToCalender(interest.endTime)
                         val c: Calendar = Calendar.getInstance()
                         if (datetime.timeInMillis > c.timeInMillis) {
 //            it's after current
                             listener.onViewRescheduleAppointment(interest, position)
                         } else {
 //            it's before current'
-                            Toast.makeText(context, context.getString(R.string.you_can_not_reschedule), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.you_can_not_reschedule),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                       
+
 
                     }
                 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -45,6 +46,9 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
 
         val itemsViewModel = mList[position]
         data = mList[position]
+        val sharedPreferences: SharedPreferences = context!!.getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -68,6 +72,7 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                                 viewModel = MyCardsViewModel(webService!!)
                             }
                             viewModel.deleteCard(mList[position].id.trim())
+                            viewModel.getCards(sharedPreferences.getString("id","").toString())
                             val dialog_delete = Dialog(context!!)
                             dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
                             dialog_delete.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
@@ -77,10 +82,6 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                             val close = dialog_delete.findViewById(R.id.closeCardPopup) as TextView
                             close.setOnClickListener {
                                 dialog_delete.dismiss()
-                                if (!::viewModel.isInitialized) {
-                                    viewModel = MyCardsViewModel(webService!!)
-                                }
-                                viewModel.getCards()
                             }
                             dialog.hide()
                             dialog_delete.show()

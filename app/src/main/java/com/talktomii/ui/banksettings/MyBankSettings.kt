@@ -1,6 +1,8 @@
 package com.talktomii.ui.banksettings
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,10 +45,14 @@ class MyBankSettings : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = MyBankSettingsBinding.inflate(inflater, container, false)
+        Companion.getContext(requireContext())
         recycleview = binding.rvDisplayBanks
         progress = binding.displayBankProgress
-//        progress.visibility = View.VISIBLE
-        dataModel.getBank()
+        progress.visibility = View.VISIBLE
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
+        dataModel.getBank(sharedPreferences.getString("id","").toString())
 
         binding.addBankAccountCard.setOnClickListener {
             val intent = Intent(context,AddBankAccountActivity::class.java)
@@ -58,5 +64,9 @@ class MyBankSettings : DaggerFragment() {
     companion object{
         lateinit var recycleview: RecyclerView
         lateinit var progress : ProgressBar
+        lateinit var context: Context
+        fun getContext(context: Context){
+            this.context = context
+        }
     }
 }

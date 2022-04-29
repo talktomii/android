@@ -13,8 +13,10 @@ import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import com.talktomii.R
+import com.talktomii.ui.mycards.activities.MyCardsActivity
 
 class RefillWalletActivity : DaggerAppCompatActivity() {
 
@@ -54,6 +56,10 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         }
         binding.tvrefillBack.setOnClickListener {
             finish()
+        }
+        binding.tvAddCard.setOnClickListener {
+            val intent = Intent(context, MyCardsActivity::class.java)
+            startActivity(intent)
         }
         repeatAmount = intent.getStringExtra("repeatamount").toString()
         binding.btnSubmitRefill.setOnClickListener {

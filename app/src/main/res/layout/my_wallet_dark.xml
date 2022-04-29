@@ -71,9 +71,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_marginHorizontal="@dimen/dp_12"
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="@dimen/dp_40"
@@ -83,7 +82,6 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
-                            android:padding="2dp"
                             android:src="@drawable/refill_wallet_img"
                             android:layout_gravity="center"
                             >
@@ -113,9 +111,8 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_marginHorizontal="@dimen/dp_12"
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         app:cardCornerRadius="@dimen/dp_40"
@@ -125,7 +122,6 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
-                            android:padding="2dp"
                             android:src="@drawable/get_paid_img"
                             android:layout_gravity="center"
                             >
@@ -156,9 +152,8 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_marginHorizontal="@dimen/dp_12"
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="@dimen/dp_40"
@@ -168,7 +163,6 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
-                            android:padding="2dp"
                             android:src="@drawable/add_coupon_img"
                             android:layout_gravity="center"
                             >

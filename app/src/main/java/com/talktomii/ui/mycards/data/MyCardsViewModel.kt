@@ -162,7 +162,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             jsonObject = JSONObject(response.errorBody()!!.string())
                             val userMessage = jsonObject.getString("message")
                             val snackbar = Snackbar.make(
-                                CardFragment.layout,
+                                CardFragment.layout!!,
                                 userMessage,
                                 Snackbar.LENGTH_SHORT
                             )
@@ -192,15 +192,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCardlistWallet() {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
-        arrayStrings = ArrayList<String>()
-        arrayStrings!!.add("Select card")
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            RefillWalletActivity.context,
-            R.layout.drop_down_custom_layout,
-            arrayStrings!!.toMutableList()
-        )
-        adapter.setDropDownViewResource(R.layout.spinner_list)
-        RefillWalletActivity.filterTypes!!.adapter = adapter
         webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
@@ -209,11 +200,13 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                 ) {
                     Timber.d("--%s", response.body().toString())
                     val dataList = ArrayList<CardItemsViewModel>()
+                    arrayStrings = ArrayList<String>()
                     arrayStrings!!.clear()
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
                         carditemMap = HashMap()
+                        arrayStrings!!.add("Select card")
                         for (i in data!!.card!!.data) {
                             val refilldata = "****" + i.card!!.last4!!.toString()
                             if (arrayStrings!!.contains(refilldata)) {
@@ -257,14 +250,34 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             }
 
                     } else {
-                        Log.d("card data is : ", " : " + response.body())
+                        arrayStrings = ArrayList<String>()
+                        arrayStrings!!.add("Add card")
+                        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                            RefillWalletActivity.context,
+                            R.layout.drop_down_custom_layout,
+                            arrayStrings!!.toMutableList()
+                        )
+                        adapter.setDropDownViewResource(R.layout.spinner_list)
+                        RefillWalletActivity.filterTypes!!.adapter = adapter
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                RefillWalletActivity.refillLayout!!,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
                         cards.value = Resource.error(
                             ApiUtils.getError(
                                 response.code(),
                                 response.errorBody()?.string()
                             )
                         )
-                        Timber.d("00000" + cards.value!!.message)
                     }
                 }
 
@@ -751,14 +764,26 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 if (i.paymentId != null) {
                                     paymentId = i.paymentId!!
                                 }
-                                dataList.add(
-                                    PaymentItemsViewModel(
-                                        wallet_id = paymentId,
-                                        wallet_name = "Wallet " + i.type!!,
-                                        wallet_date = getStringToDateWithDots(i.createdAt!!),
-                                        wallet_price = "-$" + i.amount
+                                if(i.type!! == "Credit"){
+                                    dataList.add(
+                                        PaymentItemsViewModel(
+                                            wallet_id = paymentId,
+                                            wallet_name = "Wallet " + i.type!!,
+                                            wallet_date = getStringToDateWithDots(i.createdAt!!),
+                                            wallet_price = "$" + i.amount
+                                        )
                                     )
-                                )
+                                }else{
+                                    dataList.add(
+                                        PaymentItemsViewModel(
+                                            wallet_id = paymentId,
+                                            wallet_name = "Wallet " + i.type!!,
+                                            wallet_date = getStringToDateWithDots(i.createdAt!!),
+                                            wallet_price = "-$" + i.amount
+                                        )
+                                    )
+                                }
+
                             } catch (e: ParseException) {
                                 e.printStackTrace()
                             }

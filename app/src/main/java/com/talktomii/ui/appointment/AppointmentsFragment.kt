@@ -399,6 +399,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int) {
+        //Check Call Regarding Conditions
         val currentTime = getFormatedFullDate(Calendar.getInstance())
         val calenderStartTime = simpleDateToUTCTOLocalDate(interest.startTime)
         val calenderEnd = convertStringToCalender(calenderStartTime)

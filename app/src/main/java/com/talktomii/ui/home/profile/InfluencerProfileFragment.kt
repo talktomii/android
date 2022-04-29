@@ -25,6 +25,7 @@ import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.Payload
+import com.talktomii.data.model.getallslotbydate.PayloadAppoinment
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.data.network.ApisRespHandler
@@ -35,10 +36,12 @@ import com.talktomii.interfaces.*
 import com.talktomii.ui.appointment.AppointmentViewModel
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.utlis.*
+import com.talktomii.utlis.AboutMeDialog
+import com.talktomii.utlis.AlertDialogCommon
 import com.talktomii.utlis.DateUtils.addMinutes
 import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
 import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
+import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -47,6 +50,9 @@ import com.talktomii.utlis.common.Constants.Companion.IF_ID
 import com.talktomii.utlis.common.Constants.Companion.START_TIME
 import com.talktomii.utlis.common.Constants.Companion.UID
 import com.talktomii.utlis.dialogs.ProgressDialog
+import com.talktomii.utlis.getUser
+import com.talktomii.utlis.listner.InfluenceListener
+import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -57,7 +63,8 @@ import javax.inject.Inject
 
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
-    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400, onStopProgress {
+    OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400, onStopProgress,
+    InfluenceListener {
 
     private lateinit var userData: Admin1
     private lateinit var binding: FragmentInfluencerProfileBinding
@@ -69,6 +76,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
     @Inject
     lateinit var viewModelAppoinemnt: AppointmentViewModel
+
+
+    @Inject
+    lateinit var viewModelInfluence: InfluenceHomeViewModel
 
     private var horizontalCalendar: HorizontalCalendar? = null
     private lateinit var progressDialog: ProgressDialog
@@ -112,11 +123,16 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         viewModelAppoinemnt.addAppointment = this
         viewModelAppoinemnt.commonInterface = this
         viewModelAppoinemnt.apiFailure = this
+        viewModelInfluence.commonInterface = this
+        viewModelInfluence.infulancerListner = this
         viewModel.onSlotSelectedInterface = this
         viewModel.onStopProgress = this
         binding.lifecycleOwner = this
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
+            requireArguments().getString("profileId")
+                ?.let { viewModelInfluence.getAllAppoinemnt(it) }
+
         }
         initAdapter()
 
@@ -171,6 +187,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         binding.txtCallNow.setOnClickListener {
+            //Check Call Regarding Conditions
             showPopup()
         }
 
@@ -184,15 +201,19 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.tvBadgesName.setOnClickListener {
             val bundle: Bundle = Bundle()
             bundle.putSerializable("badges", selectedAdmin!!.badges)
-            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
+            findNavController().navigate(
+                R.id.action_influencerProfileFragment_to_myBudgesFragment,
+                bundle
+            )
         }
 
         binding.txtAboutMe.setOnClickListener {
             if (selectedAdmin!!.aboutYou != null) {
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
-            }else{
-                val dialog = AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+            } else {
+                val dialog =
+                    AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             }
 
@@ -437,4 +458,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     companion object {
         lateinit var layout: ConstraintLayout
     }
+
+    override fun influenceList(payload: PayloadAppoinment) {
+        if (payload.count ?: 0 > 0) {
+            binding.txtCallNow.visibility = View.VISIBLE
+        } else {
+            binding.txtCallNow.visibility = View.GONE
+        }
+    }
+
+
 }

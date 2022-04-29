@@ -93,12 +93,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivShare.setBackgroundResource(R.drawable.share)
-//                binding.iivBookmark.setBackgroundResource(R.drawable.bookmarkprofile)
                 binding.backprofile.setImageResource(R.drawable.back_arrow)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 binding.ivShare.setBackgroundResource(R.drawable.ic_share)
-//                binding.ivBookMark.setBackgroundResource(R.drawable.bookmark_light)
                 binding.backprofile.setImageResource(R.drawable.back_arrow_light)
             }
         }
@@ -173,35 +171,23 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         binding.txtCallNow.setOnClickListener {
-            val dialog = CallDialog()
-//            dialog.show(requireActivity().supportFragmentManager, CallDialog.TAG)
             showPopup()
         }
-
-//        binding.txtAboutMe.setOnClickListener {
-//            val dialog = DeleteAppointmentDialog()
-//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-//        }
-
-//        binding.txtAboutMe.setOnClickListener {
-//            val dialog = DeleteAppointmentDialog()
-//            dialog.show(requireActivity().supportFragmentManager, DeleteAppointmentDialog.TAG)
-//        }
 
 
         binding.tvBookAppointment.setOnClickListener {
             addAppointment()
-//            view?.findNavController()
-//                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
         }
-//        binding.txtBookACall.setOnClickListener {
-//            view?.findNavController()
-//                ?.navigate(R.id.action_influencer_profile_to_call_fragmnet)
-//        }
 
         binding.ivBookMark.setOnClickListener {
             viewModel.checkAndSetBookMark()
         }
+        binding.tvBadgesName.setOnClickListener {
+            val bundle: Bundle = Bundle()
+            bundle.putSerializable("badges", selectedAdmin!!.badges)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
+        }
+
         binding.txtAboutMe.setOnClickListener {
             if (selectedAdmin!!.aboutYou != null) {
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)

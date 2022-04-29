@@ -63,6 +63,9 @@ class AdapterScheduledAppointment(
             holder.binding.ivMore.visibility = View.VISIBLE
             holder.binding.txtCallNow.visibility = View.VISIBLE
         }
+        holder.binding.txtCallNow.setOnClickListener {
+            listener.onViewCallButtonClick(interest, position)
+        }
         if (position == 0) {
             holder.binding.tvDayAndDate.visibility = View.VISIBLE;
             holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
@@ -155,5 +158,6 @@ class AdapterScheduledAppointment(
     interface onScheduleAppointment {
         fun onViewRescheduleAppointment(interest: AppointmentInterestItem, position: Int)
         fun onViewDeleteAppointment(interest: AppointmentInterestItem, position: Int)
+        fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int)
     }
 }

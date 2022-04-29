@@ -127,9 +127,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         }
 
         binding.txtBudgesCount.setOnClickListener {
-            var bundle: Bundle = Bundle()
+            val bundle: Bundle = Bundle()
             bundle.putSerializable("badges", admin1!!.badges)
-            findNavController().navigate(R.id.action_profile_to_myBudgesFragment, bundle)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
         }
 
         binding.txtAddPrice.setOnClickListener {
@@ -505,16 +505,16 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
             hashMap["availaibility"] = availaibility
         } else {
             val availaibility: ArrayList<Availaibility> = arrayListOf()
-                if (i.end == "Never" || i.end == null) {
-                    i.end = ""
-                }
-                val availbility = Availaibility()
-                availbility.day = i.day
-                availbility.end = i.end
-                availbility._id = i._id
-                availbility.endTime = simpleDateToLocalToUTCDate(i.endTime)
-                availbility.startTime = simpleDateToLocalToUTCDate(i.startTime)
-                availaibility.add(availbility)
+            if (i.end == "Never" || i.end == null) {
+                i.end = ""
+            }
+            val availbility = Availaibility()
+            availbility.day = i.day
+            availbility.end = i.end
+            availbility._id = i._id
+            availbility.endTime = simpleDateToLocalToUTCDate(i.endTime)
+            availbility.startTime = simpleDateToLocalToUTCDate(i.startTime)
+            availaibility.add(availbility)
 
             hashMap["availaibility"] = availaibility
 //            viewModel.updateAvailabilityTime(updateHashMap, position, i, 1)

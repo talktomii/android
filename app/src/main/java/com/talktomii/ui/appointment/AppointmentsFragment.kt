@@ -1,15 +1,18 @@
 package com.talktomii.ui.appointment
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -25,6 +28,7 @@ import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.ApiUtils
+import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentAppointmentsBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.DeleteAppointmentListener
@@ -34,7 +38,9 @@ import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.convertStringToCalenderWithOne
+import com.talktomii.utlis.DateUtils.getFormatedFullDate
 import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
+import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants
@@ -391,6 +397,22 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         dialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCallButtonClick(interest: AppointmentInterestItem, position: Int) {
+        val currentTime = getFormatedFullDate(Calendar.getInstance())
+        val calenderStartTime = simpleDateToUTCTOLocalDate(interest.startTime)
+        val calenderEnd = convertStringToCalender(calenderStartTime)
+        calenderEnd[Calendar.MINUTE] = calenderEnd[Calendar.MINUTE] - 1
+        val calenderEndTime = getFormatedFullDate(calenderEnd)
+
+        val isBetween = DateUtils.checkTimeIsBetween(calenderEndTime, calenderStartTime, currentTime)
+        if (isBetween) {
+            showPopup()
+        } else {
+            context?.let { showToastMessage(it, getString(R.string.call_button_availble)) }
+        }
+    }
+
     private fun setTimeSlot() {
 
         val arrayList: ArrayList<TimeSlotSpinner> = arrayListOf()
@@ -472,6 +494,39 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             binding.imageView3.visibility = View.GONE
         }
 
+    }
+
+    private fun showPopup() {
+        var customDialog: AlertDialog? = null
+        val customDialogBuilder =
+            AlertDialog.Builder(requireContext())
+        val customView = CallDialogBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            null,
+            false
+        )
+        customView.txtCall.setOnClickListener {
+            customDialog?.cancel()
+//            userData=Admin1(_id = "625e09d929499b944fc9e6a5")
+//            view?.findNavController()
+//                ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(userData)))
+        }
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                customView.ivCancel.setImageResource(R.drawable.closesheeticon_dark)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                customView.ivCancel.setImageResource(R.drawable.close_sheet_icon)
+            }
+        }
+        customView.ivCancel.setOnClickListener {
+            customDialog?.dismiss()
+        }
+        customDialogBuilder.setView(customView.root)
+        customDialog = customDialogBuilder.create()
+        customDialog?.setCancelable(true)
+        customDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        customDialog.show()
     }
 
     override fun addInfluenceItem(payload: AppointmentByIdPayload) {

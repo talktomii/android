@@ -51,6 +51,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         savedInstanceState: Bundle?
     ): View? {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
+
         MainActivity.btnMenu.visibility = View.GONE
         val role: SharedPreferences = requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
         val roleName = role.getString("name","").toString()
@@ -62,10 +63,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivCross.setBackgroundResource(R.drawable.ic_cross_dark)
+                binding.backCat.setImageResource(R.drawable.back_arrow)
                 MainActivity.btnMenu.visibility = View.GONE
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 binding.ivCross.setBackgroundResource(R.drawable.ic_cross_light)
+                binding.backCat.setImageResource(R.drawable.back_arrow_light)
                 MainActivity.btnMenu.visibility = View.GONE
             }
         }
@@ -141,7 +144,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
 //            if (adapterPopular!!.getList().size > 0) {
 //                adapterPopular!!.setPopularList(adapterPopular!!.getList())
 //            } else {
-                viewModel.getInfluence("")
+            viewModel.getInfluence("")
 //            }
         }
         binding.ivBackArrow.setOnClickListener {

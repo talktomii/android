@@ -15,7 +15,6 @@
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="left"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_20"
                 android:src="@drawable/ic_more2"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -127,9 +127,9 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         }
 
         binding.txtBudgesCount.setOnClickListener {
-            var bundle: Bundle = Bundle()
+            val bundle: Bundle = Bundle()
             bundle.putSerializable("badges", admin1!!.badges)
-            findNavController().navigate(R.id.action_profile_to_myBudgesFragment, bundle)
+            findNavController().navigate(R.id.action_influencerProfileFragment_to_myBudgesFragment, bundle)
         }
 
         binding.txtAddPrice.setOnClickListener {
@@ -490,6 +490,7 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         val hashMap: HashMap<String, Any> = hashMapOf()
         if (isNewDataAdd) {
             val availaibility: ArrayList<SendAvailaibility> = arrayListOf()
+
             if (i._id.isNullOrBlank()) {
                 if (i.end == "Never" || i.end == null) {
                     i.end = ""
@@ -502,25 +503,27 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
                 availaibility.add(availbility)
             }
             hashMap["availaibility"] = availaibility
-            viewModel.updateProfile(
-                hashMap,
-                getUser(prefsManager)!!.admin._id
-            )
         } else {
-            val updateHashMap: HashMap<String, Any> = hashMapOf()
-            updateHashMap["uid"] = getUser(prefsManager)!!.admin._id
-            updateHashMap["id"] = i._id
-            updateHashMap["day"] = i.day
-            updateHashMap["startTime"] = simpleDateToLocalToUTCDate(i.startTime)
-            updateHashMap["endTime"] = simpleDateToLocalToUTCDate(i.endTime)
-            if (i.end == "Never" || i.end.isNullOrBlank()) {
-                updateHashMap["end"] = ""
-            } else {
-                updateHashMap["end"] = i.end
+            val availaibility: ArrayList<Availaibility> = arrayListOf()
+            if (i.end == "Never" || i.end == null) {
+                i.end = ""
             }
-            viewModel.updateAvailabilityTime(updateHashMap, position, i, 1)
-        }
+            val availbility = Availaibility()
+            availbility.day = i.day
+            availbility.end = i.end
+            availbility._id = i._id
+            availbility.endTime = simpleDateToLocalToUTCDate(i.endTime)
+            availbility.startTime = simpleDateToLocalToUTCDate(i.startTime)
+            availaibility.add(availbility)
 
+            hashMap["availaibility"] = availaibility
+//            viewModel.updateAvailabilityTime(updateHashMap, position, i, 1)
+
+        }
+        viewModel.updateProfile(
+            hashMap,
+            getUser(prefsManager)!!.admin._id
+        )
 
     }
 

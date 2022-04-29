@@ -1,5 +1,7 @@
 package com.talktomii.ui.mycards.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
@@ -37,12 +39,16 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
     ): View? {
         binding = FragmentCardBinding.inflate(inflater, container, false)
 //        binding.vm = viewModels
+        getContext(requireContext())
         recycleview = binding.rvCards
         progress = binding.displayCardProgress
         layout = binding.cardlistLayout
         progress.visibility  = View.VISIBLE
         recycleview.visibility = View.GONE
-        dataModel.getCards()
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
+        dataModel.getCards(sharedPreferences.getString("id","").toString())
         return binding.root
     }
 
@@ -50,5 +56,9 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
         lateinit var recycleview: RecyclerView
         lateinit var progress : ProgressBar
         lateinit var layout : RelativeLayout
+        lateinit var context: Context
+        fun getContext(context: Context){
+            this.context = context
+        }
     }
 }

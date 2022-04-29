@@ -10,9 +10,9 @@
 
         <EditText
             android:id="@+id/etSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginHorizontal="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/bg_gray_background"
             android:drawableLeft="@drawable/c_search"

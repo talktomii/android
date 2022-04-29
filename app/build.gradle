@@ -208,8 +208,8 @@ permission*/
 
 
     //facebook implementation
-    implementation "com.facebook.android:facebook-android-sdk:8.2.0"
-    implementation 'com.facebook.android:facebook-share:8.2.0'
+    implementation "com.facebook.android:facebook-android-sdk:12.3.0"
+    implementation 'com.facebook.android:facebook-share:12.3.0'
 
     //google login
     implementation 'com.google.android.gms:play-services-auth:19.2.0'

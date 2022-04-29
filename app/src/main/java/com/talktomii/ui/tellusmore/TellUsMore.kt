@@ -273,12 +273,12 @@ class TellUsMore : DaggerFragment(R.layout.tell_us_more), LinkAccountDialog.Link
         when {
             getUser(prefsManager)?.admin?.role?.roleName != "user" -> {
                 return when {
-                    video.isEmpty() -> {
-                        binding.tvRecordVideo.showSnackBar("Please record a video that best describes you")
-                        false
-                    }
                     interest.isEmpty() -> {
                         binding.rvTopics.showSnackBar("Please select your preferred interest")
+                        false
+                    }
+                    video.isEmpty() -> {
+                        binding.tvRecordVideo.showSnackBar("Please record a video that best describes you")
                         false
                     }
                     location.isEmpty() -> {

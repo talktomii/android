@@ -171,6 +171,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
                 hashmap["cvv"] = binding.etCVV.text.toString()
                 hashmap["holderName"] = binding.etCardHolder.text.toString()
                 progress.visibility = View.VISIBLE
+                Log.d("card_detail -- ", hashmap.toString())
 //                window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 viewModel.addCard(hashmap)
             }

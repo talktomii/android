@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -43,6 +44,9 @@ class MyBankAdapter(val mList: List<BankItemModel>, var webService: WebService? 
 
         val itemsViewModel = mList[position]
         data = mList[position]
+        val sharedPreferences: SharedPreferences = context!!.getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem): Boolean {
                 when (item.itemId) {
@@ -79,22 +83,12 @@ class MyBankAdapter(val mList: List<BankItemModel>, var webService: WebService? 
                                 if (!::viewModel.isInitialized) {
                                     viewModel = MyCardsViewModel(webService!!)
                                 }
-                                viewModel.getBank()
+                                viewModel.getBank(sharedPreferences.getString("id","").toString())
                             }
                             dialog.hide()
                             dialog_delete.show()
                         }
                         dialog.show()
-                    }
-                    R.id.action_update -> {
-                        val intent = Intent(context,AddBankAccountActivity::class.java)
-                        intent.putExtra("bank","update")
-                        intent.putExtra("id",mList[position].bank_id)
-                        intent.putExtra("name",mList[position].bank_name)
-                        intent.putExtra("type",mList[position].bank_type)
-                        intent.putExtra("rnumber",mList[position].routing_number)
-                        intent.putExtra("anumber",mList[position].accounting_number)
-                        context!!.startActivity(intent)
                     }
                 }
                 return false

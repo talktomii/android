@@ -34,8 +34,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:textColor="@color/calText"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="16dp"
+                    android:textFontWeight="700"
                     tools:text="Relationship" />
 
             </RelativeLayout>

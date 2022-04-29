@@ -16,20 +16,36 @@
         android:background="@color/backgroundColor"
         tools:context=".ui.homefrag.HomesFragment">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/ivBackArrow"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/bg_back_background"
-            android:drawableLeft="@drawable/back_arrow"
-            android:padding="@dimen/dp_10"
-            android:text="Back"
-            android:textSize="14sp"
-            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/backCat"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvrefillBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/back"
+                android:textColor="@color/addCardColor"
+                android:textFontWeight="400"
+                android:textSize="@dimen/dp_16" />
+        </LinearLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

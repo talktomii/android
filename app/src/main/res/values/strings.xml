@@ -18,6 +18,7 @@
     <string name="by_continue_you_agree">By continue, you agree to our</string>
     <string name="next">Next</string>
     <string name="facebook_app_id">501682688214266</string>
+    <string name="fb_login_protocol_scheme">fb501682688214266</string>
     <string name="signup_to_furniture_market">Signup to Furniture Market</string>
     <string name="email">Email</string>
     <string name="sign_up">Sign Up</string>
@@ -328,4 +329,8 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="terms_policy">By signing up, you agree to our\n<u><font color="#55ADFF">Terms of Service</font></u> and <u><font color="#55ADFF">Privacy Policy</font></u>, and confirm\n that you are at least 18 years old. </string>
     <string name="select_location">Select Location</string>
     <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="add_time_period">Add Time Period</string>
+    <string name="view_time_period">View Time Period</string>
+    <string name="call_button_availble">Sorry, Call button is available before one minutes</string>
+    <string name="facebook_client_token" ></string>
 </resources>

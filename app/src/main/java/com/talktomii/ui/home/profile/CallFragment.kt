@@ -127,6 +127,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
             binding.clAcceptReject.gone()
             runTimer()
         }
+
         binding.ivCallEnd.setOnClickListener {
             var jsonObject = JSONObject()
             jsonObject.put("channelName", channelName)
@@ -278,7 +279,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         }
 
         // Stops/Resumes sending the local audio stream.
-        mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
+        mRtcEngine?.muteLocalAudioStream(iv.isSelected)
     }
 
 
@@ -291,6 +292,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
             //Normal Icon
         } else {
             //Muted Icon
+
             iv.isSelected = true
             iv.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
         }
@@ -298,7 +300,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         // Enables/Disables the audio playback route to the speakerphone.
         //
         // This method sets whether the audio is routed to the speakerphone or earpiece. After calling this method, the SDK returns the onAudioRouteChanged callback to indicate the changes.
-        mRtcEngine!!.setEnableSpeakerphone(view.isSelected())
+        mRtcEngine?.setEnableSpeakerphone(view.isSelected())
     }
 
 

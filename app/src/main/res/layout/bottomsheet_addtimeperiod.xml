@@ -4,10 +4,10 @@
     <RelativeLayout
         android:id="@+id/rootView"
         android:layout_width="wrap_content"
-        android:elevation="@dimen/dp_10"
         android:layout_height="wrap_content"
         android:background="@drawable/bottomsheet_round_bg"
         android:clickable="true"
+        android:elevation="@dimen/dp_10"
         android:fitsSystemWindows="true"
         android:focusable="true">
 
@@ -23,15 +23,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvLabelAddTimePeriod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Add Time Period"
-                    android:textColor="@color/myCards"
                     android:fontFamily="@font/inter_regular"
+                    android:text="@string/add_time_period"
+                    android:textColor="@color/myCards"
                     android:textFontWeight="700"
-                    android:textSize="@dimen/dp_18"
-                  />
+                    android:textSize="@dimen/dp_18" />
 
                 <ImageView
                     android:id="@+id/ivClose"
@@ -64,20 +64,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_regular"
-                        android:textFontWeight="400"
+                        android:text="From"
                         android:textColor="@color/myCards"
-                        android:text="From"></TextView>
+                        android:textFontWeight="400"></TextView>
 
                     <TextView
                         android:id="@+id/tvFrom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent"
-                        android:hint="0:00AM"
                         android:fontFamily="@font/inter_regular"
-                        android:textFontWeight="400"
+                        android:hint="0:00AM"
                         android:textColor="@color/myCards"
                         android:textColorHint="@color/textHintColor"
+                        android:textFontWeight="400"
                         android:textSize="@dimen/dp_16"></TextView>
 
                 </LinearLayout>
@@ -97,22 +97,22 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:textFontWeight="400"
-                        android:textColor="@color/myCards"
                         android:layout_height="wrap_content"
-                        android:text="To"></TextView>
+                        android:fontFamily="@font/inter_regular"
+                        android:text="To"
+                        android:textColor="@color/myCards"
+                        android:textFontWeight="400"></TextView>
 
                     <TextView
                         android:id="@+id/tvTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent"
-                        android:hint="0:00AM"
                         android:fontFamily="@font/inter_regular"
-                        android:textFontWeight="400"
+                        android:hint="0:00AM"
                         android:textColor="@color/myCards"
                         android:textColorHint="@color/textHintColor"
+                        android:textFontWeight="400"
                         android:textSize="@dimen/dp_16"></TextView>
 
                 </LinearLayout>
@@ -124,12 +124,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_weight="1"
-                android:text="Repeat"
                 android:fontFamily="@font/inter_regular"
-                android:textFontWeight="400"
+                android:text="Repeat"
                 android:textColor="@color/myCards"
-                android:textSize="@dimen/dp_18"
-                />
+                android:textFontWeight="400"
+                android:textSize="@dimen/dp_18" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -285,11 +284,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
                 android:buttonTint="@color/blue_check"
-                android:paddingLeft="@dimen/dp_10"
                 android:fontFamily="@font/inter_regular"
-                android:textFontWeight="400"
+                android:paddingLeft="@dimen/dp_10"
+                android:text="Never"
                 android:textColor="@color/myCards"
-                android:text="Never" />
+                android:textFontWeight="400" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -302,11 +301,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:buttonTint="@color/blue_check"
-                    android:paddingLeft="@dimen/dp_10"
                     android:fontFamily="@font/inter_regular"
-                    android:textFontWeight="400"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:text="On"
                     android:textColor="@color/myCards"
-                    android:text="On" />
+                    android:textFontWeight="400" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -336,9 +335,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:fontFamily="@font/inter_regular"
-                            android:textFontWeight="400"
-                            android:textColor="@color/myCards"
                             android:text="March 23 2022"
+                            android:textColor="@color/myCards"
+                            android:textFontWeight="400"
                             android:textSize="@dimen/dp_18"></TextView>
 
                     </LinearLayout>

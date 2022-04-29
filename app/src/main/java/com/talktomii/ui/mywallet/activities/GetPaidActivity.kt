@@ -2,6 +2,7 @@ package com.talktomii.ui.mywallet.activities
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
@@ -34,6 +35,9 @@ class GetPaidActivity : DaggerAppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_get_paid)
+        val sharedPreferences: SharedPreferences = getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.backGetPaid.setImageResource(R.drawable.back_arrow)
@@ -72,6 +76,7 @@ class GetPaidActivity : DaggerAppCompatActivity() {
         binding.bankSpinner.setAdapter(adapter)
 
         viewModel.getCurrentWallet()
+
 
         binding.btnGetPaid.setOnClickListener {
             if (binding.getPaidTotalAmountDetail.text.toString() == "") {

@@ -9,6 +9,7 @@ import com.talktomii.R
 import com.talktomii.data.model.admin1.BadgesItem
 import com.talktomii.databinding.FragmentMyBadgesBinding
 import com.talktomii.ui.home.HomeViewModel
+import com.talktomii.utlis.AppConstant.Companion.getBadgesArrayList
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -49,15 +50,8 @@ class MyBudgesFragment : DaggerFragment() {
         setListener()
         adapterMyBudges = AdapterMyBudges()
         binding.rvMyBudges.adapter = adapterMyBudges
-        var badgesArrayList: ArrayList<BadgesItem> = arrayListOf()
-        badgesArrayList.add(BadgesItem(0, "Fun",R.drawable.ic_badges_5))
-        badgesArrayList.add(BadgesItem(0, "Humor",R.drawable.ic_badges_4))
-        badgesArrayList.add(BadgesItem(0, "Smart",R.drawable.ic_badge_1))
-        badgesArrayList.add(BadgesItem(0, "Knowledgeable",R.drawable.ic_badge_2))
-        badgesArrayList.add(BadgesItem(0, "Kind",R.drawable.ic_badges_6))
-        badgesArrayList.add(BadgesItem(0, "Talkative",R.drawable.ic_badge_3))
-
-        if (requireArguments().getSerializable("badges") != null){
+        val badgesArrayList: ArrayList<BadgesItem> = getBadgesArrayList()
+        if (requireArguments().getSerializable("badges") != null) {
             for (i in requireArguments().getSerializable("badges") as ArrayList<BadgesItem>) {
                 for (j in badgesArrayList) {
                     if (j._id == i._id) {

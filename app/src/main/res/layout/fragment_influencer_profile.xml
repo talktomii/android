@@ -55,7 +55,7 @@
                     android:id="@+id/ivCoverPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="@drawable/ic_image1"
+                    android:background="@drawable/profile_bg"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -97,20 +97,23 @@
 
                 <RelativeLayout
                     android:id="@+id/ivBookMark"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/dp_10"
                     android:background="@drawable/gray_round"
                     android:orientation="vertical"
+                    android:padding="@dimen/dp_10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="@dimen/dp_20"
-                        android:layout_height="@dimen/dp_20"
+                        android:id="@+id/bookImag"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/bookmark"
-                        android:tint="@{viewModel2.bookMark ? @color/color_green : @color/gray}" />
+                        android:translationZ="@dimen/dp_10"
+                        android:tint="@{viewModel2.bookMark ? @color/color_green : @color/myCards}" />
                 </RelativeLayout>
 
                 <ImageView
@@ -387,6 +390,8 @@
                     android:drawableLeft="@drawable/plus"
                     android:drawablePadding="@dimen/dp_5"
                     android:text="3"
+                    android:paddingStart="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_5"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBug"

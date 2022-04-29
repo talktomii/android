@@ -184,25 +184,31 @@
                     app:layout_constraintStart_toStartOf="@+id/btnLogin"
                     app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-                <ImageView
-                    android:id="@+id/ivGoogle"
-                    android:layout_width="145dp"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="@dimen/dp_40"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/google_btn_light"
+                <LinearLayout
+                    android:id="@+id/socialLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dp_30"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtLoginWith" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtLoginWith"
+                    >
+                    <ImageView
+                        android:id="@+id/ivGoogle"
+                        android:layout_width="145dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/google_btn_light"
+                         />
 
-                <ImageView
-                    android:id="@+id/ivFacebook"
-                    android:layout_width="145dp"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:src="@drawable/facebook_btn"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivGoogle"
-                    app:layout_constraintStart_toEndOf="@+id/ivGoogle"
-                    app:layout_constraintTop_toTopOf="@+id/ivGoogle" />
+                    <ImageView
+                        android:id="@+id/ivFacebook"
+                        android:layout_width="145dp"
+                        android:layout_height="55dp"
+                        android:layout_marginStart="@dimen/dp_30"
+                        android:src="@drawable/facebook_btn" />
+                </LinearLayout>
+
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/fb_login_button"
@@ -222,7 +228,7 @@
                     android:layout_marginTop="@dimen/dp_40"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/ivGoogle">
+                    app:layout_constraintTop_toBottomOf="@+id/socialLayout">
 
                     <TextView
                         android:id="@+id/txtDontHave"

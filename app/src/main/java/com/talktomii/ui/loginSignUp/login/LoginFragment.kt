@@ -41,6 +41,8 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Patterns
 import com.talktomii.ui.mycards.data.MyCardsViewModel
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class LoginFragment : DaggerFragment() {
@@ -86,7 +88,7 @@ class LoginFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        callbackManager = CallbackManager.Factory.create()
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivGoogle.setImageResource(R.drawable.googe_btn)
@@ -148,24 +150,29 @@ class LoginFragment : DaggerFragment() {
 
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
-        callbackManager = CallbackManager.Factory.create()
 
 
+        val permissionNeeds: List<String> = Arrays.asList(
+            "email",
+            "public_profile"
+        )
+        binding.fbLoginButton.setReadPermissions(permissionNeeds)
         binding.fbLoginButton.registerCallback(callbackManager, object :
             FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) {
                 val request =
                     GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
                         try {
-                            Log.e("email", data.getString("email"))
-                            findNavController().navigate(
-                                R.id.action_signupFragment_to_createProfileFragment,
-                                bundleOf(
+                            Log.e("email", data!!.getString("email"))
+                            if (isConnectedToInternet(requireContext(), true)) {
+                                var map = HashMap<String, String>()
+                                map["email"] = data!!.getString("email")
+                                map["isSocial"] = "true"
 
-                                    "email" to data.getString("email"),
-                                    "isSocial" to "true"
-                                )
-                            )
+                                viewModel.loginApi(map)
+
+                            }
+
 
                         } catch (e: JSONException) {
                             e.printStackTrace()
@@ -184,8 +191,8 @@ class LoginFragment : DaggerFragment() {
                 print("---cancle--")
             }
 
-            override fun onError(exception: FacebookException?) {
-                exception?.stackTrace
+            override fun onError(error: FacebookException) {
+                error?.stackTrace
             }
         })
     }

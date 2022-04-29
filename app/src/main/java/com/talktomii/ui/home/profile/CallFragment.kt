@@ -279,7 +279,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         }
 
         // Stops/Resumes sending the local audio stream.
-        mRtcEngine!!.muteLocalAudioStream(iv.isSelected)
+        mRtcEngine?.muteLocalAudioStream(iv.isSelected)
     }
 
 
@@ -300,7 +300,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         // Enables/Disables the audio playback route to the speakerphone.
         //
         // This method sets whether the audio is routed to the speakerphone or earpiece. After calling this method, the SDK returns the onAudioRouteChanged callback to indicate the changes.
-        mRtcEngine!!.setEnableSpeakerphone(view.isSelected())
+        mRtcEngine?.setEnableSpeakerphone(view.isSelected())
     }
 
 

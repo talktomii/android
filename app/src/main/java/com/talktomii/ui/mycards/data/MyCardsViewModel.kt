@@ -351,6 +351,9 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     }
 
     fun deleteCard(id: String) {
+        val sharedPreferences: SharedPreferences = CardFragment.context.getSharedPreferences("RoleName",
+            Context.MODE_PRIVATE
+        )
         deleteCard.value = Resource.loading()
         webService.deleteCard(id)
             .enqueue(object : Callback<ApiResponse<Any>> {
@@ -359,16 +362,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     response: Response<ApiResponse<Any>>
                 ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.status == 200) {
-                            Log.d("Response ------", response.body()!!.data.toString())
-//                            Toast.makeText(,"added successfully",Toast.LENGTH_SHORT).show()
-                            deleteCard.value = Resource.success(response.body()?.detail)
-                        } else deleteCard.value = Resource.error(
-                            ApiUtils.getError(
-                                response.code(),
-                                response.body()?.message
-                            )
-                        )
+                        getCards(sharedPreferences.getString("id","").toString())
                     } else {
                         deleteCard.value = Resource.error(
                             ApiUtils.getError(
@@ -811,23 +805,20 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     if (response.isSuccessful) {
                         Log.d("success here : ", "yesssss")
                         val data = response.body()!!.payload
-                        for (i in data!!.BANK) {
-                            for(j in i.data){
-                                try {
-                                    dataList.add(
-                                        BankItemModel(
-                                            j.id!!,
-                                            j.accountHolderName!!.uppercase(Locale.getDefault()),
-                                            j.accountHolderType!!,
-                                            j.routingNumber!!,
-                                            ""
-                                        )
+                        for (j in data!!.BANK!!.data) {
+                            try {
+                                dataList.add(
+                                    BankItemModel(
+                                        j.id!!,
+                                        j.accountHolderName!!.uppercase(Locale.getDefault()),
+                                        j.accountHolderType!!,
+                                        j.routingNumber!!,
+                                        ""
                                     )
-                                } catch (e: ParseException) {
-                                    e.printStackTrace()
-                                }
+                                )
+                            } catch (e: ParseException) {
+                                e.printStackTrace()
                             }
-
                         }
                         Log.d("datalist bank data : ", " j " + dataList.toString())
                         val layoutManager = FlexboxLayoutManager()

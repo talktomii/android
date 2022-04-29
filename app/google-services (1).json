@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "348480339689",
-    "project_id": "talk-to-mii-65e0e",
-    "storage_bucket": "talk-to-mii-65e0e.appspot.com"
+    "project_number": "76409004524",
+    "project_id": "talktomii-3d1ca",
+    "storage_bucket": "talktomii-3d1ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:348480339689:android:0caa5691003a5e67ed3a78",
+        "mobilesdk_app_id": "1:76409004524:android:96755104f425fae4c820c9",
         "android_client_info": {
           "package_name": "com.app.talktomii"
         }
       },
       "oauth_client": [
         {
-          "client_id": "348480339689-cssio8k3lm6jckm7fht7jsv4s72jjehe.apps.googleusercontent.com",
+          "client_id": "76409004524-4o4mjr4hjo8rf2ifrldar6jqse1r7tui.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCQ4feMgizeFCAQWSsOJzd5Vq3eFQBtnuo"
+          "current_key": "AIzaSyAcUlVzy8K8yps7eoJC5jSfADPrYZz6XG4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "348480339689-cssio8k3lm6jckm7fht7jsv4s72jjehe.apps.googleusercontent.com",
+              "client_id": "76409004524-4o4mjr4hjo8rf2ifrldar6jqse1r7tui.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "348480339689-vsm6eg50ehcetch1lne4darmar6husv4.apps.googleusercontent.com",
+              "client_id": "76409004524-if04pq7eovba2dr36lasi2qjakacve3u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.app.talktomii"

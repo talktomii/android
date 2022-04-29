@@ -157,15 +157,15 @@ class LoginFragment : DaggerFragment() {
                 val request =
                     GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
                         try {
-                            Log.e("email", data.getString("email"))
-                            findNavController().navigate(
-                                R.id.action_signupFragment_to_createProfileFragment,
-                                bundleOf(
-
-                                    "email" to data.getString("email"),
-                                    "isSocial" to "true"
-                                )
-                            )
+//                            Log.e("email", data.getString("email"))
+//                            findNavController().navigate(
+//                                R.id.action_signupFragment_to_createProfileFragment,
+//                                bundleOf(
+//
+//                                    "email" to data.getString("email"),
+//                                    "isSocial" to "true"
+//                                )
+//                            )
 
                         } catch (e: JSONException) {
                             e.printStackTrace()

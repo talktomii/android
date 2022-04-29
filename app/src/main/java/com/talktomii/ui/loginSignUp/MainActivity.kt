@@ -29,7 +29,10 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.get
+import com.google.gson.Gson
+import com.talktomii.data.model.call.CallRequest
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
 import com.talktomii.utlis.*
 import com.zoho.salesiqembed.ZohoSalesIQ
@@ -40,18 +43,18 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     private lateinit var binding: ActivityMainBinding
 
     var navHostFragment: NavHostFragment? = null
-    public var socketManager: SocketManager= SocketManager.getInstance()
+    public var socketManager: SocketManager = SocketManager.getInstance()
     private val viewModel: MainVM by viewModels()
 
     companion object {
         lateinit var context: WeakReference<Context>
         var retrivedToken: String = ""
         var user_id: String = ""
-        var totalSideBarAmount : TextView ?= null
-        lateinit var bottombar : BottomNavigationView
-        lateinit var drawer : DrawerLayout
-        lateinit var btnMenu : ImageView
-        lateinit var bookMark : TextView
+        var totalSideBarAmount: TextView? = null
+        lateinit var bottombar: BottomNavigationView
+        lateinit var drawer: DrawerLayout
+        lateinit var btnMenu: ImageView
+        lateinit var bookMark: TextView
     }
 
 
@@ -63,18 +66,18 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        socketManager.connect(this,prefsManager)
+        socketManager.connect(this, prefsManager)
 
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val role: SharedPreferences = getSharedPreferences("RoleName", MODE_PRIVATE)
-        val roleName = role.getString("name","").toString()
+        val roleName = role.getString("name", "").toString()
         bookMark = binding.txtBookmarks
         Log.d("roleName is : ", roleName.toString())
-        if(roleName == "user"){
+        if (roleName == "user") {
             binding.txtBookmarks.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.txtBookmarks.visibility = View.GONE
         }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -90,7 +93,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
             }
         }
 
-        btnMenu  =  binding.btnMenu
+        btnMenu = binding.btnMenu
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         bottombar = binding.menuBottom
@@ -175,8 +178,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
         if (isDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             binding.txtDarkTheme.setText("Light Theme");
-        }
-        else {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             binding.txtDarkTheme.setText("Dark Theme");
         }
@@ -191,7 +193,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
                 binding.menuBottom.isVisible = true
                 btnMenu.visibility = View.GONE
                 binding.menuBottom.visibility = View.VISIBLE
-            }else{
+            } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 editor.putBoolean("isDarkModeOn", true);
                 editor.apply();
@@ -297,17 +299,31 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     }
 
     override fun onMessageReceive(message: String, event: String) {
-        Log.e(event,message)
-        runOnUiThread {
-            Toast.makeText(this,event,Toast.LENGTH_SHORT).show()
+        Log.e(event, message)
+//        runOnUiThread {
+//            Toast.makeText(this,event,Toast.LENGTH_SHORT).show()
+//        }
+        when (event) {
+            SocketManager.onCallRequest -> {
+                runOnUiThread {
+                    var callRequest = Gson().fromJson(message, CallRequest::class.java)
+                    if (callRequest.loginUser._id != getUser(prefsManager)?.admin?._id)
+                        viewModel.navController.navigate(
+                            R.id.callFragment,
+                            bundleOf("CALL_REQUEST" to message)
+                        )
+                }
+            }
         }
+
     }
 
     fun socketConnected() {
         var jsonObject = JSONObject()
         jsonObject.put("roomId", getUser(prefsManager)?.admin?._id)
-       socketManager.joinApp(jsonObject, this)
+        socketManager.joinApp(jsonObject, this)
     }
+
     fun openNotificationFragment() {
         binding.menuBottom.selectedItemId = R.id.nav_notifications
     }

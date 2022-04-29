@@ -72,7 +72,7 @@ class MyCardAdapter(val mList: List<CardItemsViewModel>, var webService: WebServ
                                 viewModel = MyCardsViewModel(webService!!)
                             }
                             viewModel.deleteCard(mList[position].id.trim())
-                            viewModel.getCards(sharedPreferences.getString("id","").toString())
+
                             val dialog_delete = Dialog(context!!)
                             dialog_delete.requestWindowFeature(Window.FEATURE_NO_TITLE)
                             dialog_delete.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));

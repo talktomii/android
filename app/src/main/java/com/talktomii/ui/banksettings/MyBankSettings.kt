@@ -17,11 +17,7 @@ import com.talktomii.data.apis.WebService
 import com.talktomii.databinding.FragmentPaymentBinding
 import com.talktomii.databinding.MyBankSettingsBinding
 import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
-import com.talktomii.ui.loginSignUp.MainActivity
-import com.talktomii.ui.mycards.MyPaymentsVM
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.mycards.fragments.PaymentFragment
-import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -29,9 +25,7 @@ import javax.inject.Inject
 class MyBankSettings : DaggerFragment() {
 
     private lateinit var binding: MyBankSettingsBinding
-
     private val viewModels by viewModels<MyBankSettingsVM>()
-
     @Inject
     lateinit var viewModel: MyBankSettingsVM
 

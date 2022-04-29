@@ -187,18 +187,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         }
 
         binding.txtCallNow.setOnClickListener {
-//            val currentTime = DateUtils.getFormatedFullDate(Calendar.getInstance())
-//            val calenderStartTime = DateUtils.simpleDateToUTCTOLocalDate(selectedAdmin.startTime)
-//            val calenderEnd = DateUtils.convertStringToCalender(calenderStartTime)
-//            calenderEnd[Calendar.MINUTE] = calenderEnd[Calendar.MINUTE] - 1
-//            val calenderEndTime = DateUtils.getFormatedFullDate(calenderEnd)
-//
-//            val isBetween = DateUtils.checkTimeIsBetween(calenderEndTime, calenderStartTime, currentTime)
-//            if (isBetween) {
-//                showPopup()
-//            } else {
-//                context?.let { showToastMessage(it, getString(R.string.call_button_availble)) }
-//            }
+            //Check Call Regarding Conditions
+            showPopup()
         }
 
         binding.tvBookAppointment.setOnClickListener {

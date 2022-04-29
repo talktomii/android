@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.talktomii.R
 import com.talktomii.data.model.admin.Admin
 import com.talktomii.databinding.ItemPopularBinding
+import java.util.*
 
 class AdapterPopular(
     private var context: Context,
@@ -84,6 +85,16 @@ class AdapterPopular(
 
     fun setPopularList(admin: ArrayList<Admin>) {
 //        admin.sortBy { it.fname.lowercase() }
+        Collections.sort(admin,
+            Comparator<Admin> { receivedSOSModel, t1 ->
+                if (receivedSOSModel == null || receivedSOSModel.fname == null) {
+                    return@Comparator -1 //null values will be displayed at bottom in sorted list
+                }
+                if (t1 == null || t1.fname == null) {
+                    return@Comparator 1 //null values will be displayed at bottom in sorted list
+                }
+                receivedSOSModel.fname.compareTo(t1.fname)
+            })
         if (popularArrayList.isNotEmpty()) {
             popularArrayList.clear()
         }

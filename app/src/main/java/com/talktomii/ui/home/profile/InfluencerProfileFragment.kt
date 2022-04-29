@@ -105,10 +105,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivShare.setBackgroundResource(R.drawable.share)
                 binding.backprofile.setImageResource(R.drawable.back_arrow)
+                binding.bookImag.setImageResource(R.drawable.bookmark_dark)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 binding.ivShare.setBackgroundResource(R.drawable.ic_share)
                 binding.backprofile.setImageResource(R.drawable.back_arrow_light)
+                binding.bookImag.setImageResource(R.drawable.bookmark)
             }
         }
 

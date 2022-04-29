@@ -39,7 +39,7 @@ class CardFragment : DaggerFragment(R.layout.fragment_card) {
     ): View? {
         binding = FragmentCardBinding.inflate(inflater, container, false)
 //        binding.vm = viewModels
-        Companion.getContext(requireContext())
+        getContext(requireContext())
         recycleview = binding.rvCards
         progress = binding.displayCardProgress
         layout = binding.cardlistLayout

@@ -279,14 +279,14 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
 
                 binding.menuBottom.selectedItemId = destination.id
                 binding.menuBottom.isVisible = true
-                binding.btnMenu.isVisible = true
-                binding.btnMenu.isVisible = true
+//                binding.btnMenu.isVisible = true
+//                binding.btnMenu.isVisible = true
 
             } else {
                 binding.menuBottom.isVisible = false
                 binding.btnMenu.isVisible = false
             }
-            binding.btnMenu.isVisible = destination.id == R.id.homeFragment
+//            binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
     }

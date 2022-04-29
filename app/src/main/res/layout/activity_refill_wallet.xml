@@ -120,7 +120,7 @@
                     android:background="@drawable/bg_refillwallet_text"
                     android:fontFamily="@font/inter_regular"
                     android:gravity="center"
-                    android:hint="$10"
+                    android:hint="$0"
                     android:inputType="number"
                     android:textColor="@color/addCardHintColor"
                     android:textColorHint="@color/addCardHintColor"

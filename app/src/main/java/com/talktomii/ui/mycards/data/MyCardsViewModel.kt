@@ -189,10 +189,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
             })
     }
 
-    fun getCardlistWallet() {
+    fun getCardlistWallet(id :String) {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
-        webService.getCards(prefsManager.getString(PrefsManager.PREF_API_ID, ""))
+        webService.getCards(id)
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
                     call: Call<PayloadCards>,
@@ -201,56 +201,72 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                     Timber.d("--%s", response.body().toString())
                     val dataList = ArrayList<CardItemsViewModel>()
                     arrayStrings = ArrayList<String>()
-                    arrayStrings!!.clear()
+
                     if (response.isSuccessful) {
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
                         carditemMap = HashMap()
-                        arrayStrings!!.add("Select card")
-                        for (i in data!!.card!!.data) {
-                            val refilldata = "****" + i.card!!.last4!!.toString()
-                            if (arrayStrings!!.contains(refilldata)) {
-
-                            } else {
-                                arrayStrings!!.add(refilldata)
-                                carditemMap!!.put(i.id.toString(), refilldata)
-                            }
+                        if(response.body()!!.message == "There are no card details found."){
+                            selectedCardItem = ""
+                            arrayStrings!!.clear()
+                            arrayStrings!!.add("Add card")
+                            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                                RefillWalletActivity.context,
+                                R.layout.drop_down_custom_layout,
+                                arrayStrings!!.toMutableList()
+                            )
+                            adapter.setDropDownViewResource(R.layout.spinner_list)
+                            RefillWalletActivity.filterTypes!!.adapter = adapter
                         }
-                        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                            RefillWalletActivity.context,
-                            R.layout.drop_down_custom_layout,
-                            arrayStrings!!.toMutableList()
-                        )
-                        adapter.setDropDownViewResource(R.layout.spinner_list)
-                        RefillWalletActivity.filterTypes!!.adapter = adapter
-                        RefillWalletActivity.filterTypes!!.onItemSelectedListener =
-                            object : AdapterView.OnItemSelectedListener {
-                                override fun onItemSelected(
-                                    p0: AdapterView<*>?,
-                                    p1: View?,
-                                    p2: Int,
-                                    p3: Long
-                                ) {
-                                    Log.d("selected_item", carditemMap!!.keys.toString())
-                                    for (entry in carditemMap!!.entries) {
-                                        if (entry.value === adapter.getItem(p2)) {
-                                            System.out.println(
-                                                "The key for value " + adapter.getItem(p2)
-                                                    .toString() + " is " + entry.key
-                                            )
-                                            selectedCardItem = entry.key
-                                            break
+                        else{
+                            arrayStrings!!.clear()
+                            arrayStrings!!.add("Select card")
+                            selectedCardItem = ""
+                            for (i in data!!.card!!.data) {
+                                val refilldata = "****" + i.card!!.last4!!.toString()
+                                if (arrayStrings!!.contains(refilldata)) {
+
+                                } else {
+                                    arrayStrings!!.add(refilldata)
+                                    carditemMap!!.put(i.id.toString(), refilldata)
+                                }
+                            }
+                            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                                RefillWalletActivity.context,
+                                R.layout.drop_down_custom_layout,
+                                arrayStrings!!.toMutableList()
+                            )
+                            adapter.setDropDownViewResource(R.layout.spinner_list)
+                            RefillWalletActivity.filterTypes!!.adapter = adapter
+                            RefillWalletActivity.filterTypes!!.onItemSelectedListener =
+                                object : AdapterView.OnItemSelectedListener {
+                                    override fun onItemSelected(
+                                        p0: AdapterView<*>?,
+                                        p1: View?,
+                                        p2: Int,
+                                        p3: Long
+                                    ) {
+                                        Log.d("selected_item", carditemMap!!.keys.toString())
+                                        for (entry in carditemMap!!.entries) {
+                                            if (entry.value === adapter.getItem(p2)) {
+                                                System.out.println(
+                                                    "The key for value " + adapter.getItem(p2)
+                                                        .toString() + " is " + entry.key
+                                                )
+                                                selectedCardItem = entry.key
+                                                break
+                                            }
                                         }
                                     }
+
+                                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                                    }
                                 }
-
-                                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                                }
-                            }
-
+                        }
                     } else {
                         arrayStrings = ArrayList<String>()
+                        arrayStrings!!.clear()
                         arrayStrings!!.add("Add card")
                         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             RefillWalletActivity.context,
@@ -311,7 +327,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
     fun addCard(hashMap: HashMap<String, String>) {
 //        addCard.value = Resource.loading()
-        val sharedPreferences: SharedPreferences = CardFragment.context.getSharedPreferences("RoleName",
+        val sharedPreferences: SharedPreferences = MyCardsActivity.context.getSharedPreferences("RoleName",
             Context.MODE_PRIVATE
         )
         webService.addCard(hashMap)
@@ -330,7 +346,14 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         if (response.body()!!.message == "added successfully") {
                             MyCardsActivity.progress.visibility = View.GONE
                             MyCardsActivity.finishFunction()
-                            getCards(sharedPreferences.getString("id","").toString())
+
+                            if(RefillWalletActivity!!.getDetails == true){
+                                getCardlistWallet(sharedPreferences.getString("id","").toString())
+                                RefillWalletActivity!!.getDetails = false
+                            }else{
+                                getCards(sharedPreferences.getString("id","").toString())
+                            }
+
                         }
                     } else {
 //                        addCard.value = Resource.error(
@@ -873,7 +896,6 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 
             })
     }
-
     fun addBank(hashMap: HashMap<String, String>) {
         addWallet.value = Resource.loading()
         val sharedPreferences: SharedPreferences = MyBankSettings.context.getSharedPreferences("RoleName",

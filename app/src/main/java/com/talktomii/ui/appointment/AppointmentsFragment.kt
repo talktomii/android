@@ -177,7 +177,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
             )
         }
         binding.calendarViewAppointment.addDecorator(
-            EventDecorator(R.color.siq_color_primary_dark, calenderArrayList)
+            EventDecorator(requireContext().resources.getColor(R.color.blue), calenderArrayList)
         )
         if (payload.Appointment?.size ?: 0 > 0) {
             binding.rlNoDataFound.visibility = View.GONE

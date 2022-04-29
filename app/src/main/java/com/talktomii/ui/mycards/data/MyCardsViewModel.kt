@@ -812,19 +812,22 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                         Log.d("success here : ", "yesssss")
                         val data = response.body()!!.payload
                         for (i in data!!.BANK) {
-                            try {
-                                dataList.add(
-                                    BankItemModel(
-                                        i.Id!!,
-                                        i.holderName!!.uppercase(Locale.getDefault()),
-                                        i.bankType!!,
-                                        i.routingNumber!!,
-                                        i.accountNumber!!
+                            for(j in i.data){
+                                try {
+                                    dataList.add(
+                                        BankItemModel(
+                                            j.id!!,
+                                            j.accountHolderName!!.uppercase(Locale.getDefault()),
+                                            j.accountHolderType!!,
+                                            j.routingNumber!!,
+                                            ""
+                                        )
                                     )
-                                )
-                            } catch (e: ParseException) {
-                                e.printStackTrace()
+                                } catch (e: ParseException) {
+                                    e.printStackTrace()
+                                }
                             }
+
                         }
                         Log.d("datalist bank data : ", " j " + dataList.toString())
                         val layoutManager = FlexboxLayoutManager()

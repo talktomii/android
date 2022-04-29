@@ -24,8 +24,12 @@ class SocketManager {
         // Listen Events
         const val LISTEN_LOCATION = "sendLocationResp"
         const val JOIN = "join"
+        const val acceptCall = "acceptCall"
+        const val rejectCall = "rejectCall"
         const val connectCall = "connectCall"
         const val onCallRequest = "onCallRequest"
+        const val onRejectCall = "onRejectCall"
+        const val onAcceptCall = "onAcceptCall"
 
         //Emit Events
         const val SEND_LOCATION = "send-location"
@@ -139,12 +143,52 @@ class SocketManager {
             })
     }
 
+    fun rejectCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            rejectCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    rejectCall
+                )
+            })
+    }
+    fun acceptCall(arg: JSONObject, msgAck: OnMessageReceiver) {
+        socket?.emit(
+            acceptCall, arg,
+            Ack { args ->
+                println("------------------" + args[0])
+                msgAck.onMessageReceive(
+                    args[0].toString(),
+                    acceptCall
+                )
+            })
+    }
+
+
     // Listen Events
     fun onCallRequest(msgAck: OnMessageReceiver) {
         socket?.on(onCallRequest) { args ->
             msgAck.onMessageReceive(
                 args[0].toString(),
                 onCallRequest
+            )
+        }
+    }
+    fun onRejectCall(msgAck: OnMessageReceiver) {
+        socket?.on(onRejectCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                onRejectCall
+            )
+        }
+    }
+    fun onAcceptCall(msgAck: OnMessageReceiver) {
+        socket?.on(onAcceptCall) { args ->
+            msgAck.onMessageReceive(
+                args[0].toString(),
+                onAcceptCall
             )
         }
     }

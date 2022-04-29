@@ -4,44 +4,52 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.text.TextUtils
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.facebook.FacebookSdk.getApplicationContext
 import com.google.gson.Gson
 import com.talktomii.R
-import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.call.CallRequest
+import com.talktomii.data.model.call.CallUser
 import com.talktomii.data.network.ApisRespHandler
 import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentCallBinding
 import com.talktomii.ui.home.HomeViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
-import com.talktomii.utlis.PrefsManager
-import com.talktomii.utlis.SocketManager
+import com.talktomii.utlis.*
+import com.talktomii.utlis.SocketManager.Companion.onAcceptCall
+import com.talktomii.utlis.SocketManager.Companion.onRejectCall
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.getUser
 import dagger.android.support.DaggerFragment
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
+import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.util.*
 import javax.inject.Inject
 
+
 class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
 
-    private lateinit var other: Admin1
-    private var agoraToken: String=""
-    private val LOG_TAG: String ="abcd"
+    private var channelName: String? = ""
+    private lateinit var other: CallUser
+    private lateinit var callRequest: CallRequest
+    private var agoraToken: String = ""
+    private val LOG_TAG: String = "abcd"
     private val PERMISSION_REQ_ID_RECORD_AUDIO = 22
 
     private var mRtcEngine // Tutorial Step 1
@@ -80,7 +88,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
          * false: Unmuted.
          */
         override fun onUserMuteAudio(uid: Int, muted: Boolean) { // Tutorial Step 6
-            requireActivity().runOnUiThread(Runnable { onRemoteUserVoiceMuted(uid, muted) })
+//            requireActivity().runOnUiThread(Runnable { onRemoteUserVoiceMuted(uid, muted) })
         }
     }
 
@@ -105,21 +113,79 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         return binding.root
 
     }
-    private fun setListener() {
 
+    private fun setListener() {
+        binding.ivCallAccept.setOnClickListener {
+            var jsonObject = JSONObject()
+            jsonObject.put("channelName", channelName)
+            jsonObject.put("isForVideoCall", false)
+            jsonObject.put("otherId", other._id)
+            jsonObject.put("token", agoraToken)
+            (requireActivity() as MainActivity).socketManager.acceptCall(jsonObject, this)
+            initAgoraEngineAndJoinChannel()
+            binding.constraintLayout6.visible()
+            binding.clAcceptReject.gone()
+            runTimer()
+        }
+
+        binding.ivCallEnd.setOnClickListener {
+            var jsonObject = JSONObject()
+            jsonObject.put("channelName", channelName)
+            jsonObject.put("isForVideoCall", false)
+            jsonObject.put("otherId", other._id)
+            jsonObject.put("token", agoraToken)
+            (requireActivity() as MainActivity).socketManager.rejectCall(jsonObject, this)
+//            leaveChannel()
+        }
+        binding.ivSpeaker.setOnClickListener {
+            onSwitchSpeakerphoneClicked(it)
+        }
+        binding.ivMute.setOnClickListener {
+            onLocalAudioMuteClicked(it)
+        }
+        binding.ivEnd.setOnClickListener {
+            var jsonObject = JSONObject()
+            jsonObject.put("channelName", channelName)
+            jsonObject.put("isForVideoCall", false)
+            jsonObject.put("otherId", other._id)
+            jsonObject.put("token", agoraToken)
+            (requireActivity() as MainActivity).socketManager.rejectCall(jsonObject, this)
+//            leaveChannel()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog=ProgressDialog(requireActivity())
-        setListener()
-        viewModel.initCall(getUser(prefsManager)?.admin?._id?:"")
+        progressDialog = ProgressDialog(requireActivity())
+
         bindObserver()
-        if(requireArguments()["DATA"]!=null){
-           other= Gson().fromJson(requireArguments()["DATA"].toString(),Admin1::class.java)
+        if (requireArguments()["DATA"] != null) {
+            other = Gson().fromJson(requireArguments()["DATA"].toString(), CallUser::class.java)
+            viewModel.initCall(getUser(prefsManager)?.admin?._id ?: "")
+            channelName = getUser(prefsManager)?.admin?._id
         }
+        if (requireArguments()["CALL_REQUEST"] != null) {
+            callRequest = Gson().fromJson(
+                requireArguments()["CALL_REQUEST"].toString(),
+                CallRequest::class.java
+            )
+            other = callRequest.loginUser
+            channelName = other._id
+            binding.constraintLayout6.gone()
+            binding.clAcceptReject.visible()
+            agoraToken = callRequest.token
+        }
+        setUi()
+        setListener()
+        (requireActivity() as MainActivity).socketManager.onAcceptCall(this)
+        (requireActivity() as MainActivity).socketManager.onRejectCall(this)
 
+    }
 
+    private fun setUi() {
+        Glide.with(requireContext()).load(other.profilePhoto).into(binding.ivUserProfile)
+        binding.txtName.text = other.name
+        binding.txtUserName.text = "@${other.userName}"
     }
 
     private fun bindObserver() {
@@ -128,7 +194,7 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
             it ?: return@Observer
             when (it.status) {
                 Status.SUCCESS -> {
-                    agoraToken=it.data?.token?:""
+                    agoraToken = it.data?.token ?: ""
                     progressDialog.setLoading(false)
                     if (checkSelfPermission(
                             Manifest.permission.RECORD_AUDIO,
@@ -160,7 +226,8 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
     }
 
     fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
-        Log.i(LOG_TAG,
+        Log.i(
+            LOG_TAG,
             "checkSelfPermission $permission $requestCode"
         )
         if (ContextCompat.checkSelfPermission(
@@ -200,7 +267,6 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
     }
 
 
-
     // Tutorial Step 7
     fun onLocalAudioMuteClicked(view: View) {
         val iv = view as ImageView
@@ -217,14 +283,16 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
     }
 
 
-
     // Tutorial Step 5
     fun onSwitchSpeakerphoneClicked(view: View) {
         val iv = view as ImageView
         if (iv.isSelected) {
             iv.isSelected = false
             iv.clearColorFilter()
+            //Normal Icon
         } else {
+            //Muted Icon
+
             iv.isSelected = true
             iv.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
         }
@@ -236,12 +304,10 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
     }
 
 
-
     // Tutorial Step 3
     fun onEncCallClicked(view: View?) {
         requireActivity().onBackPressed()
     }
-
 
 
     // Tutorial Step 1
@@ -249,7 +315,8 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         mRtcEngine = try {
             RtcEngine.create(requireContext(), getString(R.string.agora_app_id), mRtcEventHandler)
         } catch (e: Exception) {
-            Log.e(LOG_TAG,
+            Log.e(
+                LOG_TAG,
                 Log.getStackTraceString(e)
             )
             throw RuntimeException(
@@ -260,7 +327,6 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
             )
         }
     }
-
 
 
     // Tutorial Step 2
@@ -282,41 +348,49 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
         // Allows a user to join a channel.
         mRtcEngine!!.joinChannel(
             accessToken,
-            getUser(prefsManager)?.admin?._id,
+            channelName,
             "Extra Optional Data",
             0
         )
-        var jsonObject = JSONObject()
-        jsonObject.put("channelName", getUser(prefsManager)?.admin?._id)
-        jsonObject.put("isForVideoCall", false)
-        jsonObject.put("otherId", other._id)
-        jsonObject.put("token", agoraToken)
-        (requireActivity() as MainActivity).socketManager.connectCall(jsonObject,this)
-    // if you do not specify the uid, we will generate the uid for you
+        if (requireArguments()["CALL_REQUEST"] == null) {
+            var jsonObject = JSONObject()
+            jsonObject.put("channelName", getUser(prefsManager)?.admin?._id)
+            jsonObject.put("isForVideoCall", false)
+            jsonObject.put("otherId", other._id)
+            jsonObject.put("token", agoraToken)
+            (requireActivity() as MainActivity).socketManager.connectCall(jsonObject, this)
+        }
+        // if you do not specify the uid, we will generate the uid for you
     }
-
 
 
     // Tutorial Step 3
-    private fun leaveChannel()
-    {
+    private fun leaveChannel() {
         mRtcEngine?.leaveChannel()
+        lifecycleScope.launch {
+            try {
+                findNavController().popBackStack()
+            } catch (e: Exception) {
+                requireActivity().onBackPressed()
+            }
+        }
+//        requireActivity().onBackPressed()
     }
-
-
 
     // Tutorial Step 4
     private fun onRemoteUserLeft(uid: Int, reason: Int) {
-        showLongToast(
-            String.format(
-                Locale.US, "user %d left %d",
-                uid and 0xFFFFFFFFL.toInt(), reason
-            )
-        )
+//        showLongToast(
+//            String.format(
+//                Locale.US, "user %d left %d",
+//                uid and 0xFFFFFFFFL.toInt(), reason
+//            )
+//        )
 //        val tipMsg: View = findViewById(R.id.quick_tips_when_use_agora_sdk) // optional UI
 //        tipMsg.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            requireActivity().onBackPressed()
+        }
     }
-
 
 
     // Tutorial Step 6
@@ -330,7 +404,61 @@ class CallFragment : DaggerFragment(), SocketManager.OnMessageReceiver {
     }
 
     override fun onMessageReceive(message: String, event: String) {
-        Log.e(event,message)
+        when (event) {
+            onAcceptCall -> {
+                runTimer()
+
+            }
+            onRejectCall -> {
+                leaveChannel()
+
+            }
+        }
+    }
+
+    private fun runTimer() {
+        var seconds = 0
+        var running = true
+        // Get the text view.
+        // Creates a new Handler
+        val handler = Handler(Looper.getMainLooper())
+
+        // Call the post() method,
+        // passing in a new Runnable.
+        // The post() method processes
+        // code without a delay,
+        // so the code in the Runnable
+        // will run almost immediately.
+        handler.post(object : Runnable {
+            override fun run() {
+                val hours: Int = seconds / 3600
+                val minutes: Int = seconds % 3600 / 60
+                val secs: Int = seconds % 60
+
+                // Format the seconds into hours, minutes,
+                // and seconds.
+                val time = java.lang.String
+                    .format(
+                        Locale.getDefault(),
+                        "%d:%02d:%02d", hours,
+                        minutes, secs
+                    )
+
+                // Set the text view text.
+                binding.txtCallDuration.text = time
+
+                // If running is true, increment the
+                // seconds variable.
+                if (running) {
+                    seconds++
+                }
+
+                // Post the code again
+                // with a delay of 1 second.
+                handler.postDelayed(this, 1000)
+            }
+        })
+
     }
 
 }

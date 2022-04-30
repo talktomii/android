@@ -2,10 +2,8 @@ package com.talktomii.interfaces
 
 import com.talktomii.data.model.admin.Availaibility
 import com.talktomii.data.model.admin1.Admin1
-import com.talktomii.data.model.appointment.PayloadUpdate
 import com.talktomii.data.model.appointment.UpdateAppointmentPayload
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
-import com.talktomii.data.model.drawer.bookmark.Payload
 import com.talktomii.data.photo.Admin
 
 interface HomeInterface {

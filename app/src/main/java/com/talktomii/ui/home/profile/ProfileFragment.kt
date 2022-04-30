@@ -21,6 +21,7 @@ import com.talktomii.data.model.admin.Price
 import com.talktomii.data.model.admin.SendAvailaibility
 import com.talktomii.data.model.admin1.Admin1
 import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.Config
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentProfileBinding
 import com.talktomii.interfaces.*
@@ -225,6 +226,12 @@ class ProfileFragment : DaggerFragment(), AdminDetailInterface,
         binding.ivTikTok.setOnClickListener {
             val dialog = LinkAccountDialog("Tiktok", tikLink.link, this)
             dialog.show(requireActivity().supportFragmentManager, LinkAccountDialog.TAG)
+        }
+        binding.ivShareProfile.setOnClickListener {
+            val share = Intent(Intent.ACTION_SEND)
+            share.type = "text/plain"
+            share.putExtra(Intent.EXTRA_TEXT, Config.BASE_URL_SHARE + admin1!!._id)
+            startActivity(Intent.createChooser(share, "Share Text"))
         }
     }
 

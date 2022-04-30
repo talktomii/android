@@ -32,6 +32,7 @@ import com.talktomii.data.model.getallslotbydate.Payload
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.Config.BASE_URL_SHARE
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
@@ -226,7 +227,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.ivShare.setOnClickListener {
             val share = Intent(Intent.ACTION_SEND)
             share.type = "text/plain"
-            share.putExtra(Intent.EXTRA_TEXT, "I'm being sent!!")
+            share.putExtra(Intent.EXTRA_TEXT, BASE_URL_SHARE + selectedAdmin!!._id)
             startActivity(Intent.createChooser(share, "Share Text"))
         }
     }

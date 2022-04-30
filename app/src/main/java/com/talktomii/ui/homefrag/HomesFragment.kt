@@ -79,13 +79,6 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             myEdit.putBoolean("hide", true)
             myEdit.apply()
         }
-
-        if (sharedPreferences.getBoolean("hide",false)){
-            binding.constraintLayout.visibility = View.GONE
-        }
-        else{
-            binding.constraintLayout.visibility = View.VISIBLE
-        }
         return binding.root
     }
 
@@ -93,6 +86,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         super.onViewCreated(view, savedInstanceState)
         init()
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+
         binding.ivCross.setOnClickListener {
             binding.constraintLayout.visibility = View.GONE
             val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
@@ -100,12 +94,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             myEdit.apply()
         }
 
-        if (sharedPreferences.getBoolean("hide",false)){
-            binding.constraintLayout.visibility = View.GONE
-        }
-        else{
-            binding.constraintLayout.visibility = View.VISIBLE
-        }
+
     }
 
     private fun initAdapter() {
@@ -120,6 +109,7 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun init() {
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
         initAdapter()
         val admin = getUser(prefsManager)?.admin
         if (admin!!.fname != null) {
@@ -141,6 +131,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             binding.txtPopular.text = "Popular"
             binding.txtSeeAll.visibility = View.VISIBLE
             binding.ivBackArrow.visibility = View.GONE
+            if (sharedPreferences.getBoolean("hide",false)){
+                binding.constraintLayout.visibility = View.GONE
+            }
+            else{
+                binding.constraintLayout.visibility = View.VISIBLE
+            }
 //            if (adapterPopular!!.getList().size > 0) {
 //                adapterPopular!!.setPopularList(adapterPopular!!.getList())
 //            } else {

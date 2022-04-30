@@ -215,7 +215,8 @@ class EditPersonalInfoDetails : DaggerFragment(R.layout.edit_personal_info_fragm
                     val fileUri = data?.data!!
                     val filePath = com.talktomii.utlis.common.FileUtils.getPath(context, data.data)
                     fileProfile = File(filePath)
-                    binding.videoViewProfile.setVideoURI(fileUri)
+                    Glide.with(requireContext()).load(filePath).placeholder(R.drawable.ic_user)
+                        .error(R.drawable.ic_user).into(binding.imgDefault)
                 }
 
             }

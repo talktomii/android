@@ -108,7 +108,7 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
 
     private fun onCoverClicked(service: Service) {
         val bundle = Bundle()
-        bundle.putSerializable("profileId", service.uid._id)
+        bundle.putSerializable("profileId", service.ifid._id)
         findNavController().navigate(
             R.id.action_bookmarkFragment_to_influencerProfileFragment,
             bundle

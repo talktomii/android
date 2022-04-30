@@ -84,15 +84,15 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
         }
     }
 
-    fun getAllAppoinemnt(id: String) {
+    fun getAllAppoinemntByUserId(id: String) {
         commonInterface!!.onStarted()
         Coroutines.main {
             try {
-                val authResponse = webService.getAllAppointment(id)
+                val authResponse = webService.getCalenderAllAppointment(id)
                 if (authResponse.isSuccessful) {
                     authResponse.body().let {
 //                        walletData.set(authResponse.body()!!.payload.walletData)
-                        infulancerListner?.influenceList(authResponse.body()!!.payload)
+                        infulancerCalenderListner?.influenceCalenderList(authResponse.body()!!.payload)
                     }
                 } else {
                     commonInterface!!.onFailureAPI(

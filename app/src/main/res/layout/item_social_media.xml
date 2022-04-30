@@ -7,9 +7,9 @@
 
         <ImageView
             android:id="@+id/ivInsta"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginStart="5dp"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="@dimen/dp_10"
             android:src="@drawable/ic_insta" />
 
 

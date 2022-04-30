@@ -61,11 +61,10 @@
                     android:background="@drawable/gray_background"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:textColor="@color/calText"
+                    android:textColorHint="@color/addCardHintColor"
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/txtAreYouSure" />
-
-
-
 
                 <View
                     android:id="@+id/view"
@@ -103,7 +102,7 @@
                         android:layout_width="1dp"
                         android:layout_height="83dp"
                         android:layout_marginStart="50dp"
-                        android:background="@drawable/ic_line1"
+                        android:background="@color/gray_line"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/txtCancel"
                         app:layout_constraintTop_toTopOf="parent" />

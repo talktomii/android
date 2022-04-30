@@ -1,4 +1,4 @@
-package com.example.example
+package com.talktomii.ui.mycards.model
 
 import com.google.gson.annotations.SerializedName
 

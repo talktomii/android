@@ -32,14 +32,20 @@ class AdapterEditInterest(context: Context) :
     class ViewHolder(val binding: ItemEditInterestBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int {
-//        return if (arraylist.size > 3)
-//            3
-//        else
-        return arraylist.size
+        return if (isWhich == 1) {
+            if (arraylist.size > 3)
+                return 3
+            else arraylist.size
+        } else {
+            return arraylist.size
+        }
+
+
     }
 
     fun setItemList(list: ArrayList<Interest>, which: Int) {
         isWhich = which
+        list.sortBy { it.name }
         if (arraylist.isNotEmpty()) {
             arraylist.clear()
         }

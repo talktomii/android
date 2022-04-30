@@ -70,7 +70,7 @@ class AdapterScheduledAppointment(
             holder.binding.tvDayAndDate.visibility = View.VISIBLE;
             holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
         } else {
-            if (interestArrayList.get(position - 1).date.equals(interest.date)) {
+            if (interestArrayList[position - 1].date == interest.date) {
                 holder.binding.tvDayAndDate.visibility = View.INVISIBLE;
             } else {
                 holder.binding.tvDayAndDate.visibility = View.VISIBLE;

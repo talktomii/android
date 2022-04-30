@@ -13,9 +13,12 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
@@ -39,7 +42,6 @@ import com.talktomii.utlis.DateUtils
 import com.talktomii.utlis.DateUtils.convertStringToCalender
 import com.talktomii.utlis.DateUtils.convertStringToCalenderWithOne
 import com.talktomii.utlis.DateUtils.getFormatedFullDate
-import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
 import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
@@ -408,7 +410,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
         val isBetween = DateUtils.checkTimeIsBetween(calenderEndTime, calenderStartTime, currentTime)
         if (isBetween) {
-            showPopup()
+            showPopup(interest)
         } else {
             context?.let { showToastMessage(it, getString(R.string.call_button_availble)) }
         }
@@ -497,7 +499,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
 
     }
 
-    private fun showPopup() {
+    private fun showPopup(interest: AppointmentInterestItem) {
         var customDialog: AlertDialog? = null
         val customDialogBuilder =
             AlertDialog.Builder(requireContext())
@@ -508,6 +510,9 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
         )
         customView.txtCall.setOnClickListener {
             customDialog?.cancel()
+            view?.findNavController()
+                ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(interest)))
+
 //            userData=Admin1(_id = "625e09d929499b944fc9e6a5")
 //            view?.findNavController()
 //                ?.navigate(R.id.callFragment, bundleOf("DATA" to Gson().toJson(userData)))

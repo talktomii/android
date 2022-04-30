@@ -67,6 +67,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/ivShareProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
@@ -161,7 +162,7 @@
                         android:paddingTop="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_40"
                         android:paddingBottom="10dp"
-                        android:text="About Me"
+                        android:text="@string/about_me"
                         android:textColor="@color/calText"
                         android:textFontWeight="600"
                         android:textSize="12sp" />
@@ -275,7 +276,7 @@
                     <TextView
                         android:id="@+id/tvLocation"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:layout_weight="1"
@@ -284,6 +285,7 @@
                         android:paddingTop="15dp"
                         android:paddingRight="15dp"
                         android:paddingBottom="15dp"
+                        tools:text="TEST TESTSETSTE SETSET "
                         android:text="@{viewModel.userField.location}"
                         android:textColor="@color/calText"
                         android:textSize="16sp" />

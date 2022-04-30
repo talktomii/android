@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -23,12 +26,13 @@ import com.google.gson.Gson
 import com.talktomii.R
 import com.talktomii.data.model.TimeSlotSpinner
 import com.talktomii.data.model.admin1.Admin1
+import com.talktomii.data.model.appointment.AppointmentPayload
 import com.talktomii.data.model.drawer.bookmark.BookMarkResponse
 import com.talktomii.data.model.getallslotbydate.Payload
-import com.talktomii.data.model.getallslotbydate.PayloadAppoinment
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.data.model.getallslotbydate.TimeStop
 import com.talktomii.data.network.ApisRespHandler
+import com.talktomii.data.network.Config.BASE_URL_SHARE
 import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.CallDialogBinding
 import com.talktomii.databinding.FragmentInfluencerProfileBinding
@@ -36,12 +40,10 @@ import com.talktomii.interfaces.*
 import com.talktomii.ui.appointment.AppointmentViewModel
 import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
-import com.talktomii.utlis.AboutMeDialog
-import com.talktomii.utlis.AlertDialogCommon
+import com.talktomii.utlis.*
 import com.talktomii.utlis.DateUtils.addMinutes
 import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
 import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
-import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -50,8 +52,7 @@ import com.talktomii.utlis.common.Constants.Companion.IF_ID
 import com.talktomii.utlis.common.Constants.Companion.START_TIME
 import com.talktomii.utlis.common.Constants.Companion.UID
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.getUser
-import com.talktomii.utlis.listner.InfluenceListener
+import com.talktomii.utlis.listner.InfluenceCalenderListener
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -64,7 +65,7 @@ import javax.inject.Inject
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
     OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400, onStopProgress,
-    InfluenceListener {
+    InfluenceCalenderListener {
 
     private lateinit var userData: Admin1
     private lateinit var binding: FragmentInfluencerProfileBinding
@@ -93,6 +94,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     private var selectedEndTime: String? = null
     private var selectedDate: String? = null
     private var selectedAdmin: Admin1? = null
+    var isAppointmentSchedule = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -126,14 +128,14 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         viewModelAppoinemnt.commonInterface = this
         viewModelAppoinemnt.apiFailure = this
         viewModelInfluence.commonInterface = this
-        viewModelInfluence.infulancerListner = this
+        viewModelInfluence.infulancerCalenderListner = this
         viewModel.onSlotSelectedInterface = this
         viewModel.onStopProgress = this
         binding.lifecycleOwner = this
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
             requireArguments().getString("profileId")
-                ?.let { viewModelInfluence.getAllAppoinemnt(it) }
+                ?.let { viewModelInfluence.getAllAppoinemntByUserId(it) }
 
         }
         initAdapter()
@@ -166,7 +168,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 viewModel.getAllSlotByDate(selectedDate.toString())
             }
         }
-
+        handleCallButton()
         selectedDate = SimpleDateFormat("yyyy-MM-dd").format(startDate.time)
 
     }
@@ -190,7 +192,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
 
         binding.txtCallNow.setOnClickListener {
             //Check Call Regarding Conditions
-            showPopup()
+            handleCallButton()
+//            if (isAppointmentSchedule) {
+                showPopup()
+//            }
         }
 
         binding.tvBookAppointment.setOnClickListener {
@@ -214,9 +219,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             } else {
-                val dialog =
-                    AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+                context?.let { it1 -> showToastMessage(it1,getString(R.string.no_video_found)) }
             }
 
         }
@@ -224,7 +227,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.ivShare.setOnClickListener {
             val share = Intent(Intent.ACTION_SEND)
             share.type = "text/plain"
-            share.putExtra(Intent.EXTRA_TEXT, "I'm being sent!!")
+            share.putExtra(Intent.EXTRA_TEXT, BASE_URL_SHARE + selectedAdmin!!._id)
             startActivity(Intent.createChooser(share, "Share Text"))
         }
     }
@@ -461,13 +464,85 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         lateinit var layout: ConstraintLayout
     }
 
-    override fun influenceList(payload: PayloadAppoinment) {
-        if (payload.count ?: 0 > 0) {
-            binding.txtCallNow.visibility = View.VISIBLE
-        } else {
-            binding.txtCallNow.visibility = View.GONE
-        }
+    private var payloadAppointments: AppointmentPayload? = null
+    override fun influenceCalenderList(payload: AppointmentPayload) {
+        payloadAppointments = payload
+        handleCallButton()
+
     }
 
+    private fun handleCallButton() {
+        if (payloadAppointments != null) {
+            if (payloadAppointments!!.count > 0) {
+                binding.txtCallNow.visibility = View.VISIBLE
 
+                for (i in payloadAppointments!!.Appointment!!) {
+                    val currentTime = DateUtils.getFormatedFullDate(Calendar.getInstance())
+                    val calenderStartTime = DateUtils.simpleDateToUTCTOLocalDate(i.startTime)
+                    val calenderEnd = DateUtils.convertStringToCalender(calenderStartTime)
+                    calenderEnd[Calendar.MINUTE] = calenderEnd[Calendar.MINUTE] - 1
+                    val calenderEndTime = DateUtils.getFormatedFullDate(calenderEnd)
+
+                    val isBetween =
+                        DateUtils.checkTimeIsBetween(
+                            calenderEndTime,
+                            calenderStartTime,
+                            currentTime
+                        )
+                    if (isBetween) {
+                        isAppointmentSchedule = true
+                        break
+                    }
+                }
+
+
+            } else {
+                binding.txtCallNow.visibility = View.GONE
+            }
+            if (isAppointmentSchedule) {
+                binding.txtCallNow.background =
+                    context?.let { ContextCompat.getDrawable(it, R.drawable.bg_blue_button) }
+
+                binding.txtCallNow.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.white
+                    )
+                )
+                setTextViewDrawableColor(binding.txtCallNow, R.color.white)
+            } else {
+                binding.txtCallNow.background =
+                    context?.let { ContextCompat.getDrawable(it, R.drawable.bg_dray_background) }
+                binding.txtCallNow.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.black
+                    )
+                )
+                setTextViewDrawableColor(binding.txtCallNow, R.color.black)
+            }
+        } else {
+            binding.txtCallNow.background =
+                context?.let { ContextCompat.getDrawable(it, R.drawable.bg_dray_background) }
+            binding.txtCallNow.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.black
+                )
+            )
+            setTextViewDrawableColor(binding.txtCallNow, R.color.black)
+        }
+
+    }
+
+    private fun setTextViewDrawableColor(textView: TextView, color: Int) {
+        for (drawable in textView.compoundDrawables) {
+            if (drawable != null) {
+                drawable.colorFilter = PorterDuffColorFilter(
+                    ContextCompat.getColor(textView.context, color),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+        }
+    }
 }

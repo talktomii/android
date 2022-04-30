@@ -8,9 +8,6 @@ import com.bumptech.glide.Glide
 import com.talktomii.R
 import com.talktomii.data.model.drawer.bookmark.Service
 import com.talktomii.databinding.ItemPopularBinding
-import com.talktomii.utlis.PrefsManager
-import com.talktomii.utlis.isUser
-import javax.inject.Inject
 
 class AdapterBookmark(
     private var context: Context,
@@ -61,11 +58,14 @@ class AdapterBookmark(
         }
 
         holder.binding.ivCall.setOnClickListener {
-            listener.onClick(popularArrayList[position])
+            listener.onClick(popularArrayList[position], 1)
+        }
+        holder.binding.constrainItemListing.setOnClickListener {
+            listener.onClick(popularArrayList[position],1)
         }
 
         holder.binding.tvAboutMee.setOnClickListener {
-            listener.onClick(popularArrayList[position])
+            listener.onClick(popularArrayList[position], 2)
         }
 
     }
@@ -77,7 +77,7 @@ class AdapterBookmark(
     }
 
     interface onClickInteface {
-        fun onClick(admin: Service)
+        fun onClick(admin: Service, which: Int)
     }
 
 }

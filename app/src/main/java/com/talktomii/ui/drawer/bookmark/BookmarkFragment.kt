@@ -13,7 +13,9 @@ import com.talktomii.data.network.responseUtil.ApiUtils
 import com.talktomii.databinding.FragmentBookmarkBinding
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.drawer.BookMarkInterface
+import com.talktomii.utlis.AboutMeDialog
 import com.talktomii.utlis.PrefsManager
+import com.talktomii.utlis.common.CommonUtils
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
 import com.talktomii.utlis.isUser
@@ -86,13 +88,27 @@ class BookmarkFragment : DaggerFragment(), AdapterBookmark.onClickInteface, Comm
         adapter!!.setPopularList(payload.service)
     }
 
-    override fun onClick(service: Service) {
-        onCoverClicked(service)
+    override fun onClick(service: Service, which: Int) {
+        if (which == 1) {
+            onCoverClicked(service)
+        } else {
+            if (service.ifid?.aboutYou != null) {
+                val dialog = AboutMeDialog(service.ifid.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            } else {
+                context?.let { it1 ->
+                    CommonUtils.showToastMessage(
+                        it1,
+                        getString(R.string.no_video_found)
+                    )
+                }
+            }
+        }
     }
 
     private fun onCoverClicked(service: Service) {
         val bundle = Bundle()
-        bundle.putSerializable("profileId", service.uid._id)
+        bundle.putSerializable("profileId", service.ifid._id)
         findNavController().navigate(
             R.id.action_bookmarkFragment_to_influencerProfileFragment,
             bundle

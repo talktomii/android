@@ -27,6 +27,7 @@ class AdapterInterests() : RecyclerView.Adapter<AdapterInterests.ViewHolder>() {
     }
 
     fun setItemList(interest: ArrayList<Interest>) {
+        arrayList.sortBy { it.name }
         if (arrayList.isNotEmpty()) {
             arrayList.clear()
         }

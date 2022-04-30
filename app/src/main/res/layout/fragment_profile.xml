@@ -161,7 +161,7 @@
                         android:paddingTop="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_40"
                         android:paddingBottom="10dp"
-                        android:text="About Me"
+                        android:text="@string/about_me"
                         android:textColor="@color/calText"
                         android:textFontWeight="600"
                         android:textSize="12sp" />

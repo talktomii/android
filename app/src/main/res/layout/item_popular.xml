@@ -59,7 +59,7 @@
                     android:drawableLeft="@drawable/ic_video"
                     android:drawablePadding="@dimen/dp_10"
                     android:padding="@dimen/dp_10"
-                    android:text="About me"
+                    android:text="@string/about_me"
                     android:textColor="@color/calText"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"

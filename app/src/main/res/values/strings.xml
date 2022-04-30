@@ -333,4 +333,7 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="view_time_period">View Time Period</string>
     <string name="call_button_availble">Sorry, Call button is available before one minutes</string>
     <string name="facebook_client_token" ></string>
+    <string name="no_video_found">No Video Found</string>
+    <string name="call_now">Call Now</string>
+    <string name="about_me">About me</string>
 </resources>

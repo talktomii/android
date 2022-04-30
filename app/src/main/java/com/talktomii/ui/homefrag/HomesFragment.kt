@@ -4,7 +4,6 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,14 +19,14 @@ import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.HomeInterface
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
+import com.talktomii.utlis.AboutMeDialog
 import com.talktomii.utlis.PrefsManager
 import com.talktomii.utlis.SocketManager
+import com.talktomii.utlis.common.CommonUtils
 import com.talktomii.utlis.dialogs.ProgressDialog
 import com.talktomii.utlis.getUser
-import dagger.android.support.DaggerAppCompatActivity
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import javax.inject.Inject
 
 class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, CommonInterface,
@@ -53,11 +52,12 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         binding = HomeFragmentBinding.inflate(inflater, container, false)
 
         MainActivity.btnMenu.visibility = View.GONE
-        val role: SharedPreferences = requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
-        val roleName = role.getString("name","").toString()
-        if(roleName == "user"){
+        val role: SharedPreferences =
+            requireContext().getSharedPreferences("RoleName", MODE_PRIVATE)
+        val roleName = role.getString("name", "").toString()
+        if (roleName == "user") {
             MainActivity.bookMark.visibility = View.VISIBLE
-        }else{
+        } else {
             MainActivity.bookMark.visibility = View.GONE
         }
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -72,7 +72,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
                 MainActivity.btnMenu.visibility = View.GONE
             }
         }
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
         binding.ivCross.setOnClickListener {
             binding.constraintLayout.visibility = View.GONE
             val myEdit: SharedPreferences.Editor = sharedPreferences.edit()
@@ -85,7 +86,8 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
 
         binding.ivCross.setOnClickListener {
             binding.constraintLayout.visibility = View.GONE
@@ -109,13 +111,14 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
     }
 
     private fun init() {
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =
+            requireContext().getSharedPreferences("hideInfo", MODE_PRIVATE)
         initAdapter()
         val admin = getUser(prefsManager)?.admin
         if (admin!!.fname != null) {
             binding.txtName.text = admin.fname
         } else {
-            binding.txtName.text =  admin.name
+            binding.txtName.text = admin.name
         }
         progressDialog = ProgressDialog(requireActivity())
         viewModel.commonInterface = this
@@ -131,10 +134,9 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
             binding.txtPopular.text = "Popular"
             binding.txtSeeAll.visibility = View.VISIBLE
             binding.ivBackArrow.visibility = View.GONE
-            if (sharedPreferences.getBoolean("hide",false)){
+            if (sharedPreferences.getBoolean("hide", false)) {
                 binding.constraintLayout.visibility = View.GONE
-            }
-            else{
+            } else {
                 binding.constraintLayout.visibility = View.VISIBLE
             }
 //            if (adapterPopular!!.getList().size > 0) {
@@ -181,8 +183,22 @@ class HomesFragment : DaggerFragment(R.layout.home_fragment), HomeInterface, Com
         progressDialog.show()
     }
 
-    override fun onViewPopularClick(admin: Admin) {
-        onCoverClicked(admin)
+    override fun onViewPopularClick(admin: Admin, which: Int) {
+        if (which == 1) {
+            onCoverClicked(admin)
+        } else {
+            if (admin.aboutYou != null) {
+                val dialog = AboutMeDialog(admin.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            } else {
+                context?.let { it1 ->
+                    CommonUtils.showToastMessage(
+                        it1,
+                        getString(R.string.no_video_found)
+                    )
+                }
+            }
+        }
     }
 
     override fun onHomeAdmins(payload: com.talktomii.data.model.admin.Payload) {

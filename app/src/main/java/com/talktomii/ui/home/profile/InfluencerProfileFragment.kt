@@ -192,9 +192,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.txtCallNow.setOnClickListener {
             //Check Call Regarding Conditions
             handleCallButton()
-            if (isAppointmentSchedule) {
+//            if (isAppointmentSchedule) {
                 showPopup()
-            }
+//            }
         }
 
         binding.tvBookAppointment.setOnClickListener {
@@ -218,9 +218,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             } else {
-                val dialog =
-                    AboutMeDialog("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+                context?.let { it1 -> showToastMessage(it1,getString(R.string.no_video_found)) }
             }
 
         }

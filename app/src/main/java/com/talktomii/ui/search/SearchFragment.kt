@@ -18,6 +18,8 @@ import com.talktomii.interfaces.OnAdminSearchInterface
 import com.talktomii.interfaces.SearchInterface
 import com.talktomii.interfaces.SearchItemClick
 import com.talktomii.ui.homefrag.AdapterPopular
+import com.talktomii.utlis.AboutMeDialog
+import com.talktomii.utlis.common.CommonUtils
 import com.talktomii.viewmodel.SearchViewModel
 import dagger.android.support.DaggerFragment
 import okhttp3.ResponseBody
@@ -121,8 +123,22 @@ class SearchFragment : DaggerFragment(), SearchInterface, CommonInterface, Searc
         adapterPopular!!.setPopularList(payload.admin)
     }
 
-    override fun onViewPopularClick(admin: Admin) {
-        onCoverClicked(admin)
+    override fun onViewPopularClick(admin: Admin, which: Int) {
+        if (which == 1) {
+            onCoverClicked(admin)
+        } else {
+            if (admin.aboutYou != null) {
+                val dialog = AboutMeDialog(admin.aboutYou)
+                dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
+            } else {
+                context?.let { it1 ->
+                    CommonUtils.showToastMessage(
+                        it1,
+                        getString(R.string.no_video_found)
+                    )
+                }
+            }
+        }
     }
 
     private fun onCoverClicked(admin: Admin) {

@@ -42,8 +42,10 @@ import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.DateUtils.addMinutes
-import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
-import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
+import com.talktomii.utlis.DateUtils.convertStringToDate
+import com.talktomii.utlis.DateUtils.getLocalToUTCDate
+import com.talktomii.utlis.DateUtils.getTodayShortDate
+import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -52,7 +54,7 @@ import com.talktomii.utlis.common.Constants.Companion.IF_ID
 import com.talktomii.utlis.common.Constants.Companion.START_TIME
 import com.talktomii.utlis.common.Constants.Companion.UID
 import com.talktomii.utlis.dialogs.ProgressDialog
-import com.talktomii.utlis.listner.InfluenceCalenderListener
+import com.talktomii.utlis.listner.InfluncerItem
 import com.talktomii.viewmodel.InfluenceHomeViewModel
 import dagger.android.support.DaggerFragment
 import devs.mulham.horizontalcalendar.HorizontalCalendar
@@ -65,7 +67,7 @@ import javax.inject.Inject
 
 class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetailInterface,
     OnSlotSelectedInterface, AddAppointmentInterface, FailureAPI400, onStopProgress,
-    InfluenceCalenderListener {
+    InfluncerItem {
 
     private lateinit var userData: Admin1
     private lateinit var binding: FragmentInfluencerProfileBinding
@@ -128,14 +130,13 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         viewModelAppoinemnt.commonInterface = this
         viewModelAppoinemnt.apiFailure = this
         viewModelInfluence.commonInterface = this
-        viewModelInfluence.infulancerCalenderListner = this
+        viewModelInfluence.influncerItem = this
         viewModel.onSlotSelectedInterface = this
         viewModel.onStopProgress = this
         binding.lifecycleOwner = this
         if (arguments != null) {
             requireArguments().getString("profileId")?.let { viewModel.getAdminById(it) }
-            requireArguments().getString("profileId")
-                ?.let { viewModelInfluence.getAllAppoinemntByUserId(it) }
+
 
         }
         initAdapter()
@@ -194,7 +195,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             //Check Call Regarding Conditions
             handleCallButton()
 //            if (isAppointmentSchedule) {
-                showPopup()
+            showPopup()
 //            }
         }
 
@@ -219,7 +220,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 val dialog = AboutMeDialog(selectedAdmin!!.aboutYou)
                 dialog.show(requireActivity().supportFragmentManager, AboutMeDialog.TAG)
             } else {
-                context?.let { it1 -> showToastMessage(it1,getString(R.string.no_video_found)) }
+                context?.let { it1 -> showToastMessage(it1, getString(R.string.no_video_found)) }
             }
 
         }
@@ -329,6 +330,13 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             binding.txtItemCount.visibility = View.GONE
         }
         viewModel.getAllSlotByDate(selectedDate.toString())
+        requireArguments().getString("profileId")
+            ?.let {
+                viewModelInfluence.getAllAppointmentByDateWithStatus(
+                    getTodayShortDate(),
+                    it
+                )
+            }
     }
 
     private fun setTimeSlot() {
@@ -365,17 +373,20 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     binding.rvTimeSlot.adapter =
                         AdapterHomeTimeSlot(requireContext(), arrayList,
                             object : AdapterHomeTimeSlot.onViewItemClick {
-                                override fun onViewItemTimeSelect(text: String) {
-                                    selectedStartTime = text
-                                    try {
-                                        selectedEndTime = addMinutes(
-                                            selectedStartTime!!,
-                                            selectedTimeSlots!!.time
-                                        )
-                                    } catch (e: Exception) {
+                                override fun onViewItemTimeSelect(text: String, message: String) {
+                                    if (message.isEmpty()) {
+                                        selectedStartTime = text
+                                        try {
+                                            selectedEndTime = addMinutes(
+                                                selectedStartTime!!,
+                                                selectedTimeSlots!!.time
+                                            )
+                                        } catch (e: Exception) {
 
+                                        }
+                                    } else {
+                                        context?.let { showToastMessage(it, message) }
                                     }
-
                                 }
 
                             })
@@ -393,9 +404,11 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             val hashMap: HashMap<String, Any> = hashMapOf()
             hashMap[IF_ID] = viewModel.userField.get()!!._id
             hashMap[UID] = getUser(prefsManager)!!.admin._id
-            hashMap[DATE] = shortDateToLocalToUTCDate(selectedDate!!)
-            hashMap[START_TIME] = simpleDateToLocalToUTCDate(selectedStartTime!!)
-            hashMap[END_TIME] = simpleDateToLocalToUTCDate(selectedEndTime!!)
+            hashMap[DATE] = selectedDate!!
+//            var selectedTime = convertStringToDate(selectedDate!!,setDateToTimeUTCToLocal(selectedStartTime))
+
+            hashMap[START_TIME] = getLocalToUTCDate(selectedStartTime!!)
+            hashMap[END_TIME] = getLocalToUTCDate(selectedEndTime!!)
             hashMap[DURATON] = selectedTimeSlots!!.time
             viewModelAppoinemnt.addAppointment(hashMap)
         }
@@ -465,28 +478,31 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
     }
 
     private var payloadAppointments: AppointmentPayload? = null
-    override fun influenceCalenderList(payload: AppointmentPayload) {
-        payloadAppointments = payload
-        handleCallButton()
-
-    }
 
     private fun handleCallButton() {
         if (payloadAppointments != null) {
-            if (payloadAppointments!!.count > 0) {
-                binding.txtCallNow.visibility = View.VISIBLE
+            var isAppointmentThere = false
+            for (i in payloadAppointments!!.Appointment!!) {
+                if (i.ifid._id == requireArguments().getString("profileId") ?: "") {
+                    isAppointmentThere = true
+                    break
+                }
+            }
 
+            if (isAppointmentThere) {
+                binding.txtCallNow.visibility = View.VISIBLE
                 for (i in payloadAppointments!!.Appointment!!) {
                     val currentTime = DateUtils.getFormatedFullDate(Calendar.getInstance())
                     val calenderStartTime = DateUtils.simpleDateToUTCTOLocalDate(i.startTime)
                     val calenderEnd = DateUtils.convertStringToCalender(calenderStartTime)
                     calenderEnd[Calendar.MINUTE] = calenderEnd[Calendar.MINUTE] - 1
-                    val calenderEndTime = DateUtils.getFormatedFullDate(calenderEnd)
+                    val calenerStartTime = DateUtils.getFormatedFullDate(calenderEnd)
+                    val calenderEndTime = DateUtils.simpleDateToUTCTOLocalDate(i.endTime)
 
                     val isBetween =
                         DateUtils.checkTimeIsBetween(
+                            calenerStartTime,
                             calenderEndTime,
-                            calenderStartTime,
                             currentTime
                         )
                     if (isBetween) {
@@ -494,10 +510,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                         break
                     }
                 }
-
-
             } else {
-                binding.txtCallNow.visibility = View.GONE
+//                binding.txtCallNow.visibility = View.GONE
+                isAppointmentSchedule = false
             }
             if (isAppointmentSchedule) {
                 binding.txtCallNow.background =
@@ -544,5 +559,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 )
             }
         }
+    }
+
+    override fun influenceItem(payload: AppointmentPayload) {
+        payloadAppointments = payload
+        handleCallButton()
     }
 }

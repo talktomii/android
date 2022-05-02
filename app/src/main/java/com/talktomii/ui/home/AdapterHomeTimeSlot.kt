@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.databinding.ItemTimeSlotBinding
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AdapterHomeTimeSlot(
     private var context: Context,
@@ -51,13 +54,14 @@ class AdapterHomeTimeSlot(
         }
         holder.binding.tvTime.setOnClickListener {
 //            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).time > System.currentTimeMillis()) {
-            listener.onViewItemTimeSelect(text)
-            timeSlotsWithData.isSelected = true
-            notifyDataSetChanged()
-            lastPosition = position
-            arrayList[lastPosition].isSelected = false
+//            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).before(Date())) {
+                listener.onViewItemTimeSelect(text,"")
+                timeSlotsWithData.isSelected = true
+                notifyDataSetChanged()
+                lastPosition = position
+                arrayList[lastPosition].isSelected = false
 //            } else {
-//                Toast.makeText(context, "Invalid Time!", Toast.LENGTH_LONG).show()
+//                listener.onViewItemTimeSelect("","You can not schedule appointment on past time")
 //            }
         }
     }
@@ -68,6 +72,6 @@ class AdapterHomeTimeSlot(
 
     class ViewHolder(val binding: ItemTimeSlotBinding) : RecyclerView.ViewHolder(binding.root)
     interface onViewItemClick {
-        fun onViewItemTimeSelect(text: String)
+        fun onViewItemTimeSelect(text: String, message: String)
     }
 }

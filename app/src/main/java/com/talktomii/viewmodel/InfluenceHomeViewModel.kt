@@ -207,7 +207,30 @@ class InfluenceHomeViewModel @Inject constructor(private val webService: WebServ
             }
         }
     }
-
+    fun getAllAppointmentByDateWithStatus(date: String, _id: String) {
+        commonInterface!!.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = webService.getAppointmentByDateWithStatus(date, _id,"booked")
+                if (authResponse.isSuccessful) {
+                    authResponse.body().let {
+//                        walletData.set(authResponse.body()!!.payload.walletData)
+                        influncerItem?.influenceItem(authResponse.body()!!.payload)
+                    }
+                } else {
+                    commonInterface!!.onFailureAPI(
+                        authResponse.message(),
+                        authResponse.code(),
+                        authResponse.errorBody()
+                    )
+                }
+            } catch (e: ApiException) {
+                e.message?.let { commonInterface!!.onFailure(it) }
+            } catch (ex: Exception) {
+                ex.message?.let { commonInterface!!.onFailure(it) }
+            }
+        }
+    }
     fun updateAppointment(id: String, hashMap: java.util.HashMap<String, Any>) {
         commonInterface!!.onStarted()
         Coroutines.main {

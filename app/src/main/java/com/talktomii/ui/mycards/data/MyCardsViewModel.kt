@@ -69,6 +69,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
 
@@ -109,6 +110,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     companion object {
         var arrayStrings: ArrayList<String>? = null
         var carditemMap: HashMap<String, String>? = null
+        var cardImageMap: HashMap<String, String>? = null
         var type_item: HashMap<String, String>? = null
         var selectedCardItem: String = ""
         var selectedType: String = ""
@@ -206,6 +208,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
                         carditemMap = HashMap()
+                        cardImageMap = HashMap()
                         if(response.body()!!.message == "There are no card details found."){
                             selectedCardItem = ""
                             arrayStrings!!.clear()
@@ -229,6 +232,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 } else {
                                     arrayStrings!!.add(refilldata)
                                     carditemMap!!.put(i.id.toString(), refilldata)
+                                    cardImageMap!!.put(i.id.toString(), i.card!!.brand.toString())
                                 }
                             }
                             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -254,6 +258,30 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                                         .toString() + " is " + entry.key
                                                 )
                                                 selectedCardItem = entry.key
+                                                break
+                                            }
+                                        }
+                                        for (entry in cardImageMap!!.entries) {
+                                            if (entry.key == selectedCardItem) {
+                                                if(cardImageMap!!.get(entry.key) == "amex"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.amex)
+                                                }else if(cardImageMap!!.get(entry.key) == "diners_club"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.dinersclub)
+                                                }else if(cardImageMap!!.get(entry.key) == "discover"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.discover)
+                                                }else if(cardImageMap!!.get(entry.key) == "jcb"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.jcb)
+                                                } else if(cardImageMap!!.get(entry.key) == "mastercard"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.mastercardimg)
+                                                } else if(cardImageMap!!.get(entry.key) == "unionpay"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.unionpay)
+                                                } else if(cardImageMap!!.get(entry.key) == "visa"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.visa)
+                                                }else if(cardImageMap!!.get(entry.key) == "cartes_bancaires"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.cartes_bancaires)
+                                                }else{
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
+                                                }
                                                 break
                                             }
                                         }

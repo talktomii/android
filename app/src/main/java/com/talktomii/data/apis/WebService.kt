@@ -370,6 +370,13 @@ interface WebService {
         @Query("id") id: String
     ): Response<GetAllCalenderAppoinment>
 
+    @GET(GET_APPOINTMENT_BY_DATE)
+    suspend fun getAppointmentByDateWithStatus(
+        @Query("date") date: String,
+        @Query("id") id: String,
+        @Query("status") status: String,
+    ): Response<GetAllCalenderAppoinment>
+
     @PUT(UPDATE_APPOINTMENT + "/{id}")
     suspend fun updateAppointment(
         @Path("id") id: String,

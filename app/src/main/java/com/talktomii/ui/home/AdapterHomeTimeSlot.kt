@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.databinding.ItemTimeSlotBinding
+import com.talktomii.utlis.DateUtils.checkTimeIsPastTime
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 
 class AdapterHomeTimeSlot(
@@ -50,15 +52,15 @@ class AdapterHomeTimeSlot(
 
         }
         holder.binding.tvTime.setOnClickListener {
-//            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).time > System.currentTimeMillis()) {
-            listener.onViewItemTimeSelect(text)
-            timeSlotsWithData.isSelected = true
-            notifyDataSetChanged()
-            lastPosition = position
-            arrayList[lastPosition].isSelected = false
-//            } else {
-//                Toast.makeText(context, "Invalid Time!", Toast.LENGTH_LONG).show()
-//            }
+            if (checkTimeIsPastTime(text)) {
+                listener.onViewItemTimeSelect(text)
+                timeSlotsWithData.isSelected = true
+                notifyDataSetChanged()
+                lastPosition = position
+                arrayList[lastPosition].isSelected = false
+            } else {
+                Toast.makeText(context, "Invalid Time!", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

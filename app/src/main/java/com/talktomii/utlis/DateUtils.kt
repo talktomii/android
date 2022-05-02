@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 object DateUtils {
 
@@ -121,7 +120,7 @@ object DateUtils {
     }
 
     fun setDateToWeekDate(time: String): String {
-        val convertedTime  =  simpleDateToUTCTOLocalDate(time)
+        val convertedTime = simpleDateToUTCTOLocalDate(time)
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
             val outputFormat = SimpleDateFormat(WEEK_TIME_FORMAT)
@@ -308,8 +307,14 @@ object DateUtils {
         return dateToReturn.toString()
     }
 
+    fun getTodayShortDate(): String {
+        val c = Calendar.getInstance().time
+        val df = SimpleDateFormat(CALENDER_SHORT_DATE, Locale.getDefault())
+        return df.format(c)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    public fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
+    fun checkTimeIsBetween(startTime: String, endTime: String, checkTime: String): Boolean {
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(FULL_DATE_FORMAT, Locale.US)
         val startLocalTime: LocalTime = LocalTime.parse(startTime, formatter)
         val endLocalTime: LocalTime = LocalTime.parse(endTime, formatter)
@@ -325,6 +330,27 @@ object DateUtils {
         return isInBetween
     }
 
+    fun checkTimeIsPastTime(time: String): Boolean {
+        val currentDateTimeString =
+            SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().time)
+        if (checkTimings(currentDateTimeString, setDateToTimeUTCToLocal(time))) {
+            return true
+        }
+        return false
+    }
+
+    fun checkTimings(time: String, endtime: String): Boolean {
+        val pattern = TIME_FORMAT
+        val sdf = SimpleDateFormat(pattern)
+        try {
+            val date1 = sdf.parse(time)
+            val date2 = sdf.parse(endtime)
+            return date1.before(date2)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return false
+    }
 }
 
 /*On Date selected listener*/

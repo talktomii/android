@@ -120,11 +120,12 @@ object DateUtils {
         return formatter.format(cal.time)
     }
 
-    fun setDateToWeekDate(startTime: String): String {
+    fun setDateToWeekDate(time: String): String {
+        val convertedTime  =  simpleDateToUTCTOLocalDate(time)
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
             val outputFormat = SimpleDateFormat(WEEK_TIME_FORMAT)
-            val date = inputFormat.parse(startTime)
+            val date = inputFormat.parse(convertedTime)
             val formattedDate = outputFormat.format(date)
             formattedDate
         } catch (e: java.lang.Exception) {
@@ -230,6 +231,15 @@ object DateUtils {
     fun convertStringToCalender(time: String): Calendar {
         val df = SimpleDateFormat(FULL_DATE_FORMAT)
         val d = df.parse(time)
+        val cal = Calendar.getInstance()
+        cal.time = d
+        return cal
+    }
+
+    fun convertStringToCalenderUTC(time: String): Calendar {
+        var convertedTime = simpleDateToLocalToUTCDate(time)
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val d = df.parse(convertedTime)
         val cal = Calendar.getInstance()
         cal.time = d
         return cal

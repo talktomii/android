@@ -42,8 +42,10 @@ import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.DateUtils.addMinutes
+import com.talktomii.utlis.DateUtils.convertStringToDate
 import com.talktomii.utlis.DateUtils.getLocalToUTCDate
 import com.talktomii.utlis.DateUtils.getTodayShortDate
+import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -403,6 +405,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             hashMap[IF_ID] = viewModel.userField.get()!!._id
             hashMap[UID] = getUser(prefsManager)!!.admin._id
             hashMap[DATE] = selectedDate!!
+//            var selectedTime = convertStringToDate(selectedDate!!,setDateToTimeUTCToLocal(selectedStartTime))
+
             hashMap[START_TIME] = getLocalToUTCDate(selectedStartTime!!)
             hashMap[END_TIME] = getLocalToUTCDate(selectedEndTime!!)
             hashMap[DURATON] = selectedTimeSlots!!.time

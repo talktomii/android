@@ -380,6 +380,28 @@ object DateUtils {
         return isInBetween
     }
 
+    fun convertStringToDate(date: String, time: String): Calendar {
+        val calDate = Calendar.getInstance()
+        val sdfDate = SimpleDateFormat(CALENDER_SHORT_DATE, Locale.ENGLISH)
+        calDate.time = sdfDate.parse(date) // all done
+
+        val calTime = Calendar.getInstance()
+        val sdfTime = SimpleDateFormat(TIME_FORMAT, Locale.ENGLISH)
+        calTime.time = sdfTime.parse(time) // all done
+
+
+
+        val calendar  = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY));// for 6 hour
+        calendar.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, calTime.get(Calendar.SECOND));
+        calendar.set(Calendar.AM_PM, calTime.get(Calendar.AM));
+        calendar.set(Calendar.MONTH, calDate.get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, calDate.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.YEAR,calDate.get(Calendar.YEAR));// for 0 sec
+        return calendar
+    }
+
     fun checkTimeIsPastTime(time: String): Boolean {
 //        val currentDateTimeString =
 //            SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().time)

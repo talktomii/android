@@ -251,6 +251,13 @@ object DateUtils {
         return df.format(cal.time)
     }
 
+    fun addMinutesToCalendar(calendar: Calendar, time: String): String {
+        val df = SimpleDateFormat(FULL_DATE_FORMAT)
+        val number: String = time.replace("[^0-9]", "")
+        calendar.add(Calendar.MINUTE, number.toInt())
+        return df.format(calendar.time)
+    }
+
     fun convertStringToCalender(time: String): Calendar {
         val df = SimpleDateFormat(FULL_DATE_FORMAT)
         val d = df.parse(time)
@@ -390,16 +397,20 @@ object DateUtils {
         calTime.time = sdfTime.parse(time) // all done
 
 
-
-        val calendar  = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY));// for 6 hour
-        calendar.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE));
-        calendar.set(Calendar.SECOND, calTime.get(Calendar.SECOND));
-        calendar.set(Calendar.AM_PM, calTime.get(Calendar.AM));
-        calendar.set(Calendar.MONTH, calDate.get(Calendar.MONTH));
-        calendar.set(Calendar.DAY_OF_MONTH, calDate.get(Calendar.DAY_OF_MONTH));
-        calendar.set(Calendar.YEAR,calDate.get(Calendar.YEAR));// for 0 sec
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, calTime.get(Calendar.HOUR_OF_DAY))// for 6 hour
+        calendar.set(Calendar.MINUTE, calTime.get(Calendar.MINUTE))
+        calendar.set(Calendar.SECOND, calTime.get(Calendar.SECOND))
+        calendar.set(Calendar.AM_PM, calTime.get(Calendar.AM))
+        calendar.set(Calendar.MONTH, calDate.get(Calendar.MONTH))
+        calendar.set(Calendar.DAY_OF_MONTH, calDate.get(Calendar.DAY_OF_MONTH))
+        calendar.set(Calendar.YEAR, calDate.get(Calendar.YEAR))// for 0 sec
         return calendar
+    }
+
+    fun getCalenderToFullDateFormat(calendar: Calendar): String {
+        var simpleDateFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+        return simpleDateFormat.format(calendar.time).toString()
     }
 
     fun checkTimeIsPastTime(time: String): Boolean {

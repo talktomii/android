@@ -240,6 +240,7 @@ permission*/
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
     implementation 'com.github.chivorns:smartmaterialspinner:1.5.0'
     implementation 'com.linsea:universalvideoview:1.1.0@aar'
+    implementation 'joda-time:joda-time:2.10.14'
 
 }
 

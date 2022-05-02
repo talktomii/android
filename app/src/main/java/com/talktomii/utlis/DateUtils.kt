@@ -1,5 +1,6 @@
 package com.talktomii.utlis
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.os.Build
@@ -7,6 +8,7 @@ import androidx.annotation.RequiresApi
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.talktomii.utlis.DateFormate.CALENDER_DATE
 import com.talktomii.utlis.DateFormate.CALENDER_SHORT_DATE
+import com.talktomii.utlis.DateFormate.DATE_FORMATE
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_MMDDYYYY
 import com.talktomii.utlis.DateFormate.DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.DAY_MONTH_DATE_YEAR
@@ -15,6 +17,7 @@ import com.talktomii.utlis.DateFormate.FULL_DATE_FORMAT_WITH_DOT
 import com.talktomii.utlis.DateFormate.LOCAL_DATE_FORMATE
 import com.talktomii.utlis.DateFormate.TIME_FORMAT
 import com.talktomii.utlis.DateFormate.WEEK_TIME_FORMAT
+import org.joda.time.DateTime
 import java.text.Format
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -110,6 +113,27 @@ object DateUtils {
 
     }
 
+    fun setDateToFormatUTCToLocal(startTime: String): String {
+        var dateToReturn: String = startTime
+
+        val sdf = SimpleDateFormat(FULL_DATE_FORMAT)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+        var gmt: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(DATE_FORMATE)
+        sdfOutPutToSend.timeZone = TimeZone.getDefault()
+
+        try {
+            gmt = sdf.parse(startTime)
+            dateToReturn = sdfOutPutToSend.format(gmt)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return dateToReturn
+
+    }
+
     fun getTimeFormat(hr: Int, min: Int): String? {
         val cal = Calendar.getInstance()
         cal[Calendar.HOUR_OF_DAY] = hr
@@ -119,8 +143,8 @@ object DateUtils {
         return formatter.format(cal.time)
     }
 
-    fun setDateToWeekDate(time: String): String {
-        val convertedTime = simpleDateToUTCTOLocalDate(time)
+    fun setDateToWeekDate(convertedTime: String): String {
+//        val convertedTime = simpleDateToUTCTOLocalDate(time)
         return try {
             val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
             val outputFormat = SimpleDateFormat(WEEK_TIME_FORMAT)
@@ -307,10 +331,36 @@ object DateUtils {
         return dateToReturn.toString()
     }
 
+    fun getLocalToUTCDate(selectedDate: String): String {
+        val format = SimpleDateFormat(FULL_DATE_FORMAT)
+        var date: Date? = null
+        try {
+            date = format.parse(selectedDate)
+            println(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.timeZone = TimeZone.getTimeZone("UTC")
+        val time = calendar.time
+        @SuppressLint("SimpleDateFormat") val outputFmt =
+            SimpleDateFormat(FULL_DATE_FORMAT)
+        outputFmt.timeZone = TimeZone.getTimeZone("UTC")
+        return outputFmt.format(time)
+    }
+
     fun getTodayShortDate(): String {
         val c = Calendar.getInstance().time
         val df = SimpleDateFormat(CALENDER_SHORT_DATE, Locale.getDefault())
         return df.format(c)
+    }
+
+    fun getToDate(time: String): Date? {
+        val df = SimpleDateFormat(CALENDER_SHORT_DATE, Locale.getDefault())
+        var date: Date? = null
+        date = df.parse(simpleDateToUTCTOLocalDate(time))
+        return date
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -331,21 +381,26 @@ object DateUtils {
     }
 
     fun checkTimeIsPastTime(time: String): Boolean {
-        val currentDateTimeString =
-            SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().time)
-        if (checkTimings(currentDateTimeString, setDateToTimeUTCToLocal(time))) {
-            return true
-        }
-        return false
+//        val currentDateTimeString =
+//            SimpleDateFormat(TIME_FORMAT).format(Calendar.getInstance().time)
+//        if (checkTimings(currentDateTimeString, setDateToTimeUTCToLocal(time))) {
+//            return true
+//        }
+//        return false
+        val pattern = DATE_FORMATE
+        val sdf = SimpleDateFormat(pattern)
+        val date2 = sdf.parse(setDateToFormatUTCToLocal(time))
+        return DateTime(date2.time).isBefore(Calendar.getInstance().timeInMillis)
     }
 
     fun checkTimings(time: String, endtime: String): Boolean {
-        val pattern = TIME_FORMAT
+        val pattern = DATE_FORMATE
         val sdf = SimpleDateFormat(pattern)
         try {
             val date1 = sdf.parse(time)
             val date2 = sdf.parse(endtime)
-            return date1.before(date2)
+            return date2.compareTo(date1) > 0
+//            return date1.time > date2.time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -361,6 +416,7 @@ interface OnDateSelected {
 object DateFormate {
     const val DAY_MONTH_DATE_YEAR = "E,MMM,dd,yyyy"
     const val LOCAL_DATE_FORMATE = "dd/M/yyyy hh:mm:ss"
+    const val DATE_FORMATE = "dd/M/yyyy hh:mm:ss a"
     const val CALENDER_DATE = "d:M:yyyy"
     const val CALENDER_SHORT_DATE = "yyyy-MM-dd"
     const val DATE_FORMAT_MMDDYYYY = "MM/dd/yyyy"

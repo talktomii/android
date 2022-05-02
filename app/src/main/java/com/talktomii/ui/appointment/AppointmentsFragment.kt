@@ -449,7 +449,7 @@ class AppointmentsFragment : DaggerFragment(), OnSlotSelectedInterface, CommonIn
                     recycleViewRescheduleSlot!!.adapter =
                         AdapterHomeTimeSlot(requireContext(), arrayList,
                             object : AdapterHomeTimeSlot.onViewItemClick {
-                                override fun onViewItemTimeSelect(text: String) {
+                                override fun onViewItemTimeSelect(text: String, s: String) {
                                     selectedStartTime = text
                                     try {
                                         selectedEndTime = DateUtils.addMinutes(

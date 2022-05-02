@@ -42,9 +42,8 @@ import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.DateUtils.addMinutes
+import com.talktomii.utlis.DateUtils.getLocalToUTCDate
 import com.talktomii.utlis.DateUtils.getTodayShortDate
-import com.talktomii.utlis.DateUtils.shortDateToLocalToUTCDate
-import com.talktomii.utlis.DateUtils.simpleDateToLocalToUTCDate
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -372,17 +371,20 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                     binding.rvTimeSlot.adapter =
                         AdapterHomeTimeSlot(requireContext(), arrayList,
                             object : AdapterHomeTimeSlot.onViewItemClick {
-                                override fun onViewItemTimeSelect(text: String) {
-                                    selectedStartTime = text
-                                    try {
-                                        selectedEndTime = addMinutes(
-                                            selectedStartTime!!,
-                                            selectedTimeSlots!!.time
-                                        )
-                                    } catch (e: Exception) {
+                                override fun onViewItemTimeSelect(text: String, message: String) {
+                                    if (message.isEmpty()) {
+                                        selectedStartTime = text
+                                        try {
+                                            selectedEndTime = addMinutes(
+                                                selectedStartTime!!,
+                                                selectedTimeSlots!!.time
+                                            )
+                                        } catch (e: Exception) {
 
+                                        }
+                                    } else {
+                                        context?.let { showToastMessage(it, message) }
                                     }
-
                                 }
 
                             })
@@ -400,9 +402,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             val hashMap: HashMap<String, Any> = hashMapOf()
             hashMap[IF_ID] = viewModel.userField.get()!!._id
             hashMap[UID] = getUser(prefsManager)!!.admin._id
-            hashMap[DATE] = shortDateToLocalToUTCDate(selectedDate!!)
-            hashMap[START_TIME] = simpleDateToLocalToUTCDate(selectedStartTime!!)
-            hashMap[END_TIME] = simpleDateToLocalToUTCDate(selectedEndTime!!)
+            hashMap[DATE] = selectedDate!!
+            hashMap[START_TIME] = getLocalToUTCDate(selectedStartTime!!)
+            hashMap[END_TIME] = getLocalToUTCDate(selectedEndTime!!)
             hashMap[DURATON] = selectedTimeSlots!!.time
             viewModelAppoinemnt.addAppointment(hashMap)
         }

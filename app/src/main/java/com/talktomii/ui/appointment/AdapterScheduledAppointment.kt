@@ -13,10 +13,10 @@ import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
+import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
 class AdapterScheduledAppointment(
@@ -67,14 +67,14 @@ class AdapterScheduledAppointment(
             listener.onViewCallButtonClick(interest, position)
         }
         if (position == 0) {
-            holder.binding.tvDayAndDate.visibility = View.VISIBLE;
-            holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+            holder.binding.tvDayAndDate.visibility = View.VISIBLE
+            holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
         } else {
             if (interestArrayList[position - 1].date == interest.date) {
-                holder.binding.tvDayAndDate.visibility = View.INVISIBLE;
+                holder.binding.tvDayAndDate.visibility = View.INVISIBLE
             } else {
-                holder.binding.tvDayAndDate.visibility = View.VISIBLE;
-                holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+                holder.binding.tvDayAndDate.visibility = View.VISIBLE
+                holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
             }
         }
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {

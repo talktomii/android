@@ -1,11 +1,9 @@
 package com.talktomii.ui.loginSignUp
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -31,11 +29,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.get
-import com.facebook.AccessToken
 import com.google.gson.Gson
 import com.talktomii.data.model.call.CallRequest
 import com.talktomii.ui.reportabuse.ReportAbuseActivity
@@ -45,7 +40,6 @@ import org.json.JSONObject
 
 
 class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver {
-    private val REQUEST_MICROPHONE: Int=101
     private lateinit var binding: ActivityMainBinding
 
     var navHostFragment: NavHostFragment? = null
@@ -73,6 +67,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         socketManager.connect(this, prefsManager)
+
         ZohoSalesIQ.showLauncher(false)
         context = WeakReference(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -97,11 +92,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
                 binding.constWallet.setPadding(20)
             }
         }
-        if(!hasPermissions()){
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_MICROPHONE);
-        }
+
         btnMenu = binding.btnMenu
         drawer = binding.drawerLayout
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -298,11 +289,6 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
 //            binding.btnMenu.isVisible = destination.id == R.id.homeFragment
         }
 
-    }
-
-    private fun hasPermissions(): Boolean {
-        return ContextCompat.checkSelfPermission(this,
-            Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
     }
 
 

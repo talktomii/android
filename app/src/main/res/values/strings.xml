@@ -281,9 +281,9 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="a19">Influencers set their schedule with their availability. Users are able to view rates and availability and book a suitable time to call.</string>
     <string name="q20">20. What happens if I need to cancel my booking?</string>
     <string name="a20">You are allowed to cancel the appointment 24 hours before the appointment. Both users and Influencers will be charged a penalty for appointments canceled with less than 24 hours notice.</string>
-    <string name="q21">What penalty are Influencers charged for cancellations?</string>
+    <string name="q21">21. What penalty are Influencers charged for cancellations?</string>
     <string name="a21">Influencers will be charged 20% of their call rate if less than 24 hours notice or nothing if 24 hours or more.</string>
-    <string name="q22">What penalty are users charged for cancellations?</string>
+    <string name="q22">22. What penalty are users charged for cancellations?</string>
     <string name="a22">Users will be charged 100% of the Influencers rate if canceled in under 24 hours and no penalty if above 24 hours.</string>
     <string name="privacy_and_safety">Privacy and safety</string>
     <string name="more">More</string>

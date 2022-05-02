@@ -194,6 +194,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCardlistWallet(id :String) {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
+        RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
         webService.getCards(id)
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
@@ -220,6 +221,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             )
                             adapter.setDropDownViewResource(R.layout.spinner_list)
                             RefillWalletActivity.filterTypes!!.adapter = adapter
+                            RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
                         }
                         else{
                             arrayStrings!!.clear()
@@ -263,6 +265,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                         }
                                         for (entry in cardImageMap!!.entries) {
                                             if (entry.key == selectedCardItem) {
+
                                                 if(cardImageMap!!.get(entry.key) == "amex"){
                                                     RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.amex)
                                                 }else if(cardImageMap!!.get(entry.key) == "diners_club"){
@@ -375,9 +378,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             MyCardsActivity.progress.visibility = View.GONE
                             MyCardsActivity.finishFunction()
 
-                            if(RefillWalletActivity!!.getDetails == true){
+                            if(RefillWalletActivity.getDetails == true){
                                 getCardlistWallet(sharedPreferences.getString("id","").toString())
-                                RefillWalletActivity!!.getDetails = false
+                                RefillWalletActivity.getDetails = false
+                                RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
                             }else{
                                 getCards(sharedPreferences.getString("id","").toString())
                             }

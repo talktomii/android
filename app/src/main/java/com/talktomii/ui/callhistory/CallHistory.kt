@@ -2,7 +2,6 @@ package com.talktomii.ui.callhistory
 
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.view.*
@@ -11,12 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
 import com.talktomii.databinding.CallHistoryBinding
-import com.talktomii.ui.callhistory.adapters.CallHistoryAdapter
 import com.talktomii.ui.callhistory.models.CallHistoryItemModel
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.talktomii.adapter.MyCardAdapter
 import com.talktomii.ui.mycards.data.MyCardsViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject

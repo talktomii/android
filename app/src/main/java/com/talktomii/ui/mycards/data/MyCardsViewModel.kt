@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModel
-import com.example.example.PayloadCards
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -42,6 +41,7 @@ import com.talktomii.ui.mycards.PaymentItemsViewModel
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.fragments.CardFragment
 import com.talktomii.ui.mycards.fragments.PaymentFragment
+import com.talktomii.ui.mycards.model.PayloadCards
 import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.activities.GetPaidActivity
@@ -1046,18 +1046,28 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             Snackbar.LENGTH_SHORT
                         )
                         snackbar.show()
+                        if(response.body()!!.message!! != "The coupon code is not valid."){
+                            CouponActivity.finishFunction()
+                            getCurrentAmount()
+                            getTotalAmount()
+                        }
                         CouponActivity.progress.visibility = View.GONE
-                        CouponActivity.finishFunction()
-                        getCurrentAmount()
-                        getTotalAmount()
+
                     } else {
-                        val snackbar = Snackbar.make(
-                            CouponActivity.layout,
-                            "Something Wrong",
-                            Snackbar.LENGTH_SHORT
-                        )
-                        snackbar.show()
-                        CouponActivity.progress.visibility = View.GONE
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                            CouponActivity.progress.visibility = View.GONE
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
 

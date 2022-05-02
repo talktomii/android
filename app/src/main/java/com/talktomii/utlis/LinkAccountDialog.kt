@@ -17,7 +17,6 @@ class LinkAccountDialog(var type: String, var link: String, var listener: LinkLi
 
     lateinit var binding: DialogLinkAccountBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

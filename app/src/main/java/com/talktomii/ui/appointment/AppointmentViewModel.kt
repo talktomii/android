@@ -11,8 +11,6 @@ import com.talktomii.interfaces.AddAppointmentInterface
 import com.talktomii.interfaces.CommonInterface
 import com.talktomii.interfaces.FailureAPI400
 import com.talktomii.ui.home.profile.InfluencerProfileFragment
-import com.talktomii.ui.homefrag.InfluencerHomeFragment
-import com.talktomii.ui.mycards.fragments.CardFragment
 import java.io.IOException
 import javax.inject.Inject
 

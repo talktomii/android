@@ -76,7 +76,7 @@
                         android:layout_height="@dimen/dp_50"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -117,7 +117,7 @@
                         android:layout_height="@dimen/dp_50"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -157,9 +157,9 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="@dimen/dp_50"
                         android:layout_height="@dimen/dp_50"
-                        app:cardBackgroundColor="@color/mycard_bgcolor"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardBackgroundColor="@color/mycard_bgcolor"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -176,8 +176,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="Add Coupon"
                         android:background="?android:attr/selectableItemBackground"
+                        android:text="Add Coupon"
                         android:textColor="@color/white"
                         android:textFontWeight="600"
                         android:textSize="@dimen/dp_12"

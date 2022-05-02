@@ -9,7 +9,7 @@
             android:id="@+id/ivInsta"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="@dimen/dp_5"
             android:src="@drawable/ic_insta" />
 
 

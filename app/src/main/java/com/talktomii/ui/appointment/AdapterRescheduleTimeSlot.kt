@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.talktomii.R
-import java.text.SimpleDateFormat
 
 class AdapterRescheduleTimeSlot() : RecyclerView.Adapter<AdapterRescheduleTimeSlot.ViewHolder>() {
 

@@ -301,7 +301,7 @@ class MainActivity : DaggerAppCompatActivity(), SocketManager.OnMessageReceiver 
     }
 
     private fun hasPermissions(): Boolean {
-       return ContextCompat.checkSelfPermission(this,
+        return ContextCompat.checkSelfPermission(this,
             Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
     }
 

@@ -75,7 +75,7 @@
                         android:layout_height="@dimen/dp_50"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -115,7 +115,7 @@
                         android:layout_height="@dimen/dp_50"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 
@@ -156,7 +156,7 @@
                         android:layout_height="@dimen/dp_50"
                         app:cardBackgroundColor="@color/mycard_bgcolor"
                         android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="@dimen/dp_40"
+                        app:cardCornerRadius="@dimen/siq_25"
                         app:cardElevation="@dimen/dp_10"
                         tools:ignore="MissingConstraints">
 

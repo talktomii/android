@@ -44,8 +44,8 @@ class MyCardsActivity : DaggerAppCompatActivity() {
     lateinit var cardExpireDate: TextInputEditText
     lateinit var cardCVV: TextInputEditText
 
-    lateinit var yYear: String
-    lateinit var mMonth: String
+    var yYear: String ?= null
+    var mMonth: String ?= null
 
     lateinit var inputDate: String
 
@@ -131,8 +131,7 @@ class MyCardsActivity : DaggerAppCompatActivity() {
             }
         })
         addCardButton.setOnClickListener {
-            mMonth = cardExpireDate.text!!.substring(0,2)
-            yYear = cardExpireDate.text!!.substring(3,7)
+
             Log.d("dates is : ",mMonth + yYear)
             if (cardNumber.text.toString() == "") {
                 val snackbar = Snackbar.make(
@@ -164,10 +163,11 @@ class MyCardsActivity : DaggerAppCompatActivity() {
                 snackbar.show()
             } else {
                 val hashmap = HashMap<String, String>()
-
+                mMonth = cardExpireDate.text!!.substring(0,2)
+                yYear = cardExpireDate.text!!.substring(3,7)
                 hashmap["cardNumber"] = binding.etCardNumber.text.toString().replace(" ", "")
-                hashmap["exp_month"] = mMonth
-                hashmap["exp_year"] = yYear
+                hashmap["exp_month"] = mMonth!!
+                hashmap["exp_year"] = yYear!!
                 hashmap["cvv"] = binding.etCVV.text.toString()
                 hashmap["holderName"] = binding.etCardHolder.text.toString()
                 progress.visibility = View.VISIBLE

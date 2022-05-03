@@ -546,10 +546,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                 binding.txtCallNow.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        R.color.black
+                        R.color.calText
                     )
                 )
-                setTextViewDrawableColor(binding.txtCallNow, R.color.black)
+                setTextViewDrawableColor(binding.txtCallNow, R.color.calText)
             }
         } else {
             binding.txtCallNow.background =

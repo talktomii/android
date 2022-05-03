@@ -46,7 +46,7 @@ class AppointmentViewModel @Inject constructor(private val webService: WebServic
                                 Snackbar.LENGTH_SHORT
                             )
                             snackbar.show()
-//                            apiFailure!!.onFailureAPI400(mError.message)
+                            apiFailure!!.onFailureAPI400(mError.message)
 
 
                         } catch (e: IOException) {

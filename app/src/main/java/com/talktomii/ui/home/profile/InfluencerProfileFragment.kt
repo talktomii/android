@@ -43,11 +43,10 @@ import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.*
 import com.talktomii.utlis.DateUtils.addMinutes
 import com.talktomii.utlis.DateUtils.addMinutesToCalendar
-import com.talktomii.utlis.DateUtils.convertStringToDate
+import com.talktomii.utlis.DateUtils.dateTime
 import com.talktomii.utlis.DateUtils.getCalenderToFullDateFormat
 import com.talktomii.utlis.DateUtils.getTodayShortDate
-import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
-import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
+import com.talktomii.utlis.DateUtils.setDateToTimeLocalToUTC
 import com.talktomii.utlis.common.CommonUtils.Companion.showToastMessage
 import com.talktomii.utlis.common.Constants.Companion.DATE
 import com.talktomii.utlis.common.Constants.Companion.DURATON
@@ -407,20 +406,10 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             hashMap[IF_ID] = viewModel.userField.get()!!._id
             hashMap[UID] = getUser(prefsManager)!!.admin._id
             hashMap[DATE] = selectedDate!!
-            var selectedStartTime = convertStringToDate(
-                selectedDate!!, setDateToTimeUTCToLocal(
-                    selectedStartTime!!
-                )
-            )
+            val selectedTime = dateTime(selectedDate!!, setDateToTimeLocalToUTC(selectedStartTime!!))
 
-            hashMap[START_TIME] =
-                simpleDateToUTCTOLocalDate(getCalenderToFullDateFormat(selectedStartTime))
-            hashMap[END_TIME] = simpleDateToUTCTOLocalDate(
-                addMinutesToCalendar(
-                    selectedStartTime,
-                    selectedTimeSlots!!.time
-                )
-            )
+            hashMap[START_TIME] = getCalenderToFullDateFormat(selectedTime)
+            hashMap[END_TIME] = addMinutesToCalendar(selectedTime, selectedTimeSlots!!.time)
 
             hashMap[DURATON] = selectedTimeSlots!!.time
             println("==========================")

@@ -34,8 +34,8 @@ class AdapterHomeTimeSlot(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var timeSlotsWithData: TimeSlotsWithData = arrayList[position]
-        var text = timeSlotsWithData.slot
-        holder.binding.tvTime.text = setDateToTimeUTCToLocal(text)
+        var text = setDateToTimeUTCToLocal(timeSlotsWithData.slot)
+        holder.binding.tvTime.text = text
         if (lastPosition == position) {
             holder.binding.tvTime.background =
                 ContextCompat.getDrawable(context, R.drawable.back_select)
@@ -55,7 +55,7 @@ class AdapterHomeTimeSlot(
         holder.binding.tvTime.setOnClickListener {
 //            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).time > System.currentTimeMillis()) {
 //            if (SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(text).before(Date())) {
-                listener.onViewItemTimeSelect(text,"")
+                listener.onViewItemTimeSelect(timeSlotsWithData.slot,"")
                 timeSlotsWithData.isSelected = true
                 notifyDataSetChanged()
                 lastPosition = position

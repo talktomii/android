@@ -113,6 +113,21 @@ object DateUtils {
 
     }
 
+    fun setDateToTimeLocalToUTC(startTime: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat(FULL_DATE_FORMAT)
+            val outputFormat = SimpleDateFormat(TIME_FORMAT)
+            val date = inputFormat.parse(startTime)
+            val formattedDate = outputFormat.format(date)
+            println(formattedDate) // prints 10-04-2018
+
+            formattedDate
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+    }
+
+
     fun setDateToFormatUTCToLocal(startTime: String): String {
         var dateToReturn: String = startTime
 
@@ -389,11 +404,11 @@ object DateUtils {
 
     fun convertStringToDate(date: String, time: String): Calendar {
         val calDate = Calendar.getInstance()
-        val sdfDate = SimpleDateFormat(CALENDER_SHORT_DATE, Locale.ENGLISH)
+        val sdfDate = SimpleDateFormat(CALENDER_SHORT_DATE)
         calDate.time = sdfDate.parse(date) // all done
 
         val calTime = Calendar.getInstance()
-        val sdfTime = SimpleDateFormat(TIME_FORMAT, Locale.ENGLISH)
+        val sdfTime = SimpleDateFormat(TIME_FORMAT)
         calTime.time = sdfTime.parse(time) // all done
 
 
@@ -411,6 +426,27 @@ object DateUtils {
     fun getCalenderToFullDateFormat(calendar: Calendar): String {
         var simpleDateFormat = SimpleDateFormat(FULL_DATE_FORMAT)
         return simpleDateFormat.format(calendar.time).toString()
+    }
+
+    fun dateTime(date: String, time: String): Calendar {
+
+        val aDate = Calendar.getInstance()
+        val sdfDate = SimpleDateFormat(CALENDER_SHORT_DATE)
+        aDate.time = sdfDate.parse(date) // all done
+
+        val aTime = Calendar.getInstance()
+        val sdfTime = SimpleDateFormat(TIME_FORMAT)
+        aTime.time = sdfTime.parse(time) // all done
+
+
+        val aDateTime = Calendar.getInstance()
+        aDateTime[Calendar.DAY_OF_MONTH] = aDate[Calendar.DAY_OF_MONTH]
+        aDateTime[Calendar.MONTH] = aDate[Calendar.MONTH]
+        aDateTime[Calendar.YEAR] = aDate[Calendar.YEAR]
+        aDateTime[Calendar.HOUR] = aTime[Calendar.HOUR]
+        aDateTime[Calendar.MINUTE] = aTime[Calendar.MINUTE]
+        aDateTime[Calendar.SECOND] = aTime[Calendar.SECOND]
+        return aDateTime
     }
 
     fun checkTimeIsPastTime(time: String): Boolean {

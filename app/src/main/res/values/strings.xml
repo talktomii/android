@@ -18,6 +18,7 @@
     <string name="by_continue_you_agree">By continue, you agree to our</string>
     <string name="next">Next</string>
     <string name="facebook_app_id">501682688214266</string>
+    <string name="fb_login_protocol_scheme">fb501682688214266</string>
     <string name="signup_to_furniture_market">Signup to Furniture Market</string>
     <string name="email">Email</string>
     <string name="sign_up">Sign Up</string>
@@ -331,4 +332,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="add_time_period">Add Time Period</string>
     <string name="view_time_period">View Time Period</string>
     <string name="call_button_availble">Sorry, Call button is available before one minutes</string>
+    <string name="facebook_client_token" ></string>
 </resources>

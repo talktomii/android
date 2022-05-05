@@ -19,11 +19,8 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.facebook.*
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -32,8 +29,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.talktomii.R
-import com.talktomii.data.network.ApisRespHandler
-import com.talktomii.data.network.responseUtil.Status
 import com.talktomii.databinding.FragmentSignUpBinding
 import com.talktomii.ui.loginSignUp.LoginViewModel
 import com.talktomii.ui.loginSignUp.MainActivity
@@ -42,7 +37,9 @@ import com.talktomii.utlis.dialogs.ProgressDialog
 import dagger.android.support.DaggerFragment
 import org.json.JSONException
 import java.net.URL
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 
 class SignUpFragment : DaggerFragment() {
@@ -108,6 +105,7 @@ class SignUpFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callbackManager = CallbackManager.Factory.create()
+
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 binding.ivGoogle.setImageResource(R.drawable.googe_btn)
@@ -142,20 +140,27 @@ class SignUpFragment : DaggerFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager?.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
     private fun init() {
         progressDialog = ProgressDialog(requireActivity())
+        val permissionNeeds: List<String> = Arrays.asList(
+            "email",
+            "public_profile"
+        )
+        binding.fbLoginButton.setReadPermissions(permissionNeeds)
         binding.fbLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) {
                 val request =
                     GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { data, _ ->
                         try {
-                            Log.e("email", data.getString("email"))
+                            var  profile = Profile.getCurrentProfile();
+                            Log.e("email", data!!.getString("email"))
                             findNavController().navigate(
                                 R.id.action_signupFragment_to_createProfileFragment,
                                 bundleOf(
 
-                                    "email" to data.getString("email"),
+                                    "email" to data?.getString("email"),
                                     "isSocial" to "true"
                                 )
                             )
@@ -165,10 +170,8 @@ class SignUpFragment : DaggerFragment() {
                         }
                     }
                 val parameters = Bundle()
-                parameters.putString(
-                    "fields",
-                    "id,email"
-                )
+                parameters.putString("fields", "id,name,email")
+
                 request.parameters = parameters
                 request.executeAsync()
             }
@@ -177,7 +180,7 @@ class SignUpFragment : DaggerFragment() {
                 print("---cancle--")
             }
 
-            override fun onError(exception: FacebookException?) {
+            override fun onError(exception: FacebookException) {
                 exception?.stackTrace
             }
         })

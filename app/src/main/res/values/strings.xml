@@ -336,4 +336,5 @@ Ensure that all your appointments are executed with enthusiasm and attentiveness
     <string name="no_video_found">No Video Found</string>
     <string name="call_now">Call Now</string>
     <string name="about_me">About me</string>
+    <string name="you_can_not_schedule_time">You can not schedule appointment on past time</string>
 </resources>

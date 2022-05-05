@@ -462,18 +462,32 @@ object DateUtils {
         return DateTime(date2.time).isBefore(Calendar.getInstance().timeInMillis)
     }
 
-    fun checkTimings(time: String, endtime: String): Boolean {
-        val pattern = DATE_FORMATE
+    fun checkPastTime(time: String, endtime: String): Boolean {
+        val pattern = TIME_FORMAT
         val sdf = SimpleDateFormat(pattern)
         try {
             val date1 = sdf.parse(time)
             val date2 = sdf.parse(endtime)
             return date2.compareTo(date1) > 0
-//            return date1.time > date2.time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
         return false
+    }
+    fun getSubStringTime(selectedDate: String, subString: String): String {
+       return SimpleDateFormat(TIME_FORMAT).format(
+            SimpleDateFormat(FULL_DATE_FORMAT).parse(
+                selectedDate + "T" + subString
+            )
+        )
+    }
+
+    fun convertShortDateFormat(dateSelected : String): Date? {
+       return SimpleDateFormat("yyyy-MM-dd").parse(dateSelected)
+    }
+
+    fun getCurrentDateFormatted(): Date? {
+        return SimpleDateFormat("yyyy-MM-dd").parse(SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time))
     }
 }
 

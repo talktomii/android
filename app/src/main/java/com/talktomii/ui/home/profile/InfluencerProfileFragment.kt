@@ -167,6 +167,7 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         horizontalCalendar!!.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 selectedDate = SimpleDateFormat("yyyy-MM-dd").format(date!!.time)
+                (binding.rvTimeSlot.adapter as AdapterHomeTimeSlot).setSelectedDate(selectedDate!!)
                 viewModel.getAllSlotByDate(selectedDate.toString())
             }
         }
@@ -195,9 +196,9 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
         binding.txtCallNow.setOnClickListener {
             //Check Call Regarding Conditions
             handleCallButton()
-//            if (isAppointmentSchedule) {
-            showPopup()
-//            }
+            if (isAppointmentSchedule) {
+                showPopup()
+            }
         }
 
         binding.tvBookAppointment.setOnClickListener {
@@ -391,10 +392,12 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
                                 }
 
                             })
-
+                    (binding.rvTimeSlot.adapter as AdapterHomeTimeSlot).setSelectedDate(selectedDate!!)
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
             }
         binding.spinnerTimeDuration.adapter = adapter
     }
@@ -406,7 +409,8 @@ class InfluencerProfileFragment : DaggerFragment(), CommonInterface, AdminDetail
             hashMap[IF_ID] = viewModel.userField.get()!!._id
             hashMap[UID] = getUser(prefsManager)!!.admin._id
             hashMap[DATE] = selectedDate!!
-            val selectedTime = dateTime(selectedDate!!, setDateToTimeLocalToUTC(selectedStartTime!!))
+            val selectedTime =
+                dateTime(selectedDate!!, setDateToTimeLocalToUTC(selectedStartTime!!))
 
             hashMap[START_TIME] = getCalenderToFullDateFormat(selectedTime)
             hashMap[END_TIME] = addMinutesToCalendar(selectedTime, selectedTimeSlots!!.time)

@@ -46,6 +46,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         etAmount = binding.addselectedAmount
         refillLayout = binding.refillMainLayout
         walletProgress = binding.addWalletProgress
+        cardImg = binding.cardImage
         binding.selectAmount1.setOnClickListener {
             binding.addselectedAmount.setText("100")
             binding.addselectedAmount.setSelection(binding.addselectedAmount.text!!.length);
@@ -118,6 +119,7 @@ class RefillWalletActivity : DaggerAppCompatActivity() {
         lateinit var context : Context
         var getDetails : Boolean = false
         var repeatAmount : String = ""
+        var cardImg : ImageView ?= null
         fun getContext(context: Context){
             this.context = context
         }

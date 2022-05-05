@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModel
-import com.example.example.PayloadCards
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -42,6 +41,7 @@ import com.talktomii.ui.mycards.PaymentItemsViewModel
 import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.fragments.CardFragment
 import com.talktomii.ui.mycards.fragments.PaymentFragment
+import com.talktomii.ui.mycards.model.PayloadCards
 import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.MyWallet
 import com.talktomii.ui.mywallet.activities.GetPaidActivity
@@ -69,6 +69,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewModel() {
 
@@ -109,6 +110,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     companion object {
         var arrayStrings: ArrayList<String>? = null
         var carditemMap: HashMap<String, String>? = null
+        var cardImageMap: HashMap<String, String>? = null
         var type_item: HashMap<String, String>? = null
         var selectedCardItem: String = ""
         var selectedType: String = ""
@@ -192,6 +194,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
     fun getCardlistWallet(id :String) {
         cards.value = Resource.loading()
         Log.d("token : ", MainActivity.retrivedToken)
+        RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
         webService.getCards(id)
             .enqueue(object : Callback<PayloadCards> {
                 override fun onResponse(
@@ -206,6 +209,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
 //                        cards.value = Resource.success(response.body()!!.payload)
                         val data = response.body()!!.payload
                         carditemMap = HashMap()
+                        cardImageMap = HashMap()
                         if(response.body()!!.message == "There are no card details found."){
                             selectedCardItem = ""
                             arrayStrings!!.clear()
@@ -217,6 +221,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             )
                             adapter.setDropDownViewResource(R.layout.spinner_list)
                             RefillWalletActivity.filterTypes!!.adapter = adapter
+                            RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
                         }
                         else{
                             arrayStrings!!.clear()
@@ -229,6 +234,7 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                 } else {
                                     arrayStrings!!.add(refilldata)
                                     carditemMap!!.put(i.id.toString(), refilldata)
+                                    cardImageMap!!.put(i.id.toString(), i.card!!.brand.toString())
                                 }
                             }
                             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -254,6 +260,31 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                                                         .toString() + " is " + entry.key
                                                 )
                                                 selectedCardItem = entry.key
+                                                break
+                                            }
+                                        }
+                                        for (entry in cardImageMap!!.entries) {
+                                            if (entry.key == selectedCardItem) {
+
+                                                if(cardImageMap!!.get(entry.key) == "amex"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.amex)
+                                                }else if(cardImageMap!!.get(entry.key) == "diners_club"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.dinersclub)
+                                                }else if(cardImageMap!!.get(entry.key) == "discover"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.discover)
+                                                }else if(cardImageMap!!.get(entry.key) == "jcb"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.jcb)
+                                                } else if(cardImageMap!!.get(entry.key) == "mastercard"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.mastercardimg)
+                                                } else if(cardImageMap!!.get(entry.key) == "unionpay"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.unionpay)
+                                                } else if(cardImageMap!!.get(entry.key) == "visa"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.visa)
+                                                }else if(cardImageMap!!.get(entry.key) == "cartes_bancaires"){
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.cartes_bancaires)
+                                                }else{
+                                                    RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
+                                                }
                                                 break
                                             }
                                         }
@@ -347,9 +378,10 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             MyCardsActivity.progress.visibility = View.GONE
                             MyCardsActivity.finishFunction()
 
-                            if(RefillWalletActivity!!.getDetails == true){
+                            if(RefillWalletActivity.getDetails == true){
                                 getCardlistWallet(sharedPreferences.getString("id","").toString())
-                                RefillWalletActivity!!.getDetails = false
+                                RefillWalletActivity.getDetails = false
+                                RefillWalletActivity.cardImg!!.setBackgroundResource(R.drawable.demo)
                             }else{
                                 getCards(sharedPreferences.getString("id","").toString())
                             }
@@ -1046,18 +1078,28 @@ class MyCardsViewModel @Inject constructor(val webService: WebService) : ViewMod
                             Snackbar.LENGTH_SHORT
                         )
                         snackbar.show()
+                        if(response.body()!!.message!! != "The coupon code is not valid."){
+                            CouponActivity.finishFunction()
+                            getCurrentAmount()
+                            getTotalAmount()
+                        }
                         CouponActivity.progress.visibility = View.GONE
-                        CouponActivity.finishFunction()
-                        getCurrentAmount()
-                        getTotalAmount()
+
                     } else {
-                        val snackbar = Snackbar.make(
-                            CouponActivity.layout,
-                            "Something Wrong",
-                            Snackbar.LENGTH_SHORT
-                        )
-                        snackbar.show()
-                        CouponActivity.progress.visibility = View.GONE
+                        var jsonObject: JSONObject? = null
+                        try {
+                            jsonObject = JSONObject(response.errorBody()!!.string())
+                            val userMessage = jsonObject.getString("message")
+                            val snackbar = Snackbar.make(
+                                AddBankAccountActivity.layout,
+                                userMessage,
+                                Snackbar.LENGTH_SHORT
+                            )
+                            snackbar.show()
+                            CouponActivity.progress.visibility = View.GONE
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
 

@@ -1,6 +1,6 @@
 package com.talktomii.data.model.drawer.bookmark
 
-data class Service(
+data class  Service(
     val __v: Int,
     val _id: String,
     val bookmark: Boolean,

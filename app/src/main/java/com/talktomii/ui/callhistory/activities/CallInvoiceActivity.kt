@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso
 import com.talktomii.BuildConfig
 import com.talktomii.R
 import com.talktomii.databinding.ActivityCallInvoiceBinding
-import com.talktomii.ui.callhistory.adapters.CallHistoryAdapter
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.lucasfsc.html2pdf.Html2Pdf
 import java.io.File

@@ -9,15 +9,6 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:itemBackground">@color/black</item>
-        <item name="android:popupBackground">@color/black</item>
-        <item name="android:drawablePadding">0dp</item>
-        <item name="android:dividerHeight">1dp</item>
-<!--        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>-->
-        <!-- Customize your theme here. -->
 
         <item name="fontFamily">@font/inter_regular</item>
     </style>

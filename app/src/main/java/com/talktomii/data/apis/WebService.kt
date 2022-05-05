@@ -1,6 +1,5 @@
 package com.talktomii.data.apis
 
-import com.example.example.PayloadCards
 import com.talktomii.data.model.AllInterst
 import com.talktomii.data.model.InterestResponse
 import com.talktomii.data.model.RegisterModel
@@ -26,6 +25,7 @@ import com.talktomii.ui.callhistory.models.CallHistoryData
 import com.talktomii.ui.coupon.models.CouponData
 import com.talktomii.ui.home.notifications.models.NotificationData
 import com.talktomii.ui.mycards.data.addCardData
+import com.talktomii.ui.mycards.model.PayloadCards
 import com.talktomii.ui.mycards.model.PaymentPayload
 import com.talktomii.ui.mywallet.models.CurrentWalletPaylod
 import com.talktomii.ui.mywallet.models.WalletPayload
@@ -368,6 +368,13 @@ interface WebService {
     suspend fun getAppointmentByDate(
         @Query("date") date: String,
         @Query("id") id: String
+    ): Response<GetAllCalenderAppoinment>
+
+    @GET(GET_APPOINTMENT_BY_DATE)
+    suspend fun getAppointmentByDateWithStatus(
+        @Query("date") date: String,
+        @Query("id") id: String,
+        @Query("status") status: String,
     ): Response<GetAllCalenderAppoinment>
 
     @PUT(UPDATE_APPOINTMENT + "/{id}")

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.media.Image
 import android.net.Uri
 import android.view.*
 import android.widget.ImageView
@@ -19,13 +18,10 @@ import com.talktomii.R
 import com.talktomii.data.apis.WebService
 import com.talktomii.ui.callhistory.activities.CallInvoiceActivity
 import com.talktomii.ui.callhistory.models.CallHistoryItemModel
-import com.talktomii.ui.loginSignUp.login.LoginFragment
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.utlis.PrefsManager
 import javax.inject.Inject
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.talktomii.adapter.MyCardAdapter
 
 
 class CallHistoryAdapter(

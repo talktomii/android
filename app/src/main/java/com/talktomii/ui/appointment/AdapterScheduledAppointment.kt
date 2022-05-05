@@ -13,10 +13,10 @@ import com.talktomii.databinding.ItemScheduledAppointmentBinding
 import com.talktomii.ui.home.HomeScreenViewModel
 import com.talktomii.utlis.DateUtils.setDateToTimeUTCToLocal
 import com.talktomii.utlis.DateUtils.setDateToWeekDate
+import com.talktomii.utlis.DateUtils.simpleDateToUTCTOLocalDate
 import com.talktomii.utlis.common.Constants.Companion.CANCELLED
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
 class AdapterScheduledAppointment(
@@ -67,14 +67,14 @@ class AdapterScheduledAppointment(
             listener.onViewCallButtonClick(interest, position)
         }
         if (position == 0) {
-            holder.binding.tvDayAndDate.visibility = View.VISIBLE;
-            holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+            holder.binding.tvDayAndDate.visibility = View.VISIBLE
+            holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
         } else {
-            if (interestArrayList.get(position - 1).date.equals(interest.date)) {
-                holder.binding.tvDayAndDate.visibility = View.INVISIBLE;
+            if (interestArrayList[position - 1].date == interest.date) {
+                holder.binding.tvDayAndDate.visibility = View.INVISIBLE
             } else {
-                holder.binding.tvDayAndDate.visibility = View.VISIBLE;
-                holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date);
+                holder.binding.tvDayAndDate.visibility = View.VISIBLE
+                holder.binding.tvDayAndDate.text = setDateToWeekDate(interest.date)
             }
         }
         class moreMenuClickListener : PopupMenu.OnMenuItemClickListener {
@@ -85,7 +85,7 @@ class AdapterScheduledAppointment(
                     }
                     R.id.action_rescedule -> {
                         val datetime: Calendar =
-                            com.talktomii.utlis.DateUtils.convertStringToCalender(interest.endTime)
+                            com.talktomii.utlis.DateUtils.convertStringToCalenderUTC(interest.endTime)
                         val c: Calendar = Calendar.getInstance()
                         if (datetime.timeInMillis > c.timeInMillis) {
 //            it's after current

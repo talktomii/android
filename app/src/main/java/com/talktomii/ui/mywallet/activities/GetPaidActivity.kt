@@ -7,20 +7,14 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.R
-import com.talktomii.data.model.getallslotbydate.TimeSlotsWithData
 import com.talktomii.databinding.ActivityGetPaidBinding
-import com.talktomii.ui.banksettings.activities.AddBankAccountActivity
-import com.talktomii.ui.home.AdapterHomeTimeSlot
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.utlis.DateUtils
 import dagger.android.support.DaggerAppCompatActivity
-import java.util.ArrayList
 import javax.inject.Inject
 
 class GetPaidActivity : DaggerAppCompatActivity() {

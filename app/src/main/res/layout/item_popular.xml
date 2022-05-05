@@ -4,7 +4,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="117dp"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="10dp">
 
@@ -38,11 +38,11 @@
                 <TextView
                     android:id="@+id/tvPriceWithTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/siq_25"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/light_rupess_background"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:text="$15 / 15min"
                     android:textColor="@color/white"
                     android:textSize="12sp"
@@ -53,13 +53,13 @@
                 <TextView
                     android:id="@+id/tvAboutMee"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/siq_25"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:background="@drawable/trans_white_background"
                     android:drawableLeft="@drawable/ic_video"
                     android:drawablePadding="@dimen/dp_10"
-                    android:padding="@dimen/dp_10"
-                    android:text="About me"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/about_me"
                     android:textColor="@color/calText"
                     android:textSize="@dimen/sp_12"
                     android:textStyle="bold"
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="110dp"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:fontFamily="@font/inter_medium"
                     android:text="Leslie Alexander"
                     android:textColor="@color/calText"
@@ -138,6 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_10"
                     android:src="@drawable/ic_call"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -147,8 +148,8 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imgDefault"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="50dp"
                 android:scaleType="centerCrop"

@@ -71,14 +71,14 @@ class AdapterPopular(
             .into(holder.binding.imgDefault)
 
         holder.binding.ivCall.setOnClickListener {
-            listener.onViewPopularClick(popularArrayList[position])
+            listener.onViewPopularClick(popularArrayList[position],1)
         }
 
         holder.binding.tvAboutMee.setOnClickListener {
-            listener.onViewPopularClick(popularArrayList[position])
+           listener.onViewPopularClick(popularArrayList[position], 2)
         }
         holder.binding.constrainItemListing.setOnClickListener {
-            listener.onViewPopularClick(popularArrayList[position])
+            listener.onViewPopularClick(popularArrayList[position], 1)
         }
 
     }
@@ -113,6 +113,7 @@ class AdapterPopular(
     }
 
     interface onViewPopularClick {
-        fun onViewPopularClick(admin: Admin)
+        fun onViewPopularClick(admin: Admin, which: Int)
     }
+
 }

@@ -10,15 +10,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.talktomii.R
 import com.talktomii.databinding.ActivityAddBankAccountBinding
-import com.talktomii.ui.mycards.activities.MyCardsActivity
 import com.talktomii.ui.mycards.data.MyCardsViewModel
-import com.talktomii.ui.mywallet.activities.RefillWalletActivity
 import com.talktomii.utlis.PrefsManager
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
